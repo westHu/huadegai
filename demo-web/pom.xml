@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.xkeshi</groupId>
+        <artifactId>demo</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <version>${project.parent.version}</version>
+    <artifactId>demo-web</artifactId>
+    <packaging>war</packaging>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.xkeshi</groupId>
+            <artifactId>xkeshi-framework-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xkeshi</groupId>
+            <artifactId>xkeshi-framework-webkits</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xkeshi</groupId>
+            <artifactId>demo-business</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.mobile</groupId>
+            <artifactId>spring-mobile-device</artifactId>
+        </dependency>
+
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+
+        <!-- commons-fileupload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+
+
+        <!-- json -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+
+        <!-- dozer -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+        </dependency>
+
+        <!-- freemarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.18</version>
+        </dependency>
+
+        <!-- web -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+
+        <!-- dubbo -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+        <!--zookeeper-->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.netty</groupId>
+            <artifactId>netty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+        </dependency>
+
+        <!-- shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-aspectj</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-cas</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+        </dependency>
+        <!-- Validation -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+    </dependencies>
+    <build>
+        <finalName>gather-web</finalName>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.16.v20140903</version>
+                <configuration>
+                    <stopKey>foo</stopKey>
+                    <stopPort>9997</stopPort>
+                    <contextXml>src/test/resources/jetty-deploy.xml</contextXml>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <!--jetty启动端口号 -->
+                            <port>8066</port>
+                        </connector>
+                    </connectors>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!-- xkeshi自动配置 -->
+            <plugin>
+                <groupId>com.xkeshi.maven.plugins</groupId>
+                <artifactId>autoconfig-maven-plugin</artifactId>
+                <version>1.0.2</version>
+                <configuration>
+                    <!--<enable>${autoconfig.enable}</enable>-->
+                    <enable>false</enable>
+                    <version>${autoconfig.version}</version>
+                    <app>${autoconfig.base.app}</app>
+                    <env>${autoconfig.env}</env>
+                    <download_dir>${autoconfig.base.user_define_download_dir}</download_dir>
+                    <configFiles>
+                        <configFile>dubbo.properties</configFile>
+                        <configFile>datasource.properties</configFile>
+                        <configFile>mail.properties</configFile>
+                    </configFiles>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>autoconfig</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <!-- 新增项目配置全局变量 -->
+    <properties>
+        <autoconfig.base.app>openplatform</autoconfig.base.app>
+        <autoconfig.base.user_define_download_dir>src/main/resources/props</autoconfig.base.user_define_download_dir>
+    </properties>
+
+    <!-- 环境配置 -->
+    <profiles>
+        <profile>
+            <!-- 开发环境 -->
+            <id>dev</id>
+            <!-- 默认激活本环境,默认为false不激活 -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <autoconfig.enable>true</autoconfig.enable>
+                <autoconfig.env>dev</autoconfig.env>
+                <autoconfig.version>1_0_0_0</autoconfig.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- 测试环境 -->
+            <id>qa</id>
+            <properties>
+                <autoconfig.enable>true</autoconfig.enable>
+                <autoconfig.env>qa</autoconfig.env>
+                <autoconfig.version>1_0_0_0</autoconfig.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- 预发布环境 -->
+            <id>prepub</id>
+            <properties>
+                <autoconfig.enable>true</autoconfig.enable>
+                <autoconfig.env>prepub</autoconfig.env>
+                <autoconfig.version>1_0_0_0</autoconfig.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- 线上环境 -->
+            <id>online</id>
+            <properties>
+                <autoconfig.enable>true</autoconfig.enable>
+                <autoconfig.env>online</autoconfig.env>
+                <autoconfig.version>1_0_0_0</autoconfig.version>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

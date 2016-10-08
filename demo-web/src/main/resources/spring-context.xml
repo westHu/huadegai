@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="propertyConfigurer" class="com.xkeshi.core.context.XPreferencesPlaceholderConfigurer">
+        <!--<property name="propdir" value="/home/www/properties/xconfig/xweb"/>-->
+        <property name="props">
+            <list>
+                <value>/props/datasource.properties</value>
+                <value>/props/dubbo.properties</value>
+                <value>/props/eleme.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <import resource="/spring/spring-mvc.xml"/>
+    <import resource="/spring/spring-infrastructure.xml"/>
+    <import resource="/spring/spring-datasource.xml"/>
+
+    <!-- dubbo -->
+    <import resource="/dubbo/dubbo-client.xml"/>
+
+</beans>

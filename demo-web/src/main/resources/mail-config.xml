@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <!-- id:唯一性标志 template:邮件模板路径，classpath subject:标题 charset:邮件内容编码，默认utf-8 -->
+    <mail id="shopMessage" template="pc/email/shopMessage.ftl" subject="爱客仕商户用户名及初始密码"
+          charset="UTF-8"/>
+
+    <!-- id:唯一性标志 template:邮件模板路径，classpath subject:标题 charset:邮件内容编码，默认utf-8 -->
+    <mail id="resetPassword" template="pc/email/resetPassword.ftl" subject="找回用户名密码"
+          charset="UTF-8"/>
+</templates>
+

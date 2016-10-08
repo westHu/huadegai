@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.xkeshi</groupId>
+        <artifactId>xkeshi</artifactId>
+        <version>1.0.6</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>demo</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>demo-api</module>
+        <module>demo-business</module>
+        <module>demo-dubbo</module>
+        <module>demo-web</module>
+    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.xkeshi</groupId>
+            <artifactId>xkeshi</artifactId>
+            <version>1.0.6</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- project-->
+            <dependency>
+                <groupId>com.xkeshi</groupId>
+                <artifactId>xkeshi-framework-core</artifactId>
+                <version>1.0.13</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xkeshi</groupId>
+                <artifactId>xkeshi-framework-webkits</artifactId>
+                <version>1.0.11</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xkeshi</groupId>
+                <artifactId>common-business</artifactId>
+                <version>1.0.3</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
