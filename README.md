@@ -7,6 +7,7 @@
 3.error.properties请写在api项目中
 
 4.如果需要单独发布dubbo服务的项目，请注意以下配置也要同步修改
+
     a.datasource.properties修改为自己项目的数据库链接，数据库连接池初始化大小，请根据项目访问情况酌情分配。
     b.dubbo.properties请按照自己的项目，将变量的名字修改成更合理的名字。group和version等也请根据真实项目进行修改
 
