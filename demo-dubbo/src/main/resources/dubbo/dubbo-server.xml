@@ -15,7 +15,7 @@
 
     <dubbo:monitor protocol="registry" address="${gatherplatform.dubbo.monitor.address}"/>
 
-    <dubbo:provider timeout="20000" loadbalance="roundrobin" retries="0" executes="200"
+    <dubbo:provider timeout="2000" loadbalance="roundrobin" retries="0" executes="200"
                     group="${gatherplatform.dubbo.provider.group}" version="${gatherplatform.dubbo.provider.version}"/>
 
     <!--dubbo服务提供者-->

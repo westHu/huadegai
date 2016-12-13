@@ -13,7 +13,7 @@
 
     <dubbo:monitor protocol="registry" address="${gatherplatform.dubbo.monitor.address}"/>
 
-    <dubbo:consumer check="false" timeout="20000" loadbalance="roundrobin" retries="2" validation="true"
+    <dubbo:consumer check="false" timeout="2000" loadbalance="roundrobin" retries="2" validation="true"
                     group="${gatherplatform.dubbo.consumer.group}" version="${gatherplatform.dubbo.consumer.version}"/>
 
     <!--dubbo服务消费者声明-->
