@@ -32,6 +32,8 @@
 
     <bean id="formAuthenticationFilter" class="com.xkeshi.webkits.shiro.XFormAuthenticationFilter"/>
 
+    <bean id="xUrlAuthenticationFilter" class="com.xkeshi.demo.shiro.DemoUrlAuthenticationFilter"/>
+
     <!-- 凭证匹配器 -->
     <bean id="credentialsMatcher" class="com.xkeshi.demo.shiro.RetryLimitHashedCredentialsMatcher">
         <!--密码加密方式：md5-->
