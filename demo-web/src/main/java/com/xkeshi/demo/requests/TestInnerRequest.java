@@ -1,4 +1,4 @@
-package com.xkeshi.integralmall.requests;
+package com.xkeshi.demo.requests;
 
 /**
  * Created by nt on 2016-09-27.

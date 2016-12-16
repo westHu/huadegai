@@ -37,7 +37,7 @@
     <!-- sqlSessionFactory -->
     <bean id="xBusinessSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="xBusinessDatasource"/>
-        <property name="typeAliasesPackage" value="com.xkeshi.integralmall.entities"/>
+        <property name="typeAliasesPackage" value="com.xkeshi.demo.entities"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
         <property name="mapperLocations">
             <list>
@@ -54,7 +54,7 @@
 
     <!--  MyBatis MapperScannerConfigurer -->
     <bean id="xBusinessMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.xkeshi.integralmall.dao"/>
+        <property name="basePackage" value="com.xkeshi.demo.dao"/>
         <property name="sqlSessionFactoryBeanName" value="xBusinessSqlSessionFactory"/>
     </bean>
     <!-- =====================================Business datasource end=====================================-->

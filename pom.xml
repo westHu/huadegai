@@ -32,13 +32,13 @@
             <dependency>
                 <groupId>com.xkeshi</groupId>
                 <artifactId>xkeshi-framework-core</artifactId>
-                <version>1.0.17</version>
+                <version>1.0.18-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>com.xkeshi</groupId>
                 <artifactId>xkeshi-framework-webkits</artifactId>
-                <version>1.0.17</version>
+                <version>1.0.18-SNAPSHOT</version>
             </dependency>
 
             <dependency>

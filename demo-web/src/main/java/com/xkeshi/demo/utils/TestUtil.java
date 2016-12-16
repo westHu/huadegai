@@ -1,4 +1,4 @@
-package com.xkeshi.integralmall.utils;
+package com.xkeshi.demo.utils;
 
 /**
  * Created by nt on 2016-10-08.

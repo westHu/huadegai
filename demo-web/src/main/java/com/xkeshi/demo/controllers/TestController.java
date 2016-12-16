@@ -1,12 +1,12 @@
-package com.xkeshi.integralmall.controllers;
+package com.xkeshi.demo.controllers;
 
 import com.xkeshi.core.orm.db.Pager;
 import com.xkeshi.eleme.apis.UserDubboService;
 import com.xkeshi.eleme.dtos.QueryUserDto;
 import com.xkeshi.eleme.dtos.QueryUserResultDto;
 import com.xkeshi.eleme.services.UserService;
-import com.xkeshi.integralmall.requests.TestRequest;
-import com.xkeshi.integralmall.responses.TestResponse;
+import com.xkeshi.demo.requests.TestRequest;
+import com.xkeshi.demo.responses.TestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+       default-lazy-init="true">
+
+    <description>Shiro Configuration</description>
+
+    <!-- 安全认证过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="${shiro.loginUrl}"/>
+        <!--登录成功默认跳转页面，不配置则跳转至”/”。 如果登陆前点击的一个需要登录的页面，则在登录自动跳转到那个需要登录的页面。不跳转到此。 -->
+        <property name="successUrl" value="${shiro.successUrl}"/>
+        <!--没有权限跳转的链接 -->
+        <property name="unauthorizedUrl" value="/login"/>
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /favicon.ico =anon
+                /css/**     = anon
+                /js/**     = anon
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+    <bean id="formAuthenticationFilter" class="com.xkeshi.webkits.shiro.XFormAuthenticationFilter"/>
+
+    <!-- 凭证匹配器 -->
+    <bean id="credentialsMatcher" class="com.xkeshi.demo.shiro.RetryLimitHashedCredentialsMatcher">
+        <!--密码加密方式：md5-->
+        <property name="hashAlgorithmName" value="${shiro.encryptName}"/>
+        <!--MD5加密次数：2-->
+        <property name="hashIterations" value="${shiro.encryptCount}"/>
+        <!--hex转码-->
+        <property name="storedCredentialsHexEncoded" value="${shiro.encryptHex}"/>
+    </bean>
+
+    <!-- Realm实现-->
+    <bean id="systemAuthorizingRealm" class="com.xkeshi.demo.shiro.SystemAuthorizingRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+
+    <!-- 权限管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- 基于redis登录校验的实现 -->
+        <property name="realm" ref="systemAuthorizingRealm"/>
+        <!-- session 管理器 -->
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <!--开启Shiro的注解-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!--session 超时时间：30分钟 -->
+        <property name="globalSessionTimeout" value="${shiro.sessionTimeout}"/>
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        <!--持久化shiro session，以适应集群环境-->
+        <property name="sessionDAO" ref="redisSessionDao"/>
+    </bean>
+
+    <!-- 指定本系统SESSIONID, 默认为: JSESSIONID 问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT
+        等默认JSESSIONID, 当跳出SHIRO SERVLET时如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失! -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg name="name" value="xkeshi.session.id"/>
+        <property name="httpOnly" value="true"/>
+    </bean>
+
+    <bean id="redisSessionDao" class="com.xkeshi.webkits.shiro.RedisSessionDAO">
+        <property name="expire" value="2700"/>
+        <property name="keyPrefix" value="${shiro.sessionkey}"/>
+    </bean>
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+</beans>

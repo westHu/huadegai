@@ -1,4 +1,4 @@
-package com.xkeshi.integralmall.requests;
+package com.xkeshi.demo.requests;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
