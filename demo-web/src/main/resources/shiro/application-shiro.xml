@@ -32,6 +32,7 @@
 
     <bean id="formAuthenticationFilter" class="com.xkeshi.webkits.shiro.XFormAuthenticationFilter"/>
 
+    <!--url权限过滤，需要对url做权限的话配置，不需要的话就删掉-->
     <bean id="xUrlAuthenticationFilter" class="com.xkeshi.demo.shiro.DemoUrlAuthenticationFilter"/>
 
     <!-- 凭证匹配器 -->
