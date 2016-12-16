@@ -1,7 +1,7 @@
-package com.xkeshi.eleme.apis;
+package com.xkeshi.demo.apis;
 
 import com.xkeshi.core.orm.db.Pager;
-import com.xkeshi.eleme.dtos.*;
+import com.xkeshi.demo.dtos.*;
 
 import javax.validation.constraints.NotNull;
 

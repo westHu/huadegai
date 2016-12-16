@@ -1,10 +1,10 @@
-package com.xkeshi.eleme.services;
+package com.xkeshi.demo.services;
 
 import com.xkeshi.core.orm.db.Pager;
-import com.xkeshi.eleme.dtos.QueryUserDto;
-import com.xkeshi.eleme.dtos.QueryUserResultDto;
-import com.xkeshi.eleme.entities.QueryUserResult;
-import com.xkeshi.eleme.entities.User;
+import com.xkeshi.demo.dtos.QueryUserDto;
+import com.xkeshi.demo.dtos.QueryUserResultDto;
+import com.xkeshi.demo.entities.QueryUserResult;
+import com.xkeshi.demo.entities.User;
 
 /**
  * local服务，入参和返回值可以使用po对象，也可以只用dto对象，但是禁止出现vo对象

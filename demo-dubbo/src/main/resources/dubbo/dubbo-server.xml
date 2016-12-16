@@ -19,6 +19,6 @@
                     group="${gatherplatform.dubbo.provider.group}" version="${gatherplatform.dubbo.provider.version}"/>
 
     <!--dubbo服务提供者-->
-    <dubbo:service interface="com.xkeshi.eleme.apis.UserDubboService" ref="testDubboServiceImpl" />
+    <dubbo:service interface="com.xkeshi.demo.apis.UserDubboService" ref="testDubboServiceImpl" />
 
 </beans>

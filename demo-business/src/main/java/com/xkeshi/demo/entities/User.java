@@ -1,4 +1,4 @@
-package com.xkeshi.eleme.entities;
+package com.xkeshi.demo.entities;
 
 import javax.persistence.*;
 

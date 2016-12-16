@@ -1,12 +1,12 @@
-package com.xkeshi.eleme.services.impl;
+package com.xkeshi.demo.services.impl;
 
 import com.xkeshi.core.orm.db.Pager;
-import com.xkeshi.eleme.dao.UserDAO;
-import com.xkeshi.eleme.dtos.QueryUserDto;
-import com.xkeshi.eleme.dtos.QueryUserResultDto;
-import com.xkeshi.eleme.entities.QueryUserResult;
-import com.xkeshi.eleme.entities.User;
-import com.xkeshi.eleme.services.UserService;
+import com.xkeshi.demo.dao.UserDAO;
+import com.xkeshi.demo.dtos.QueryUserDto;
+import com.xkeshi.demo.dtos.QueryUserResultDto;
+import com.xkeshi.demo.entities.QueryUserResult;
+import com.xkeshi.demo.entities.User;
+import com.xkeshi.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

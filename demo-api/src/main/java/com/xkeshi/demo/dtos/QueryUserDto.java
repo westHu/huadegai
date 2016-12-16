@@ -1,4 +1,4 @@
-package com.xkeshi.eleme.dtos;
+package com.xkeshi.demo.dtos;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

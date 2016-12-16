@@ -1,10 +1,10 @@
 package com.xkeshi.demo.controllers;
 
 import com.xkeshi.core.orm.db.Pager;
-import com.xkeshi.eleme.apis.UserDubboService;
-import com.xkeshi.eleme.dtos.QueryUserDto;
-import com.xkeshi.eleme.dtos.QueryUserResultDto;
-import com.xkeshi.eleme.services.UserService;
+import com.xkeshi.demo.apis.UserDubboService;
+import com.xkeshi.demo.dtos.QueryUserDto;
+import com.xkeshi.demo.dtos.QueryUserResultDto;
+import com.xkeshi.demo.services.UserService;
 import com.xkeshi.demo.requests.TestRequest;
 import com.xkeshi.demo.responses.TestResponse;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
-package com.xkeshi.eleme.dao;
+package com.xkeshi.demo.dao;
 
 import com.xkeshi.core.orm.db.Pager;
-import com.xkeshi.eleme.dtos.QueryUserDto;
-import com.xkeshi.eleme.dtos.QueryUserResultDto;
-import com.xkeshi.eleme.entities.QueryUserResult;
-import com.xkeshi.eleme.entities.User;
+import com.xkeshi.demo.dtos.QueryUserDto;
+import com.xkeshi.demo.dtos.QueryUserResultDto;
+import com.xkeshi.demo.entities.QueryUserResult;
+import com.xkeshi.demo.entities.User;
 import org.apache.ibatis.annotations.Param;
 
 /**

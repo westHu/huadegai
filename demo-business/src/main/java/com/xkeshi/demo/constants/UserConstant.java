@@ -1,4 +1,4 @@
-package com.xkeshi.eleme.constants;
+package com.xkeshi.demo.constants;
 
 /**
  * 常量以static final的形式表示，英文字母大写,中间用_间隔开

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xkeshi.eleme.dao.UserDAO">
+<mapper namespace="com.xkeshi.demo.dao.UserDAO">
 
     <!--
         1.属性名,表名等用小写,select / from之类关键字用大写。
@@ -11,7 +11,7 @@
         6.对SQL进行排版。
         7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
     -->
-    <select id="findResult" resultType="com.xkeshi.eleme.entities.QueryUserResult">
+    <select id="findResult" resultType="com.xkeshi.demo.entities.QueryUserResult">
         SELECT
             t.id
         FROM
@@ -20,7 +20,7 @@
             t.id = #{result.id}
     </select>
 
-    <select id="queryResult" resultType="com.xkeshi.eleme.dtos.QueryUserResultDto">
+    <select id="queryResult" resultType="com.xkeshi.demo.dtos.QueryUserResultDto">
         SELECT
             t.id
         FROM
@@ -32,7 +32,7 @@
     <!--
         <insert>语句如果需要返回插入行的id时，可以在<insert>标签中加入useGeneratedKeys="true" keyProperty="xxx.id"属性。
     -->
-    <insert id="saveUser" parameterType="com.xkeshi.eleme.entities.User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveUser" parameterType="com.xkeshi.demo.entities.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user(name,age) VALUES(#{name}, #{age})
     </insert>
 

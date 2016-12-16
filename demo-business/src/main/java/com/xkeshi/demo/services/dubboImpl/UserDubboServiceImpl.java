@@ -1,11 +1,11 @@
-package com.xkeshi.eleme.services.dubboImpl;
+package com.xkeshi.demo.services.dubboImpl;
 
 import com.xkeshi.core.orm.db.Pager;
-import com.xkeshi.eleme.apis.UserDubboService;
-import com.xkeshi.eleme.dtos.*;
-import com.xkeshi.eleme.entities.QueryUserResult;
-import com.xkeshi.eleme.entities.User;
-import com.xkeshi.eleme.services.UserService;
+import com.xkeshi.demo.apis.UserDubboService;
+import com.xkeshi.demo.dtos.*;
+import com.xkeshi.demo.entities.QueryUserResult;
+import com.xkeshi.demo.entities.User;
+import com.xkeshi.demo.services.UserService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
