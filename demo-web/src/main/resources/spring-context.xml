@@ -4,13 +4,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="propertyConfigurer" class="com.xkeshi.core.context.XPreferencesPlaceholderConfigurer">
-        <!--<property name="propdir" value="/home/www/properties/xconfig/xweb"/>-->
-        <property name="props">
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="locations" >
             <list>
-                <value>/props/datasource.properties</value>
-                <value>/props/dubbo.properties</value>
-                <value>/props/eleme.properties</value>
+                <value>classpath*:props/datasource.properties</value>
+                <value>classpath*:props/dubbo.properties</value>
             </list>
         </property>
     </bean>
