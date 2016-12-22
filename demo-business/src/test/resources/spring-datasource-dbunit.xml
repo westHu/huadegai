@@ -44,7 +44,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="com.xkeshi.demo.entities"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
-        <property name="mapperLocations" value="classpath:/com/xkeshi/eleme/dao/*DAO.xml"/>
+        <property name="mapperLocations" value="classpath:/com/xkeshi/demo/dao/*DAO.xml"/>
         <property name="plugins">
             <array>
                 <!--page interceptor-->
