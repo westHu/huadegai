@@ -11,6 +11,15 @@
            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd"
        default-lazy-init="false">
 
+    <bean id="mvcPropertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="locations" >
+            <list>
+                <!--context和mvc属于两个不同的容器,配置不共享，这里如果需要替换占位符，需要把相关的文件加载一次-->
+                <value>classpath*:props/datasource.properties</value>
+            </list>
+        </property>
+    </bean>
+
 
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
@@ -18,14 +27,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <bean class="com.xkeshi.core.context.ApplicationContextHelper"/>
-
-    <bean id="dozerMapper" class="org.dozer.DozerBeanMapper"/>
-
-    <context:component-scan base-package="com.xkeshi.demo.services">
-    </context:component-scan>
-
-    <context:component-scan base-package="com.xkeshi.demo.controllers"/>
+    <context:component-scan base-package="com.xkeshi.demo.controllers,com.xkeshi.demo.services"/>
 
     <mvc:default-servlet-handler/>
 

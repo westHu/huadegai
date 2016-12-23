@@ -17,5 +17,6 @@
                     group="${gatherplatform.dubbo.consumer.group}" version="${gatherplatform.dubbo.consumer.version}"/>
 
     <!--dubbo服务消费者声明-->
-    <dubbo:reference id="itemDubboServiceSpi" interface="com.xkeshi.dubbo.spi.item.ItemDubboServiceSpi"/>
+    <!--<dubbo:reference id="itemDubboServiceSpi" interface="com.xkeshi.dubbo.spi.item.ItemDubboServiceSpi"/>-->
+
 </beans>
