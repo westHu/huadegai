@@ -4,7 +4,7 @@ import com.xkeshi.core.orm.db.Pager;
 import com.xkeshi.demo.apis.UserDubboService;
 import com.xkeshi.demo.dtos.QueryUserDto;
 import com.xkeshi.demo.dtos.QueryUserResultDto;
-import com.xkeshi.demo.services.UserService;
+import com.xkeshi.demo.services.TestService;
 import com.xkeshi.demo.requests.TestRequest;
 import com.xkeshi.demo.responses.TestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import javax.validation.Valid;
 public class TestController {
 
     @Autowired
-    private UserService testService;
+    private TestService testService;
 
     @Autowired
     private UserDubboService testDubboService;

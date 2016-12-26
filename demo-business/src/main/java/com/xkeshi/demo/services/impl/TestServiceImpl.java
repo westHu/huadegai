@@ -6,7 +6,7 @@ import com.xkeshi.demo.dtos.QueryUserDto;
 import com.xkeshi.demo.dtos.QueryUserResultDto;
 import com.xkeshi.demo.entities.QueryUserResult;
 import com.xkeshi.demo.entities.User;
-import com.xkeshi.demo.services.UserService;
+import com.xkeshi.demo.services.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * Created by nt on 2016-05-09.
  */
 @Service
-public class TestServiceImpl implements UserService {
+public class TestServiceImpl implements TestService {
 
     @Autowired
     private UserDAO userDAO;

@@ -11,7 +11,7 @@ import com.xkeshi.demo.entities.User;
  *
  * Created by nt on 2016-05-09.
  */
-public interface UserService {
+public interface TestService {
 
     /**
      * 分页查询，query开头

@@ -5,7 +5,7 @@ import com.xkeshi.demo.apis.UserDubboService;
 import com.xkeshi.demo.dtos.*;
 import com.xkeshi.demo.entities.QueryUserResult;
 import com.xkeshi.demo.entities.User;
-import com.xkeshi.demo.services.UserService;
+import com.xkeshi.demo.services.TestService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class UserDubboServiceImpl implements UserDubboService {
 
     @Autowired
-    private UserService testService;
+    private TestService testService;
 
     @Autowired
     private Mapper mapper;

@@ -61,6 +61,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>web-servlet</servlet-name>
+        <!--这里不允许改为/*,会有安全问题。/为只有rest路径会进入，/*所有的都会进入-->
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
