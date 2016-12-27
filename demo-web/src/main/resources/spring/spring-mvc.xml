@@ -37,12 +37,12 @@
                 <property name="XInterceptorList">
                     <list>
                         <bean class="com.xkeshi.webkits.interceptors.RequestInterceptor"/>
+                        <bean class="com.xkeshi.webkits.interceptors.form.AvoidDuplicateSubmissionInterceptor"/>
                         <!--<bean class="com.xkeshi.webkits.interceptors.SignatureInterceptor"/>-->
                     </list>
                 </property>
             </bean>
         </mvc:interceptor>
-        <bean class="com.xkeshi.webkits.interceptors.form.AvoidDuplicateSubmissionInterceptor"/>
     </mvc:interceptors>
 
     <bean id="xMessageConverter" class="com.xkeshi.webkits.converters.XMessageConverter">
