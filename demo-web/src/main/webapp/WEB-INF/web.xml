@@ -121,4 +121,12 @@
         </init-param>
     </servlet>
 
+    <!-- log4j -->
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>
+            classpath:/props/log4j.xml
+        </param-value>
+    </context-param>
+
 </web-app>
