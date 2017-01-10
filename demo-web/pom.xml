@@ -248,8 +248,8 @@
                 <artifactId>autoconfig-maven-plugin</artifactId>
                 <version>1.0.2</version>
                 <configuration>
-                    <!--<enable>${autoconfig.enable}</enable>-->
-                    <enable>false</enable>
+                    <server_host>ops.xkeshi.so</server_host>
+                    <enable>${autoconfig.enable}</enable>
                     <version>${autoconfig.version}</version>
                     <app>${autoconfig.base.app}</app>
                     <env>${autoconfig.env}</env>
@@ -276,6 +276,7 @@
     <properties>
         <autoconfig.base.app>openplatform</autoconfig.base.app>
         <autoconfig.base.user_define_download_dir>src/main/resources/props</autoconfig.base.user_define_download_dir>
+        <autoconfig.version>1_0_0_0</autoconfig.version>
     </properties>
 
     <!-- 环境配置 -->
@@ -290,7 +291,6 @@
             <properties>
                 <autoconfig.enable>true</autoconfig.enable>
                 <autoconfig.env>dev</autoconfig.env>
-                <autoconfig.version>1_0_0_0</autoconfig.version>
             </properties>
         </profile>
 
@@ -300,7 +300,6 @@
             <properties>
                 <autoconfig.enable>true</autoconfig.enable>
                 <autoconfig.env>qa</autoconfig.env>
-                <autoconfig.version>1_0_0_0</autoconfig.version>
             </properties>
         </profile>
 
@@ -310,7 +309,6 @@
             <properties>
                 <autoconfig.enable>true</autoconfig.enable>
                 <autoconfig.env>prepub</autoconfig.env>
-                <autoconfig.version>1_0_0_0</autoconfig.version>
             </properties>
         </profile>
 
@@ -320,7 +318,6 @@
             <properties>
                 <autoconfig.enable>true</autoconfig.enable>
                 <autoconfig.env>online</autoconfig.env>
-                <autoconfig.version>1_0_0_0</autoconfig.version>
             </properties>
         </profile>
     </profiles>
