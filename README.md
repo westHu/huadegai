@@ -124,3 +124,8 @@
             <!--hex转码-->
             <property name="storedCredentialsHexEncoded" value="${shiro.encryptHex}"/>
         </bean>
+
+
+      spring-shiro.xml用于非单点登陆功能的shiro配置
+      spring-shiro-cas.xml用于单点登陆，主要是Realm类改为SSOLoginAuthorizingRealm，增加了casFilter，logoutFilter，casSubjectFactory配置
+

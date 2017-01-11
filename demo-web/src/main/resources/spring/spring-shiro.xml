@@ -51,7 +51,7 @@
     </bean>
 
     <!-- Realm实现-->
-    <bean id="systemAuthorizingRealm" class="com.xkeshi.demo.shiro.SystemAuthorizingRealm">
+    <bean id="systemAuthorizingRealm" class="com.xkeshi.demo.shiro.LoginAuthorizingRealm">
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
     </bean>
 
