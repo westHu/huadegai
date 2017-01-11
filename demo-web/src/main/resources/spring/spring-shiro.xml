@@ -30,13 +30,18 @@
         </property>
     </bean>
 
+    <!-- 身份验证类根据需要配置-->
+    <!-- 默认身份验证类，只保存用户账号,密码-->
     <bean id="formAuthenticationFilter" class="com.xkeshi.webkits.shiro.XFormAuthenticationFilter"/>
+    <!-- 示例自定义身份验证类,可保存更多登录信息-->
+    <!--<bean id="formAuthenticationFilter" class="com.xkeshi.webkits.shiro.XFormAuthenticationFilter"/>-->
 
     <!--url权限过滤，需要对url做权限的话配置，不需要的话就删掉-->
     <bean id="xUrlAuthenticationFilter" class="com.xkeshi.demo.shiro.DemoUrlAuthenticationFilter"/>
 
     <!-- 凭证匹配器 -->
-    <bean id="credentialsMatcher" class="com.xkeshi.demo.shiro.RetryLimitHashedCredentialsMatcher">
+    <bean id="credentialsMatcher"
+          class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
         <!--密码加密方式：md5-->
         <property name="hashAlgorithmName" value="${shiro.encryptName}"/>
         <!--MD5加密次数：2-->

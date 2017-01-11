@@ -1,6 +1,7 @@
 package com.xkeshi.demo.shiro;
 
-import com.xkeshi.demo.shiro.exception.ShiroExceptionHandler;
+import com.xkeshi.webkits.shiro.UserToken;
+import com.xkeshi.webkits.shiro.exception.ShiroExceptionHandler;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -77,7 +78,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
         } catch (Exception e) {
             logger.error("doGetAuthenticationInfo fail", e);
             //throw new AuthenticationException(message, e);
-            throw ShiroExceptionHandler.buildUnifiedException(e);
+            throw ShiroExceptionHandler.unifiedException(e);
         }
 
 
