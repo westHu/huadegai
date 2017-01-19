@@ -1,6 +1,7 @@
 package com.xkeshi.demo.shiro;
 
-import com.xkeshi.demo.shiro.exception.ShiroExceptionHandler;
+import com.xkeshi.webkits.shiro.UserToken;
+import com.xkeshi.webkits.shiro.exception.ShiroExceptionHandler;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,8 +16,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by zacard on 14-8-7.
  * 系统安全认证实现类
+ * 非单点登陆时使用该类
  */
-public class SystemAuthorizingRealm extends AuthorizingRealm {
+public class LoginAuthorizingRealm extends AuthorizingRealm {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -76,8 +78,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 //            }
         } catch (Exception e) {
             logger.error("doGetAuthenticationInfo fail", e);
-            //throw new AuthenticationException(message, e);
-            throw ShiroExceptionHandler.buildUnifiedException(e);
+            throw e;
         }
 
 
@@ -117,8 +118,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
             }
         } catch (Exception e) {
             String message = "doGetAuthorizationInfo fail";
-            logger.error(message, e);
-            throw new AuthorizationException(message, e);
+            throw e
         }*/
         return info;
     }

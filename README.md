@@ -68,3 +68,64 @@
         </root>
 
     </log4j:configuration>
+
+
+
+6.关于配置中心
+默认项目中关闭了默认环境（dev）下载，项目使用时开启:
+
+        <profile>
+            <!-- 开发环境 -->
+            <id>dev</id>
+            <!-- 默认激活本环境,默认为false不激活 -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <autoconfig.enable>true</autoconfig.enable>
+                <autoconfig.env>dev</autoconfig.env>
+            </properties>
+        </profile>
+
+
+7.shiro相关
+
+    本次升级需要更新框架 xkeshi-framework-webkits 1.0.19及以上版本
+
+     因为默认身份验证类仅保存账号名,密码，如果有额外需求需要自定义
+
+    <!-- 默认身份验证类，只保存用户账号,密码-->
+    <bean id="formAuthenticationFilter" class="com.xkeshi.webkits.shiro.XFormAuthenticationFilter"/>
+
+    <!-- 示例自定义身份验证类,可保管更多登录信息-->
+    <!--<bean id="formAuthenticationFilter" class="com.xkeshi.webkits.shiro.XFormAuthenticationFilter"/>-->
+
+
+
+    <!-- 默认凭证类，不支持验证码等功能  -->
+        <bean id="credentialsMatcher"
+              class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+            <!--密码加密方式：md5-->
+            <property name="hashAlgorithmName" value="${shiro.encryptName}"/>
+            <!--MD5加密次数：2-->
+            <property name="hashIterations" value="${shiro.encryptCount}"/>
+            <!--hex转码-->
+            <property name="storedCredentialsHexEncoded" value="${shiro.encryptHex}"/>
+        </bean>
+
+
+     <!-- 扩展凭证匹配器，支持验证码 -->
+        <bean id="credentialsMatcher"
+              class="com.xkeshi.webkits.shiro.RetryLimitHashedCredentialsMatcher">
+            <!--密码加密方式：md5-->
+            <property name="hashAlgorithmName" value="${shiro.encryptName}"/>
+            <!--MD5加密次数：2-->
+            <property name="hashIterations" value="${shiro.encryptCount}"/>
+            <!--hex转码-->
+            <property name="storedCredentialsHexEncoded" value="${shiro.encryptHex}"/>
+        </bean>
+
+
+      spring-shiro.xml用于非单点登陆功能的shiro配置
+      spring-shiro-cas.xml用于单点登陆，主要是Realm类改为SSOLoginAuthorizingRealm，增加了casFilter，logoutFilter，casSubjectFactory配置
+

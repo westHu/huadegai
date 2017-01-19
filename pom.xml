@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo</artifactId>
+    <artifactId>project-demo</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -31,13 +31,13 @@
             <dependency>
                 <groupId>com.xkeshi</groupId>
                 <artifactId>xkeshi-framework-core</artifactId>
-                <version>1.0.18-SNAPSHOT</version>
+                <version>1.0.19-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>com.xkeshi</groupId>
                 <artifactId>xkeshi-framework-webkits</artifactId>
-                <version>1.0.18-SNAPSHOT</version>
+                <version>1.0.19-SNAPSHOT</version>
             </dependency>
 
             <dependency>
