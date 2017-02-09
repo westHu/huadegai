@@ -41,13 +41,13 @@
 
     <!--  MyBatis 配置  -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.message.dao"/>
+        <property name="basePackage" value="com.xkeshi.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.message.entities"/>
+        <property name="typeAliasesPackage" value="com.xkeshi.entities"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
         <property name="mapperLocations" value="classpath:mapper/**DAO.xml"/>
         <property name="plugins">
@@ -76,7 +76,7 @@
         </tx:attributes>
     </tx:advice>
     <aop:config proxy-target-class="true">
-        <aop:pointcut id="serviceMethod" expression="execution(* com.message.service.impl.*.*(..))"/>
+        <aop:pointcut id="serviceMethod" expression="execution(* com.xkeshi.services.*.*(..))"/>
         <aop:advisor advice-ref="txManager" pointcut-ref="serviceMethod"/>
     </aop:config>
 

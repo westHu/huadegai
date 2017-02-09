@@ -1,5 +1,6 @@
 package com.xkeshi.shiro;
 
+import com.xkeshi.apis.UserService;
 import com.xkeshi.shiro.exception.ShiroExceptionHandler;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -27,7 +28,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-//    private UserService userService;
+    private UserService userService;
 
     /**
      * 认证回调函数, 登录时调用

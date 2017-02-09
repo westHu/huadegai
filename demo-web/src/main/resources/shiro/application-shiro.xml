@@ -14,7 +14,7 @@
         <!--登录成功默认跳转页面，不配置则跳转至”/”。 如果登陆前点击的一个需要登录的页面，则在登录自动跳转到那个需要登录的页面。不跳转到此。 -->
         <property name="successUrl" value="${shiro.successUrl}"/>
         <!--没有权限跳转的链接 -->
-        <property name="unauthorizedUrl" value="/login"/>
+        <property name="unauthorizedUrl" value="${shiro.loginUrl}"/>
         <property name="filters">
             <map>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
@@ -29,19 +29,6 @@
                 /api/message/**= anon
                 /logout        = logout
                 /druid/**      = anon
-                /test/**       = anon
-                /callback/**   = anon
-                /getCaptcha    = anon
-                /test/** = ip
-                /appMessage/callBack = anon
-                /user/toPsdModify = authc
-                /user/passwordModification = authc
-                <!--需要具体角色才能访问到的链接-->
-                /sms/toSendSMS = authc,roles[admin]
-                /sms/send = authc,roles[admin]
-                /sms/toReceiveSMSList = authc,roles[admin]
-                /common/** = authc,roles[admin]
-                /user/** = authc
                 /** = authc
             </value>
         </property>
@@ -72,7 +59,7 @@
     <!-- 定义 Shiro 主要业务对象 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="sessionManager" ref="sessionManager"/>
-        <property name="realms" ref="systemAuthorizingRealm"/>
+        <property name="realm" ref="systemAuthorizingRealm"/>
     </bean>
 
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">

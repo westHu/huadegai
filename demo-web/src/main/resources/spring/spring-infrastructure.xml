@@ -19,14 +19,14 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-<!--    <bean class="com.core.exceptions.ExceptionDefinitions" />
+    <!--<bean class="com.xkeshi.exception.ExceptionDefinitions" />-->
+    <!--<bean class="com.xkeshi.context.ApplicationContextHelper" />-->
 
-    <bean class="com.core.context.ApplicationContextHelper" />-->
-    <context:component-scan base-package="com.message.service.impl" />
-    <context:component-scan base-package="com.message.controller" />
+    <context:component-scan base-package="com.xkeshi.services" />
+    <context:component-scan base-package="com.xkeshi.controllers" />
 
 
-   <bean id="xMessageConverter" class="com.message.context.XMessageConverter">
+   <bean id="xMessageConverter" class="com.xkeshi.context.XMessageConverter">
         <property name="supportedMediaTypes">
             <list>
                 <value>application/json;charset=UTF-8</value>
