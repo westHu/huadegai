@@ -23,12 +23,12 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
-                /favicon.ico =anon
-                /css/**     = anon
-                /js/**     = anon
-                /api/message/**= anon
-                /logout        = logout
-                /druid/**      = anon
+                /favicon.ico    = anon
+                /css/**         = anon
+                /js/**          = anon
+                /getCaptcha     = anon
+                /logout         = logout
+                /druid/**       = anon
                 /** = authc
             </value>
         </property>
