@@ -13,4 +13,9 @@
     -->
 
 
+    <select id="getUserByUserName" resultType="com.xkeshi.entities.User">
+        SELECT * FROM USER t WHERE t.username = #{username}
+    </select>
+
+
 </mapper>

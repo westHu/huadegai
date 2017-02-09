@@ -1,5 +1,7 @@
 package com.xkeshi.interceptors.db;
 
+import com.xkeshi.db.OrderType;
+
 /**
  * 数据库方言接口
  * @author david

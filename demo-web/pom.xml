@@ -13,6 +13,13 @@
 
 
     <dependencies>
+        <!--project-->
+        <dependency>
+            <groupId>com.xkeshi</groupId>
+            <artifactId>demo-business</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- spring -->
         <dependency>
             <groupId>org.springframework</groupId>

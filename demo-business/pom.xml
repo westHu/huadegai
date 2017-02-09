@@ -12,7 +12,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.xkeshi</groupId>
+            <artifactId>demo-api</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.testng</groupId>
@@ -20,15 +24,26 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xkeshi</groupId>
-            <artifactId>demo-api</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- dozer -->

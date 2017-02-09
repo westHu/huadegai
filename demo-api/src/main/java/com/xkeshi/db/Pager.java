@@ -1,6 +1,4 @@
-package com.xkeshi.util;
-
-import com.xkeshi.interceptors.db.OrderType;
+package com.xkeshi.db;
 
 import java.io.Serializable;
 import java.util.List;

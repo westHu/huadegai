@@ -1,6 +1,6 @@
 package com.xkeshi.interceptors.db;
 
-import com.xkeshi.util.Pager;
+import com.xkeshi.db.Pager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.executor.ExecutorException;
@@ -171,7 +171,7 @@ public class SQLHelp {
         }
         return pager;
     }
-    
+
     /**
      * 根据数据库方言，生成特定的分页sql
      *

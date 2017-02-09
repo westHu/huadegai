@@ -1,6 +1,7 @@
 package com.xkeshi.interceptors.db;
 
 
+import com.xkeshi.db.OrderType;
 import org.apache.commons.lang3.StringUtils;
 
 /**

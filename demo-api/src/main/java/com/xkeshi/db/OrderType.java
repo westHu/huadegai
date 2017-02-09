@@ -1,4 +1,4 @@
-package com.xkeshi.interceptors.db;
+package com.xkeshi.db;
 
 /**
  * 排序方式 <br>

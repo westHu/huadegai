@@ -1,7 +1,7 @@
 package com.xkeshi.interceptors.db;
 
 
-import com.xkeshi.util.Pager;
+import com.xkeshi.db.Pager;
 import com.xkeshi.util.ReflectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.statement.BaseStatementHandler;
