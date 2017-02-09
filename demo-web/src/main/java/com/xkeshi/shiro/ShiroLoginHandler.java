@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 /**
  * shiro登录处理类
  *
- * @author Guoqw
+ * @author hpj
  * @since 2015-08-03 14:01
  */
 public class ShiroLoginHandler {

@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 
 /**
- * Created by zacard on 14-8-8.
+ * Created by hpj
  * 密码重试次数限制:
  * 输错3次，则显示验证码
  */
@@ -33,7 +33,7 @@ public class CustomHashedCredentialsMatcher extends HashedCredentialsMatcher {
      */
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        logger.info("开始验证密码重试次数...");
+        logger.info("开始验证密码...");
         UserToken userToken = (UserToken) token;
         if (!checkCaptcha(userToken)) {
             throw ShiroExceptionHandler.CAPTCHA_EXCEPTION;

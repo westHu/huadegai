@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface UserDAO {
 
-    List<User> getUserByUserName(@Param("userName")String userName);
+    List<User> getUserByUserName(@Param("userName") String userName);
 
 }

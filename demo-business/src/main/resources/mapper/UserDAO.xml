@@ -13,6 +13,6 @@
     -->
 
     <select id="getUserByUserName" resultType="com.xkeshi.entities.User">
-        SELECT * FROM  USER t WHERE t.username = #{username}
+        SELECT * FROM USER t WHERE t.username = #{userName}
     </select>
 </mapper>

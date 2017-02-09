@@ -1,6 +1,7 @@
 package com.xkeshi.shiro;
 
 import com.xkeshi.apis.UserService;
+import com.xkeshi.entities.User;
 import com.xkeshi.shiro.exception.ShiroExceptionHandler;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -14,13 +15,11 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
- * Created by zacard on 14-8-7.
+ * Created by hpj
  * 系统安全认证实现类
  */
 public class SystemAuthorizingRealm extends AuthorizingRealm {
@@ -41,20 +40,40 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
         SimpleAuthenticationInfo info = null;
         try {
             //验证账号
-            /*User user = userService.getUserByUserName(token.getUsername());
-            if (user == null) {
-                //throw new UnknownAccountException(); //用户名错误
+            List<User> users = userService.getUserByUserName(token.getUsername());
+
+            if (users == null || users.size() == 0) {
                 throw ShiroExceptionHandler.UNKNOWN_ACCOUNT_EXCEPTION;//用户名不存在
             }
+
+            if (users.size() > 1) {//用户名必须唯一
+                throw ShiroExceptionHandler.REPEAT_ACCOUNT_EXCEPTION;//用户名重复
+            }
+
+            User user = users.get(0);
+
+            if (user == null) {
+                throw ShiroExceptionHandler.UNKNOWN_ACCOUNT_EXCEPTION;//用户名不存在
+            }
+
+            if (!user.isEnable()) {
+                throw ShiroExceptionHandler.LOCKED_ACCOUNT_EXCEPTION; //用户被锁定
+            }
+
             //授权用户信息
             info = new SimpleAuthenticationInfo(
-                    user.getUserName()//用户登录名
-                    , user.getPassword()//用户登录密码
-                    , getName()//realm name
-            );*/
+                    user.getUserName(),//用户登录名
+                    user.getPassword(),//用户登录密码
+                    getName()//realm name
+            );
+
+//            if (StringUtils.isNotBlank(xCardUser.getSalt())){
+//                info.setCredentialsSalt(ByteSource.Util.bytes(xCardUser.getSalt()));
+//            }else {
+//                info.setCredentialsSalt(ByteSource.Util.bytes(""));
+//            }
         } catch (Exception e) {
             logger.error("doGetAuthenticationInfo fail", e);
-            //throw new AuthenticationException(message, e);
             throw ShiroExceptionHandler.buildUnifiedException(e);
         }
 

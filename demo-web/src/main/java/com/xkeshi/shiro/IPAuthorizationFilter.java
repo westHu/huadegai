@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * 基于ip的过滤器，方便内外网隔离访问
  *
- * @author Guoqw
+ * @author hpj
  * @since 2015-06-09 10:38
  */
 public class IPAuthorizationFilter extends AuthorizationFilter {
