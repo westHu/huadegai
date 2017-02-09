@@ -7,28 +7,12 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>${project.parent.version}</version>
+    <version>1.0.1-SNAPSHOT</version>
     <artifactId>demo-web</artifactId>
     <packaging>war</packaging>
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.xkeshi</groupId>
-            <artifactId>xkeshi-framework-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xkeshi</groupId>
-            <artifactId>xkeshi-framework-webkits</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xkeshi</groupId>
-            <artifactId>demo-business</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-        </dependency>
-
         <!-- spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -49,10 +33,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.mobile</groupId>
-            <artifactId>spring-mobile-device</artifactId>
         </dependency>
 
         <!-- mybatis -->
@@ -133,12 +113,12 @@
         </dependency>
 
         <!-- dubbo -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
-        </dependency>
+        </dependency>-->
         <!--zookeeper-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
         </dependency>
@@ -153,7 +133,7 @@
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- shiro -->
         <dependency>
@@ -202,19 +182,49 @@
             <artifactId>dom4j</artifactId>
         </dependency>
 
+        <!--httpclient-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+
+        <!-- joda Time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+
+        <!-- json -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+        </dependency>
+
     </dependencies>
+
+
+
     <build>
         <finalName>gather-web</finalName>
 
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.4</version>
             </plugin>
 
             <plugin>
@@ -241,89 +251,9 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-
-            <!-- xkeshi自动配置 -->
-            <plugin>
-                <groupId>com.xkeshi.maven.plugins</groupId>
-                <artifactId>autoconfig-maven-plugin</artifactId>
-                <version>1.0.2</version>
-                <configuration>
-                    <server_host>ops.xkeshi.so</server_host>
-                    <enable>${autoconfig.enable}</enable>
-                    <version>${autoconfig.version}</version>
-                    <app>${autoconfig.base.app}</app>
-                    <env>${autoconfig.env}</env>
-                    <download_dir>${autoconfig.base.user_define_download_dir}</download_dir>
-                    <configFiles>
-                        <configFile>dubbo.properties</configFile>
-                        <configFile>datasource.properties</configFile>
-                        <configFile>mail.properties</configFile>
-                    </configFiles>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>autoconfig</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 
-    <!-- 新增项目配置全局变量 -->
-    <properties>
-        <!-- 配置中心项目名称 -->
-        <autoconfig.base.app>openplatform</autoconfig.base.app>
-        <!-- 下载目录 -->
-        <autoconfig.base.user_define_download_dir>src/main/resources/props</autoconfig.base.user_define_download_dir>
-        <!-- 下载版本 -->
-        <autoconfig.version>1_0_0_0</autoconfig.version>
-    </properties>
 
-    <!-- 环境配置 -->
-    <profiles>
-        <profile>
-            <!-- 开发环境 -->
-            <id>dev</id>
-            <!-- 默认激活本环境,默认为false不激活 -->
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <!-- 此处关闭配置中心，真实项目中需要改为true,否则开发环境插件不起作用 -->
-                <autoconfig.enable>false</autoconfig.enable>
-                <autoconfig.env>dev</autoconfig.env>
-            </properties>
-        </profile>
-
-        <profile>
-            <!-- 测试环境 -->
-            <id>qa</id>
-            <properties>
-                <autoconfig.enable>true</autoconfig.enable>
-                <autoconfig.env>qa</autoconfig.env>
-            </properties>
-        </profile>
-
-        <profile>
-            <!-- 预发布环境 -->
-            <id>prepub</id>
-            <properties>
-                <autoconfig.enable>true</autoconfig.enable>
-                <autoconfig.env>prepub</autoconfig.env>
-            </properties>
-        </profile>
-
-        <profile>
-            <!-- 线上环境 -->
-            <id>online</id>
-            <properties>
-                <autoconfig.enable>true</autoconfig.enable>
-                <autoconfig.env>online</autoconfig.env>
-            </properties>
-        </profile>
-    </profiles>
 
 </project>

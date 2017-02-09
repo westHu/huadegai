@@ -2,14 +2,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <artifactId>project-demo</artifactId>
         <groupId>com.xkeshi</groupId>
+        <artifactId>project-demo</artifactId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>demo-api</artifactId>
-    <version>${project.parent.version}</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -18,7 +18,6 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.6</version>
         </dependency>
 
         <!-- Validation -->
@@ -29,12 +28,6 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-        </dependency>
-
-        <!-- project -->
-        <dependency>
-            <groupId>com.xkeshi</groupId>
-            <artifactId>xkeshi-framework-core</artifactId>
         </dependency>
 
     </dependencies>
