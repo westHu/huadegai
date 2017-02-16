@@ -12,13 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-@RequestMapping("/test")
-public class TestController {
+@RequestMapping("/layout")
+public class LayoutsController {
 
-    @RequestMapping("boxed_view")
-    public String test1(){
-        return "boxed_view";
+    @RequestMapping("boxed")
+    public String boxed_view(){
+        return "layout/boxed_view";
     }
 
+    @RequestMapping("collapsed")
+    public String collapsed_view(){
+        return "layout/collapsed_view";
+    }
+
+    @RequestMapping("horizontal")
+    public String horizontal_view(){
+        return "layout/horizontal_menu";
+    }
 
 }

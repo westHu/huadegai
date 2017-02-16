@@ -36,7 +36,7 @@
     <![endif]-->
 </head>
 
-<body class="sticky-header left-side-collapsed">
+<body class="sticky-header">
 
 <section>
     <!-- left side start-->
@@ -44,11 +44,11 @@
 
         <!--logo and iconic logo start-->
         <div class="logo">
-            <a href="${context.contextPath}/home"><img src="images/logo.png" alt=""></a>
+            <a href="${context.contextPath}/home"><img src="${context.contextPath}/images/logo.png" alt=""></a>
         </div>
 
         <div class="logo-icon text-center">
-            <a href="${context.contextPath}/home"><img src="images/logo_icon.png" alt=""></a>
+            <a href="${context.contextPath}/home"><img src="${context.contextPath}/images/logo_icon.png" alt=""></a>
         </div>
         <!--logo and iconic logo end-->
 
@@ -77,10 +77,10 @@
                 <li class="active"><a href="${context.contextPath}/home"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
                 <li class="menu-list"><a href=""><i class="fa fa-laptop"></i> <span>Layouts</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="${context.contextPath}/home"> Blank Page</a></li>
-                        <li><a href="${context.contextPath}/home"> Boxed Page</a></li>
-                        <li><a href="${context.contextPath}/home"> Sidebar Collapsed</a></li>
-                        <li><a href="${context.contextPath}/home"> Horizontal Menu</a></li>
+                        <li><a href="#"> 正常布局</a></li>
+                        <li><a href="${context.contextPath}/layout/boxed"> 魔盒布局</a></li>
+                        <li><a href="${context.contextPath}/layout/collapsed"> 折叠布局</a></li>
+                        <li><a href="${context.contextPath}/layout/horizontal"> 水平布局</a></li>
 
                     </ul>
                 </li>
@@ -149,6 +149,7 @@
                     <ul class="sub-menu-list">
                         <li><a href="google_map.html"> Google Map</a></li>
                         <li><a href="vector_map.html"> Vector Map</a></li>
+                        <li><a href="${context.contextPath}/map/baiduMap"> Baidu Map</a></li>
                     </ul>
                 </li>
                 <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>Extra Pages</span></a>
@@ -187,7 +188,7 @@
             <!--toggle button end-->
 
             <!--search start-->
-            <form class="searchform" action="index.html" method="post">
+            <form class="searchform" action="${context.contextPath}/home" method="post">
                 <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
             </form>
             <!--search end-->

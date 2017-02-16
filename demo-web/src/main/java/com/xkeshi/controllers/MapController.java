@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-@RequestMapping("/test")
-public class TestController {
+@RequestMapping("/map")
+public class MapController {
 
-    @RequestMapping("boxed_view")
+    @RequestMapping("baiduMap")
     public String test1(){
-        return "boxed_view";
+        return "map/baiduMap";
     }
 
 
