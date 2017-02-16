@@ -3,19 +3,18 @@
  *	@update: wuxiaoxia 2015-09-11*/
 //配置require文件  start
 require.config({
-    baseUrl: basePath + "/js/lib",
+    baseUrl: basePath + "/js",
     paths: {  //引入js文件路径配置
-        'jquery': 'jquery-1.8.3.min'
+        'jquery': 'jquery-1.10.2.min'
     },
 //  enforceDefine:true,
     urlArgs: "t=" + (new Date()).getTime()
 });
 require(["jquery"], function ($) {
 
-    if (typeof JSON == 'undefined') {//判断支不支持JSON对象，不支持的浏览器加载json2.js
+    /*if (typeof JSON == 'undefined') {//判断支不支持JSON对象，不支持的浏览器加载json2.js
         $('head').append($("<script type='text/javascript' src='" + basePath + "/js/json2.js'>"));
-    }
-    ;
+    };*/
 
     $(".inputStyle").each(function () {
         var self = $(this);

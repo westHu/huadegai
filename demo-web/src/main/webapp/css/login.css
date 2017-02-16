@@ -9,7 +9,7 @@ body{font-size:14px; font-family:"Microsoft Yahei","weiruanya"; color:#333; }
 .cl-div{ clear:both; width:100%;}
 .hide{ display:none;}
 /*-----------------------------------------------------------------------------------*/
-.logCont{background:#4E5658 url(images/stock.jpg) no-repeat scroll center center;background-size:cover; height:100%;min-height:405px;}
+.logCont{background:#4E5658 url(../images/login.jpg) no-repeat scroll center center;background-size:cover; height:100%;min-height:405px;}
 .main{ width:383px; height:405px !important; position:absolute; left:50%; top:50%; margin:-180px 0 0 -192px; z-index:10;}
 .logo{ display:block; margin:0 0 57px 84px; width:189px; height:53px; overflow:hidden; text-indent:-999em;}
 .login{color:#fff;	font-size:15px;	width: 383px;	background:#fff;	border-radius: 3px; padding-bottom:36px;}

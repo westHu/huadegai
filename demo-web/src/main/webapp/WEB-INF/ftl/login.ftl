@@ -2,11 +2,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>登录页面 - xxxx平台</title>
+    <title>登录页面</title>
     <link type="text/css" rel="stylesheet" href="${context.contextPath}/css/reset.css" />
     <link type="text/css" rel="stylesheet" href="${context.contextPath}/css/login.css" />
     <!--[if IE 8]>
-    <script src="${context.contextPath}/js/lib/respond.js" language="javascript" type="text/javascript"></script>
+    <script src="${context.contextPath}/js/respond.min.js" language="javascript" type="text/javascript"></script>
     <![endif]-->
     <script type="text/javascript">
         var basePath = "${context.contextPath}";
@@ -20,7 +20,7 @@
         <span class="logo">Peppa Pig</span>
         <div class="login">
             <form name="loginform" id="loginform" action="${context.contextPath}/login" method="post">
-                <h2>xxxx平台${context.contextPath}<i>Sign In</i></h2>
+                <h2><i>Sign In</i></h2>
                 <div class="inputDiv">
                     <span class="inputSpanB"><input type="text" class="inputStyle" name="username" id="name" value="" /><label class="show">账号</label></span>
                     <span class="inputSpan"><input type="password" class="inputStyle" name="password" id="pwd" value="" /><label class="show">密码</label></span>

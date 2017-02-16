@@ -25,6 +25,7 @@
             <value>
                 /favicon.ico    = anon
                 /css/**         = anon
+                /images/**      = anon
                 /js/**          = anon
                 /getCaptcha     = anon
                 /logout         = logout
