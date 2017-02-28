@@ -293,14 +293,6 @@
                 <version>2.2.11</version>
             </dependency>
 
-
-            <!--阿里大鱼-->
-            <dependency>
-                <groupId>com.taobao</groupId>
-                <artifactId>taobao-sdk-java-auto-dy</artifactId>
-                <version>1455552377940-20160607</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
