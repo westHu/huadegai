@@ -9,10 +9,14 @@ map.addControl(new BMap.OverviewMapControl());
 map.addControl(new BMap.MapTypeControl());
 map.setCurrentCity("北京");
 
-$(document).ready(function(){
+$(function(){
+
     alert(1111);
 
-    $.getJSON("/mapJson", function(json){
+    $.get("/mapJson", function(json){
+
+
+        alert(2222);
         alert("JSON Data: " + json);
     });
 });
@@ -54,6 +58,6 @@ for( var i = 0;i < points.length; i++){
 
 
 // 添加自定义覆盖物
-var mySquare = new SquareOverlay(map.getCenter(), 100, "red");
-map.addOverlay(mySquare);
+//var mySquare = new SquareOverlay(map.getCenter(), 100, "red");
+//map.addOverlay(mySquare);
 
