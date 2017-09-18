@@ -25,13 +25,13 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/")
+   /* @RequestMapping("/")
     public String index(User loginUser, Model model) {
         Set<String> permissions = userService.findPermissions(loginUser.getUsername());
         List<Resource> menus = resourceService.findMenus(permissions);
         model.addAttribute("menus", menus);
         return "index";
-    }
+    }*/
 
     @RequestMapping("/welcome")
     public String welcome() {

@@ -1,9 +1,9 @@
 package com.hup.controller;
 
-import com.github.zhangkaitao.shiro.chapter16.entity.User;
-import com.github.zhangkaitao.shiro.chapter16.service.OrganizationService;
-import com.github.zhangkaitao.shiro.chapter16.service.RoleService;
-import com.github.zhangkaitao.shiro.chapter16.service.UserService;
+import com.hup.api.OrganizationService;
+import com.hup.api.RoleService;
+import com.hup.api.UserService;
+import com.hup.entity.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
