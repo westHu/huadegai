@@ -52,7 +52,7 @@
         <appender-ref ref="console"/>
     </logger>
 
-    <logger name="com.xkeshi.wechat.dao" additivity="false">
+    <logger name="com.hup.wechat.dao" additivity="false">
         <level value="debug"/>
         <appender-ref ref="console"/>
     </logger>

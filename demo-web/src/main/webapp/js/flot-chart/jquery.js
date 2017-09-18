@@ -7888,12 +7888,12 @@ jQuery.extend({
 		// Determine if request has content
 		s.hasContent = !rnoContent.test( s.type );
 
-		// Watch for a new set of requests
+		// Watch for a new set of request
 		if ( fireGlobals && jQuery.active++ === 0 ) {
 			jQuery.event.trigger( "ajaxStart" );
 		}
 
-		// More options handling for requests with no content
+		// More options handling for request with no content
 		if ( !s.hasContent ) {
 
 			// If data is available, append data to url
@@ -8007,7 +8007,7 @@ jQuery.extend({
 
 });
 
-/* Handles responses to an ajax request:
+/* Handles response to an ajax request:
  * - sets all responseXXX fields accordingly
  * - finds the right dataType (mediates between content-type and expected dataType)
  * - returns the corresponding response
@@ -8173,7 +8173,7 @@ jQuery.ajaxSetup({
 	}
 });
 
-// Detect, normalize options and install callbacks for jsonp requests
+// Detect, normalize options and install callbacks for jsonp request
 jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 
 	var callbackName, overwritten, responseContainer,
@@ -8275,7 +8275,7 @@ jQuery.ajaxPrefilter( "script", function( s ) {
 // Bind script tag hack transport
 jQuery.ajaxTransport( "script", function(s) {
 
-	// This transport only deals with cross domain requests
+	// This transport only deals with cross domain request
 	if ( s.crossDomain ) {
 
 		var script,
@@ -8333,7 +8333,7 @@ jQuery.ajaxTransport( "script", function(s) {
 var xhrCallbacks,
 	// #5280: Internet Explorer will keep connections alive if we don't abort on unload
 	xhrOnUnloadAbort = window.ActiveXObject ? function() {
-		// Abort all pending requests
+		// Abort all pending request
 		for ( var key in xhrCallbacks ) {
 			xhrCallbacks[ key ]( 0, 1 );
 		}
@@ -8413,15 +8413,15 @@ if ( jQuery.support.ajax ) {
 					}
 
 					// X-Requested-With header
-					// For cross-domain requests, seeing as conditions for a preflight are
+					// For cross-domain request, seeing as conditions for a preflight are
 					// akin to a jigsaw puzzle, we simply never set it to be sure.
 					// (it can always be set on a per-request basis or even using ajaxSetup)
-					// For same-domain requests, won't change header if already provided.
+					// For same-domain request, won't change header if already provided.
 					if ( !s.crossDomain && !headers["X-Requested-With"] ) {
 						headers[ "X-Requested-With" ] = "XMLHttpRequest";
 					}
 
-					// Need an extra try/catch for cross domain requests in Firefox 3
+					// Need an extra try/catch for cross domain request in Firefox 3
 					try {
 						for ( i in headers ) {
 							xhr.setRequestHeader( i, headers[ i ] );
@@ -8486,7 +8486,7 @@ if ( jQuery.support.ajax ) {
 									}
 
 									// Firefox throws an exception when accessing
-									// statusText for faulty cross-domain requests
+									// statusText for faulty cross-domain request
 									try {
 										statusText = xhr.statusText;
 									} catch( e ) {

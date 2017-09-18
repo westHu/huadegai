@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xkeshi.dao.UserDAO">
+<mapper namespace="com.hup.dao.UserDAO">
 
     <!--
         1.属性名,表名等用小写,select / from之类关键字用大写。
@@ -12,7 +12,7 @@
         7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
     -->
 
-    <select id="getUserByUserName" resultType="com.xkeshi.entities.User">
+    <select id="getUserByUserName" resultType="com.hup.entity.User">
         SELECT * FROM USER t WHERE t.username = #{userName}
     </select>
 </mapper>

@@ -2305,7 +2305,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
             /*--------------------------------------------------------------------------------------------------------*/
 
-            // Test for WebKit bug that has the beahviour of compareBoundaryPoints round the wrong way for constants
+            // Test for WebKit bug that has the beahviour of compareBoundaryPoints round the wrong way for constant
             // START_TO_END and END_TO_START: https://bugs.webkit.org/show_bug.cgi?id=20738
 
             range.selectNodeContents(testTextNode);
@@ -3416,7 +3416,7 @@ wysihtml5.browser = (function() {
           hasContentEditableSupport   = "contentEditable" in testElement,
           // Following methods are needed in order to interact with the contentEditable area
           hasEditingApiSupport        = document.execCommand && document.queryCommandSupported && document.queryCommandState,
-          // document selector apis are only supported by IE 8+, Safari 4+, Chrome and Firefox 3.5+
+          // document selector api are only supported by IE 8+, Safari 4+, Chrome and Firefox 3.5+
           hasQuerySelectorSupport     = document.querySelector && document.querySelectorAll,
           // contentEditable is unusable in mobile browsers (tested iOS 4.2.2, Android 2.2, Opera Mobile, WebOS 3.05)
           isIncompatibleMobileBrowser = (this.isIos() && iosVersion(userAgent) < 5) || userAgent.indexOf("opera mobi") !== -1 || userAgent.indexOf("hpwos/") !== -1;

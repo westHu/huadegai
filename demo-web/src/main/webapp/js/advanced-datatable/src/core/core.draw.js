@@ -568,7 +568,7 @@ function _fnAddOptionsHtml ( oSettings )
 					j++;
 				}
 				
-				/* Replace jQuery UI constants */
+				/* Replace jQuery UI constant */
 				if ( sAttr == "H" )
 				{
 					sAttr = oSettings.oClasses.sJUIHeader;

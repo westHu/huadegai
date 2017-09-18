@@ -21,7 +21,7 @@
     说明: 目前flume已经采用监听文件的方式，日志级别统一为info到error。
          第一部分的配置为业务日志相关的配置。
          第二部分配置为系统日志相关的配置。
-         第三部分为需要添加到业务日志的文件路径，目前较多的为net.xkeshi,com.xkeshi,自己项目中，有比较特殊的，自行添加
+         第三部分为需要添加到业务日志的文件路径，目前较多的为net.hup,com.hup,自己项目中，有比较特殊的，自行添加
 
     <?xml version="1.0" encoding="UTF-8" ?>
     <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
@@ -52,12 +52,12 @@
             </filter>
         </appender>
 
-        <logger name="net.xkeshi" additivity="false">
+        <logger name="net.hup" additivity="false">
             <level value="info"/>
             <appender-ref ref="file-business"/>
         </logger>
 
-        <logger name="com.xkeshi" additivity="false">
+        <logger name="com.hup" additivity="false">
             <level value="info"/>
             <appender-ref ref="file-business"/>
         </logger>
@@ -90,15 +90,15 @@
 
 7.shiro相关
 
-    本次升级需要更新框架 xkeshi-framework-webkits 1.0.19及以上版本
+    本次升级需要更新框架 hup-framework-webkits 1.0.19及以上版本
 
      因为默认身份验证类仅保存账号名,密码，如果有额外需求需要自定义
 
     <!-- 默认身份验证类，只保存用户账号,密码-->
-    <bean id="formAuthenticationFilter" class="com.xkeshi.webkits.shiro.XFormAuthenticationFilter"/>
+    <bean id="formAuthenticationFilter" class="com.hup.webkits.shiro.XFormAuthenticationFilter"/>
 
     <!-- 示例自定义身份验证类,可保管更多登录信息-->
-    <!--<bean id="formAuthenticationFilter" class="com.xkeshi.webkits.shiro.XFormAuthenticationFilter"/>-->
+    <!--<bean id="formAuthenticationFilter" class="com.hup.webkits.shiro.XFormAuthenticationFilter"/>-->
 
 
 
@@ -116,7 +116,7 @@
 
      <!-- 扩展凭证匹配器，支持验证码 -->
         <bean id="credentialsMatcher"
-              class="com.xkeshi.webkits.shiro.RetryLimitHashedCredentialsMatcher">
+              class="com.hup.webkits.shiro.RetryLimitHashedCredentialsMatcher">
             <!--密码加密方式：md5-->
             <property name="hashAlgorithmName" value="${shiro.encryptName}"/>
             <!--MD5加密次数：2-->

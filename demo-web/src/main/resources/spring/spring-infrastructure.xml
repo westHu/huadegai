@@ -19,14 +19,14 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <!--<bean class="com.xkeshi.exception.ExceptionDefinitions" />-->
-    <!--<bean class="com.xkeshi.context.ApplicationContextHelper" />-->
+    <!--<bean class="com.hupception.ExceptionDefinitions" />-->
+    <!--<bean class="com.hupntext.ApplicationContextHelper" />-->
 
-    <context:component-scan base-package="com.xkeshi.services" />
-    <context:component-scan base-package="com.xkeshi.controllers" />
+    <context:component-scan base-package="com.hup.service" />
+    <context:component-scan base-package="com.hup.controller" />
 
 
-   <bean id="xMessageConverter" class="com.xkeshi.context.XMessageConverter">
+   <bean id="xMessageConverter" class="com.hup.context.XMessageConverter">
         <property name="supportedMediaTypes">
             <list>
                 <value>application/json;charset=UTF-8</value>
@@ -49,11 +49,11 @@
    <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/api/**"/>
-            <bean class="com.xkeshi.interceptors.XInterceptor">
+            <bean class="com.hup.interceptor.XInterceptor">
                 <property name="XInterceptorList">
                     <list>
-                        <bean class="com.xkeshi.interceptors.RequestInterceptor"/>
-                        <bean class="com.xkeshi.interceptors.SignatureInterceptor"/>
+                        <bean class="com.hup.interceptor.RequestInterceptor"/>
+                        <bean class="com.hup.interceptor.SignatureInterceptor"/>
                     </list>
                 </property>
             </bean>
@@ -68,12 +68,12 @@
 
     <!-- FreemarkerConfig -->
     <bean id="freemarkerConfig"
-          class="com.xkeshi.shiro.ShiroTagFreeMarkerConfigurer">
+          class="com.hup.shiro.ShiroTagFreeMarkerConfigurer">
         <property name="templateLoaderPath" value="/WEB-INF/ftl/" />
         <property name="freemarkerSettings" ref="freemarkerConfiguration" />
     </bean>
 
-    <!--<bean id="mailService" name="mailService" class="com.common.services.impl.SpringMailService">
+    <!--<bean id="mailService" name="mailService" class="com.common.service.impl.SpringMailService">
         <property name="host" value="${mail.smtp.host}"/>
         <property name="port" value="${mail.port}"/>
         <property name="username" value="${mail.user}"/>
@@ -82,7 +82,7 @@
     </bean>-->
 
     <!-- 发送邮件 start -->
-    <!--<bean id="mailSenderService" class="com.xkeshi.common.services.impl.MailSenderServiceImpl">
+    <!--<bean id="mailSenderService" class="com.hupmmon.service.impl.MailSenderServiceImpl">
         <property name="mailService">
             <ref bean="mailService"/>
         </property>

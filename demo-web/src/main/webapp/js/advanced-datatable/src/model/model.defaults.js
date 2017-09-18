@@ -1812,7 +1812,7 @@ DataTable.defaults = {
 	 *         <li>'r' - pRocessing</li>
 	 *       </ul>
 	 *     </li>
-	 *     <li>The following constants are allowed:
+	 *     <li>The following constant are allowed:
 	 *       <ul>
 	 *         <li>'H' - jQueryUI theme "header" classes ('fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix')</li>
 	 *         <li>'F' - jQueryUI theme "footer" classes ('fg-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix')</li>

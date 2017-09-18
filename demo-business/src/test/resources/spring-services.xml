@@ -9,11 +9,11 @@
 
     <description>spring-services-configuration</description>
 
-    <bean class="com.xkeshi.core.context.ApplicationContextHelper"/>
+    <bean class="com.hup.core.context.ApplicationContextHelper"/>
 
-    <bean class="com.xkeshi.core.exceptions.ExceptionDefinitions"/>
+    <bean class="com.hup.core.exceptions.ExceptionDefinitions"/>
     
-    <context:component-scan base-package="com.xkeshi.demo.services"/>
+    <context:component-scan base-package="com.hup.demo.services"/>
 
     <bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
         <property name="mappingFiles">

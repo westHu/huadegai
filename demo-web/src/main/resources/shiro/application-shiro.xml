@@ -36,7 +36,7 @@
     </bean>
 
     <!--基于ip的过滤器-->
-    <bean id="ipAuthorizationFilter" class="com.xkeshi.shiro.IPAuthorizationFilter">
+    <bean id="ipAuthorizationFilter" class="com.hup.shiro.IPAuthorizationFilter">
         <property name="allowIps">
             <map>
                 <entry key="localIp1" value="192.168.181.189"/>
@@ -45,14 +45,14 @@
     </bean>
 
     <!-- 基于Form表单的身份验证过滤器 -->
-    <bean id="formAuthenticationFilter" class="com.xkeshi.shiro.MyFormAuthenticationFilter">
+    <bean id="formAuthenticationFilter" class="com.hup.shiro.MyFormAuthenticationFilter">
     </bean>
 
     <!-- 凭证匹配器 -->
-    <bean id="credentialsMatcher" class="com.xkeshi.shiro.CustomHashedCredentialsMatcher"/>
+    <bean id="credentialsMatcher" class="com.hup.shiro.CustomHashedCredentialsMatcher"/>
 
     <!-- Realm实现 -->
-    <bean id="systemAuthorizingRealm" class="com.xkeshi.shiro.SystemAuthorizingRealm">
+    <bean id="systemAuthorizingRealm" class="com.hup.shiro.SystemAuthorizingRealm">
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cachingEnabled" value="false"/>
     </bean>
@@ -74,14 +74,14 @@
     <!-- 指定本系统SESSIONID, 默认为: JSESSIONID 问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT
         等默认JSESSIONID, 当跳出SHIRO SERVLET时如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失! -->
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-        <constructor-arg name="name" value="xkeshi.session.id"/>
+        <constructor-arg name="name" value="hup.session.id"/>
     </bean>
 
-    <!--<bean id="redisSessionDao" class="com.xkeshi.webkits.shiro.RedisSessionCluster">
+    <!--<bean id="redisSessionDao" class="com.hupbkits.shiro.RedisSessionCluster">
         <property name="projectShiroSessionKey" value="${shiro.sessionkey}"/>
     </bean>-->
 
-    <bean id="shiroLoginHandler" class="com.xkeshi.shiro.ShiroLoginHandler"/>
+    <bean id="shiroLoginHandler" class="com.hup.shiro.ShiroLoginHandler"/>
 
     <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>

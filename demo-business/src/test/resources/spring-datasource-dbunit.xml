@@ -10,7 +10,7 @@
 
     <description>spring-datasource-configuration</description>
 
-    <bean class="com.xkeshi.core.context.ApplicationContextHelper"/>
+    <bean class="com.hup.core.context.ApplicationContextHelper"/>
 
     <!-- 定义事务管理器（声明式的事务） -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -36,19 +36,19 @@
 
     <!--  MyBatis 配置  -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.xkeshi.*.dao"/>
+        <property name="basePackage" value="com.hup.*.dao"/>
         <property name="sqlSessionFactoryBeanName" value="xSqlSessionFactory"/>
     </bean>
 
     <bean id="xSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.xkeshi.demo.entities"/>
+        <property name="typeAliasesPackage" value="com.hup.demo.entities"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
-        <property name="mapperLocations" value="classpath:/com/xkeshi/demo/dao/*DAO.xml"/>
+        <property name="mapperLocations" value="classpath:/com/hup/demo/dao/*DAO.xml"/>
         <property name="plugins">
             <array>
                 <!--page interceptor-->
-                <bean class="com.xkeshi.core.orm.db.QueryInterceptor"/>
+                <bean class="com.hup.core.orm.db.QueryInterceptor"/>
             </array>
         </property>
     </bean>
