@@ -21,7 +21,10 @@
 
     <!--<bean class="com.hupception.ExceptionDefinitions" />-->
     <!--<bean class="com.hupntext.ApplicationContextHelper" />-->
-
+    <!-- 扫描注解Bean -->
+    <context:component-scan base-package="com.hup.dao">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
     <context:component-scan base-package="com.hup.service" />
     <context:component-scan base-package="com.hup.controller" />
 

@@ -14,7 +14,7 @@ import java.util.Map;
  * haven't logged in yet, or because they have no 'RememberMe' identity.
  *
  * <p>The logically opposite tag of this one is the {@link UserTag}.  Please read that class's JavaDoc as it explains
- * more about the differences between Authenticated/Unauthenticated and User/Guest semantic differences.
+ * more about the differences between Authenticated/Unauthenticated and User_User/Guest semantic differences.
  *
  * <p>Equivalent to {@link org.apache.shiro.web.tags.GuestTag}</p>
  *

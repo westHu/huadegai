@@ -39,6 +39,16 @@
         <property name="logAbandoned" value="true" />
     </bean>
 
+
+    <!--Jdbc设置-->
+    <bean id="dataSourceProxy" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+        <property name="targetDataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSourceProxy"/>
+    </bean>
+
     <!--  MyBatis 配置  -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.hup.dao"/>
