@@ -1,6 +1,7 @@
-package com.hup.shiro;
+package com.hup.shiro.realm;
 
 import com.hup.api.UserService;
+import com.hup.shiro.UserToken;
 import com.hup.shiro.exception.ShiroExceptionHandler;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

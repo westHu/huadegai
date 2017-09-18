@@ -21,6 +21,7 @@
 
     <import resource="classpath:spring/spring-infrastructure.xml"/>
     <import resource="classpath:spring/spring-datasource.xml"/>
-    <import resource="classpath:shiro/application-shiro.xml" />
+    <import resource="classpath:spring/spring-shiro.xml" />
+    <import resource="classpath:spring/spring-config-cache.xml" />
 
 </beans>

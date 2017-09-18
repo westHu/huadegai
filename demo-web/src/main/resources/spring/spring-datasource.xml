@@ -40,7 +40,7 @@
     </bean>
 
 
-    <!--Jdbc设置-->
+    <!--1 使用jdbcTemplate  Jdbc设置-->
     <bean id="dataSourceProxy" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
         <property name="targetDataSource" ref="dataSource"/>
     </bean>
@@ -49,24 +49,26 @@
         <constructor-arg ref="dataSourceProxy"/>
     </bean>
 
-    <!--  MyBatis 配置  -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!--2 使用 MyBatis 配置  -->
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.hup.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-    </bean>
+    </bean>-->
 
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="com.hup.entity"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
         <property name="mapperLocations" value="classpath:mapper/**DAO.xml"/>
         <property name="plugins">
             <array>
-                <!--page interceptor-->
+                &lt;!&ndash;page interceptor&ndash;&gt;
                 <bean class="com.hup.interceptor.db.QueryInterceptor" />
             </array>
         </property>
-    </bean>
+    </bean>-->
+
+
 
     <!--事务配置-->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

@@ -1,5 +1,6 @@
-package com.hup.shiro;
+package com.hup.shiro.credentials;
 
+import com.hup.shiro.UserToken;
 import com.hup.shiro.exception.ShiroExceptionHandler;
 import com.hup.util.RandomValidateCode;
 import org.apache.commons.lang3.StringUtils;

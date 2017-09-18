@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/")
-public class LoginController {
+public class LoginController_B {
 
 
     @Autowired
