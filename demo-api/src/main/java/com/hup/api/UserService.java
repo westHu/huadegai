@@ -1,23 +1,59 @@
 package com.hup.api;
 
-import com.hup.db.Pager;
+
 import com.hup.entity.User;
+
 import java.util.List;
+import java.util.Set;
 
 /**
- * Created by hpj
+ * <p>User: hup
+ * <p>Date: 14-1-28
+ * <p>Version: 1.0
  */
 public interface UserService {
 
-    Pager<User> queryUsers(Pager<User> pager, User user);
+    /**
+     * 创建用户
+     * @param user
+     */
+    public User createUser(User user);
 
-    List<User> getUserByUserName(String userName);
+    public User updateUser(User user);
 
-    boolean deleteUser(Long userId);
+    public void deleteUser(Long userId);
 
-    User getUserById(Long id);
+    /**
+     * 修改密码
+     * @param userId
+     * @param newPassword
+     */
+    public void changePassword(Long userId, String newPassword);
 
-    void addOrEditUser(User user);
 
+    User findOne(Long userId);
+
+    List<User> findAll();
+
+    /**
+     * 根据用户名查找用户
+     * @param username
+     * @return
+     */
+    public User findByUsername(String username);
+
+    /**
+     * 根据用户名查找其角色
+     * @param username
+     * @return
+     */
+    public Set<String> findRoles(String username);
+
+    /**
+     * 根据用户名查找其权限
+     * @param username
+     * @return
+     */
+    public Set<String> findPermissions(String username);
 
 }

@@ -1,37 +1,33 @@
 package com.hup.entity;
 
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by hpj
+ * <p>User: hup
+ * <p>Date: 17-1-28
+ * <p>Version: 1.0
  */
 public class User implements Serializable {
+    private Long id; //编号
+    private Long organizationId; //所属公司
+    private String username; //用户名
+    private String password; //密码
+    private String salt; //加密密码的盐
+    private List<Long> roleIds; //拥有的角色列表
+    private Boolean locked = Boolean.FALSE;
 
-    private Long id;            //主键
-    private String userName;    //用户名
-    private String password;    //密码
-    private String roles;       //角色
-    private boolean enable;     //账户状态
-    private Date createDate;    //创建时间
-
-
-
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", roles='" + roles + '\'' +
-                ", enable=" + enable +
-                ", createDate=" + createDate +
-                '}';
+    public User() {
     }
 
-
-    //-----------------setter getter -------------------
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
@@ -41,12 +37,20 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public Long getOrganizationId() {
+        return organizationId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setOrganizationId(Long organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -57,27 +61,90 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getRoles() {
-        return roles;
+    public String getSalt() {
+        return salt;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
-    public boolean isEnable() {
-        return enable;
+    public String getCredentialsSalt() {
+        return username + salt;
     }
 
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public List<Long> getRoleIds() {
+        if(roleIds == null) {
+            roleIds = new ArrayList<Long>();
+        }
+        return roleIds;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public void setRoleIds(List<Long> roleIds) {
+        this.roleIds = roleIds;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+
+    public String getRoleIdsStr() {
+        if(CollectionUtils.isEmpty(roleIds)) {
+            return "";
+        }
+        StringBuilder s = new StringBuilder();
+        for(Long roleId : roleIds) {
+            s.append(roleId);
+            s.append(",");
+        }
+        return s.toString();
+    }
+
+    public void setRoleIdsStr(String roleIdsStr) {
+        if(StringUtils.isEmpty(roleIdsStr)) {
+            return;
+        }
+        String[] roleIdStrs = roleIdsStr.split(",");
+        for(String roleIdStr : roleIdStrs) {
+            if(StringUtils.isEmpty(roleIdStr)) {
+                continue;
+            }
+            getRoleIds().add(Long.valueOf(roleIdStr));
+        }
+    }
+    
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", organizationId=" + organizationId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", roleIds=" + roleIds +
+                ", locked=" + locked +
+                '}';
     }
 }
