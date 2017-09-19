@@ -1,7 +1,6 @@
 package com.hup.dao;
 
 
-import com.hup.dto.UserDto;
 import com.hup.entity.User;
 
 import java.util.List;
@@ -22,8 +21,6 @@ public interface UserDao {
     User findOne(Long userId);
 
     List<User> findAll();
-
-    List<UserDto> findAllUser();
 
     User findByUsername(String username);
 

@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
      * @param newPassword
      */
     public void changePassword(Long userId, String newPassword) {
-        User user =userDao.findOne(userId);
+        User user = userDao.findOne(userId);
         user.setPassword(newPassword);
         passwordHelper.encryptPassword(user);
         userDao.updateUser(user);
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     public Set<String> findPermissions(String username) {
-        User user =findByUsername(username);
+        User user = findByUsername(username);
         if(user == null) {
             return Collections.EMPTY_SET;
         }

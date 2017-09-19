@@ -30,16 +30,10 @@ public interface UserService {
      */
     public void changePassword(Long userId, String newPassword);
 
-
     User findOne(Long userId);
 
     List<User> findAll();
 
-    /**
-     * 根据用户名查找用户
-     * @param username
-     * @return
-     */
     public User findByUsername(String username);
 
     /**
