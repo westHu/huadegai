@@ -41,32 +41,32 @@
 
 
     <!--1 使用jdbcTemplate  Jdbc设置-->
-    <bean id="dataSourceProxy" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+    <!--<bean id="dataSourceProxy" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
         <property name="targetDataSource" ref="dataSource"/>
     </bean>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg ref="dataSourceProxy"/>
-    </bean>
-
-    <!--2 使用 MyBatis 配置  -->
-    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.hup.dao"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>-->
 
-    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!--2 使用 MyBatis 配置  -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.hup.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="com.hup.entity"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
-        <property name="mapperLocations" value="classpath:mapper/**DAO.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/**Dao.xml"/>
         <property name="plugins">
             <array>
-                &lt;!&ndash;page interceptor&ndash;&gt;
+                <!--page interceptor-->
                 <bean class="com.hup.interceptor.db.QueryInterceptor" />
             </array>
         </property>
-    </bean>-->
+    </bean>
 
 
 

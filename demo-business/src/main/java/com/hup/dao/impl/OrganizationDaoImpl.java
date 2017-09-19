@@ -1,5 +1,6 @@
-package com.hup.dao;
+package com.hup.dao.impl;
 
+import com.hup.dao.OrganizationDao;
 import com.hup.entity.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

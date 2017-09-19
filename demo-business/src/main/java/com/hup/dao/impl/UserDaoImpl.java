@@ -1,5 +1,7 @@
-package com.hup.dao;
+package com.hup.dao.impl;
 
+import com.hup.dao.UserDao;
+import com.hup.dto.UserDto;
 import com.hup.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -74,6 +76,11 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAll() {
         String sql = "select id, organization_id, username, password, salt, role_ids as roleIdsStr, locked from sys_user";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper(User.class));
+    }
+
+    @Override
+    public List<UserDto> findAllUser() {
+        return null;
     }
 
 
