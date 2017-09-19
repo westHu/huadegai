@@ -1,6 +1,7 @@
 package com.hup.shiro.filter;
 
 import com.hup.api.UserService;
+import com.hup.constant.UserConstant;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,12 @@ public class SysUserFilter extends PathMatchingFilter {
     @Autowired
     private UserService userService;
 
-    private String CURRENT_USER = "user";
 
     @Override
     protected boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
 
         String username = (String) SecurityUtils.getSubject().getPrincipal();
-        request.setAttribute(CURRENT_USER, userService.findByUsername(username));
+        request.setAttribute(UserConstant.USER_STRING, userService.findByUsername(username));
         return true;
     }
 }

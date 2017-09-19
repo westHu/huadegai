@@ -32,15 +32,11 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-
         String username = (String)token.getPrincipal();
-
         User user = userService.findByUsername(username);
-
         if(user == null) {
             throw new UnknownAccountException();//没找到帐号
         }
-
         if(Boolean.TRUE.equals(user.getLocked())) {
             throw new LockedAccountException(); //帐号锁定
         }

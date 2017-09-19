@@ -20,8 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginController {
 
-    /*@RequestMapping(value = "/login")
+    @RequestMapping(value = "/login")
     public String showLoginForm(HttpServletRequest req, Model model) {
+        if (SecurityUtils.getSubject().getPrincipal() != null) {
+            return "redirect:/";
+        }
         String exceptionClassName = (String)req.getAttribute("shiroLoginFailure");
         String error = null;
         if(UnknownAccountException.class.getName().equals(exceptionClassName)) {
@@ -33,27 +36,11 @@ public class LoginController {
         }
         model.addAttribute("error", error);
         return "login";
-    }*/
-
-    @RequestMapping("/")
-    public String home() {
-        return "redirect:/index";
     }
 
 
 
-    @RequestMapping("/login")
-    public String login() {
-        if (SecurityUtils.getSubject().getPrincipal() != null) {
-            return "redirect:/index";
-        }
-        return "/login";
-    }
 
-    @RequestMapping(value = "/index")
-    public String home(Model model){
-        return  "/index";
-    }
 
     @RequestMapping(value = "/getCaptcha", method = RequestMethod.GET)
     public void getCaptcha(HttpServletRequest request, HttpServletResponse response) {

@@ -2,6 +2,7 @@ package com.hup.controller;
 
 import com.hup.api.ResourceService;
 import com.hup.api.UserService;
+import com.hup.bind.annotation.CurrentUser;
 import com.hup.entity.Resource;
 import com.hup.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,15 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
-   /* @RequestMapping("/")
-    public String index(User loginUser, Model model) {
+    @RequestMapping("/")
+    public String index(@CurrentUser User loginUser, Model model) {
         Set<String> permissions = userService.findPermissions(loginUser.getUsername());
         List<Resource> menus = resourceService.findMenus(permissions);
         model.addAttribute("menus", menus);
         return "index";
-    }*/
+    }
 
-    @RequestMapping("/welcome")
+    @RequestMapping("/index")
     public String welcome() {
         return "welcome";
     }

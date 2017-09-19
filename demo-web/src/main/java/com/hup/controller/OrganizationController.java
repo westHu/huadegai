@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- * <p>User: Zhang Kaitao
+ * <p>User: hup
  * <p>Date: 14-2-14
  * <p>Version: 1.0
  */

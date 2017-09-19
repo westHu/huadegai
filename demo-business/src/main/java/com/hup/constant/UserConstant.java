@@ -7,6 +7,6 @@ package com.hup.constant;
  */
 public class UserConstant {
 
-    public static final String USER_STRING = "aaaa";
+    public static final String USER_STRING = "user";
 
 }
