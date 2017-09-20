@@ -42,14 +42,14 @@
     </select>
 
     <select id="findAll" resultType="com.hup.entity.User">
-        SELECT t.id, t.organization_id, t.username, t.password, t.salt, t.role_ids, t.locked, s.name as organization_name
+        SELECT t.id, t.organization_id, t.username, t.password, t.salt, t.role_ids as roleIdsStr, t.locked, s.name as organization_name
         FROM sys_user t
         LEFT JOIN sys_organization s ON s.id = t.organization_id
     </select>
 
 
     <select id="findByUsername" resultType="com.hup.entity.User">
-        SELECT t.id, t.organization_id, t.username, t.password, t.salt, t.role_ids, t.locked, s.name as organization_name
+        SELECT t.id, t.organization_id, t.username, t.password, t.salt, t.role_ids as roleIdsStr, t.locked, s.name as organization_name
         FROM sys_user t
         LEFT JOIN sys_organization s ON s.id = t.organization_id
         WHERE t.username = #{username}

@@ -8,7 +8,11 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Set;
 
 /**
  * <p>User: hup
@@ -16,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * <p>Version: 1.0
  */
 public class UserRealm extends AuthorizingRealm {
+
+    Logger logger = LoggerFactory.getLogger(UserRealm.class);
 
     @Autowired
     private UserService userService;
@@ -25,8 +31,12 @@ public class UserRealm extends AuthorizingRealm {
         String username = (String)principals.getPrimaryPrincipal();
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(userService.findRoles(username));
-        authorizationInfo.setStringPermissions(userService.findPermissions(username));
+        Set<String> roles = userService.findRoles(username);
+        authorizationInfo.setRoles(roles);
+        logger.info(username + " 拥有角色 ： " + roles);
+        Set<String> permissions = userService.findPermissions(username);
+        authorizationInfo.setStringPermissions(permissions);
+        logger.info(username + " 拥有权限 ： "+ permissions);
         return authorizationInfo;
     }
 

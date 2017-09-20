@@ -29,8 +29,8 @@
             <img src="images/login-logo.png" alt=""/>
         </div>
         <div class="login-wrap">
-            <input name="username" type="text" class="form-control" placeholder="User ID" autofocus>
-            <input name="password" type="password" class="form-control" placeholder="Password">
+            <input name="username" value="admin" type="text" class="form-control" placeholder="User ID" autofocus>
+            <input name="password" value="123456" type="password" class="form-control" placeholder="Password">
 
             <button class="btn btn-lg btn-login btn-block" type="submit">
                 <i class="fa fa-check"></i>

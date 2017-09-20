@@ -33,13 +33,13 @@
     </delete>
 
     <select id="findOne" resultType="com.hup.entity.Role">
-        SELECT t.id, t.role, t.description, t.resource_ids, t.available
+        SELECT t.id, t.role, t.description, t.resource_ids as resourceIdsStr, t.available
         FROM sys_role t
         WHERE t.id = #{roleId}
     </select>
 
     <select id="findAll" resultType="com.hup.entity.Role">
-        SELECT t.id, t.role, t.description, t.resource_ids, t.available
+        SELECT t.id, t.role, t.description, t.resource_ids as resourceIdsStr, t.available
         FROM sys_role t
     </select>
 

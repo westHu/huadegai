@@ -167,6 +167,22 @@
                         <li><a href="lock_screen.html"> Lockscreen </a></li>
                     </ul>
                 </li>
+                <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>Setting</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/user"> userList</a></li>
+                        <li><a href="/user/create"> addUser</a></li>
+                        <li><a href="pricing_table.html"> Pricing Table</a></li>
+                        <li><a href="timeline.html"> Timeline</a></li>
+                        <li><a href="blog_list.html"> Blog List</a></li>
+                        <li><a href="blog_details.html"> Blog Details</a></li>
+                        <li><a href="directory.html"> Directory </a></li>
+                        <li><a href="chat.html"> Chat </a></li>
+                        <li><a href="404.html"> 404 Error</a></li>
+                        <li><a href="500.html"> 500 Error</a></li>
+                        <li><a href="registration.html"> Registration Page</a></li>
+                        <li><a href="lock_screen.html"> Lockscreen </a></li>
+                    </ul>
+                </li>
                 <li><a href="login.login.ftl"><i class="fa fa-sign-in"></i> <span>Login Page</span></a></li>
 
             </ul>
