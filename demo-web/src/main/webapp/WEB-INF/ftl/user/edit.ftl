@@ -414,19 +414,19 @@
                                         <fieldset title="Step 2">
                                             <legend>description two</legend>
                                             <div class="form-group">
-                                                <label class="col-md-2 col-sm-2 control-label">First Name</label>
+                                                <label class="col-md-2 col-sm-2 control-label">真实名称</label>
                                                 <div class="col-md-6 col-sm-6">
                                                     <input type="text" placeholder="First Name" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-2 col-sm-2 control-label">Last Name</label>
+                                                <label class="col-md-2 col-sm-2 control-label">联系方式</label>
                                                 <div class="col-md-6 col-sm-6">
                                                     <input type="text" placeholder="Last Name" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-2 col-sm-2 control-label">Address</label>
+                                                <label class="col-md-2 col-sm-2 control-label">联系地址</label>
                                                 <div class="col-md-6 col-sm-6">
                                                     <textarea name="address" rows="5" cols="60" class="form-control"></textarea>
                                                 </div>
@@ -479,7 +479,7 @@
 
         <!--footer section start-->
         <footer class="sticky-footer">
-            2014 &copy; AdminEx by <a href="http://www.mycodes.net/" target="_blank">源码之家</a>
+            2017 &copy; transfar by <a href="http://www.mycodes.net/" target="_blank">hup</a>
         </footer>
         <!--footer section end-->
 
