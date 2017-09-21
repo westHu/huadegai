@@ -54,6 +54,7 @@ public class UserController {
         setCommonData(model);
         model.addAttribute("user", userService.findOne(id));
         model.addAttribute("op", "修改");
+        model.addAttribute("userList", userService.findAll());
         return "user/list";
     }
 

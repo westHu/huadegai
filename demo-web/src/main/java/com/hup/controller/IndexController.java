@@ -36,7 +36,7 @@ public class IndexController {
 
     @RequestMapping("/index")
     public String welcome() {
-        return "welcome";
+        return "index";
     }
 
 

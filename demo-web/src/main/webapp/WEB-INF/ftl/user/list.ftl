@@ -3,9 +3,7 @@
     <link href="${context.contextPath}/css/jquery.stepy.css" rel="stylesheet">
 </@header>
 
-
 <body class="sticky-header">
-
 <section>
     <!-- left side start-->
     <@left title="导航栏"></@left>
@@ -33,7 +31,7 @@
         <!-- header section end-->
 
         <!-- page heading start-->
-        <div class="page-heading">
+        <#--<div class="page-heading">
             <h3>
                 用户组管理
             </h3>
@@ -43,7 +41,7 @@
                 </li>
                 <li class="active">用户操作</li>
             </ul>
-        </div>
+        </div>-->
         <!-- page heading end-->
         <hr/>
         <!--body wrapper start-->
@@ -59,8 +57,8 @@
                         <div class="widget-container">
                             <div class="widget-block">
                                 <div class="widget-content box-padding">
-                                    <form id="stepy_form" class=" form-horizontal left-align form-well" action="${context.contextPath}/create" method="post">
-                                        <fieldset title="登录信息 填写">
+                                    <form id="stepy_form" class=" form-horizontal left-align form-well" action="${context.contextPath}/user/create" method="post">
+                                        <fieldset title="登录信息">
                                             <legend>Login Information...</legend>
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">登录名</label>
@@ -75,7 +73,7 @@
                                                 </div>
                                             </div>
                                         </fieldset>
-                                        <fieldset title="联系信息 填写">
+                                        <fieldset title="联系信息">
                                             <legend>Personal Information...</legend>
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">真实名称</label>
@@ -96,12 +94,13 @@
                                                 </div>
                                             </div>
                                         </fieldset>
-                                        <fieldset title="组织权限信息 填写">
+                                        <fieldset title="组织权限信息">
                                             <legend>Permission Information...</legend>
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">所属组织</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input type="text" id="organization" name="organization" class="form-control" value="" onclick="$('#treeView').show()">
+                                                    <input type="text" id="organization"   class="form-control" value="" onclick="$('#treeView').show()" autocomplete="off">
+                                                    <input type="text" id="organizationId" name="organizationId" style="display: none;">
                                                     <div id="treeView" style="display: none;"></div>
                                                 </div>
 
@@ -167,14 +166,27 @@
                                     <#list userList as user>
                                     <tr>
                                         <td>${user.username}</td>
-                                        <td>${user.password}</td>
-                                        <td class="numeric">${user.salt}</td>
-                                        <td class="numeric">${user.roleIds[0]}</td>
+                                        <td>*******</td>
+                                        <td class="numeric">********</td>
+                                        <td class="numeric">${user.roleNames}</td>
                                         <td class="numeric">${user.organizationName}</td>
                                         <td class="numeric">...</td>
                                         <td class="numeric">...</td>
                                         <td class="numeric">...</td>
-                                        <td class="numeric">...</td>
+                                        <td class="numeric">
+                                            <#--<a href="javascript:void(0)" class="pop pop_recharge" data-toggle='modal' data-target="#user-recharge" data-id="${user.id}">充值</a>-->
+                                            <div class="btn-group">
+                                                <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                                    操&nbsp作 <span class="caret"></span>
+                                                </button>
+                                                <ul role="menu" class="dropdown-menu">
+                                                    <li><a href="${context.contextPath}/user/${user.id}/update">编辑用户</a></li>
+                                                    <li><a href="#">删除用户</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">重置密码</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     </#list>
                                     </tbody>
@@ -309,6 +321,7 @@
             data : defaultData,
             onNodeSelected : function(event, data) {
                 $("#organization").val(data.text);
+                $("#organizationId").val(data.id);
                 $("#treeView").hide();
             }
         };
@@ -321,21 +334,25 @@
 
     var defaultData = [
         {
+            id:1,
             text: '集团本部',
             href: '#parent1',
             tags: ['4'],
             nodes: [
                 {
+                    id:2,
                     text: '支付公司',
                     href: '#child1',
                     tags: ['2'],
                     nodes: [
                         {
+                            id:3,
                             text: '技术研发部',
                             href: '#grandchild1',
                             tags: ['0']
                         },
                         {
+                            id:4,
                             text: '市场销售部',
                             href: '#grandchild2',
                             tags: ['0']
@@ -343,6 +360,7 @@
                     ]
                 },
                 {
+                    id:5,
                     text: '物流公司',
                     href: '#child2',
                     tags: ['0']
@@ -350,6 +368,7 @@
             ]
         },
         {
+            id:6,
             text: '集团党委',
             href: '#parent2',
             tags: ['0']

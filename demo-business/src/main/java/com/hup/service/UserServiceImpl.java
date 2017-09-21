@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * <p>User: hup
@@ -35,12 +36,14 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         //加密密码
         passwordHelper.encryptPassword(user);
-        return userDao.createUser(user);
+        userDao.createUser(user);
+        return user;
     }
 
     @Override
     public User updateUser(User user) {
-        return userDao.updateUser(user);
+        userDao.updateUser(user);
+        return user;
     }
 
     @Override
@@ -67,7 +70,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return userDao.findAll();
+        List<User> userList = userDao.findAll();
+        userList.forEach((User user) -> {
+            String name  = user.getUsername();
+            Set<String> roles = findRoles(name);
+            user.setRoleNames(roles.toString());
+        });
+        return userList;
     }
 
     /**

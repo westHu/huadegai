@@ -2,6 +2,7 @@ package com.hup.dao;
 
 
 import com.hup.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public interface UserDao {
 
-    User createUser(User user);
+    void createUser(@Param("user") User user);
 
-    User updateUser(User user);
+    void updateUser(User user);
 
     void deleteUser(Long userId);
 

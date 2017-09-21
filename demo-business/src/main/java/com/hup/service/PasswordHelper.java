@@ -22,11 +22,12 @@ public class PasswordHelper {
     private String algorithmName = "md5";
     @Value("${password.hashIterations}")
     private int hashIterations = 2;
+    @Value("${default.password:123456}")
+    private String defaultPwd;
 
     public void setRandomNumberGenerator(RandomNumberGenerator randomNumberGenerator) {
         this.randomNumberGenerator = randomNumberGenerator;
     }
-
     public void setAlgorithmName(String algorithmName) {
         this.algorithmName = algorithmName;
     }
@@ -36,7 +37,7 @@ public class PasswordHelper {
     }
 
     public void encryptPassword(User user) {
-
+        user.setPassword(defaultPwd);
         user.setSalt(randomNumberGenerator.nextBytes().toHex());
 
         String newPassword = new SimpleHash(

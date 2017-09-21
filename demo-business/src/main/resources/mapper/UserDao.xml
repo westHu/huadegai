@@ -16,7 +16,7 @@
         insert into sys_user
         (organization_id, username, password, salt, role_ids, locked)
          values
-         (#{user.organizationId}, #{user.username}, #{user.password},#{user.salt}, #{user.roleIds}, #{user.locked})
+         (#{user.organizationId}, #{user.username}, #{user.password},#{user.salt}, #{user.roleIdsStr}, #{user.locked})
     </insert>
 
     <update id="updateUser">

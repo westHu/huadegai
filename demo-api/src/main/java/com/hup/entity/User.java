@@ -21,9 +21,15 @@ public class User implements Serializable {
     private List<Long> roleIds; //拥有的角色列表
     private Boolean locked = Boolean.FALSE;
 
+    private String realName;
+    private String email;
+    private String mobile;
+    private String address;
+
+
     //--------- 非数据库属性
     private String organizationName;
-    private List<String> roleNames;
+    private String roleNames;
 
 
     public User() {
@@ -43,11 +49,11 @@ public class User implements Serializable {
         this.organizationName = organizationName;
     }
 
-    public List<String> getRoleNames() {
+    public String getRoleNames() {
         return roleNames;
     }
 
-    public void setRoleNames(List<String> roleNames) {
+    public void setRoleNames(String roleNames) {
         this.roleNames = roleNames;
     }
 
@@ -138,6 +144,38 @@ public class User implements Serializable {
 
     public void setLocked(Boolean locked) {
         this.locked = locked;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
