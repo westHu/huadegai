@@ -31,14 +31,22 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @RequiresPermissions(value = {"user:view","user:create"}, logical = Logical.OR)
+    @RequiresPermissions("user:view")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
-        setCommonData(model);
-        model.addAttribute("user", new User());
         model.addAttribute("userList", userService.findAll());
         return "user/list";
     }
+
+    @RequiresPermissions("user:create")
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String showCreateForm(Model model) {
+        setCommonData(model);
+        model.addAttribute("user", new User());
+        model.addAttribute("op", "新增");
+        return "user/edit";
+    }
+
 
     @RequiresPermissions("user:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -72,7 +80,7 @@ public class UserController {
         setCommonData(model);
         model.addAttribute("user", userService.findOne(id));
         model.addAttribute("op", "删除");
-        return "user/list";
+        return "user/list-b";
     }
 
     @RequiresPermissions("user:delete")
