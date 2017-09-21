@@ -4,18 +4,15 @@ import com.hup.api.OrganizationService;
 import com.hup.api.RoleService;
 import com.hup.api.UserService;
 import com.hup.entity.User;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>User: hup
@@ -34,20 +31,13 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @RequiresPermissions("user:view")
+    @RequiresPermissions(value = {"user:view","user:create"}, logical = Logical.OR)
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
-        model.addAttribute("userList", userService.findAll());
-        return "user/list";
-    }
-
-    @RequiresPermissions("user:create")
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String showCreateForm(Model model) {
         setCommonData(model);
         model.addAttribute("user", new User());
-        model.addAttribute("op", "新增");
-        return "user/edit";
+        model.addAttribute("userList", userService.findAll());
+        return "user/list";
     }
 
     @RequiresPermissions("user:create")
@@ -64,7 +54,7 @@ public class UserController {
         setCommonData(model);
         model.addAttribute("user", userService.findOne(id));
         model.addAttribute("op", "修改");
-        return "user/edit";
+        return "user/list";
     }
 
     @RequiresPermissions("user:update")
@@ -81,7 +71,7 @@ public class UserController {
         setCommonData(model);
         model.addAttribute("user", userService.findOne(id));
         model.addAttribute("op", "删除");
-        return "user/edit";
+        return "user/list";
     }
 
     @RequiresPermissions("user:delete")
