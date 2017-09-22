@@ -4,14 +4,18 @@ import com.hup.api.OrganizationService;
 import com.hup.api.RoleService;
 import com.hup.api.UserService;
 import com.hup.entity.User;
+import com.hup.response.BaseResponse;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -22,6 +26,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -62,8 +68,7 @@ public class UserController {
         setCommonData(model);
         model.addAttribute("user", userService.findOne(id));
         model.addAttribute("op", "修改");
-        model.addAttribute("userList", userService.findAll());
-        return "user/list";
+        return "user/edit";
     }
 
     @RequiresPermissions("user:update")
@@ -80,15 +85,23 @@ public class UserController {
         setCommonData(model);
         model.addAttribute("user", userService.findOne(id));
         model.addAttribute("op", "删除");
-        return "user/list-b";
+        return "redirect:/user";
     }
 
+    /**
+     * <p>@Description: 删除用户
+     * <p>@Author: hupj
+     * <p>@Date: 2017/5/22
+     * <p>@Param: 
+     * <p>@return: BaseResponse 0: 成功 -1：失败
+     */
+    @ResponseBody
     @RequiresPermissions("user:delete")
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    public BaseResponse delete(@PathVariable("id") Long id) {
+        logger.info("========删除用户 {}",id);
         userService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("msg", "删除成功");
-        return "redirect:/user";
+        return new BaseResponse("0","删除成功");
     }
 
 

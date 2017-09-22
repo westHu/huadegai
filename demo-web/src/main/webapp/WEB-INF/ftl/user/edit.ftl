@@ -2,6 +2,8 @@
 <@header title="新增用户" keywords="新增用户" description="新增用户">
 <!--responsive table-->
 <link href="${context.contextPath}/css/jquery.stepy.css" rel="stylesheet">
+<!--file upload-->
+<link rel="stylesheet" type="text/css" href="${context.contextPath}/css/bootstrap-fileupload.min.css" />
 </@header>
 
 <body class="sticky-header">
@@ -41,19 +43,19 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">登录名</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input type="text" class="form-control" name="username" placeholder="LoginName"/>
+                                                    <input type="text" class="form-control" name="username" placeholder="LoginName" value="${user.username}"/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">邮箱</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input class="form-control" name="email" type="email" placeholder="Email"/>
+                                                    <input class="form-control" name="email" type="email" placeholder="Email" value="${user.email}"/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">手机号码</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input type="text" placeholder="mobile" name="mobile" class="form-control">
+                                                    <input type="text" placeholder="mobile" name="mobile" class="form-control" value="${user.mobile}"/>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -62,19 +64,38 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">真实名称</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input type="text" placeholder="real Name" name="realName" class="form-control">
+                                                    <input type="text" placeholder="real Name" name="realName" class="form-control" value="${user.realName}"/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">身份证</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input type="text" placeholder="Identity Card No" name="identityCardNo" class="form-control">
+                                                    <input type="text" placeholder="Identity Card No" name="identityCardNo" class="form-control" value="identityCardNo"/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">联系地址</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <textarea name="address" rows="5" cols="60" class="form-control"></textarea>
+                                                    <textarea name="address" rows="5" cols="60" class="form-control">${user.address}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-2 col-sm-2 control-label">头像</label>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                                                        </div>
+                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                                        <div>
+                                                           <span class="btn btn-default btn-file">
+                                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择图片</span>
+                                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 更换</span>
+                                                                <input type="file" class="default" />
+                                                           </span>
+                                                            <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> 移除</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -83,7 +104,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">所属组织</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input type="text" id="organization"   class="form-control" value="" onclick="$('#treeView').show()" autocomplete="off">
+                                                    <input type="text" id="organization"  class="form-control" value="${user.organizationName}" onclick="$('#treeView').show()" autocomplete="off">
                                                     <input type="text" id="organizationId" name="organizationId" style="display: none;">
                                                     <div id="treeView" style="display: none;"></div>
                                                 </div>
@@ -92,7 +113,7 @@
                                                 <label class="col-md-2 col-sm-2 control-label">角色列表</label>
                                             <#list roleList as role>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <label class="checkbox"><input type="checkbox" name="roleIdsStr" value="${role.id}">${role.description}</label>
+                                                    <label class="checkbox"><input type="checkbox" name="roleIdsStr" value="${role.id}" <#if user.roleIds?seq_contains(role.id)> checked </#if> >${role.description}</label>
                                                 </div>
                                             </#list>
                                             </div>
@@ -137,8 +158,12 @@
 <script src="${context.contextPath}/js/modernizr.min.js"></script>
 <script src="${context.contextPath}/js/jquery.nicescroll.js"></script>
 
+<#--treeview-->
 <script src="${context.contextPath}/js/bootstrap-treeview/js/bootstrap-treeview.min.js"></script>
 <link href="${context.contextPath}/js/bootstrap-treeview/css/bootstrap-treeview.css" rel="stylesheet">
+<!--file upload-->
+<script type="text/javascript" src="${context.contextPath}/js/bootstrap-fileupload.min.js"></script>
+
 <!--common scripts for all pages-->
 <script src="${context.contextPath}/js/scripts.js"></script>
 

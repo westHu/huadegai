@@ -2,6 +2,8 @@
 <@header title="新增用户" keywords="新增用户" description="新增用户">
 <!--responsive table-->
 <link href="${context.contextPath}/css/table-responsive.css" rel="stylesheet" />
+<!--gritter css-->
+<link rel="stylesheet" type="text/css" href="${context.contextPath}/js/gritter/css/jquery.gritter.css" />
 </@header>
 
 <body class="sticky-header">
@@ -84,7 +86,8 @@
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu">
                                                             <li><a href="${context.contextPath}/user/${user.id}/update">编辑用户</a></li>
-                                                            <li><a href="#">删除用户</a></li>
+                                                            <li><a href="#myModal2" data-toggle="modal" onclick="delete_user(${user.id})" >删除用户</a></li>
+                                                            <#--<li><a href="${context.contextPath}/user/${user.id}/delete">删除用户</a></li>-->
                                                             <li class="divider"></li>
                                                             <li><a href="#">重置密码</a></li>
                                                         </ul>
@@ -92,6 +95,26 @@
                                                 </td>
                                             </tr>
                                         </#list>
+                                        <!-- 删除用户  Modal -->
+                                        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                                        <h4 class="modal-title">确认删除</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input id="userId" name="userId" type="hidden"/>
+                                                        你确定要删除该用户吗？
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="confirm()"> 确定</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- modal -->
                                     </tbody>
                                 </table>
                             </section>
@@ -121,8 +144,56 @@
 <script src="${context.contextPath}/js/modernizr.min.js"></script>
 <script src="${context.contextPath}/js/jquery.nicescroll.js"></script>
 
+<!--gritter script-->
+<script type="text/javascript" src="${context.contextPath}/js/gritter/js/jquery.gritter.js"></script>
+<script src="${context.contextPath}/js/gritter/js/gritter-init.js" type="text/javascript"></script>
+
 <!--common scripts for all pages-->
 <script src="${context.contextPath}/js/scripts.js"></script>
 
+<script>
+    function delete_user(id) {
+        $('#userId').val(id);
+    }
+    function confirm() {
+        var id = $('#userId').val().trim();
+        var url = "/user/"+id+"/delete";
+        $.ajax({
+            url: url,
+            type: 'post',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                //TipsNotice();
+                /*if (data.status == "0") {
+                    //location.reload()
+                    setTimeout("alert(11111)",5000)
+                }*/
+
+            }
+        });
+    }
+
+
+
+
+    /*$(function(){
+
+
+    })*/
+    /*function TipsNotice() {
+        $.gritter.add({
+            title: '提醒',
+            text: '提现设置已经成功！',
+            //image: ctx+'admin/clear/notif_icon.png',
+            sticky: false,
+            time: 3000,
+            speed:5000,
+            position: 'bottom-right',
+            class_name: 'gritter-success'//gritter-center
+        });
+    }*/
+
+</script>
 </body>
 </html>
