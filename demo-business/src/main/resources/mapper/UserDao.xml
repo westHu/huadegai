@@ -25,7 +25,7 @@
         username = #{user.username},
         password = #{user.password},
         salt = #{user.salt},
-        role_ids = #{user.roleIds},
+        role_ids = #{user.roleIdsStr},
         locked = #{user.locked}
         where id= #{user.id}
     </update>

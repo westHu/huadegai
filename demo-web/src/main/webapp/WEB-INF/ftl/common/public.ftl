@@ -158,6 +158,7 @@
                 <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>系统设置</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="${context.contextPath}/user"> 用户管理</a></li>
+                        <li><a href="${context.contextPath}/role"> 角色管理</a></li>
                         <li><a href="pricing_table.html"> Pricing Table</a></li>
                         <li><a href="timeline.html"> Timeline</a></li>
                         <li><a href="blog_list.html"> Blog List</a></li>

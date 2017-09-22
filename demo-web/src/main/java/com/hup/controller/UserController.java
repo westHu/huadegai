@@ -121,6 +121,22 @@ public class UserController {
         return "redirect:/user";
     }
 
+    /**
+     * <p>@Description:  重置密码
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/22
+     * <p>@Param: 
+     * <p>@return:
+     */
+    @ResponseBody
+    @RequiresPermissions("user:resetPassword")
+    @RequestMapping(value = "/{id}/resetPassword", method = RequestMethod.POST)
+    public BaseResponse resetPassword(@PathVariable("id") Long id) {
+        userService.resetPassword(id);
+        return new BaseResponse("0","密码重置成功");
+    }
+
+
     private void setCommonData(Model model) {
         model.addAttribute("organizationList", organizationService.findAll());
         model.addAttribute("roleList", roleService.findAll());

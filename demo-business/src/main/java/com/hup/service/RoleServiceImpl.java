@@ -3,6 +3,7 @@ package com.hup.service;
 import com.hup.api.ResourceService;
 import com.hup.api.RoleService;
 import com.hup.dao.RoleDao;
+import com.hup.entity.Resource;
 import com.hup.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,15 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> findAll() {
-        return roleDao.findAll();
+        List<Role> roles = roleDao.findAll();
+        roles.forEach((Role role) -> {
+            Set<String> set = new HashSet<>();
+            for (Long aLong : role.getResourceIds()) {
+                set.add(resourceService.findOne(aLong).getName());
+            }
+            role.setResourceNames(set.toString());
+        });
+        return roles;
     }
 
     @Override

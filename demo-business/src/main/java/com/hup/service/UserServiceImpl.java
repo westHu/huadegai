@@ -114,4 +114,13 @@ public class UserServiceImpl implements UserService {
         return roleService.findPermissions(user.getRoleIds().toArray(new Long[0]));
     }
 
+
+    @Override
+    public boolean resetPassword(Long id) {
+        User user = userDao.findOne(id);
+        passwordHelper.encryptPassword(user);
+        userDao.updateUser(user);
+        return true;
+    }
+
 }
