@@ -81,7 +81,7 @@
                                                 <td class="numeric">
                                                 <#--<a href="javascript:void(0)" class="pop pop_recharge" data-toggle='modal' data-target="#user-recharge" data-id="${user.id}">充值</a>-->
                                                     <div class="btn-group">
-                                                        <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                                        <button data-toggle="dropdown" type="button" class="btn btn-success btn-sm dropdown-toggle">
                                                             操&nbsp作 <span class="caret"></span>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu">

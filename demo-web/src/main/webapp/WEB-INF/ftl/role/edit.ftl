@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <span class="tools pull-right">
-                                <button class="btn btn-success" type="submit">确&nbsp定</button>
+                                <button class="btn btn-info" type="submit">&nbsp确&nbsp定&nbsp</button>
                             </span>
                         </form>
                     </div>

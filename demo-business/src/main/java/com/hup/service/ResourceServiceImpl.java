@@ -27,12 +27,14 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public Resource createResource(Resource resource) {
-        return resourceDao.createResource(resource);
+        resourceDao.createResource(resource);
+        return resource;
     }
 
     @Override
     public Resource updateResource(Resource resource) {
-        return resourceDao.updateResource(resource);
+        resourceDao.updateResource(resource);
+        return resource;
     }
 
     @Override
