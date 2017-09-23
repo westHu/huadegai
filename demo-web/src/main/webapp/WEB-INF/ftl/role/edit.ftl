@@ -26,79 +26,52 @@
         <!--body wrapper start-->
         <section class="wrapper">
         <!-- page start-->
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            角色管理
-                        </header>
-                        <div class="panel-body">
-                            <form class="form-horizontal adminex-form" method="get">
-                                <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label">角色名称</label>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" name="role">
-                                    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        角色管理
+                    </header>
+                    <div class="panel-body">
+                        <form id="roleEditForm" class="form-horizontal" action="${context.contextPath}/role/create" method="post">
+                            <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label">角色名称</label>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" name="role">
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label">角色描述</label>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" name="description">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label">角色描述</label>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" name="description">
 
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
-                    </section>
-                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">资源列表</label>
+                                <div class="col-md-9">
+                                    <select multiple="multiple" class="multi-select" id="my_multi_select2"
+                                            name="resourceNames">
+                                        <#list resourceTreeList as two >
+                                            <optgroup label="${two.name}">
+                                                <#list two.sonResourceList as son >
+                                                    <option>${son}</option>
+                                                </#list>
+                                            </optgroup>
+                                        </#list>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <span class="tools pull-right">
+                                <button class="btn btn-success" type="submit">确&nbsp定</button>
+                            </span>
+                        </form>
+                    </div>
+                </section>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            选择资源
-                        </header>
-                        <div class="panel-body">
-                            <form action="#" class="form-horizontal ">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">资源列表</label>
-                                    <div class="col-md-9">
-                                        <select multiple="multiple" class="multi-select" id="my_multi_select2"
-                                                name="my_multi_select2[]">
-                                            <optgroup label="NFC EAST">
-                                                <option>Dallas Cowboys</option>
-                                                <option>New York Giants</option>
-                                                <option>Philadelphia Eagles</option>
-                                                <option>Washington Redskins</option>
-                                            </optgroup>
-                                            <optgroup label="NFC NORTH">
-                                                <option>Chicago Bears</option>
-                                                <option>Detroit Lions</option>
-                                                <option>Green Bay Packers</option>
-                                                <option>Minnesota Vikings</option>
-                                            </optgroup>
-                                            <optgroup label="NFC SOUTH">
-                                                <option>Atlanta Falcons</option>
-                                                <option>Carolina Panthers</option>
-                                                <option>New Orleans Saints</option>
-                                                <option>Tampa Bay Buccaneers</option>
-                                            </optgroup>
-                                            <optgroup label="NFC WEST">
-                                                <option>Arizona Cardinals</option>
-                                                <option>St. Louis Rams</option>
-                                                <option>San Francisco 49ers</option>
-                                                <option>Seattle Seahawks</option>
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </section>
-                </div>
-            </div>
+        </div>
         <!-- page end-->
         </section>
         <!--body wrapper end-->

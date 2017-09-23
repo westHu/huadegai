@@ -2,6 +2,7 @@ package com.hup.dao;
 
 
 import com.hup.entity.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public interface RoleDao {
 
-    Role createRole(Role role);
+    void createRole(@Param("role") Role role);
 
-    Role updateRole(Role role);
+    void updateRole(@Param("role") Role role);
 
     void deleteRole(Long roleId);
 

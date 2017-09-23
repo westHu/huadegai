@@ -1,5 +1,7 @@
 <#include "common/public.ftl">
 <@header title="角色列表" keywords="角色列表" description="角色列表">
+    <!--gritter css-->
+    <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/gritter/css/jquery.gritter.css" />
 </@header>
 
 <body class="sticky-header">
@@ -77,13 +79,13 @@
                                                 </button>
                                                 <ul role="menu" class="dropdown-menu">
                                                     <li><a href="${context.contextPath}/role/${role.id}/update">编辑角色</a></li>
-                                                    <li><a href="#myModal2" data-toggle="modal" onclick="delete_role(${role.id},this)" >删除角色</a></li>
+                                                    <li><a href="#myModal2" data-toggle="modal" onclick="delete_role(${role.id}, this)" >删除角色</a></li>
                                                 </ul>
                                             </div>
                                         </td>
                                     </tr>
                                 </#list>
-                                <!-- 删除用户  Modal -->
+                                <!-- 删除角色  Modal -->
                                 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -131,8 +133,57 @@
 <script src="${context.contextPath}/js/modernizr.min.js"></script>
 <script src="${context.contextPath}/js/jquery.nicescroll.js"></script>
 
+<!--gritter script-->
+<script type="text/javascript" src="${context.contextPath}/js/gritter/js/jquery.gritter.js"></script>
+<script src="${context.contextPath}/js/gritter/js/gritter-init.js" type="text/javascript"></script>
+
 <!--common scripts for all pages-->
 <script src="${context.contextPath}/js/scripts.js"></script>
+
+<script>
+    //删除的标签
+    var parentTR, parentTBODY;
+
+    function delete_role(id, inputObj) {
+        $('#deleteId').val(id);
+        //如果后台成功则调用下列参数进行页面删除
+        var parentTD = inputObj.parentNode.parentNode.parentNode.parentNode;
+        parentTR = parentTD.parentNode;
+        parentTBODY = parentTR.parentNode;
+    }
+    function confirm() {
+        var id = $('#deleteId').val().trim();
+        var url = "/role/"+id+"/delete";
+        $.ajax({
+            url: url,
+            type: 'post',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                alert(1111);
+                TipsNotice(null, data.description);
+                if (data.status == "0") {
+                    parentTBODY.removeChild(parentTR);
+                }
+
+            }
+        });
+    }
+    function TipsNotice(title, text) {
+        console.info("TipsNotice");
+        $.gritter.add({
+            title: title || " 温馨提示 NOTICE ",
+            text:  text || "没有消息！",
+            image: 'images/notice.jpg',
+            sticky: false,
+            time: 3000,
+            speed:5000,
+            position: 'bottom-right',
+            class_name: 'gritter-light'
+        });
+    }
+
+</script>
 
 </body>
 </html>

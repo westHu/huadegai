@@ -26,11 +26,13 @@ public class RoleServiceImpl implements RoleService {
     private ResourceService resourceService;
 
     public Role createRole(Role role) {
-        return roleDao.createRole(role);
+        roleDao.createRole(role);
+        return role;
     }
 
     public Role updateRole(Role role) {
-        return roleDao.updateRole(role);
+        roleDao.updateRole(role);
+        return role;
     }
 
     public void deleteRole(Long roleId) {

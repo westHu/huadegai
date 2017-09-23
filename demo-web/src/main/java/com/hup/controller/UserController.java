@@ -101,7 +101,7 @@ public class UserController {
     public BaseResponse delete(@PathVariable("id") Long id) {
         logger.info("========删除用户 {}",id);
         userService.deleteUser(id);
-        return new BaseResponse("0","删除成功");
+        return new BaseResponse("0","用户删除删除成功！");
     }
 
 

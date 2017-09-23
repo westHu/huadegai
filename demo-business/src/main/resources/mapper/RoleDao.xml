@@ -16,7 +16,7 @@
         insert into sys_role
         (role, description, resource_ids, available)
          values
-         (#{role.role}, #{role.description}, #{role.resourceIds},#{role.available})
+         (#{role.role}, #{role.description}, #{role.resourceIdsStr},#{role.available})
     </insert>
 
     <update id="updateRole">
