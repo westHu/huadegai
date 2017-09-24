@@ -24,11 +24,37 @@ public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
 
+    /**
+     * <p>@Description: 显示组织
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/24
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("organization:view")
+    @RequestMapping(method = RequestMethod.GET)
+    public String showOrganization(Model model) {
+        model.addAttribute("organizationList", organizationService.findAll());
+        return "organization/list";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*@RequiresPermissions("organization:view")
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
         return "organization/index";
-    }
+    }*/
 
     @RequiresPermissions("organization:view")
     @RequestMapping(value = "/tree", method = RequestMethod.GET)

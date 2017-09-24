@@ -1,15 +1,16 @@
 package com.hup.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.hup.api.ResourceService;
 import com.hup.entity.Resource;
+import com.hup.response.BaseResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/resource")
 public class ResourceController {
+
+    Logger logger = LoggerFactory.getLogger(ResourceController.class);
 
     @Autowired
     private ResourceService resourceService;
@@ -52,6 +55,7 @@ public class ResourceController {
     @RequiresPermissions("resource:create")
     @RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.POST)
     public String create(Resource resource, RedirectAttributes redirectAttributes) {
+        logger.info("========= 添加子节点 =========");
         resourceService.createResource(resource);
         redirectAttributes.addFlashAttribute("msg", "新增子节点成功");
         return "redirect:/resource";
@@ -73,12 +77,19 @@ public class ResourceController {
         return "redirect:/resource";
     }
 
+    /**
+     * <p>@Description:  删除资源
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/24
+     * <p>@Param: 
+     * <p>@return:
+     */
+    @ResponseBody
     @RequiresPermissions("resource:delete")
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-    public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    public BaseResponse delete(@PathVariable("id") Long id) {
         resourceService.deleteResource(id);
-        redirectAttributes.addFlashAttribute("msg", "删除成功");
-        return "redirect:/resource";
+        return new BaseResponse("0", "资源删除成功！");
     }
 
 

@@ -63,7 +63,7 @@
                                                             <li><a href="${context.contextPath}/resource/${resource.id}/appendChild">添加子节点</a></li>
                                                             <li><a href="${context.contextPath}/resource/${resource.id}/update">修改</a></li>
                                                             <li class="divider"></li>
-                                                            <li><a class="deleteBtn" href="#" data-id="${resource.id}">删除</a></li>
+                                                            <li><a href="#myModalResource" data-toggle="modal" onclick="delete_resource(${resource.id}, this)" >删除</a></li>
                                                         </ul>
                                                     </div>
 
@@ -85,6 +85,26 @@
                                                 </td>
                                             </tr>
                                         </#list>
+                                        <!-- 删除资源  Modal -->
+                                        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModalResource" class="modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                                        <h4 class="modal-title">确认删除</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input id="deleteId" type="hidden"/>
+                                                        你确定要删除该资源吗？
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="confirmDeleteResource()"> 确定</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- modal -->
                                     </tbody>
                                 </table>
                             </section>
@@ -114,6 +134,10 @@
 <script src="js/modernizr.min.js"></script>
 <script src="js/jquery.nicescroll.js"></script>
 
+<!--gritter script-->
+<script type="text/javascript" src="${context.contextPath}/js/gritter/js/jquery.gritter.js"></script>
+<script src="${context.contextPath}/js/gritter/js/gritter-init.js" type="text/javascript"></script>
+
 <!--treetable-->
 <script src="${context.contextPath}/js/jquery-treetable/javascripts/src/jquery.treetable.js"></script>
 
@@ -122,12 +146,49 @@
 <script>
     $(function() {
         $(".table").treetable({ expandable: true }).treetable("expandNode", 1);
-        $(".deleteBtn").click(function() {
-            if(confirm("确认删除吗?")) {
-                location.href = "${context.contextPath}/resource/"+$(this).data("id")+"/delete";
+    });
+
+
+    //删除的标签
+    var parentTR, parentTBODY;
+
+    function delete_resource(id, inputObj) {
+        $('#deleteId').val(id);
+        //如果后台成功则调用下列参数进行页面删除
+        var parentTD = inputObj.parentNode.parentNode.parentNode.parentNode;
+        parentTR = parentTD.parentNode;
+        parentTBODY = parentTR.parentNode;
+    }
+    function confirmDeleteResource() {
+        var id = $('#deleteId').val().trim();
+        var url = "/resource/"+id+"/delete";
+        $.ajax({
+            url: url,
+            type: 'post',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                TipsNotice(null, data.description);
+                if (data.status == "0") {
+                    parentTBODY.removeChild(parentTR);
+                }
+
             }
         });
-    });
+    }
+    function TipsNotice(title, text) {
+        console.info("TipsNotice");
+        $.gritter.add({
+            title: title || " 温馨提示 NOTICE ",
+            text:  text || "没有消息！",
+            image: 'images/notice.jpg',
+            sticky: false,
+            time: 3000,
+            speed:5000,
+            position: 'bottom-right',
+            class_name: 'gritter-light'
+        });
+    }
 </script>
 </body>
 </html>

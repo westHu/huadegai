@@ -56,11 +56,14 @@
                         角色管理
                     </header>
                     <div class="panel-body">
-                        <form id="roleEditForm" class="form-horizontal" action="${context.contextPath}/resource/${parent.id}/appendChild" method="post">
+                        <form id="resourceEditForm" class="form-horizontal"
+                              <#if op == "新增子节点">action="${context.contextPath}/resource/${parent.id}/appendChild"</#if>
+                              <#if op == "修改">action="${context.contextPath}/resource/${resource.id}/update"</#if>
+                               method="post">
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">父节点</label>
                                 <div class="col-lg-10">
-                                    <p class="form-control-static"><#if parent ?? >${parent.name}<#else>没有父节点</#if></p>
+                                    <p class="form-control-static"><#if parent??>${parent.name}<#else>没有父节点</#if></p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -78,13 +81,13 @@
 
                                     <div class="square">
                                         <div class="radio ">
-                                            <input tabindex="3" type="radio"  name="type" value="${resource.type}" checked>
+                                            <input tabindex="3" type="radio"  name="type" value="menu" <#if resource.type?? &&  resource.type== "menu">checked</#if> >
                                             <label>菜单 </label>
                                         </div>
                                     </div>
                                     <div class="square-red">
                                         <div class="radio ">
-                                            <input tabindex="3" type="radio"  name="type" value="${resource.type}">
+                                            <input tabindex="3" type="radio"  name="type" value="button" <#if resource.type?? &&  resource.type== "button">checked</#if>>
                                             <label>按钮 </label>
                                         </div>
                                     </div>
