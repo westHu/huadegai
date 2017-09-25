@@ -40,6 +40,7 @@ public class UserController {
     @RequiresPermissions("user:view")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
+        logger.info("===== 用户列表页面 ======");
         model.addAttribute("userList", userService.findAll());
         return "user/list";
     }
@@ -47,6 +48,7 @@ public class UserController {
     @RequiresPermissions("user:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreateForm(Model model) {
+        logger.info("===== 创建用户页面 =====");
         setCommonData(model);
         model.addAttribute("user", new User());
         model.addAttribute("op", "新增");

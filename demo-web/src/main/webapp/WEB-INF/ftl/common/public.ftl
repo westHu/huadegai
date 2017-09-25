@@ -8,7 +8,7 @@
     <meta name="keywords" content="${keywords}">
     <meta name="description" content="${description}">
     <meta name="author" content="hup">
-    <link rel="shortcut icon" href="#" type="image/png">
+    <#--<link rel="shortcut icon" href="#" type="image/png">-->
 
     <title>${title}</title>
 

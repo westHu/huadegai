@@ -1,6 +1,7 @@
 package com.hup.api.deviceManagement;
 
-import com.hup.entity.deviceManagement.Device;
+import com.hup.db.Pager;
+import com.hup.entity.Device;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,4 +13,8 @@ import com.hup.entity.deviceManagement.Device;
 public interface DeviceService {
 
     int insert(Device device);
+
+    Pager<Device> queryDeviceList(Pager<Device> pager, Device device); //查询发送短信列表
+
+    Device findOne(Long id);
 }

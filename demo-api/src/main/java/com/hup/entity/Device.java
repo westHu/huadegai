@@ -1,8 +1,9 @@
-package com.hup.entity.deviceManagement;
+package com.hup.entity;
 
 import com.hup.enums.DeviceEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Date;
  * Date: 2017-09-24
  * Time: 14:03
  */
-public class Device {
+public class Device implements Serializable {
     private Long id;
     private String deviceCode; //设备编码
     private String deviceName; //设备名称
