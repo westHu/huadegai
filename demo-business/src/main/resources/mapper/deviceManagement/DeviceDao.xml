@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hup.dao.deviceManagement.DeviceDao">
+
+    <!--
+        1.属性名,表名等用小写,select / from之类关键字用大写。
+        2.<select>返回值尽量使用resultType，当实体属性名称与表中列名无法匹配时候，使用resultMap进行映射。
+        3.不要用parameterType属性(多余)。
+        4.一般情况下用#{},不要用${}。
+        5.对做了分表分库后的数据集做查询操作时，不支持Join, 嵌套查询，order by, group by等操作。
+        6.对SQL进行排版。
+        7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
+          WHERE t.devicename = #{deviceName}
+    -->
+    <insert id="insertDevice" useGeneratedKeys="true" keyProperty="device.id">
+        insert into dms_device
+         (device_code, device_name, device_model, device_spec, device_bg_type, device_sm_type, energy_type, device_brand, device_vender,
+          device_value, device_price, device_function, device_unit, device_purchaser_date, device_purchaser_agent, install_address,
+          device_status, create_date)
+         values
+         (#{device.deviceCode}, #{device.deviceName}, #{device.deviceModel},#{device.deviceSpec}, #{device.deviceBgType}, #{device.deviceSmType},
+          #{device.energyType}, #{device.deviceBrand}, #{device.deviceVender},#{device.deviceValue}, #{device.devicePrice},
+          #{device.deviceFunction},#{device.deviceUnit}, #{device.devicePurchaserDate}, #{device.devicePurchaserAgent},#{device.installAddress}, #{device.deviceStatus}, now())
+    </insert>
+
+
+</mapper>

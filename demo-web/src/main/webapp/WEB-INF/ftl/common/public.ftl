@@ -155,22 +155,21 @@
                         <li><a href="lock_screen.html"> Lockscreen </a></li>
                     </ul>
                 </li>
+                <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>设备管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="${context.contextPath}/device/inbound"> 设备入库</a></li>
+                        <li><a href="${context.contextPath}/device/install"> 设备安装</a></li>
+                        <li><a href="${context.contextPath}/device/repair"> 设备检修</a></li>
+                        <li><a href="${context.contextPath}/device/scrap"> 设备报废</a></li>
+                        <li><a href="${context.contextPath}/device/query"> 设备查询</a></li>
+                    </ul>
+                </li>
                 <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>系统设置</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="${context.contextPath}/user"> 用户管理</a></li>
                         <li><a href="${context.contextPath}/role"> 角色管理</a></li>
                         <li><a href="${context.contextPath}/resource"> 资源管理</a></li>
                         <li><a href="${context.contextPath}/organization"> 组织管理</a></li>
-                        <li><a href="pricing_table.html"> Pricing Table</a></li>
-                        <li><a href="timeline.html"> Timeline</a></li>
-                        <li><a href="blog_list.html"> Blog List</a></li>
-                        <li><a href="blog_details.html"> Blog Details</a></li>
-                        <li><a href="directory.html"> Directory </a></li>
-                        <li><a href="chat.html"> Chat </a></li>
-                        <li><a href="404.html"> 404 Error</a></li>
-                        <li><a href="500.html"> 500 Error</a></li>
-                        <li><a href="registration.html"> Registration Page</a></li>
-                        <li><a href="lock_screen.html"> Lockscreen </a></li>
                     </ul>
                 </li>
                 <li><a href="login.login.ftl"><i class="fa fa-sign-in"></i> <span>Login Page</span></a></li>
