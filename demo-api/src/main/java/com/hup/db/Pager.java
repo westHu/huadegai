@@ -18,7 +18,7 @@ public class Pager<E> implements Serializable {
     /**
      * 每页记录数
      */
-    private Integer pageSize = 20;
+    private Integer pageSize = 10;
 
     /**
      * 总记录数

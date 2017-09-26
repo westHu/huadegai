@@ -22,4 +22,8 @@ public interface DeviceDao {
     int getDeviceCount(@Param("device") Device device);
 
     Device findOne(Long id);
+
+    int updateDevice(Device device);
+
+    int deleteDevice(Long id);
 }

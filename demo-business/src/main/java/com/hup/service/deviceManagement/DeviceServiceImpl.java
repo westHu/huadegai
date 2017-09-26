@@ -46,4 +46,14 @@ public class DeviceServiceImpl implements DeviceService{
     public Device findOne(Long id) {
         return deviceDao.findOne(id);
     }
+
+    @Override
+    public void update(Device device) {
+        deviceDao.updateDevice(device);
+    }
+
+    @Override
+    public void deleteDevice(Long id) {
+        deviceDao.deleteDevice(id);
+    }
 }

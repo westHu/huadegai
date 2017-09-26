@@ -13,9 +13,10 @@
           WHERE t.devicename = #{deviceName}
     -->
     <sql id="table_columns">
-          device_code, device_name, device_model, device_spec, device_bg_type, device_sm_type, energy_type, device_brand, device_vender,
-          device_value, device_price, device_function, device_unit, device_purchaser_date, device_purchaser_agent, install_address,
-          device_status, create_date
+          device_code, device_name, device_model, device_spec, device_bg_type,
+          device_sm_type, energy_type, device_img_urls, device_brand, device_vender,
+          device_value, device_price, device_function, device_unit, device_purchaser_date,
+          device_purchaser_agent, install_address, device_status, remark, create_date
     </sql>
 
 
@@ -23,9 +24,11 @@
         insert into dms_device
          (<include refid="table_columns"/>)
          values
-         (#{device.deviceCode}, #{device.deviceName}, #{device.deviceModel},#{device.deviceSpec}, #{device.deviceBgType}, #{device.deviceSmType},
-          #{device.energyType}, #{device.deviceBrand}, #{device.deviceVender},#{device.deviceValue}, #{device.devicePrice},
-          #{device.deviceFunction},#{device.deviceUnit}, #{device.devicePurchaserDate}, #{device.devicePurchaserAgent},#{device.installAddress}, #{device.deviceStatus}, now())
+         (#{device.deviceCode}, #{device.deviceName}, #{device.deviceModel},#{device.deviceSpec}, #{device.deviceBgType},
+          #{device.deviceSmType}, #{device.energyType}, #{device.deviceImgUrls}, #{device.deviceBrand}, #{device.deviceVender},
+          #{device.deviceValue}, #{device.devicePrice}, #{device.deviceFunction},#{device.deviceUnit}, #{device.devicePurchaserDate},
+          #{device.devicePurchaserAgent},#{device.installAddress}, #{device.deviceStatus}, #{remark},  now()
+          )
     </insert>
 
 
@@ -43,6 +46,34 @@
     </select>
 
 
+    <update id="updateDevice">
+        UPDATE dms_device SET
+          device_code = #{device.deviceCode},
+          device_name = #{device.deviceMame},
+          device_model = #{device.deviceModel},
+          device_spec = #{device.deviceSpec},
+          device_bg_type = #{device.deviceBgType},
+          device_sm_type = #{device.deviceSmType},
+          energy_type = #{device.energyType},
+          device_img_urls = #{device.deviceImgUrls},
+          device_brand = #{device.deviceBrand},
+          device_vender = #{device.deviceVender},
+          device_value = #{device.deviceValue},
+          device_price = #{device.devicePrice},
+          device_function = #{device.deviceFunction},
+          device_unit = #{device.deviceUnit},
+          device_purchaser_date = #{device.devicePurchaserDate},
+          device_purchaser_agent = #{device.devicePurchaserAgent},
+          install_address = #{device.installAddress},
+          device_status = #{device.deviceStatus},
+          remark = #{device.remark},
+          update_date = now()
+        WHERE id = #{device.id}
+    </update>
 
+
+    <delete id="deleteDevice">
+        DELETE FROM dms_device WHERE id = #{id}
+    </delete>
 
 </mapper>

@@ -408,6 +408,34 @@
 </#macro>
 
 
+
+<#macro  hup_pagination showBegin = "1"  showEnd = "10">
+<div id="my-page-div" class="row-fluid">
+    <div class="span6" style="float: left">
+        <div id="dynamic-table_length" class="dataTables_length">
+            <label>
+                <select class="form-control" size="1" name="dynamic-table_length" aria-controls="dynamic-table" id="pageSize">
+                    <option value="10" <#if page.pageSize == 10>selected="selected"</#if> >10</option>
+                    <option value="20" <#if page.pageSize == 20>selected="selected"</#if> >20</option>
+                    <option value="30" <#if page.pageSize == 30>selected="selected"</#if> >30</option>
+                    <option value="40" <#if page.pageSize == 40>selected="selected"</#if> >40</option>
+                </select>
+            </label>
+        </div>
+    </div>
+    <div class="span6" style="float: left; padding: 10px;">
+        <div class="dataTables_info" id="dynamic-table_info">
+            条/页.  现显示：[ ${showBegin} - ${showEnd} ]
+        </div>
+    </div>
+    <div class="span6" style="float: right">
+        <div id="page" class="page_div"></div>
+    </div>
+</div>
+</#macro>
+
+
+
 <#--公共底部-->
 <#macro footer>
 <script type="text/javascript" src="/static/js/common.js"></script>

@@ -17,4 +17,8 @@ public interface DeviceService {
     Pager<Device> queryDeviceList(Pager<Device> pager, Device device); //查询发送短信列表
 
     Device findOne(Long id);
+
+    void update(Device device);
+
+    void deleteDevice(Long id);
 }

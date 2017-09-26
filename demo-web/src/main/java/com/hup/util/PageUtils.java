@@ -1,5 +1,7 @@
 package com.hup.util;
 
+import com.hup.db.Pager;
+
 /**
  * Created by hpj on 2015-09-16.
  */
@@ -29,7 +31,7 @@ public class PageUtils {
         try {
             return Integer.valueOf(num);
         } catch (Exception e) {
-            return 20;
+            return (new Pager()).getPageSize();
         }
     }
 

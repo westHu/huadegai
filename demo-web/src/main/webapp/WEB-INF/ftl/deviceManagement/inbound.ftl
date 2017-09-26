@@ -11,6 +11,9 @@
 <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
 <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/bootstrap-datetimepicker/css/datetimepicker-custom.css" />
 
+<!--paging-hup css-->
+<link rel="stylesheet" type="text/css" href="${context.contextPath}/css/paging-hup.css" />
+
 <style>
 
     label {
@@ -41,6 +44,10 @@
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
         -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+
+    .my-textarea {
+        height: 47px;
     }
 
     .col-md-1 {
@@ -77,40 +84,51 @@
                             ${base}asdad
                         </header>
                         <div class="panel-body">
-                            <form class="device-inbound-form" action="${context.contextPath}/device/inbound" method="post">
+                            <form class="device-inbound-form"
+                                  <#if op == '新增'>
+                                    action="${context.contextPath}/device/inbound"
+                                  <#elseif op == '更新'>
+                                    action="${context.contextPath}/device/update"
+                                  </#if>
+                                  method="post">
                                 <div class="row">
                                     <label class="control-label"  style="float: left">设备编码：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" value="${base}" name="deviceCode"  id="deviceCode" disabled>
+                                        <input type="hidden" class="my-form-control"  name="id"  id="id" value="${device.id}">
+                                        <input type="text" class="my-form-control"
+                                               <#if op = '新增'>value=".系统生成"<#elseif op = '更新'>value="${device.deviceCode}"</#if>
+                                               name="deviceCode"  id="deviceCode" disabled>
                                     </div>
 
                                     <label class="control-label"  style="float: left">设备名称：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" name="deviceName" id="deviceName">
+                                        <#--<p class="form-control-static" style="margin-top: 5px;">水泵3#</p>-->
+                                        <input type="text" class="my-form-control" name="deviceName" id="deviceName" value="${device.deviceName}">
                                     </div>
 
-                                    <label class="control-label" style="float: left">设备型号</label>
+                                    <label class="control-label" style="float: left">设备型号：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" name="deviceModel" id="deviceModel">
+                                        <input type="text" class="my-form-control" name="deviceModel" id="deviceModel" value="${device.deviceModel}">
                                     </div>
                                     <label class="control-label"  style="float: left">设备规格：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" name="deviceSpec" id="deviceSpec">
+                                        <input type="text" class="my-form-control" name="deviceSpec" id="deviceSpec" value="${device.deviceSpec}">
                                     </div>
 
                                     <label class="control-label"  style="float: left">设备大类：</label>
                                     <div class="col-md-1">
-                                        <select class="my-form-control" name="deviceBgType" id="deviceBgType">
+                                        <select class="my-form-control" name="deviceBgType" id="deviceBgType" value="${device.getDeviceBgType()}">
                                             <#list deviceBgType as bgType>
-                                                <option value="${bgType}">${bgType.value}</option>
+                                                <option value="${bgType}"  <#if device.deviceBgType == bgType>selected</#if> >${bgType.value}</option>
                                             </#list>
                                         </select>
                                     </div>
-                                    <label class="control-label" style="float: left">设备子类</label>
+
+                                    <label class="control-label" style="float: left">设备子类：</label>
                                     <div class="col-md-1">
-                                        <select class="my-form-control" name="deviceSmType" id="deviceSmType">
+                                        <select class="my-form-control" name="deviceSmType" id="deviceSmType"  >
                                         <#list deviceSmType as smType>
-                                            <option value="${smType}">${smType.value}</option>
+                                            <option value="${smType}" <#if device.deviceSmType == smType>selected</#if> >${smType.value}</option>
                                         </#list>
                                         </select>
                                     </div>
@@ -119,23 +137,37 @@
                                 <div class="row">
                                     <label class="control-label"  style="float: left">设备品牌：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" name="deviceBrand" id="deviceBrand">
+                                        <input type="text" class="my-form-control" name="deviceBrand" id="deviceBrand" value="${device.deviceBrand}">
                                     </div>
+
                                     <label class="control-label"  style="float: left">设备厂家：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" name="deviceVender" id="deviceVender">
+                                        <input type="text" class="my-form-control" name="deviceVender" id="deviceVender" value="${device.deviceVender}">
                                     </div>
-                                    <label class="control-label" style="float: left">设备原值</label>
+                                    <label class="control-label" style="float: left">设备原值：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" name="deviceValue" id="deviceValue" value="100.0">
+                                        <input type="text" class="my-form-control" name="deviceValue" id="deviceValue" value="${device.deviceValue}??'100.0'">
                                     </div>
+
                                     <label class="control-label"  style="float: left">设备价格：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" name="devicePrice" id="devicePrice">
+                                        <input type="text" class="my-form-control" name="devicePrice" id="devicePrice" value="${device.devicePrice}" >
                                     </div>
-                                    <label class="control-label"  style="float: left">设备用途：</label>
-                                    <div class="col-md-2">
-                                        <input type="text" class="my-form-control" name="deviceFunction" id="deviceFunction">
+                                    <!--设备新增不现实状态，默认都是入库-->
+                                    <#if op == '更新'>
+                                        <label class="control-label" style="float: left">设备状态：</label>
+                                        <div class="col-md-1">
+                                            <input type="text" class="my-form-control" name="deviceStatus" id="deviceStatus" value="${device.deviceStatus}">
+                                        </div>
+                                    </#if>
+                                    <label class="control-label" style="float: left">能源类型：</label>
+                                    <div class="col-md-1">
+                                        <select class="my-form-control" name="energyType" id="energyType" value="${device.energyType}">
+                                            <option value="水">水</option>
+                                            <option value="电">电</option>
+                                            <option value="气">气</option>
+                                            <option value="燃">燃</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -143,28 +175,55 @@
                                 <div class="row">
                                     <label class="control-label"  style="float: left">隶属单位：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" name="deviceUnit" id="deviceUnit">
+                                        <input type="text" class="my-form-control" name="deviceUnit" id="deviceUnit" value="${device.deviceUnit}">
                                     </div>
+
                                     <label class="control-label"  style="float: left">采购日期：</label>
                                     <div class="col-md-1">
                                         <#--<input type="text" class="my-form-control" >-->
                                             <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="12-02-2017"  class="input-append date dpYears">
-                                                <input type="text" readonly="" value="2017-11-11" size="16" class="form-control" name="devicePurchaserDate" id="devicePurchaserDate">
+                                                <input type="text" readonly=""value="<#if device.devicePurchaserDate??>${device.devicePurchaserDate?string("yyyy-MM-dd")}<#else>2017-11-11</#if>" size="16" class="form-control" name="devicePurchaserDate" id="devicePurchaserDate">
                                                 <span class="input-group-btn add-on">
                                                     <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
                                                 </span>
                                             </div>
                                     </div>
-                                    <label class="control-label" style="float: left">采购人员</label>
+
+                                    <label class="control-label" style="float: left">采购人员：</label>
                                     <div class="col-md-1">
-                                        <input type="text" class="my-form-control" name="devicePurchaserAgent" value="${device.devicePurchaserAgent}">
+                                        <input type="text" class="my-form-control" name="devicePurchaserAgent" id="devicePurchaserAgent" value="${device.devicePurchaserAgent}" >
+                                    </div>
+
+                                    <label class="control-label" style="float: left">安装地址：</label>
+                                    <div class="col-md-1">
+                                        <input type="text" class="my-form-control" name="installAddress" id="installAddress" value="${device.installAddress}" >
+                                    </div>
+
+                                    <label class="control-label"  style="float: left">设备用途：</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="my-form-control" name="deviceFunction" id="deviceFunction" value="${device.deviceFunction}" >
                                     </div>
                                 </div>
-                                <span class="tools pull-right">
-                                    <button class="btn btn-info" type="button">&nbsp批量导入&nbsp</button>
-                                    <button class="btn btn-info" type="submit">&nbsp设备入库&nbsp</button>
-                                    <button class="btn btn-info" type="reset">&nbsp重&nbsp置&nbsp</button>
-                                </span>
+
+                                <!--************** 第四行 ***************** -->
+                                <div class="row" style="width: 90%">
+                                    <label class="control-label" style="float: left">设备备注：</label>
+                                    <div class="col-sm-4">
+                                        <textarea rows="6" class="my-form-control my-textarea" id="remark">${device.remark}</textarea>
+                                    </div>
+                                </div>
+                                <#if op == '新增'>
+                                    <span class="tools pull-right">
+                                        <button class="btn btn-primary" type="button">&nbsp批量导入&nbsp</button>
+                                        <button class="btn btn-primary" type="submit">&nbsp设备入库&nbsp</button>
+                                        <button class="btn btn-primary" type="reset">&nbsp重&nbsp置&nbsp</button>
+                                    </span>
+                                <#elseif op == '更新'>
+                                    <span class="tools pull-right">
+                                        <button class="btn btn-primary" type="submit">&nbsp更新设备&nbsp</button>
+                                    </span>
+                                </#if>
+
                             </form>
                         </div>
                     </section>
@@ -209,8 +268,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <#list deviceList as obj>
-                                            <tr>
+                                        <#list page.getList() as obj>
+                                            <tr <#if obj.id == device.id> style="color: #eeaa31" </#if> >
                                                 <td>${obj.deviceCode}</td>
                                                 <td>${obj.deviceName}</td>
                                                 <td>${obj.deviceModel}</td>
@@ -227,8 +286,9 @@
                                                             操&nbsp作 <span class="caret"></span>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu">
-                                                            <li><a href="#"  onclick="edit_device(${obj.id})">编辑设备</a></li>
-                                                            <li><a href="#myModal2" data-toggle="modal" onclick="delete_user(${obj.id},this)" >删除设备</a></li>
+                                                            <li><a href="#" >查看设备</a></li>
+                                                            <li><a href="${context.contextPath}/device/${obj.id}/update?currentPage=${page.currentPage}&pageSize=${page.pageSize}" >编辑设备</a></li>
+                                                            <li><a href="#myModal2" data-toggle="modal" onclick="delete_device(${obj.id},this)" >删除设备</a></li>
                                                             <li class="divider"></li>
                                                             <li><a href="#myModal3" data-toggle="modal" onclick="resetPwd(${obj.id})" >复制设备</a></li>
                                                         </ul>
@@ -246,11 +306,11 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <input id="deleteId" type="hidden"/>
-                                                        你确定要删除该用户吗？
+                                                        你确定要删除该设备吗？
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="confirm()"> 确定</button>
+                                                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="confirmDeleteDevice()"> 确定</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -258,6 +318,8 @@
                                         <!-- modal -->
                                     </tbody>
                                 </table>
+
+                                <@hup_pagination  showBegin = "${ (page.currentPage-1) * page.pageSize + 1 }"  showEnd = "${page.currentPage * page.pageSize}"></@hup_pagination>
                             </section>
                         </div>
                     </section>
@@ -300,61 +362,28 @@
 <!--pickers initialization-->
 <script src="${context.contextPath}/js/pickers-init.js"></script>
 
+<!--pickers initialization-->
+<script src="${context.contextPath}/js/paging-hup.js"></script>
+
 <!--common scripts for all pages-->
 <script src="${context.contextPath}/js/scripts.js"></script>
 
 <script>
 
-    /** 跟新设备 */
-    function edit_device(updateId) {
-        var url =  "/device/"+updateId;
-        $.ajax({
-            url: url,
-            type: 'post',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data) {
-                if(data.status == 0){
-                    fill_form(data.result)
-                }else if (data.status == -1){
-                    TipsNotice(null, data.description);
-                }
-            }
-        });
-    }
-    /** 填充form */
-    function fill_form(result) {
-        $('#deviceCode').val(result.deviceCode);
-        $('#deviceName').val(result.deviceName);
-        $('#deviceModel').val(result.deviceModel);
-        $('#deviceSpec').val(result.deviceSpec);
-        $('#deviceBgType').val(result.deviceBgType);
-        $('#deviceSmType').val(result.deviceSmType);
-        $('#deviceBrand').val(result.deviceBrand);
-        $('#deviceVender').val(result.deviceVender);
-        $('#deviceValue').val(result.deviceValue);
-        $('#devicePrice').val(result.devicePrice);
-        $('#deviceFunction').val(result.deviceFunction);
-        $('#deviceUnit').val(result.deviceUnit);
-        $('#devicePurchaserDate').val(result.devicePurchaserDate);
-        $('#devicePurchaserAgent').val(result.devicePurchaserAgent);
-    }
-
-
-
     //删除的标签
     var parentTR, parentTBODY;
 
-    function delete_user(id, inputObj) {
+    function delete_device(id, inputObj) {
         $('#deleteId').val(id);
         //如果后台成功则调用下列参数进行页面删除
         var parentTD = inputObj.parentNode.parentNode.parentNode.parentNode;
         parentTR = parentTD.parentNode;
         parentTBODY = parentTR.parentNode;
     }
-    function confirm() {
+
+    function confirmDeleteDevice() {
         var id = $('#deleteId').val().trim();
-        var url =  "/user/"+id+"/delete";
+        var url =  "/device/"+id+"/delete";
         $.ajax({
             url: url,
             type: 'post',
@@ -370,34 +399,6 @@
         });
     }
 
-    //重置密码js
-    function resetPwd(id) {
-        $('#resetPwdId').val(id);
-    }
-    function confirmReset() {
-        var id = $('#resetPwdId').val().trim();
-        var url = "/user/"+id+"/resetPassword";
-        $.ajax({
-            url: url,
-            type: 'post',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data) {
-                TipsNotice(null, data.description);
-            }
-        });
-    }
-
-
-
-
-
-
-
-
-
-
-
 
     function TipsNotice(title, text) {
         $.gritter.add({
@@ -412,6 +413,23 @@
         });
     }
 
+</script>
+
+<script>
+    //分页
+    $("#page").paging({
+        pageNo: ${page.currentPage},
+        totalPage: ${page.pageCount},
+        totalSize: ${page.totalCount},
+        callback: function(num) {
+            //alert(num)
+            var pageSize = $('#pageSize option:selected').val();
+            console.info(pageSize);
+            var pageUrl =  "${context.contextPath}/device/inbound?currentPage="+num+"&pageSize="+pageSize;
+            console.info(pageUrl)
+            location.href = pageUrl;
+        }
+    })
 </script>
 </body>
 </html>
