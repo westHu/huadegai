@@ -1,23 +1,53 @@
 <#--公共顶部-->
-<#macro header title="默认文字" keywords="默认文字" description="默认文字">
+<#macro header title="默认文字" css_war = "" >
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="keywords" content="${keywords}">
-    <meta name="description" content="${description}">
+    <meta name="keywords" content="${title}">
+    <meta name="description" content="${title}">
     <meta name="author" content="hup">
     <#--<link rel="shortcut icon" href="#" type="image/png">-->
-
     <title>${title}</title>
+
+    <#if css_war?length gt 0>
+        <#list css_war?split(",") as obj >
+            <#if obj == 'responsive_table'>
+                <!--responsive table-->
+                <link href="${context.contextPath}/css/table-responsive.css" rel="stylesheet" />
+            </#if>
+            <#if obj == 'gritter_css'>
+                <!--gritter css-->
+                <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/gritter/css/jquery.gritter.css" />
+            </#if>
+            <#if obj == 'icheck'>
+                <!--icheck-->
+                <link href="${context.contextPath}/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/square/square.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/square/red.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/square/blue.css" rel="stylesheet">
+            </#if>
+            <#if obj == 'dashboard_calendar'>
+                <!--dashboard calendar-->
+                <link href="${context.contextPath}/css/clndr.css" rel="stylesheet">
+            </#if>
+            <#if obj == 'morris_chart_css'>
+                <!--Morris Chart CSS -->
+                <link rel="stylesheet" href="${context.contextPath}/js/morris-chart/morris.css">
+            </#if>
+
+
+
+
+        </#list>
+    </#if>
 
     <#nested>
 
     <!--common-->
     <link href="${context.contextPath}/css/style.css" rel="stylesheet">
     <link href="${context.contextPath}/css/style-responsive.css" rel="stylesheet">
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="${context.contextPath}/js/html5shiv.js"></script>
@@ -157,6 +187,7 @@
                 </li>
                 <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>设备管理</span></a>
                     <ul class="sub-menu-list">
+                        <li><a href="${context.contextPath}/device/inbound"> 设备采购</a></li>
                         <li><a href="${context.contextPath}/device/inbound"> 设备入库</a></li>
                         <li><a href="${context.contextPath}/device/install"> 设备安装</a></li>
                         <li><a href="${context.contextPath}/device/repair"> 设备检修</a></li>

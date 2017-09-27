@@ -25,6 +25,7 @@ public class User implements Serializable {
     private String email;
     private String mobile;
     private String address;
+    private String avatarPhoto;
 
 
     //--------- 非数据库属性
@@ -176,6 +177,14 @@ public class User implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getAvatarPhoto() {
+        return avatarPhoto;
+    }
+
+    public void setAvatarPhoto(String avatarPhoto) {
+        this.avatarPhoto = avatarPhoto;
     }
 
     @Override

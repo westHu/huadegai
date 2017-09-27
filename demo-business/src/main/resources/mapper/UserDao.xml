@@ -12,11 +12,19 @@
         7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
           WHERE t.username = #{userName}
     -->
+    <sql id="table_columns">
+        t.id, t.organization_id, t.username, t.password, t.salt, t.real_name, t.email, t.mobile, t.address,
+         t.role_ids as roleIdsStr, t.locked, s.name as organization_name
+
+    </sql>
+
+
     <insert id="createUser" useGeneratedKeys="true" keyProperty="user.id">
         insert into sys_user
-        (organization_id, username, password, salt, role_ids, locked)
+        (organization_id, username, password, salt, real_name, email, mobile, address, role_ids, locked)
          values
-         (#{user.organizationId}, #{user.username}, #{user.password},#{user.salt}, #{user.roleIdsStr}, #{user.locked})
+         (#{user.organizationId}, #{user.username}, #{user.password}, #{user.salt}, #{user.realName}, #{user.email},
+          #{user.mobile}, #{user.address}, #{user.roleIdsStr}, #{user.locked})
     </insert>
 
     <update id="updateUser">
@@ -25,6 +33,10 @@
         username = #{user.username},
         password = #{user.password},
         salt = #{user.salt},
+        real_name = #{user.realName},
+        email = #{user.email},
+        mobile = #{user.mobile},
+        address =  #{user.address},
         role_ids = #{user.roleIdsStr},
         locked = #{user.locked}
         where id= #{user.id}
@@ -35,21 +47,21 @@
     </delete>
 
     <select id="findOne" resultType="com.hup.entity.User">
-        SELECT t.id, t.organization_id, t.username, t.password, t.salt, t.role_ids, t.locked, s.name as organization_name
+        SELECT <include refid="table_columns"/>
         FROM sys_user t
         LEFT JOIN sys_organization s ON s.id = t.organization_id
         WHERE t.id = #{userId}
     </select>
 
     <select id="findAll" resultType="com.hup.entity.User">
-        SELECT t.id, t.organization_id, t.username, t.password, t.salt, t.role_ids as roleIdsStr, t.locked, s.name as organization_name
+        SELECT <include refid="table_columns"/>
         FROM sys_user t
         LEFT JOIN sys_organization s ON s.id = t.organization_id
     </select>
 
 
     <select id="findByUsername" resultType="com.hup.entity.User">
-        SELECT t.id, t.organization_id, t.username, t.password, t.salt, t.role_ids as roleIdsStr, t.locked, s.name as organization_name
+        SELECT <include refid="table_columns"/>
         FROM sys_user t
         LEFT JOIN sys_organization s ON s.id = t.organization_id
         WHERE t.username = #{username}

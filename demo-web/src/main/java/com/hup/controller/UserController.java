@@ -3,9 +3,9 @@ package com.hup.controller;
 import com.hup.api.OrganizationService;
 import com.hup.api.RoleService;
 import com.hup.api.UserService;
+import com.hup.constant.CantDelete;
 import com.hup.entity.User;
 import com.hup.response.BaseResponse;
-import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Arrays;
 
 /**
  * <p>User: hup
@@ -42,7 +44,7 @@ public class UserController {
     public String list(Model model) {
         logger.info("===== 用户列表页面 ======");
         model.addAttribute("userList", userService.findAll());
-        return "user/list";
+        return "user/userList";
     }
 
     @RequiresPermissions("user:create")
@@ -52,7 +54,7 @@ public class UserController {
         setCommonData(model);
         model.addAttribute("user", new User());
         model.addAttribute("op", "新增");
-        return "user/edit";
+        return "user/userCreate";
     }
 
 
@@ -70,7 +72,7 @@ public class UserController {
         setCommonData(model);
         model.addAttribute("user", userService.findOne(id));
         model.addAttribute("op", "修改");
-        return "user/edit";
+        return "user/userEdit";
     }
 
     @RequiresPermissions("user:update")
@@ -81,14 +83,7 @@ public class UserController {
         return "redirect:/user";
     }
 
-    @RequiresPermissions("user:delete")
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-    public String showDeleteForm(@PathVariable("id") Long id, Model model) {
-        setCommonData(model);
-        model.addAttribute("user", userService.findOne(id));
-        model.addAttribute("op", "删除");
-        return "redirect:/user";
-    }
+
 
     /**
      * <p>@Description: 删除用户
@@ -102,6 +97,11 @@ public class UserController {
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public BaseResponse delete(@PathVariable("id") Long id) {
         logger.info("========删除用户 {}",id);
+        User user = userService.findOne(id);
+        String[] split = CantDelete.INNATE_USER.split(",");
+        if (null != user && Arrays.asList(split).contains(user.getUsername()) ){
+            return new BaseResponse("-1",user.getUsername()+",该用户是固有用户，不能删除！");
+        }
         userService.deleteUser(id);
         return new BaseResponse("0","用户删除删除成功！");
     }

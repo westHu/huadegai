@@ -1,13 +1,6 @@
 <#include "common/public.ftl">
-<@header title="新增用户" keywords="新增用户" description="新增用户">
-<!--responsive table-->
-<link href="${context.contextPath}/css/table-responsive.css" rel="stylesheet" />
-<!--gritter css-->
-<link rel="stylesheet" type="text/css" href="${context.contextPath}/js/gritter/css/jquery.gritter.css" />
-</@header>
-
+<@header title="新增用户" css_wart = "responsive_table,gritter_css"></@header>
 <body class="sticky-header">
-
 <section>
     <!-- left side start-->
     <@left title="导航栏"></@left>
@@ -15,7 +8,6 @@
     
     <!-- main content start-->
     <div class="main-content" >
-
         <!-- header section start-->
         <@notification title="通知"></@notification>
         <!-- header section end-->
@@ -57,28 +49,26 @@
                                     <thead>
                                         <tr>
                                             <th>登录名</th>
-                                            <th>密码</th>
-                                            <th class="numeric">盐值</th>
-                                            <th class="numeric">角色列表</th>
-                                            <th class="numeric">所属公司</th>
-                                            <th class="numeric">真实名称</th>
-                                            <th class="numeric">联系方式</th>
-                                            <th class="numeric">联系地址</th>
-                                            <th class="numeric">操作</th>
+                                            <th>昵称</th>
+                                            <th>邮箱</th>
+                                            <th>角色列表</th>
+                                            <th>所属公司</th>
+                                            <th>联系方式</th>
+                                            <th>联系地址</th>
+                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <#list userList as user>
                                             <tr>
                                                 <td>${user.username}</td>
-                                                <td>*******</td>
-                                                <td class="numeric">********</td>
-                                                <td class="numeric">${user.roleNames}</td>
-                                                <td class="numeric">${user.organizationName}</td>
-                                                <td class="numeric">...</td>
-                                                <td class="numeric">...</td>
-                                                <td class="numeric">...</td>
-                                                <td class="numeric">
+                                                <td>${user.realName}</td>
+                                                <td>${user.email}</td>
+                                                <td>${user.roleNames}</td>
+                                                <td>${user.organizationName}</td>
+                                                <td>${user.mobile}</td>
+                                                <td>${user.address}</td>
+                                                <td>
                                                 <#--<a href="javascript:void(0)" class="pop pop_recharge" data-toggle='modal' data-target="#user-recharge" data-id="${user.id}">充值</a>-->
                                                     <div class="btn-group">
                                                         <button data-toggle="dropdown" type="button" class="btn btn-success btn-sm dropdown-toggle">
@@ -218,16 +208,6 @@
             }
         });
     }
-
-
-
-
-
-
-
-
-
-
 
 
     function TipsNotice(title, text) {

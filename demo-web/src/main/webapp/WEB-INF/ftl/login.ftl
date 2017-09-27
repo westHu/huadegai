@@ -1,11 +1,8 @@
 <#include "common/public.ftl">
-<@header title="登录" keywords="登录" description="登录">
-</@header>
-
+<@header title="登录" css_war="default"></@header>
 <body class="login-body">
 
 <div class="container">
-
     <form class="form-signin" action="${context.contextPath}/login" method="post">
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">Sign In</h1>
@@ -60,15 +57,12 @@
     </form>
 
 </div>
-
-
-
 <!-- Placed js at the end of the document so the pages load faster -->
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/modernizr.min.js"></script>
+<script src="${context.contextPath}/js/jquery-1.10.2.min.js"></script>
+<script src="${context.contextPath}/js/bootstrap.min.js"></script>
+<script src="${context.contextPath}/js/modernizr.min.js"></script>
 
 </body>
 </html>

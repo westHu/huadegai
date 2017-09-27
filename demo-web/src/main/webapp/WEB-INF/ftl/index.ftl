@@ -1,16 +1,6 @@
 <#include "common/public.ftl">
-<@header title="首页" keywords="首页" description="首页">
-    <!--icheck-->
-    <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
-    <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
-    <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
-    <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+<@header title="首页" css_war="icheck,dashboard_calendar,morris_chart_css">
 
-    <!--dashboard calendar-->
-    <link href="css/clndr.css" rel="stylesheet">
-
-    <!--Morris Chart CSS -->
-    <link rel="stylesheet" href="js/morris-chart/morris.css">
 </@header>
 
 
