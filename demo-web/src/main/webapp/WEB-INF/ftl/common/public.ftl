@@ -1,5 +1,5 @@
 <#--公共顶部-->
-<#macro header title="默认文字" css_war = "" >
+<#macro header title="default" css_war = "" >
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +17,10 @@
                 <!--responsive table-->
                 <link href="${context.contextPath}/css/table-responsive.css" rel="stylesheet" />
             </#if>
+            <#if obj == 'stepy'>
+                <!--stepy-->
+                <link href="${context.contextPath}/css/jquery.stepy.css" rel="stylesheet">
+            </#if>
             <#if obj == 'gritter_css'>
                 <!--gritter css-->
                 <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/gritter/css/jquery.gritter.css" />
@@ -24,9 +28,25 @@
             <#if obj == 'icheck'>
                 <!--icheck-->
                 <link href="${context.contextPath}/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/minimal/red.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/minimal/green.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/minimal/blue.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/minimal/yellow.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/minimal/purple.css" rel="stylesheet">
+
                 <link href="${context.contextPath}/js/iCheck/skins/square/square.css" rel="stylesheet">
                 <link href="${context.contextPath}/js/iCheck/skins/square/red.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/square/green.css" rel="stylesheet">
                 <link href="${context.contextPath}/js/iCheck/skins/square/blue.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/square/yellow.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/square/purple.css" rel="stylesheet">
+
+                <link href="${context.contextPath}/js/iCheck/skins/flat/grey.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/flat/red.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/flat/green.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/flat/blue.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/flat/yellow.css" rel="stylesheet">
+                <link href="${context.contextPath}/js/iCheck/skins/flat/purple.css" rel="stylesheet">
             </#if>
             <#if obj == 'dashboard_calendar'>
                 <!--dashboard calendar-->
@@ -36,6 +56,11 @@
                 <!--Morris Chart CSS -->
                 <link rel="stylesheet" href="${context.contextPath}/js/morris-chart/morris.css">
             </#if>
+            <#if obj == 'treeview'>
+                <!--treeview -->
+                <link href="${context.contextPath}/js/bootstrap-treeview/css/bootstrap-treeview.css" rel="stylesheet">
+            </#if>
+
 
 
 
@@ -57,6 +82,8 @@
 </#macro>
 
 
+
+<#-- ##########页面引入 导航栏 的模板 ##############-->
 <#macro left title="导航栏">
     <!-- left side start-->
     <div class="left-side sticky-left-side">
@@ -214,6 +241,8 @@
 </#macro>
 
 
+
+<#-- ##########页面引入 通知 的模板 ##############-->
 <#macro notification title="通知">
     <div class="header-section">
 
@@ -420,6 +449,8 @@
 </#macro>
 
 
+
+<#-- ##########页面引入公共底部的模板 ##############-->
 <#--公共底部-->
 <#macro pageHeading title_1 = "默认标题" title_2 = "默认标题" title_3 = "默认标题" title_4 = "默认标题">
     <div class="page-heading">
@@ -440,6 +471,7 @@
 
 
 
+<#-- ##########页面引入 分页 的模板 ##############-->
 <#macro  hup_pagination showBegin = "1"  showEnd = "10">
 <div id="my-page-div" class="row-fluid">
     <div class="span6" style="float: left">
@@ -464,6 +496,97 @@
     </div>
 </div>
 </#macro>
+
+
+
+<#-- ##########页面引入js库的模板 ##############-->
+<#macro js_lib  js_war = "default">
+    <!-- Placed js at the end of the document so the pages load faster -->
+    <script src="${context.contextPath}/js/jquery-1.10.2.min.js"></script>
+    <script src="${context.contextPath}/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="${context.contextPath}/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="${context.contextPath}/js/bootstrap.min.js"></script>
+    <script src="${context.contextPath}/js/modernizr.min.js"></script>
+    <script src="${context.contextPath}/js/jquery.nicescroll.js"></script>
+
+    <#if js_war?length gt 0>
+        <#list js_war?split(",") as obj >
+            <#if obj == 'validate_stepy'>
+                <!--validate_stepy-->
+                <script src="${context.contextPath}/js/jquery.validate.min.js"></script>
+                <script src="${context.contextPath}/js/jquery.stepy.js"></script>
+            </#if>
+
+            <#if obj == 'easy_pie_chart'>
+                <!--easy pie chart-->
+                <script src="${context.contextPath}/js/easypiechart/jquery.easypiechart.js"></script>
+                <script src="${context.contextPath}/js/easypiechart/easypiechart-init.js"></script>
+            </#if>
+
+            <#if obj == 'sparkline_chart'>
+                <!--Sparkline Chart-->
+                <script src="${context.contextPath}/js/sparkline/jquery.sparkline.js"></script>
+                <script src="${context.contextPath}/js/sparkline/sparkline-init.js"></script>
+            </#if>
+
+            <#if obj == 'icheck'>
+                <!--icheck -->
+                <script src="${context.contextPath}/js/iCheck/jquery.icheck.js"></script>
+                <script src="${context.contextPath}/js/icheck-init.js"></script>
+            </#if>
+
+            <#if obj == 'jQuery_flot_chart'>
+                <!-- jQuery Flot Chart-->
+                <script src="${context.contextPath}/js/flot-chart/jquery.flot.js"></script>
+                <script src="${context.contextPath}/js/flot-chart/jquery.flot.tooltip.js"></script>
+                <script src="${context.contextPath}/js/flot-chart/jquery.flot.resize.js"></script>
+            </#if>
+
+            <#if obj == 'morris_chart'>
+                <!--Morris Chart-->
+                <script src="${context.contextPath}/js/morris-chart/morris.js"></script>
+                <script src="${context.contextPath}/js/morris-chart/raphael-min.js"></script>
+            </#if>
+
+            <#if obj == 'calendar'>
+                <!--Calendar-->
+                <script src="${context.contextPath}/js/calendar/clndr.js"></script>
+                <script src="${context.contextPath}/js/calendar/evnt.calendar.init.js"></script>
+                <script src="${context.contextPath}/js/calendar/moment-2.2.1.js"></script>
+                <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+            </#if>
+
+            <#if obj == 'gritter_script'>
+                <!--gritter script-->
+                <script src="${context.contextPath}/js/gritter/js/jquery.gritter.js" type="text/javascript"></script>
+                <script src="${context.contextPath}/js/gritter/js/gritter-init.js" type="text/javascript"></script>
+            </#if>
+            <#if obj == 'treeview'>
+                <!--treeview-->
+                <script src="${context.contextPath}/js/bootstrap-treeview/js/bootstrap-treeview.min.js"></script>
+            </#if>
+            <#if obj == 'input_mask'>
+                <!--bootstrap-input-mask-->
+                <script type="text/javascript" src="${context.contextPath}/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+            </#if>
+
+
+
+
+
+            <#if obj == 'dashboard_charts'>
+                <!--Dashboard Charts-->
+                <script src="${context.contextPath}/js/dashboard-chart-init.js"></script>
+            </#if>
+        </#list>
+    </#if>
+    <!--common scripts for all pages-->
+    <script src="${context.contextPath}/js/scripts.js"></script>
+</#macro>
+
+
+
+
 
 
 

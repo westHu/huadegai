@@ -1,32 +1,5 @@
 <#include "common/public.ftl">
-<@header title="新增用户" keywords="新增用户" description="新增用户">
-<!--responsive table-->
-<link href="${context.contextPath}/css/jquery.stepy.css" rel="stylesheet">
-<!--treeview-->
-<link href="${context.contextPath}/js/bootstrap-treeview/css/bootstrap-treeview.css" rel="stylesheet">
-<!--icheck-->
-<link href="${context.contextPath}/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/red.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/green.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/blue.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/yellow.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/purple.css" rel="stylesheet">
-
-<link href="${context.contextPath}/js/iCheck/skins/square/square.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/red.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/green.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/blue.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/yellow.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/purple.css" rel="stylesheet">
-
-<link href="${context.contextPath}/js/iCheck/skins/flat/grey.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/red.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/green.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/blue.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/yellow.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/purple.css" rel="stylesheet">
-</@header>
-
+<@header title="新增用户" css_war = "stepy,treeview,icheck"></@header>
 <body class="sticky-header">
 
 <section>
@@ -195,24 +168,7 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="${context.contextPath}/js/jquery-1.10.2.min.js"></script>
-<script src="${context.contextPath}/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="${context.contextPath}/js/jquery-migrate-1.2.1.min.js"></script>
-<script src="${context.contextPath}/js/jquery.validate.min.js"></script>
-<script src="${context.contextPath}/js/jquery.stepy.js"></script>
-<script src="${context.contextPath}/js/bootstrap.min.js"></script>
-<script src="${context.contextPath}/js/modernizr.min.js"></script>
-<script src="${context.contextPath}/js/jquery.nicescroll.js"></script>
-<#--treeview-->
-<script src="${context.contextPath}/js/bootstrap-treeview/js/bootstrap-treeview.min.js"></script>
-<!--bootstrap input mask-->
-<script type="text/javascript" src="${context.contextPath}/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-<!--icheck -->
-<script src="${context.contextPath}/js/iCheck/jquery.icheck.js"></script>
-<script src="${context.contextPath}/js/icheck-init.js"></script>
-<!--common scripts for all pages-->
-<script src="${context.contextPath}/js/scripts.js"></script>
-
+<@js_lib js_war="validate_stepy,treeview,input_mask,icheck"></@js_lib>
 <script>
     /*=====STEPY WIZARD WITH VALIDATION====*/
     $(function() {

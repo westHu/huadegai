@@ -58,11 +58,6 @@
 
 </div>
 <!-- Placed js at the end of the document so the pages load faster -->
-
-<!-- Placed js at the end of the document so the pages load faster -->
-<script src="${context.contextPath}/js/jquery-1.10.2.min.js"></script>
-<script src="${context.contextPath}/js/bootstrap.min.js"></script>
-<script src="${context.contextPath}/js/modernizr.min.js"></script>
-
+<@js_lib js_war="default"></@js_lib>
 </body>
 </html>

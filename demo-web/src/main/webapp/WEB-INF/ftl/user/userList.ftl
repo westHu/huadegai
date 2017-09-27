@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="新增用户" css_wart = "responsive_table,gritter_css"></@header>
+<@header title="新增用户" css_war = "responsive_table,gritter_css"></@header>
 <body class="sticky-header">
 <section>
     <!-- left side start-->
@@ -148,20 +148,7 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="${context.contextPath}/js/jquery-1.10.2.min.js"></script>
-<script src="${context.contextPath}/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="${context.contextPath}/js/jquery-migrate-1.2.1.min.js"></script>
-<script src="${context.contextPath}/js/bootstrap.min.js"></script>
-<script src="${context.contextPath}/js/modernizr.min.js"></script>
-<script src="${context.contextPath}/js/jquery.nicescroll.js"></script>
-
-<!--gritter script-->
-<script type="text/javascript" src="${context.contextPath}/js/gritter/js/jquery.gritter.js"></script>
-<script src="${context.contextPath}/js/gritter/js/gritter-init.js" type="text/javascript"></script>
-
-<!--common scripts for all pages-->
-<script src="${context.contextPath}/js/scripts.js"></script>
-
+<@js_lib js_war="gritter_script"></@js_lib>
 <script>
     //删除的标签
     var parentTR, parentTBODY;
