@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * <p>User: hup
@@ -88,6 +87,17 @@ public class UserServiceImpl implements UserService {
         return userDao.findByUsername(username);
     }
 
+
+    @Override
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
+    }
+
+    @Override
+    public User findByMobile(String mobile) {
+        return userDao.findByMobile(mobile);
+    }
+
     /**
      * 根据用户名查找其角色
      * @param username
@@ -101,6 +111,24 @@ public class UserServiceImpl implements UserService {
         return roleService.findRoles(user.getRoleIds().toArray(new Long[0]));
     }
 
+    @Override
+    public Set<String> findRolesByEmail(String email) {
+        User user = findByEmail(email);
+        if(user == null) {
+            return Collections.EMPTY_SET;
+        }
+        return roleService.findRoles(user.getRoleIds().toArray(new Long[0]));
+    }
+
+    @Override
+    public Set<String> findRolesByMobile(String mobile) {
+        User user = findByMobile(mobile);
+        if(user == null) {
+            return Collections.EMPTY_SET;
+        }
+        return roleService.findRoles(user.getRoleIds().toArray(new Long[0]));
+    }
+
     /**
      * 根据用户名查找其权限
      * @param username
@@ -108,6 +136,24 @@ public class UserServiceImpl implements UserService {
      */
     public Set<String> findPermissions(String username) {
         User user = findByUsername(username);
+        if(user == null) {
+            return Collections.EMPTY_SET;
+        }
+        return roleService.findPermissions(user.getRoleIds().toArray(new Long[0]));
+    }
+
+    @Override
+    public Set<String> findPermissionsByEmail(String email) {
+        User user = findByEmail(email);
+        if(user == null) {
+            return Collections.EMPTY_SET;
+        }
+        return roleService.findPermissions(user.getRoleIds().toArray(new Long[0]));
+    }
+
+    @Override
+    public Set<String> findPermissionsByMobile(String mobile) {
+        User user = findByMobile(mobile);
         if(user == null) {
             return Collections.EMPTY_SET;
         }

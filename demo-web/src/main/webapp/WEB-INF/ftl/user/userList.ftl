@@ -13,7 +13,7 @@
         <!-- header section end-->
 
         <!-- page heading start-->
-        <@pageHeading title_1="用户管理" title_2="首页" title_3="系统设置" title_4="用户管理"></@pageHeading>
+        <@pageHeading title_1="用户列表" title_3="系统设置" title_4="用户管理" title_4_url="${context.contextPath}/user" ></@pageHeading>
         <!-- page heading end-->
 
         <!--body wrapper start-->
@@ -141,8 +141,6 @@
             2017 &copy; tansfar by hup
         </footer>
         <!--footer section end-->
-
-
     </div>
     <!-- main content end-->
 </section>
@@ -150,6 +148,15 @@
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war="gritter_script"></@js_lib>
 <script>
+
+    $(function () {
+        //显示小提示
+        var tip = '${msg}';
+        if (tip !== null && tip !== ''){
+            TipsNotice(null, tip);
+        }
+    })
+
     //删除的标签
     var parentTR, parentTBODY;
 

@@ -185,22 +185,44 @@
                 <version>2.4</version>
             </plugin>
 
+
             <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.3.2.v20150730</version>
+                <configuration>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <contextXml>${project.basedir}/src/test/resources/jetty-deploy.xml</contextXml>
+                    <httpConnector>
+                        <port>8066</port>
+                    </httpConnector>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                    </webAppConfig>
+                </configuration>
+            </plugin>
+            <!--<plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>8.1.16.v20140903</version>
                 <configuration>
-                    <stopKey>foo</stopKey>
-                    <stopPort>9997</stopPort>
-                    <contextXml>src/test/resources/jetty-deploy.xml</contextXml>
+                    <stopKey>stop</stopKey>
+                    <stopPort>9999</stopPort>
+                    &lt;!&ndash;热部署的时间间隔&ndash;&gt;
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
+                    <contextXml>${project.basedir}/src/test/resources/jetty-deploy.xml</contextXml>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <!--jetty启动端口号 -->
+                            &lt;!&ndash;jetty启动端口号 &ndash;&gt;
                             <port>8066</port>
+                            <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

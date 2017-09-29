@@ -66,4 +66,18 @@
         LEFT JOIN sys_organization s ON s.id = t.organization_id
         WHERE t.username = #{username}
     </select>
+
+    <select id="findByEmail" resultType="com.hup.entity.User">
+        SELECT <include refid="table_columns"/>
+        FROM sys_user t
+        LEFT JOIN sys_organization s ON s.id = t.organization_id
+        WHERE t.email = #{email}
+    </select>
+
+    <select id="findByMobile" resultType="com.hup.entity.User">
+        SELECT <include refid="table_columns"/>
+        FROM sys_user t
+        LEFT JOIN sys_organization s ON s.id = t.organization_id
+        WHERE t.mobile = #{mobile}
+    </select>
 </mapper>

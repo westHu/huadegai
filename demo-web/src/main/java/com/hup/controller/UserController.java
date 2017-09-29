@@ -5,7 +5,9 @@ import com.hup.api.RoleService;
 import com.hup.api.UserService;
 import com.hup.constant.CantDelete;
 import com.hup.entity.User;
+import com.hup.request.UserUpdateRequest;
 import com.hup.response.BaseResponse;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>User: hup
@@ -39,14 +44,36 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
+    private static Set<String> USERNAME_SET = new HashSet(); //用户名set缓存
+    private static Set<String> MOBILE_SET   = new HashSet(); //手机
+    private static Set<String> EMAIL_SET    = new HashSet(); //邮箱
+
+    /**
+     * <p>@Description: 用户列表
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/28
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("user:view")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         logger.info("===== 用户列表页面 ======");
-        model.addAttribute("userList", userService.findAll());
+        List<User> userList = userService.findAll();
+        addSet(userList);
+        model.addAttribute("userList", userList);
+        model.addAttribute("flag", "系统设置,用户管理");
         return "user/userList";
     }
 
+
+    /**
+     * <p>@Description:  跳转用户新增页面
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/28
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("user:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreateForm(Model model) {
@@ -58,14 +85,38 @@ public class UserController {
     }
 
 
+    /**
+     * <p>@Description:  用户新增操作
+     *                 对于用户名、邮箱、电话不能重复，此处用 set来实现， 对于用户量比较小的简单实用
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/28
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("user:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(User user, RedirectAttributes redirectAttributes) {
+        //用户名不能重复
+        String paramsMsg = assertParamsConfig(user);
+        if (StringUtils.isNotBlank(paramsMsg)){
+            redirectAttributes.addFlashAttribute("user", user);
+            redirectAttributes.addFlashAttribute("msg", paramsMsg);
+            return "redirect:/user/create";
+        }
         userService.createUser(user);
+        addSet(user.getUsername(), user.getMobile(), user.getEmail());
         redirectAttributes.addFlashAttribute("msg", "新增成功");
         return "redirect:/user";
     }
 
+
+    /**
+     * <p>@Description: 跳转到用户编辑页面
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/28
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("user:update")
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
@@ -75,10 +126,28 @@ public class UserController {
         return "user/userEdit";
     }
 
+
+    /**
+     * <p>@Description: 用户更新
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/28
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("user:update")
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
-    public String update(User user, RedirectAttributes redirectAttributes) {
+    public String update(User user, UserUpdateRequest updateRequest, RedirectAttributes redirectAttributes) {
+        //防止重复
+        removeSet(updateRequest.getOldUsername(), updateRequest.getOldMobile(), updateRequest.getOldEmail());
+        String paramsMsg = assertParamsConfig(user);
+        if (StringUtils.isNotBlank(paramsMsg)){
+            addSet(updateRequest.getOldUsername(), updateRequest.getOldMobile(), updateRequest.getOldEmail());
+            redirectAttributes.addFlashAttribute("user", user);
+            redirectAttributes.addFlashAttribute("msg", paramsMsg);
+            return "redirect:/user/update";
+        }
         userService.updateUser(user);
+        removeSet(user.getUsername(), user.getMobile(), user.getEmail());
         redirectAttributes.addFlashAttribute("msg", "修改成功");
         return "redirect:/user";
     }
@@ -96,17 +165,25 @@ public class UserController {
     @RequiresPermissions("user:delete")
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public BaseResponse delete(@PathVariable("id") Long id) {
-        logger.info("========删除用户 {}",id);
+        logger.info("========删除用户 {} ========",id);
         User user = userService.findOne(id);
         String[] split = CantDelete.INNATE_USER.split(",");
         if (null != user && Arrays.asList(split).contains(user.getUsername()) ){
             return new BaseResponse("-1",user.getUsername()+",该用户是固有用户，不能删除！");
         }
         userService.deleteUser(id);
+        removeSet(user.getUsername(), user.getMobile(), user.getEmail());
         return new BaseResponse("0","用户删除删除成功！");
     }
 
 
+    /**
+     * <p>@Description:  跳转用户修改密码页面
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/28
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("user:update")
     @RequestMapping(value = "/{id}/changePassword", method = RequestMethod.GET)
     public String showChangePasswordForm(@PathVariable("id") Long id, Model model) {
@@ -115,6 +192,14 @@ public class UserController {
         return "user/changePassword";
     }
 
+
+    /**
+     * <p>@Description: 用户修改密码
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/28
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("user:update")
     @RequestMapping(value = "/{id}/changePassword", method = RequestMethod.POST)
     public String changePassword(@PathVariable("id") Long id, String newPassword, RedirectAttributes redirectAttributes) {
@@ -142,5 +227,44 @@ public class UserController {
     private void setCommonData(Model model) {
         model.addAttribute("organizationList", organizationService.findAll());
         model.addAttribute("roleList", roleService.findAll());
+    }
+
+
+
+    private void addSet(List<User> userList){
+        userList.forEach(user -> {
+            if (null != user) {
+                USERNAME_SET.add(user.getUsername());
+                MOBILE_SET.add(user.getMobile());
+                EMAIL_SET.add(user.getEmail());
+            }
+        });
+        logger.info("USERNAME_SET -- " + USERNAME_SET);
+        logger.info("MOBILE_SET -- " + MOBILE_SET);
+        logger.info("EMAIL_SET -- " + EMAIL_SET);
+    }
+    private void addSet(String username, String mobile, String email){
+        USERNAME_SET.add(username);
+        MOBILE_SET.add(mobile);
+        EMAIL_SET.add(email);
+    }
+
+    private void removeSet(String username, String mobile, String email) {
+        USERNAME_SET.remove(username);
+        MOBILE_SET.remove(mobile);
+        EMAIL_SET.remove(email);
+    }
+
+    private String assertParamsConfig(User user) {
+        if (!USERNAME_SET.add(user.getUsername())) {
+            return "新增失败！该用户名已经存在！";
+        }
+        if (!MOBILE_SET.add(user.getMobile())) {
+            return "新增失败！该手机号已经存在！";
+        }
+        if (!EMAIL_SET.add(user.getEmail())) {
+            return "新增失败！该邮箱已经存在！";
+        }
+        return null;
     }
 }

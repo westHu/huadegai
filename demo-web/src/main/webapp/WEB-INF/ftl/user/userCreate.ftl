@@ -15,7 +15,7 @@
         <!-- header section end-->
 
         <!-- page heading start-->
-        <@pageHeading title_1="用户管理" title_2="首页" title_3="系统设置" title_4="新增用户"></@pageHeading>
+        <@pageHeading title_1="新增用户"  title_3="系统设置" title_4="用户管理" title_4_url="${context.contextPath}/user"></@pageHeading>
         <!-- page heading end-->
         <hr/>
         <!--body wrapper start-->
@@ -39,7 +39,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">登录名</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input  class="form-control" name="username" placeholder="登录名,用于登录 " />
+                                                    <input  class="form-control" name="username" placeholder="登录名,用于登录 "  value="${user.username}"/>
                                                 </div>
                                             </div>
 
@@ -47,7 +47,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">邮箱</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input class="form-control" name="email" type="email" placeholder="邮箱"/>
+                                                    <input class="form-control" name="email" type="email" placeholder="邮箱" value="${user.email}"/>
                                                 </div>
                                             </div>
 
@@ -55,7 +55,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">手机号码</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input  class="form-control" name="mobile" data-mask="199-9999-9999" placeholder="手机号码" />
+                                                    <input  class="form-control" name="mobile" data-mask="199-9999-9999" placeholder="手机号码" value="${user.mobile}"/>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -66,7 +66,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">真实名称</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input  class="form-control" name="realName" placeholder="真实姓名，用于显示" />
+                                                    <input  class="form-control" name="realName" placeholder="真实姓名，用于显示" value="${user.realName}"/>
                                                 </div>
                                             </div>
 
@@ -74,7 +74,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">身份证</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input class="form-control" name="identityCardNo" data-mask="999999 99999999 9999" placeholder="用于身份核实"  />
+                                                    <input class="form-control" name="identityCardNo" data-mask="999999 99999999 9999" placeholder="用于身份核实" value="identityCardNo" />
                                                 </div>
                                             </div>
 
@@ -82,7 +82,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">联系地址</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <textarea class="form-control" name="address" rows="5" cols="60" ></textarea>
+                                                    <textarea class="form-control" name="address" rows="5" cols="60" >${user.address}</textarea>
                                                 </div>
                                             </div>
 
@@ -115,7 +115,7 @@
                                                 <label class="col-md-2 col-sm-2 control-label">所属组织</label>
                                                 <div class="col-md-6 col-sm-6">
                                                     <input id="organization"  class="form-control" value="${user.organizationName}" onclick="$('#treeView').show()" autocomplete="off">
-                                                    <input id="organizationId" name="organizationId" style="display: none;">
+                                                    <input id="organizationId" name="organizationId" style="display: none;" value="${user.organizationId}" >
                                                     <div id="treeView" style="display: none;"></div>
                                                 </div>
                                             </div>
@@ -127,7 +127,7 @@
                                                     <#list roleList as role>
                                                         <div class="square-red">
                                                             <div class="checkbox ">
-                                                                <input tabindex="3" type="checkbox" name="roleIdsStr" value="${role.id}" >
+                                                                <input tabindex="3" type="checkbox" name="roleIdsStr" value="${role.id}" <#if user.roleIds?seq_contains(role.id)>checked</#if> >
                                                                 <label>${role.description}</label>
                                                             </div>
                                                         </div>
@@ -172,6 +172,13 @@
 <script>
     /*=====STEPY WIZARD WITH VALIDATION====*/
     $(function() {
+        var tip = '${msg}';
+        if (tip !== null && tip !== ''){
+            TipsNotice(null, tip);
+        }
+
+
+
         $('#stepy_form').stepy({
             backLabel: 'Back',
             nextLabel: 'Next',

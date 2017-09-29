@@ -36,6 +36,9 @@ public interface UserService {
 
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
+    User findByMobile(String mobile);
     /**
      * 根据用户名查找其角色
      * @param username
@@ -43,6 +46,9 @@ public interface UserService {
      */
     Set<String> findRoles(String username);
 
+    Set<String> findRolesByEmail(String email);
+
+    Set<String> findRolesByMobile(String mobile);
     /**
      * 根据用户名查找其权限
      * @param username
@@ -50,5 +56,12 @@ public interface UserService {
      */
     Set<String> findPermissions(String username);
 
+    Set<String> findPermissionsByEmail(String email);
+
+    Set<String> findPermissionsByMobile(String mobile);
+
     boolean resetPassword(Long id);
+
+
+
 }

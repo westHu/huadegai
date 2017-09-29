@@ -19,25 +19,24 @@ import java.util.Set;
  * <p>Date: 17-1-28
  * <p>Version: 1.0
  */
-public class UserRealm extends AuthorizingRealm {
+public class MobileRealm extends AuthorizingRealm {
 
-    Logger logger = LoggerFactory.getLogger(UserRealm.class);
+    Logger logger = LoggerFactory.getLogger(MobileRealm.class);
 
     @Autowired
     private UserService userService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        logger.info(" ======== 开始授权 username 登录 ========");
-        String username = (String)principals.getPrimaryPrincipal();
-
+        logger.info(" ======== 开始授权 mobile 登录 ========");
+        String mobile = (String)principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        Set<String> roles = userService.findRoles(username);
+        Set<String> roles = userService.findRolesByMobile(mobile);
         authorizationInfo.setRoles(roles);
-        logger.info(username + " 拥有角色 ： " + roles);
-        Set<String> permissions = userService.findPermissions(username);
+        logger.info(mobile + " 拥有角色 ： " + roles);
+        Set<String> permissions = userService.findPermissionsByMobile(mobile);
         authorizationInfo.setStringPermissions(permissions);
-        logger.info(username + " 拥有权限 ： "+ permissions);
+        logger.info(mobile + " 拥有权限 ： "+ permissions);
         return authorizationInfo;
     }
 
@@ -50,10 +49,10 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        logger.info(" ======== 开始认证 username 登录 ========");
-        String username = (String)token.getPrincipal();
-        logger.info("username = " + username);
-        User user = userService.findByUsername(username);
+        logger.info(" ======== 开始认证 mobile 登录 ========");
+        String mobile = (String)token.getPrincipal();
+        logger.info("mobile = " + mobile);
+        User user = userService.findByMobile(mobile);
         if(user == null) {
             throw new UnknownAccountException();//没找到帐号
         }

@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="新增用户" css_war = "stepy,treeview,icheck"></@header>
+<@header title="更新用户" css_war = "stepy,treeview,icheck"></@header>
 <body class="sticky-header">
 
 <section>
@@ -15,7 +15,7 @@
         <!-- header section end-->
 
         <!-- page heading start-->
-    <@pageHeading title_1="用户管理" title_2="首页" title_3="系统设置" title_4="新增用户"></@pageHeading>
+    <@pageHeading title_1="更新用户" title_3="系统设置" title_4="用户管理" title_4_url="${context.contextPath}/user"></@pageHeading>
         <!-- page heading end-->
         <hr/>
         <!--body wrapper start-->
@@ -126,7 +126,7 @@
                                                 <#list roleList as role>
                                                     <div class="square-red">
                                                         <div class="checkbox ">
-                                                            <input tabindex="3" type="checkbox" name="roleIdsStr" value="${role.id}" >
+                                                            <input tabindex="3" type="checkbox" name="roleIdsStr" value="${role.id}"  <#if user.roleIds?seq_contains(role.id)>checked</#if>>
                                                             <label>${role.description}</label>
                                                         </div>
                                                     </div>

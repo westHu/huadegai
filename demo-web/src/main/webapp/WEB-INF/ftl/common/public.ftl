@@ -119,7 +119,7 @@
 
             <!--sidebar nav start-->
             <ul class="nav nav-pills nav-stacked custom-nav">
-                <li class="active"><a href="${context.contextPath}/"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+                <li><a href="${context.contextPath}/"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
                 <li class="menu-list"><a href=""><i class="fa fa-laptop"></i> <span>Layouts</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="blank_page.html"> Blank Page</a></li>
@@ -222,7 +222,7 @@
                         <li><a href="${context.contextPath}/device/query"> 设备查询</a></li>
                     </ul>
                 </li>
-                <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>系统设置</span></a>
+                <li class="menu-list" ><a href=""><i class="fa fa-file-text"></i> <span>系统设置</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="${context.contextPath}/user"> 用户管理</a></li>
                         <li><a href="${context.contextPath}/role"> 角色管理</a></li>
@@ -450,21 +450,22 @@
 
 
 
-<#-- ##########页面引入公共底部的模板 ##############-->
-<#--公共底部-->
-<#macro pageHeading title_1 = "默认标题" title_2 = "默认标题" title_3 = "默认标题" title_4 = "默认标题">
+<#-- ##########页面引入公共顶部的模板 ##############-->
+<#macro pageHeading title_1 = "默认标题"  title_3 = "默认标题" title_4 = "默认标题" title_4_url ="#">
     <div class="page-heading">
         <h3>
            ${title_1}
         </h3>
         <ul class="breadcrumb">
             <li>
-                <a href="#">${title_2}</a>
+                <a href="${context.contextPath}/">首页</a>
             </li>
             <li>
                 <a href="#">${title_3}</a>
             </li>
-            <li class="active"> ${title_4} </li>
+            <li class="active">
+                <a href="${title_4_url}">${title_4}</a>
+            </li>
         </ul>
     </div>
 </#macro>
