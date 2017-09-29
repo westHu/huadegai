@@ -70,7 +70,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">身份证</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input class="form-control" name="identityCardNo" data-mask="999999 99999999 9999" placeholder="用于身份核实" value="identityCardNo" />
+                                                    <input class="form-control" name="identityCardNo" data-mask="999999 99999999 9999" placeholder="用于身份核实" value="330825192373820283" disabled/>
                                                 </div>
                                             </div>
 
@@ -141,7 +141,7 @@
                                                 </div>
                                             </div>
                                         </fieldset>
-                                        <button class="finish btn btn-info btn-extend"> Finish!</button>
+                                        <button class="finish btn btn-info btn-extend"> 新&nbsp增!</button>
                                     </form>
                                 </div>
                             </div>
@@ -166,7 +166,6 @@
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war="validate_stepy,treeview,input_mask,icheck,gritter_script"></@js_lib>
 <script>
-    /*=====STEPY WIZARD WITH VALIDATION====*/
     $(function() {
         var tip = '${msg}';
         if (tip !== null && tip !== ''){
@@ -193,7 +192,9 @@
             rules: {
                 'username': 'required',
                 'email': 'required',
-                'mobile': 'required'
+                'mobile': 'required',
+                'organizationId':'required',
+                'roleIdsStr':'required'
             },
             messages: {
                 'username': {
@@ -204,6 +205,12 @@
                 },
                 'mobile': {
                     required: '手机是必填的!'
+                },
+                'organizationId': {
+                    required: '组织机构是必填的!'
+                },
+                'roleIdsStr': {
+                    required: '角色是必填的!'
                 }
             }
         });

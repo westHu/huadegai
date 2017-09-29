@@ -57,6 +57,7 @@
         SELECT <include refid="table_columns"/>
         FROM sys_user t
         LEFT JOIN sys_organization s ON s.id = t.organization_id
+        ORDER BY id DESC
     </select>
 
 

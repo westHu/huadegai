@@ -58,7 +58,7 @@ public class UserController {
     @RequiresPermissions("user:view")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
-        logger.info("===== 用户列表页面 ======");
+        logger.info("-----> 用户列表页面");
         List<User> userList = userService.findAll();
         addSet(userList);
         model.addAttribute("userList", userList);
@@ -77,7 +77,7 @@ public class UserController {
     @RequiresPermissions("user:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreateForm(Model model) {
-        logger.info("===== 创建用户页面 =====");
+        logger.info("-----> 创建用户页面");
         setCommonData(model);
         model.addAttribute("user", new User());
         model.addAttribute("op", "新增");
@@ -239,9 +239,6 @@ public class UserController {
                 EMAIL_SET.add(user.getEmail());
             }
         });
-        logger.info("USERNAME_SET -- " + USERNAME_SET);
-        logger.info("MOBILE_SET -- " + MOBILE_SET);
-        logger.info("EMAIL_SET -- " + EMAIL_SET);
     }
     private void addSet(String username, String mobile, String email){
         USERNAME_SET.add(username);
