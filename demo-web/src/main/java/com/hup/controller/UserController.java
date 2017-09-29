@@ -99,7 +99,7 @@ public class UserController {
         //用户名不能重复
         String paramsMsg = assertParamsConfig(user);
         if (StringUtils.isNotBlank(paramsMsg)){
-            redirectAttributes.addFlashAttribute("user", user);
+            //redirectAttributes.addFlashAttribute("user", user);
             redirectAttributes.addFlashAttribute("msg", paramsMsg);
             return "redirect:/user/create";
         }

@@ -1,19 +1,15 @@
 <#include "common/public.ftl">
-<@header title="新增用户" css_war = "stepy,treeview,icheck"></@header>
+<@header title="新增用户" css_war = "stepy,treeview,icheck,gritter_css"></@header>
 <body class="sticky-header">
-
 <section>
     <!-- left side start-->
     <@left title="导航栏"></@left>
     <!-- left side end-->
-    
     <!-- main content start-->
     <div class="main-content" >
-
         <!-- header section start-->
         <@notification title="通知"></@notification>
         <!-- header section end-->
-
         <!-- page heading start-->
         <@pageHeading title_1="新增用户"  title_3="系统设置" title_4="用户管理" title_4_url="${context.contextPath}/user"></@pageHeading>
         <!-- page heading end-->
@@ -168,7 +164,7 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="validate_stepy,treeview,input_mask,icheck"></@js_lib>
+<@js_lib js_war="validate_stepy,treeview,input_mask,icheck,gritter_script"></@js_lib>
 <script>
     /*=====STEPY WIZARD WITH VALIDATION====*/
     $(function() {
@@ -213,6 +209,20 @@
         });
     });
 
+
+    // 提示方法
+    function TipsNotice(title, text) {
+        $.gritter.add({
+            title: title || " 温馨提示 NOTICE ",
+            text:  text || "没有消息！",
+            image: '${absolutePath}/images/notice.jpg',
+            sticky: false,
+            time: 3000,
+            speed:5000,
+            position: 'bottom-right',
+            class_name: 'gritter-light'
+        });
+    }
     /*var data1 = [];
 
     $(function() {

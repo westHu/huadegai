@@ -148,7 +148,6 @@
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war="gritter_script"></@js_lib>
 <script>
-
     $(function () {
         //显示小提示
         var tip = '${msg}';
@@ -156,10 +155,8 @@
             TipsNotice(null, tip);
         }
     })
-
     //删除的标签
     var parentTR, parentTBODY;
-
     function delete_user(id, inputObj) {
         $('#deleteId').val(id);
         //如果后台成功则调用下列参数进行页面删除
@@ -167,6 +164,7 @@
         parentTR = parentTD.parentNode;
         parentTBODY = parentTR.parentNode;
     }
+    //确认删除
     function confirm() {
         var id = $('#deleteId').val().trim();
         var url = "/user/"+id+"/delete";
@@ -184,7 +182,6 @@
             }
         });
     }
-
     //重置密码js
     function resetPwd(id) {
         $('#resetPwdId').val(id);
@@ -202,8 +199,7 @@
             }
         });
     }
-
-
+    // 提示方法
     function TipsNotice(title, text) {
         $.gritter.add({
             title: title || " 温馨提示 NOTICE ",
@@ -216,6 +212,8 @@
             class_name: 'gritter-light'
         });
     }
+
+
 
 </script>
 </body>

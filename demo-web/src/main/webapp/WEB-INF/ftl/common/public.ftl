@@ -583,6 +583,8 @@
     </#if>
     <!--common scripts for all pages-->
     <script src="${context.contextPath}/js/scripts.js"></script>
+    <#--hup    -->
+    <script src="${context.contextPath}/js/common-hup.js"></script>
 </#macro>
 
 
