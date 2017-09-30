@@ -43,7 +43,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">邮箱</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input class="form-control" name="email" type="email" placeholder="邮箱" value="${user.email}"/>
+                                                    <input class="form-control" name="email" type="email" placeholder="邮箱，唯一可登录" value="${user.email}"/>
                                                 </div>
                                             </div>
 
@@ -51,7 +51,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">手机号码</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input  class="form-control" name="mobile" data-mask="199-9999-9999" placeholder="手机号码" value="${user.mobile}"/>
+                                                    <input  class="form-control" name="mobile" data-mask="199-9999-9999" placeholder="手机号码，唯一可登录" value="${user.mobile}"/>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -175,8 +175,8 @@
 
 
         $('#stepy_form').stepy({
-            backLabel: 'Back',
-            nextLabel: 'Next',
+            backLabel: '上一步',
+            nextLabel: '下一步',
             errorImage: true,
             block: true,
             description: true,

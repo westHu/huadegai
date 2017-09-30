@@ -31,14 +31,11 @@
         update sys_user set
         organization_id =  #{user.organizationId},
         username = #{user.username},
-        password = #{user.password},
-        salt = #{user.salt},
         real_name = #{user.realName},
         email = #{user.email},
         mobile = #{user.mobile},
         address =  #{user.address},
-        role_ids = #{user.roleIdsStr},
-        locked = #{user.locked}
+        role_ids = #{user.roleIdsStr}
         where id= #{user.id}
     </update>
 

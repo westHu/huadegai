@@ -15,7 +15,7 @@ public interface UserDao {
 
     void createUser(@Param("user") User user);
 
-    void updateUser(User user);
+    void updateUser(@Param("user") User user);
 
     void deleteUser(Long userId);
 
@@ -29,5 +29,4 @@ public interface UserDao {
 
     User findByMobile(String mobile);
 
-    List<User> findByUser(@Param("user") User user, @Param("updateDto") UserUpdateDto updateDto);
 }

@@ -96,7 +96,7 @@ public class UserController {
         User byUsername = userService.findByUsername(user.getUsername());
         if (null != byUsername){
             //redirectAttributes.addFlashAttribute("user", user);
-            redirectAttributes.addFlashAttribute("msg", "该用户名已经存在，新增用户失败！");
+            redirectAttributes.addFlashAttribute("msg", user.getUsername() + ", 该用户名已经存在，新增用户失败！");
             return "redirect:/user/create";
         }
         userService.createUser(user);
@@ -130,8 +130,8 @@ public class UserController {
      * <p>@return:
      */
     @RequiresPermissions("user:update")
-    @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
-    public String update(User user, UserUpdateRequest updateRequest, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(User user,  RedirectAttributes redirectAttributes) {
         userService.updateUser(user);
         redirectAttributes.addFlashAttribute("msg", "修改成功");
         return "redirect:/user";
