@@ -28,4 +28,6 @@ public interface UserDao {
     User findByEmail(String email);
 
     User findByMobile(String mobile);
+
+    List<User> findByUser(@Param("user") User user, @Param("updateDto") UserUpdateDto updateDto);
 }

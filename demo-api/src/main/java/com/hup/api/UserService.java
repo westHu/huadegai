@@ -62,6 +62,4 @@ public interface UserService {
 
     boolean resetPassword(Long id);
 
-
-
 }

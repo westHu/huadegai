@@ -44,9 +44,6 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    private static Set<String> USERNAME_SET = new HashSet(); //用户名set缓存
-    private static Set<String> MOBILE_SET   = new HashSet(); //手机
-    private static Set<String> EMAIL_SET    = new HashSet(); //邮箱
 
     /**
      * <p>@Description: 用户列表
@@ -60,7 +57,6 @@ public class UserController {
     public String list(Model model) {
         logger.info("-----> 用户列表页面");
         List<User> userList = userService.findAll();
-        addSet(userList);
         model.addAttribute("userList", userList);
         model.addAttribute("flag", "系统设置,用户管理");
         return "user/userList";
@@ -97,14 +93,13 @@ public class UserController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(User user, RedirectAttributes redirectAttributes) {
         //用户名不能重复
-        String paramsMsg = assertParamsConfig(user);
-        if (StringUtils.isNotBlank(paramsMsg)){
+        User byUsername = userService.findByUsername(user.getUsername());
+        if (null != byUsername){
             //redirectAttributes.addFlashAttribute("user", user);
-            redirectAttributes.addFlashAttribute("msg", paramsMsg);
+            redirectAttributes.addFlashAttribute("msg", "该用户名已经存在，新增用户失败！");
             return "redirect:/user/create";
         }
         userService.createUser(user);
-        addSet(user.getUsername(), user.getMobile(), user.getEmail());
         redirectAttributes.addFlashAttribute("msg", "新增成功");
         return "redirect:/user";
     }
@@ -137,17 +132,7 @@ public class UserController {
     @RequiresPermissions("user:update")
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
     public String update(User user, UserUpdateRequest updateRequest, RedirectAttributes redirectAttributes) {
-        //防止重复
-        removeSet(updateRequest.getOldUsername(), updateRequest.getOldMobile(), updateRequest.getOldEmail());
-        String paramsMsg = assertParamsConfig(user);
-        if (StringUtils.isNotBlank(paramsMsg)){
-            addSet(updateRequest.getOldUsername(), updateRequest.getOldMobile(), updateRequest.getOldEmail());
-            redirectAttributes.addFlashAttribute("user", user);
-            redirectAttributes.addFlashAttribute("msg", paramsMsg);
-            return "redirect:/user/update";
-        }
         userService.updateUser(user);
-        removeSet(user.getUsername(), user.getMobile(), user.getEmail());
         redirectAttributes.addFlashAttribute("msg", "修改成功");
         return "redirect:/user";
     }
@@ -172,7 +157,6 @@ public class UserController {
             return new BaseResponse("-1",user.getUsername()+",该用户是固有用户，不能删除！");
         }
         userService.deleteUser(id);
-        removeSet(user.getUsername(), user.getMobile(), user.getEmail());
         return new BaseResponse("0","用户删除删除成功！");
     }
 
@@ -227,41 +211,5 @@ public class UserController {
     private void setCommonData(Model model) {
         model.addAttribute("organizationList", organizationService.findAll());
         model.addAttribute("roleList", roleService.findAll());
-    }
-
-
-
-    private void addSet(List<User> userList){
-        userList.forEach(user -> {
-            if (null != user) {
-                USERNAME_SET.add(user.getUsername());
-                MOBILE_SET.add(user.getMobile());
-                EMAIL_SET.add(user.getEmail());
-            }
-        });
-    }
-    private void addSet(String username, String mobile, String email){
-        USERNAME_SET.add(username);
-        MOBILE_SET.add(mobile);
-        EMAIL_SET.add(email);
-    }
-
-    private void removeSet(String username, String mobile, String email) {
-        USERNAME_SET.remove(username);
-        MOBILE_SET.remove(mobile);
-        EMAIL_SET.remove(email);
-    }
-
-    private String assertParamsConfig(User user) {
-        if (!USERNAME_SET.add(user.getUsername())) {
-            return "新增失败！该用户名已经存在！";
-        }
-        if (!MOBILE_SET.add(user.getMobile())) {
-            return "新增失败！该手机号已经存在！";
-        }
-        if (!EMAIL_SET.add(user.getEmail())) {
-            return "新增失败！该邮箱已经存在！";
-        }
-        return null;
     }
 }
