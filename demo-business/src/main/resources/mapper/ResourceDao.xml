@@ -47,4 +47,10 @@
         FROM sys_resource t
     </select>
 
+    <select id="findByParentId" resultType="com.hup.entity.Resource">
+        SELECT t.id, t.name, t.type, t.url, t.parent_id, t.parent_ids, t.permission, t.available
+        FROM sys_resource t
+        WHERE t.parent_id =#{parentId}
+    </select>
+
 </mapper>

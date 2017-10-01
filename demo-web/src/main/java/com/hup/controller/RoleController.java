@@ -2,6 +2,7 @@ package com.hup.controller;
 
 import com.hup.api.ResourceService;
 import com.hup.api.RoleService;
+import com.hup.constant.CantDelete;
 import com.hup.entity.Resource;
 import com.hup.entity.Role;
 import com.hup.response.BaseResponse;
@@ -20,7 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.hup.constant.CantDelete.INNATE_ROLE;
 
 /**
  * <p>User: hup
@@ -46,16 +50,33 @@ public class RoleController {
         return "role/roleList";
     }
 
+
+    /**
+     * <p>@Description: 角色创建页面
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/1
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("role:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreateForm(Model model) {
         setCommonData(model);
         setResourceMap(model);
+        model.addAttribute("resourceTree", resourceService.getResourceTree());
         model.addAttribute("role", new Role());
         model.addAttribute("op", "新增");
         return "role/roleEdit";
     }
 
+
+    /**
+     * <p>@Description:  角色创建操作
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/1
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("role:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(Role role, RedirectAttributes redirectAttributes) {
@@ -67,15 +88,31 @@ public class RoleController {
         return "redirect:/role";
     }
 
+
+    /**
+     * <p>@Description: 角色更新页面
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/1
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("role:update")
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         setCommonData(model);
+        model.addAttribute("resourceTree", resourceService.getResourceTree());
         model.addAttribute("role", roleService.findOne(id));
         model.addAttribute("op", "修改");
         return "role/roleEdit";
     }
 
+    /**
+     * <p>@Description:  角色更新操作
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/1
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("role:update")
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
     public String update(Role role, RedirectAttributes redirectAttributes) {
@@ -97,8 +134,13 @@ public class RoleController {
     @RequiresPermissions("role:delete")
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public BaseResponse delete(@PathVariable("id") Long id) {
+        Role role = roleService.findOne(id);
+        String[] split = CantDelete.INNATE_ROLE.split(",");
+        if (null != role &&  Arrays.asList(split).contains(role.getRole()) ){
+            return new BaseResponse("-1",role.getRole() + ",该角色是固有角色，不能删除！");
+        }
         roleService.deleteRole(id);
-        return  new BaseResponse("0","角色删除成功！");
+        return  new BaseResponse("0",role.getRole() + "，角色删除成功！");
     }
 
     private void setCommonData(Model model) {

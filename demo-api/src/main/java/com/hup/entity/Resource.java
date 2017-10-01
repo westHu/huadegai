@@ -1,6 +1,7 @@
 package com.hup.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>User: hup
@@ -16,6 +17,11 @@ public class Resource implements Serializable {
     private Long parentId; //父编号
     private String parentIds; //父编号列表
     private Boolean available = Boolean.FALSE;
+
+
+    //==========非数据库 属性===================
+    private List<Resource> childrenList;
+    private List<String> tags;
 
     public static enum ResourceType {
         menu("菜单"), button("按钮");
@@ -103,6 +109,23 @@ public class Resource implements Serializable {
     public String makeSelfAsParentIds() {
         return getParentIds() + getId() + "/";
     }
+
+    public List<Resource> getChildrenList() {
+        return childrenList;
+    }
+
+    public void setChildrenList(List<Resource> childrenList) {
+        this.childrenList = childrenList;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

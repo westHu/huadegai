@@ -1,8 +1,11 @@
 package com.hup.service;
 
+import com.alibaba.fastjson.JSON;
 import com.hup.api.ResourceService;
 import com.hup.dao.ResourceDao;
+import com.hup.entity.Organization;
 import com.hup.entity.Resource;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.permission.WildcardPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,34 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public List<Resource> findAll() {
         return resourceDao.findAll();
+    }
+
+    @Override
+    public String getResourceTree() {
+        List<Resource> tree = findTree(0L);
+        String jsonString = JSON.toJSONString(tree);
+        String result = jsonString.replaceAll("name","text")
+                .replaceAll("childrenList","nodes")
+                .replaceAll("parentIds","tags");
+        return result;
+    }
+    private List<Resource> findTree(Long parentId) {
+        List<Resource> resources = findByParentId(parentId);
+        if (CollectionUtils.isNotEmpty(resources)){
+            for (Resource resource : resources){
+                List<Resource> tree = findTree(resource.getId());
+                List<String> tags = new ArrayList<>();
+                tags.add(String.valueOf(tree.size()));
+                resource.setTags(tags);
+                resource.setChildrenList(tree);
+            }
+        }
+        return resources;
+    }
+
+    @Override
+    public List<Resource> findByParentId(Long parentId) {
+        return resourceDao.findByParentId(parentId);
     }
 
     @Override

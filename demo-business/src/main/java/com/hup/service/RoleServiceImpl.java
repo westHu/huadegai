@@ -41,7 +41,16 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findOne(Long roleId) {
-        return roleDao.findOne(roleId);
+        Role one = roleDao.findOne(roleId);
+        Set<String> resourceNames = new HashSet<>();
+        one.getResourceIds().forEach(resourceId -> {
+            Resource resource = resourceService.findOne(resourceId);
+            if (null != resource){
+                resourceNames.add(resource.getName());
+            }
+        });
+        one.setResourceNames(resourceNames.toString());
+        return one;
     }
 
     @Override

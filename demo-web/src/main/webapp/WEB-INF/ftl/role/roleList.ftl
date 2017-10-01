@@ -141,7 +141,6 @@
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (data) {
-                alert(1111);
                 TipsNotice(null, data.description);
                 if (data.status == "0") {
                     parentTBODY.removeChild(parentTR);

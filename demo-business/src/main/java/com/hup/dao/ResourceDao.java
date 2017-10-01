@@ -23,4 +23,5 @@ public interface ResourceDao {
 
     List<Resource> findAll();
 
+    List<Resource> findByParentId(Long parentId);
 }
