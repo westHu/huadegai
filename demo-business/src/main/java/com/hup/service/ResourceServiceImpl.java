@@ -47,7 +47,13 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public Resource findOne(Long resourceId) {
-        return resourceDao.findOne(resourceId);
+        Resource resource = resourceDao.findOne(resourceId);
+        if (null != resource){
+            Resource parent = resourceDao.findOne(resource.getParentId());
+            if (null != parent)
+                resource.setParentName(parent.getName());
+        }
+        return resource;
     }
 
     @Override

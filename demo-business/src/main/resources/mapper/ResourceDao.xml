@@ -17,7 +17,7 @@
         (name, type, url, parent_id, parent_ids, permission, available)
          values
          (#{resource.name}, #{resource.type}, #{resource.url}, #{resource.parentId},
-          #{resource.parentIds}, #{resource.permission}, #{resource.available})
+          #{resource.parentIds}, #{resource.permission}, 1)
     </insert>
 
     <update id="updateResource">
@@ -25,10 +25,7 @@
         name =  #{resource.name},
         type = #{resource.type},
         url = #{resource.url},
-        parent_id = #{resource.parent_id},
-        parent_ids = #{resource.parent_ids},
-        permission = #{resource.permission},
-        available = #{resource.available}
+        permission = #{resource.permission}
         where id= #{resource.id}
     </update>
 

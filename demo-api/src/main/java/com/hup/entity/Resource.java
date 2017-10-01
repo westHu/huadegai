@@ -20,6 +20,7 @@ public class Resource implements Serializable {
 
 
     //==========非数据库 属性===================
+    private String parentName;
     private List<Resource> childrenList;
     private List<String> tags;
 
@@ -124,6 +125,14 @@ public class Resource implements Serializable {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
     @Override

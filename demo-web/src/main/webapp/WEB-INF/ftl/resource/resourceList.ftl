@@ -1,16 +1,6 @@
 <#include "common/public.ftl">
-<@header title="资源列表" keywords="资源列表" description="资源列表">
-<!--jquery.treetable-->
-<link rel="stylesheet" href="${context.contextPath}/js/jquery-treetable/stylesheets/jquery.treetable.css">
-<link rel="stylesheet" href="${context.contextPath}/js/jquery-treetable/stylesheets/jquery.treetable.theme.default.css">
-<!--responsive table-->
-<link href="${context.contextPath}/css/table-responsive.css" rel="stylesheet" />
-<!--gritter css-->
-<link rel="stylesheet" type="text/css" href="${context.contextPath}/js/gritter/css/jquery.gritter.css" />
-</@header>
-
+<@header title="资源列表" css_war = "responsive_table,treetable,gritter_css"></@header>
 <body class="sticky-header">
-
 <section>
     <!-- left side start-->
     <@left title="导航栏"></@left>
@@ -24,7 +14,7 @@
         <!-- header section end-->
 
         <!-- page heading start-->
-        <@pageHeading title_1="资源管理" title_2="首页" title_3="系统设置" title_4="资源管理"></@pageHeading>
+        <@pageHeading title_1="资源列表"  title_3="系统设置" title_4="资源管理" title_4_url="${context.contextPath}/resource" ></@pageHeading>
         <!-- page heading end-->
 
         <!--body wrapper start-->
@@ -120,38 +110,19 @@
             2017 &copy; transfar by hup
         </footer>
         <!--footer section end-->
-
-
     </div>
     <!-- main content end-->
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="js/jquery-migrate-1.2.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/modernizr.min.js"></script>
-<script src="js/jquery.nicescroll.js"></script>
-
-<!--gritter script-->
-<script type="text/javascript" src="${context.contextPath}/js/gritter/js/jquery.gritter.js"></script>
-<script src="${context.contextPath}/js/gritter/js/gritter-init.js" type="text/javascript"></script>
-
-<!--treetable-->
-<script src="${context.contextPath}/js/jquery-treetable/javascripts/src/jquery.treetable.js"></script>
-
-<!--common scripts for all pages-->
-<script src="js/scripts.js"></script>
+<@js_lib js_war="gritter_script,treetable"></@js_lib>
 <script>
     $(function() {
         $(".table").treetable({ expandable: true }).treetable("expandNode", 1);
     });
 
-
     //删除的标签
     var parentTR, parentTBODY;
-
     function delete_resource(id, inputObj) {
         $('#deleteId').val(id);
         //如果后台成功则调用下列参数进行页面删除
@@ -181,7 +152,7 @@
         $.gritter.add({
             title: title || " 温馨提示 NOTICE ",
             text:  text || "没有消息！",
-            image: 'images/notice.jpg',
+            image: '${absolutePath}/images/notice.jpg',
             sticky: false,
             time: 3000,
             speed:5000,

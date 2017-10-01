@@ -1,35 +1,6 @@
 <#include "common/public.ftl">
-<@header title="新增角色" keywords="新增角色" description="新增角色">
-
-
-
-<!--icheck-->
-<link href="${context.contextPath}/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/red.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/green.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/blue.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/yellow.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/minimal/purple.css" rel="stylesheet">
-
-<link href="${context.contextPath}/js/iCheck/skins/square/square.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/red.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/green.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/blue.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/yellow.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/square/purple.css" rel="stylesheet">
-
-<link href="${context.contextPath}/js/iCheck/skins/flat/grey.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/red.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/green.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/blue.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/yellow.css" rel="stylesheet">
-<link href="${context.contextPath}/js/iCheck/skins/flat/purple.css" rel="stylesheet">
-
-</@header>
-
-
+<@header title="新增角色" css_war="icheck"></@header>
 <body class="sticky-header">
-
 <section>
     <!-- left side start-->
     <@left title="导航栏"></@left>
@@ -43,7 +14,7 @@
         <!-- header section end-->
 
         <!-- page heading start-->
-        <@pageHeading title_1="角色管理" title_2="首页" title_3="系统设置" title_4="新增角色"></@pageHeading>
+        <@pageHeading title_1="${op}资源"  title_3="系统设置" title_4="资源管理" title_4_url="${context.contextPath}/resource"></@pageHeading>
         <!-- page heading end-->
 
         <!--body wrapper start-->
@@ -53,7 +24,7 @@
             <div class="col-md-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        角色管理
+                        资源管理
                     </header>
                     <div class="panel-body">
                         <form id="resourceEditForm" class="form-horizontal"
@@ -63,7 +34,10 @@
                             <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label">父节点</label>
                                 <div class="col-lg-10">
-                                    <p class="form-control-static"><#if parent??>${parent.name}<#else>没有父节点</#if></p>
+                                    <p class="form-control-static">
+                                        <#if op == '新增子节点'> <#if parent??>${parent.name}<#else>没有父节点</#if> </#if>
+                                        <#if op == '修改'>${resource.parentName}</#if>
+                                    </p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -133,19 +107,6 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="${context.contextPath}/js/jquery-1.10.2.min.js"></script>
-<script src="${context.contextPath}/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="${context.contextPath}/js/jquery-migrate-1.2.1.min.js"></script>
-<script src="${context.contextPath}/js/bootstrap.min.js"></script>
-<script src="${context.contextPath}/js/modernizr.min.js"></script>
-<script src="${context.contextPath}/js/jquery.nicescroll.js"></script>
-
-<!--icheck -->
-<script src="${context.contextPath}/js/iCheck/jquery.icheck.js"></script>
-<script src="${context.contextPath}/js/icheck-init.js"></script>
-
-<!--common scripts for all pages-->
-<script src="${context.contextPath}/js/scripts.js"></script>
-
+<@js_lib js_war="icheck"></@js_lib>
 </body>
 </html>

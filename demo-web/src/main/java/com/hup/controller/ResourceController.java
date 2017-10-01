@@ -1,6 +1,5 @@
 package com.hup.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.hup.api.ResourceService;
 import com.hup.entity.Resource;
 import com.hup.response.BaseResponse;
@@ -32,13 +31,27 @@ public class ResourceController {
         return Resource.ResourceType.values();
     }
 
+    /**
+     * <p>@Description:  资源列表
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/1
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("resource:view")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("resourceList", resourceService.findAll());
-        return "resource/list";
+        return "resource/resourceList";
     }
 
+    /**
+     * <p>@Description: 资源新增页面
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/1
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("resource:create")
     @RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.GET)
     public String showAppendChildForm(@PathVariable("parentId") Long parentId, Model model) {
@@ -49,9 +62,17 @@ public class ResourceController {
         child.setParentIds(parent.makeSelfAsParentIds());
         model.addAttribute("resource", child);
         model.addAttribute("op", "新增子节点");
-        return "resource/edit";
+        return "resource/resourceEdit";
     }
 
+
+    /**
+     * <p>@Description: 资源新增操作
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/1
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("resource:create")
     @RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.POST)
     public String create(Resource resource, RedirectAttributes redirectAttributes) {
@@ -61,14 +82,28 @@ public class ResourceController {
         return "redirect:/resource";
     }
 
+    /**
+     * <p>@Description: 资源更新页面
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/1
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("resource:update")
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("resource", resourceService.findOne(id));
         model.addAttribute("op", "修改");
-        return "resource/edit";
+        return "resource/resourceEdit";
     }
 
+    /**
+     * <p>@Description: 资源更新操作
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/1
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequiresPermissions("resource:update")
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
     public String update(Resource resource, RedirectAttributes redirectAttributes) {

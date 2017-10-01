@@ -64,6 +64,11 @@
                 <!--multi-select-->
                 <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/jquery-multi-select/css/multi-select.css" />
             </#if>
+            <#if obj == 'treetable'>
+                <!--jquery.treetable-->
+                <link rel="stylesheet" href="${context.contextPath}/js/jquery-treetable/stylesheets/jquery.treetable.css">
+                <link rel="stylesheet" href="${context.contextPath}/js/jquery-treetable/stylesheets/jquery.treetable.theme.default.css">
+            </#if>
 
 
 
@@ -578,6 +583,10 @@
                 <script type="text/javascript" src="${context.contextPath}/js/jquery-multi-select/js/jquery.multi-select.js"></script>
                 <script type="text/javascript" src="${context.contextPath}/js/jquery-multi-select/js/jquery.quicksearch.js"></script>
                 <script type="text/javascript" src="${context.contextPath}/js/multi-select-init.js"></script>
+            </#if>
+            <#if obj == 'treetable'>
+                <!--treetable-->
+                <script src="${context.contextPath}/js/jquery-treetable/javascripts/src/jquery.treetable.js"></script>
             </#if>
 
 

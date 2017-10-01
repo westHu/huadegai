@@ -404,7 +404,7 @@
         $.gritter.add({
             title: title || " 温馨提示 NOTICE ",
             text:  text || "没有消息！",
-            image:  ' ${absolutePath}/images/notice.jpg',
+            image:  '${absolutePath}/images/notice.jpg',
             sticky: false,
             time: 3000,
             speed:5000,
