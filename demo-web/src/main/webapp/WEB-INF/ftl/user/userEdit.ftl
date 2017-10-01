@@ -19,7 +19,7 @@
         <div class="wrapper">
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="fw-title">创建用户</h4>
+                    <h4 class="fw-title">更新用户</h4>
                     <div class="box-widget">
                         <div class="widget-head clearfix">
                             <div id="top_tabby" class="block-tabby pull-left">
@@ -111,10 +111,16 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">所属组织</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input id="organization"  class="form-control" value="${user.organizationName}" onclick="$('#treeView').show()" autocomplete="off">
+                                                    <input id="organization"  class="form-control" value="${user.organizationName}" onclick="$('#treeView-panel').show()" autocomplete="off">
                                                     <input id="organizationId" name="organizationId" style="display: none;" value="${user.organizationId}">
-                                                    <div id="treeView" style="display: none;">
-                                                        <button >确定</button>
+                                                    <div id="treeView-panel" class="panel" style="display: none;">
+                                                        <div class="panel-heading">
+                                                            组织机构图
+                                                            <span class="tools pull-right">
+                                                                <button class="btn btn-primary" type="button" onclick="$('#treeView-panel').hide()">取&nbsp消</button>
+                                                            </span>
+                                                        </div>
+                                                        <div id="treeView" class="panel-body"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,7 +140,7 @@
                                                 </div>
                                             </div>
                                         </fieldset>
-                                        <button class="finish btn btn-info btn-extend"> Finish!</button>
+                                        <button class="finish btn btn-info btn-extend"> 确认更新!</button>
                                         <div class="stepy-error-1"></div>
                                     </form>
                                 </div>
@@ -192,56 +198,12 @@
         });
     });
 
-    /*var data1 = [];
-
-    $(function() {
-        $.ajax({
-            type : "post",
-            url : "/receiverShow/findTree.action",
-            success : function(data, status) {
-                if (status == "success") {
-                    data1 = eval("[" + data + "]");
-                }
-            },
-            error : function() {
-                toastr.error('Error');
-            },
-        });
-    });
-
-    function buildDomTree() {
-        var data = [];
-        var root = "所有分类";
-        function walk(nodes, data) {
-            if (!nodes) {
-                return;
-            }
-            $.each(nodes, function(id, node) {
-                var obj = {
-                    id : id,
-                    text : node.name != null ? node.name : root
-                    // 										tags : [ node.isLeaf == true ? node.
-                    // 												+ ' child elements'
-                    // 												: '' ]
-                };
-                if (node.isLeaf = true) {
-                    obj.nodes = [];
-                    walk(node.children, obj.nodes);
-                }
-                data.push(obj);
-            });
-        }
-
-        walk(data1, data);
-        return data;
-    }*/
-
     $("#organization").click(function() {
         var options = {
             bootstrap : true,
             showTags : true,
             levels : 5,
-            showCheckbox : true,
+            //showCheckbox : true,
             color: "black",
             backColor: "#a7a7a7",
             showBorder: true,
@@ -250,64 +212,17 @@
             selectedColor: "yellow",
             selectedBackColor: "dark",
             multiSelect:true,
-
-            //checkedIcon : "glyphicon glyphicon-check",
-            data : defaultData,
+            checkedIcon : "glyphicon glyphicon-check",
+            data : ${organizationTree},
             onNodeSelected : function(event, data) {
                 $("#organization").val(data.text);
                 $("#organizationId").val(data.id);
-                $("#treeView").hide();
+                $("#treeView-panel").hide();
             }
         };
 
         $('#treeView').treeview(options);
     });
-
-
-
-
-    var defaultData = [
-        {
-            id:1,
-            text: '集团本部',
-//            href: '#parent1',
-            tags: ['4'],
-            nodes: [
-                {
-                    id:2,
-                    text: '支付公司',
-                    //href: '#child111111',
-                    tags: ['2'],
-                    nodes: [
-                        {
-                            id:3,
-                            text: '技术研发部',
-                            //href: '#grandchild111111',
-                            tags: ['0']
-                        },
-                        {
-                            id:4,
-                            text: '市场销售部',
-                            //href: '#grandchild211111',
-                            tags: ['0']
-                        }
-                    ]
-                },
-                {
-                    id:5,
-                    text: '物流公司',
-                    //href: '#child21111111',
-                    tags: ['0']
-                }
-            ]
-        },
-        {
-            id:6,
-            text: '集团党委',
-            //href: '#parent2',
-            tags: ['0']
-        }
-    ];
 
 </script>
 

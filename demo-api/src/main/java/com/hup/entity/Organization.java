@@ -1,6 +1,7 @@
 package com.hup.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>User: hup
@@ -13,6 +14,11 @@ public class Organization implements Serializable {
     private Long parentId; //父编号
     private String parentIds; //父编号列表，如1/2/
     private Boolean available = Boolean.FALSE;
+
+    //==========非数据库 属性===================
+    private List<Organization> childrenList;
+    private List<String> tags;
+
 
 
     public Long getId() {
@@ -61,6 +67,22 @@ public class Organization implements Serializable {
 
     public String makeSelfAsParentIds() {
         return getParentIds() + getId() + "/";
+    }
+
+    public List<Organization> getChildrenList() {
+        return childrenList;
+    }
+
+    public void setChildrenList(List<Organization> childrenList) {
+        this.childrenList = childrenList;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     @Override

@@ -5,9 +5,7 @@ import com.hup.api.RoleService;
 import com.hup.api.UserService;
 import com.hup.constant.CantDelete;
 import com.hup.entity.User;
-import com.hup.request.UserUpdateRequest;
 import com.hup.response.BaseResponse;
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>User: hup
@@ -41,6 +37,7 @@ public class UserController {
 
     @Autowired
     private OrganizationService organizationService;
+
     @Autowired
     private RoleService roleService;
 
@@ -75,6 +72,7 @@ public class UserController {
     public String showCreateForm(Model model) {
         logger.info("-----> 创建用户页面");
         setCommonData(model);
+        model.addAttribute("organizationTree", organizationService.getOrganizationTree());
         model.addAttribute("user", new User());
         model.addAttribute("op", "新增");
         return "user/userCreate";
@@ -116,6 +114,7 @@ public class UserController {
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         setCommonData(model);
+        model.addAttribute("organizationTree", organizationService.getOrganizationTree());
         model.addAttribute("user", userService.findOne(id));
         model.addAttribute("op", "修改");
         return "user/userEdit";

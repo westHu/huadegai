@@ -1,11 +1,14 @@
 package com.hup.service;
 
+import com.alibaba.fastjson.JSON;
 import com.hup.api.OrganizationService;
 import com.hup.dao.OrganizationDao;
 import com.hup.entity.Organization;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,6 +50,30 @@ public class OrganizationServiceImpl implements OrganizationService {
     public List<Organization> findAll() {
         return organizationDao.findAll();
     }
+
+    @Override
+    public String getOrganizationTree() {
+        List<Organization> tree = findTree(0L);
+        String jsonString = JSON.toJSONString(tree);
+        String result = jsonString.replaceAll("name","text")
+                .replaceAll("childrenList","nodes")
+                .replaceAll("parentIds","tags");
+        return result;
+    }
+    private List<Organization> findTree(Long parentId) {
+        List<Organization> organizations = findByParentId(parentId);
+        if (CollectionUtils.isNotEmpty(organizations)){
+            for (Organization organization : organizations){
+                List<Organization> tree = findTree(organization.getId());
+                List<String> tags = new ArrayList<>();
+                tags.add(String.valueOf(tree.size()));
+                organization.setTags(tags);
+                organization.setChildrenList(tree);
+            }
+        }
+        return organizations;
+    }
+
 
     @Override
     public List<Organization> findAllWithExclude(Organization excludeOraganization) {

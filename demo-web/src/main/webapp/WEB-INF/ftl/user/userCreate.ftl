@@ -110,9 +110,17 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 col-sm-2 control-label">所属组织</label>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input id="organization"  class="form-control" value="${user.organizationName}" onclick="$('#treeView').show()" autocomplete="off">
+                                                    <input id="organization"  class="form-control" value="${user.organizationName}" onclick="$('#treeView-panel').show()" autocomplete="off">
                                                     <input id="organizationId" name="organizationId" style="display: none;" value="${user.organizationId}" >
-                                                    <div id="treeView" style="display: none;"></div>
+                                                    <div id="treeView-panel" class="panel" style="display: none;">
+                                                       <div class="panel-heading">
+                                                           组织机构图
+                                                            <span class="tools pull-right">
+                                                                <button class="btn btn-primary" type="button" onclick="$('#treeView-panel').hide()">取&nbsp消</button>
+                                                            </span>
+                                                        </div>
+                                                        <div id="treeView" class="panel-body"></div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -172,8 +180,6 @@
             TipsNotice(null, tip);
         }
 
-
-
         $('#stepy_form').stepy({
             backLabel: '上一步',
             nextLabel: '下一步',
@@ -230,56 +236,13 @@
             class_name: 'gritter-light'
         });
     }
-    /*var data1 = [];
-
-    $(function() {
-        $.ajax({
-            type : "post",
-            url : "/receiverShow/findTree.action",
-            success : function(data, status) {
-                if (status == "success") {
-                    data1 = eval("[" + data + "]");
-                }
-            },
-            error : function() {
-                toastr.error('Error');
-            },
-        });
-    });
-
-    function buildDomTree() {
-        var data = [];
-        var root = "所有分类";
-        function walk(nodes, data) {
-            if (!nodes) {
-                return;
-            }
-            $.each(nodes, function(id, node) {
-                var obj = {
-                    id : id,
-                    text : node.name != null ? node.name : root
-                    // 										tags : [ node.isLeaf == true ? node.
-                    // 												+ ' child elements'
-                    // 												: '' ]
-                };
-                if (node.isLeaf = true) {
-                    obj.nodes = [];
-                    walk(node.children, obj.nodes);
-                }
-                data.push(obj);
-            });
-        }
-
-        walk(data1, data);
-        return data;
-    }*/
 
     $("#organization").click(function() {
         var options = {
             bootstrap : true,
             showTags : true,
             levels : 5,
-            showCheckbox : true,
+            //showCheckbox : true,
             color: "black",
             backColor: "#a7a7a7",
             showBorder: true,
@@ -287,64 +250,16 @@
             highlightSelected: true,
             selectedColor: "yellow",
             selectedBackColor: "dark",
-            //checkedIcon : "glyphicon glyphicon-check",
-            data : defaultData,
+            checkedIcon : "glyphicon glyphicon-check",
+            data : ${organizationTree},
             onNodeSelected : function(event, data) {
                 $("#organization").val(data.text);
                 $("#organizationId").val(data.id);
-                $("#treeView").hide();
+                $("#treeView-panel").hide();
             }
         };
-
         $('#treeView').treeview(options);
     });
-
-
-
-
-    var defaultData = [
-        {
-            id:1,
-            text: '集团本部',
-            href: '#parent1',
-            tags: ['4'],
-            nodes: [
-                {
-                    id:2,
-                    text: '支付公司',
-                    href: '#child1',
-                    tags: ['2'],
-                    nodes: [
-                        {
-                            id:3,
-                            text: '技术研发部',
-                            href: '#grandchild1',
-                            tags: ['0']
-                        },
-                        {
-                            id:4,
-                            text: '市场销售部',
-                            href: '#grandchild2',
-                            tags: ['0']
-                        }
-                    ]
-                },
-                {
-                    id:5,
-                    text: '物流公司',
-                    href: '#child2',
-                    tags: ['0']
-                }
-            ]
-        },
-        {
-            id:6,
-            text: '集团党委',
-            href: '#parent2',
-            tags: ['0']
-        }
-    ];
-
 </script>
 
 </body>

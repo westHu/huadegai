@@ -14,7 +14,9 @@ public interface OrganizationService {
 
 
     public Organization createOrganization(Organization organization);
+
     public Organization updateOrganization(Organization organization);
+
     public void deleteOrganization(Long organizationId);
 
     Organization findOne(Long organizationId);
@@ -22,6 +24,8 @@ public interface OrganizationService {
     List<Organization> findByParentId(Long parentId);
 
     List<Organization> findAll();
+
+    String getOrganizationTree();
 
     Object findAllWithExclude(Organization excludeOraganization);
 
