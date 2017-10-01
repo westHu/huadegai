@@ -60,7 +60,10 @@
                 <!--treeview -->
                 <link href="${context.contextPath}/js/bootstrap-treeview/css/bootstrap-treeview.css" rel="stylesheet">
             </#if>
-
+            <#if obj == 'multi-select'>
+                <!--multi-select-->
+                <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/jquery-multi-select/css/multi-select.css" />
+            </#if>
 
 
 
@@ -570,8 +573,12 @@
                 <!--bootstrap-input-mask-->
                 <script type="text/javascript" src="${context.contextPath}/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
             </#if>
-
-
+            <#if obj == 'multi-select'>
+                <!--multi-select-->
+                <script type="text/javascript" src="${context.contextPath}/js/jquery-multi-select/js/jquery.multi-select.js"></script>
+                <script type="text/javascript" src="${context.contextPath}/js/jquery-multi-select/js/jquery.quicksearch.js"></script>
+                <script type="text/javascript" src="${context.contextPath}/js/multi-select-init.js"></script>
+            </#if>
 
 
 

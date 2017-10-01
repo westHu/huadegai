@@ -113,7 +113,9 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <input id="organization"  class="form-control" value="${user.organizationName}" onclick="$('#treeView').show()" autocomplete="off">
                                                     <input id="organizationId" name="organizationId" style="display: none;" value="${user.organizationId}">
-                                                    <div id="treeView" style="display: none;"></div>
+                                                    <div id="treeView" style="display: none;">
+                                                        <button >确定</button>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -247,6 +249,8 @@
             highlightSelected: true,
             selectedColor: "yellow",
             selectedBackColor: "dark",
+            multiSelect:true,
+
             //checkedIcon : "glyphicon glyphicon-check",
             data : defaultData,
             onNodeSelected : function(event, data) {
@@ -266,25 +270,25 @@
         {
             id:1,
             text: '集团本部',
-            href: '#parent1',
+//            href: '#parent1',
             tags: ['4'],
             nodes: [
                 {
                     id:2,
                     text: '支付公司',
-                    href: '#child1',
+                    //href: '#child111111',
                     tags: ['2'],
                     nodes: [
                         {
                             id:3,
                             text: '技术研发部',
-                            href: '#grandchild1',
+                            //href: '#grandchild111111',
                             tags: ['0']
                         },
                         {
                             id:4,
                             text: '市场销售部',
-                            href: '#grandchild2',
+                            //href: '#grandchild211111',
                             tags: ['0']
                         }
                     ]
@@ -292,7 +296,7 @@
                 {
                     id:5,
                     text: '物流公司',
-                    href: '#child2',
+                    //href: '#child21111111',
                     tags: ['0']
                 }
             ]
@@ -300,7 +304,7 @@
         {
             id:6,
             text: '集团党委',
-            href: '#parent2',
+            //href: '#parent2',
             tags: ['0']
         }
     ];

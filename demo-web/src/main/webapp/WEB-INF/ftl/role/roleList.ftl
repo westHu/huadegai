@@ -1,16 +1,11 @@
 <#include "common/public.ftl">
-<@header title="角色列表" keywords="角色列表" description="角色列表">
-    <!--gritter css-->
-    <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/gritter/css/jquery.gritter.css" />
-</@header>
-
+<@header title="角色管理" css_war="gritter_css"></@header>
 <body class="sticky-header">
-
 <section>
     <!-- left side start-->
     <@left title="导航栏"></@left>
     <!-- left side end-->
-    
+
     <!-- main content start-->
     <div class="main-content" >
 
@@ -19,7 +14,7 @@
         <!-- header section end-->
 
         <!-- page heading start-->
-        <@pageHeading title_1="角色管理" title_2="首页" title_3="系统设置" title_4="角色管理"></@pageHeading>
+        <@pageHeading title_1="角色列表"  title_3="系统设置" title_4="角色管理" title_4_url="${context.contextPath}/role" ></@pageHeading>
         <!-- page heading end-->
 
         <!--body wrapper start-->
@@ -126,24 +121,10 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="${context.contextPath}/js/jquery-1.10.2.min.js"></script>
-<script src="${context.contextPath}/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="${context.contextPath}/js/jquery-migrate-1.2.1.min.js"></script>
-<script src="${context.contextPath}/js/bootstrap.min.js"></script>
-<script src="${context.contextPath}/js/modernizr.min.js"></script>
-<script src="${context.contextPath}/js/jquery.nicescroll.js"></script>
-
-<!--gritter script-->
-<script type="text/javascript" src="${context.contextPath}/js/gritter/js/jquery.gritter.js"></script>
-<script src="${context.contextPath}/js/gritter/js/gritter-init.js" type="text/javascript"></script>
-
-<!--common scripts for all pages-->
-<script src="${context.contextPath}/js/scripts.js"></script>
-
+<@js_lib js_war="gritter_script"></@js_lib>
 <script>
     //删除的标签
     var parentTR, parentTBODY;
-
     function delete_role(id, inputObj) {
         $('#deleteId').val(id);
         //如果后台成功则调用下列参数进行页面删除

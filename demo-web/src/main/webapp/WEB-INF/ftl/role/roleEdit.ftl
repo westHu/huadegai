@@ -1,12 +1,6 @@
 <#include "common/public.ftl">
-<@header title="新增角色" keywords="新增角色" description="新增角色">
-<!--multi-select-->
-<link rel="stylesheet" type="text/css" href="${context.contextPath}/js/jquery-multi-select/css/multi-select.css" />
-</@header>
-
-
+<@header title="新增角色" css_war="multi-select"></@header>
 <body class="sticky-header">
-
 <section>
     <!-- left side start-->
     <@left title="导航栏"></@left>
@@ -20,7 +14,7 @@
         <!-- header section end-->
 
         <!-- page heading start-->
-        <@pageHeading title_1="角色管理" title_2="首页" title_3="系统设置" title_4="新增角色"></@pageHeading>
+        <@pageHeading title_1="${op}角色"  title_3="系统设置" title_4="角色管理" title_4_url="${context.contextPath}/role"></@pageHeading>
         <!-- page heading end-->
 
         <!--body wrapper start-->
@@ -30,7 +24,7 @@
             <div class="col-md-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        角色管理
+                        ${op}角色
                     </header>
                     <div class="panel-body">
                         <form id="roleEditForm" class="form-horizontal" action="${context.contextPath}/role/create" method="post">
@@ -88,6 +82,7 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
+<@js_lib js_war="multi-select"></@js_lib>
 <script src="${context.contextPath}/js/jquery-1.10.2.min.js"></script>
 <script src="${context.contextPath}/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="${context.contextPath}/js/jquery-migrate-1.2.1.min.js"></script>

@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="新增用户" css_war = "responsive_table,gritter_css"></@header>
+<@header title="用户管理" css_war = "responsive_table,gritter_css"></@header>
 <body class="sticky-header">
 <section>
     <!-- left side start-->

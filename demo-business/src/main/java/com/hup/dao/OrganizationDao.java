@@ -20,6 +20,8 @@ public interface OrganizationDao {
 
     Organization findOne(Long organizationId);
 
+    List<Organization> findByParentId(Long parentId);
+
     List<Organization> findAll();
 
     List<Organization> findAllWithExclude(Organization excludeOraganization);

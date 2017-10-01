@@ -39,6 +39,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    public List<Organization> findByParentId(Long parentId) {
+        return organizationDao.findByParentId(parentId);
+    }
+
+    @Override
     public List<Organization> findAll() {
         return organizationDao.findAll();
     }

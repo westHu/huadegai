@@ -53,4 +53,10 @@
     <update id="move">
 
     </update>
+
+    <select id="findByParentId" resultType="com.hup.entity.Organization">
+        SELECT t.id, t.name, t.parent_id, t.parent_ids, t.available
+        FROM sys_organization t
+        WHERE t.parent_id = #{parentId}
+    </select>
 </mapper>

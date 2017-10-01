@@ -6,7 +6,6 @@ import com.hup.entity.Resource;
 import com.hup.entity.Role;
 import com.hup.response.BaseResponse;
 import com.hup.response.RoleTreeResponse;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -21,9 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>User: hup
@@ -46,7 +43,7 @@ public class RoleController {
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("roleList", roleService.findAll());
-        return "role/list";
+        return "role/roleList";
     }
 
     @RequiresPermissions("role:create")
@@ -56,7 +53,7 @@ public class RoleController {
         setResourceMap(model);
         model.addAttribute("role", new Role());
         model.addAttribute("op", "新增");
-        return "role/edit";
+        return "role/roleEdit";
     }
 
     @RequiresPermissions("role:create")
@@ -76,7 +73,7 @@ public class RoleController {
         setCommonData(model);
         model.addAttribute("role", roleService.findOne(id));
         model.addAttribute("op", "修改");
-        return "role/edit";
+        return "role/roleEdit";
     }
 
     @RequiresPermissions("role:update")
@@ -138,7 +135,7 @@ public class RoleController {
 
 
     private void setRoleIds(Role role){
-        //格式转化下， 前端和后端格式不一致 13* 组织机构修改,14* 组织机构删除,23* 用户修改,24* 用户删除,25* 用户查看,32* 资源新增,33* 资源修改
+        //格式转化， 前端和后端格式不一致 13* 组织机构修改,14* 组织机构删除,23* 用户修改,24* 用户删除,25* 用户查看,32* 资源新增,33* 资源修改
         String roleNames = role.getResourceNames();
         if (StringUtils.isBlank(roleNames)) return;
 
