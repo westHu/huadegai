@@ -2,14 +2,12 @@ package com.hup.controller;
 
 import com.hup.api.OrganizationService;
 import com.hup.entity.Organization;
+import com.hup.response.BaseResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -34,15 +32,30 @@ public class OrganizationController {
     @RequiresPermissions("organization:view")
     @RequestMapping(method = RequestMethod.GET)
     public String showOrganization(Model model) {
+        model.addAttribute("organizationTree", organizationService.getOrganizationTree());
         model.addAttribute("organizationList", organizationService.findAll());
-        return "organization/list";
+        return "organization/organizationList";
     }
 
 
 
 
+    @RequiresPermissions("organization:create")
+    @RequestMapping(value = "/appendChild", method = RequestMethod.POST)
+    public String createSon(Organization organization, RedirectAttributes redirectAttributes) {
+        organizationService.createOrganization(organization);
+        redirectAttributes.addFlashAttribute("msg", "添加子节点成功");
+        return "redirect:/organization";
+    }
 
 
+    @RequiresPermissions("organization:update")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateOrn(Organization organization, RedirectAttributes redirectAttributes) {
+        organizationService.updateOrganization(organization);
+        redirectAttributes.addFlashAttribute("msg", "修改成功");
+        return "redirect:/organization";
+    }
 
 
 

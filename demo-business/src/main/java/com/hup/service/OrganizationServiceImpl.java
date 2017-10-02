@@ -23,12 +23,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public Organization createOrganization(Organization organization) {
-        return organizationDao.createOrganization(organization);
+        organizationDao.createOrganization(organization);
+        return organization;
     }
 
     @Override
     public Organization updateOrganization(Organization organization) {
-        return organizationDao.updateOrganization(organization);
+        organizationDao.updateOrganization(organization);
+        return organization;
     }
 
     @Override
@@ -38,17 +40,34 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public Organization findOne(Long organizationId) {
-        return organizationDao.findOne(organizationId);
+        Organization one = organizationDao.findOne(organizationId);
+        Organization parentOne = organizationDao.findOne(one.getParentId());
+        one.setParentName(parentOne.getName());
+        return one;
     }
 
     @Override
     public List<Organization> findByParentId(Long parentId) {
-        return organizationDao.findByParentId(parentId);
+        List<Organization> byParentId = organizationDao.findByParentId(parentId);
+        for (Organization organization : byParentId){
+            Organization parentOne = organizationDao.findOne(organization.getParentId());
+            if (null != parentOne){
+                organization.setParentName(parentOne.getName());
+            }
+        }
+        return byParentId;
     }
 
     @Override
     public List<Organization> findAll() {
-        return organizationDao.findAll();
+        List<Organization> byParentId = organizationDao.findAll();
+        for (Organization organization : byParentId){
+            Organization parentOne = organizationDao.findOne(organization.getParentId());
+            if (null != parentOne){
+                organization.setParentName(parentOne.getName());
+            }
+        }
+        return byParentId;
     }
 
     @Override

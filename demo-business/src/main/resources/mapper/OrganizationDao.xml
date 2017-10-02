@@ -14,17 +14,16 @@
     -->
     <insert id="createOrganization" useGeneratedKeys="true" keyProperty="organization.id">
         insert into sys_organization
-        (name, parent_id, parent_ids, available)
+        (name, description, leaders, parent_id, parent_ids, available)
          values
-         (#{organization.name}, #{organization.parentId}, #{organization.parentIds},#{organization.available})
+         (#{organization.name},#{organization.description},#{organization.leaders}, #{organization.parentId}, #{organization.parentIds}, 1)
     </insert>
 
     <update id="updateOrganization">
         update sys_organization set
         name =  #{organization.name},
-        parent_id = #{organization.parentId},
-        parent_ids = #{organization.parentIds},
-        available = #{organization.available},
+        description = #{organization.description},
+        leaders = #{organization.leaders}
         where id= #{organization.id}
     </update>
 
@@ -33,19 +32,19 @@
     </delete>
 
     <select id="findOne" resultType="com.hup.entity.Organization">
-        SELECT t.id, t.name, t.parent_id, t.parent_ids, t.available
+        SELECT t.id, t.name, t.description, t.leaders, t.parent_id, t.parent_ids, t.available
         FROM sys_organization t
         WHERE t.id = #{organizationId}
     </select>
 
     <select id="findAll" resultType="com.hup.entity.Organization">
-        SELECT t.id, t.name, t.parent_id, t.parent_ids, t.available
+        SELECT t.id, t.name, t.description, t.leaders, t.parent_id, t.parent_ids, t.available
         FROM sys_organization t
     </select>
 
 
     <select id="findAllWithExclude" resultType="com.hup.entity.Organization">
-       select id, name, parent_id, parent_ids, available
+       select id, name, description, leaders, parent_id, parent_ids, available
        from sys_organization
        where id != #{excludeOraganization.id} and parent_ids not like #{excludeOraganization.parentIds}
     </select>
@@ -55,7 +54,7 @@
     </update>
 
     <select id="findByParentId" resultType="com.hup.entity.Organization">
-        SELECT t.id, t.name, t.parent_id, t.parent_ids, t.available
+        SELECT t.id, t.name, t.description, t.leaders, t.parent_id, t.parent_ids, t.available
         FROM sys_organization t
         WHERE t.parent_id = #{parentId}
     </select>

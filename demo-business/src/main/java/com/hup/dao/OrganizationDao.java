@@ -2,6 +2,7 @@ package com.hup.dao;
 
 
 import com.hup.entity.Organization;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public interface OrganizationDao {
 
-    Organization createOrganization(Organization organization);
+    void createOrganization(@Param("organization") Organization organization);
 
-    Organization updateOrganization(Organization organization);
+    void updateOrganization(@Param("organization") Organization organization);
 
     void deleteOrganization(Long organizationId);
 

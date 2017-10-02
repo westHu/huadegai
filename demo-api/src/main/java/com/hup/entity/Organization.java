@@ -11,13 +11,16 @@ import java.util.List;
 public class Organization implements Serializable {
     private Long id; //编号
     private String name; //组织机构名称
+    private String description; //组织描述
+    private String leaders;
     private Long parentId; //父编号
     private String parentIds; //父编号列表，如1/2/
     private Boolean available = Boolean.FALSE;
 
     //==========非数据库 属性===================
-    private List<Organization> childrenList;
-    private List<String> tags;
+    private List<Organization> childrenList; //子节点列表
+    private List<String> tags; //子节点个数
+    private String parentName; //父节点名称
 
 
 
@@ -83,6 +86,30 @@ public class Organization implements Serializable {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLeaders() {
+        return leaders;
+    }
+
+    public void setLeaders(String leaders) {
+        this.leaders = leaders;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
     @Override
