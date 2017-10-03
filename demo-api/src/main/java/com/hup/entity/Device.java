@@ -17,9 +17,8 @@ public class Device implements Serializable {
     /** 设备固有属性 */
     private Long id;
     private String deviceCode;      //设备编码
-    private DeviceEnum.DeviceBgType deviceBgType; //设备大类
-    private DeviceEnum.DeviceSmType deviceSmType; //设备小类
     private String deviceName;      //设备名称
+    private DeviceCategory deviceCategory; // 设备分类
     private String deviceModel;     //设备型号
     private String deviceSpec;      //设备规格
     private String deviceBrand;     //设备品牌
@@ -57,6 +56,14 @@ public class Device implements Serializable {
         this.deviceName = deviceName;
     }
 
+    public DeviceCategory getDeviceCategory() {
+        return deviceCategory;
+    }
+
+    public void setDeviceCategory(DeviceCategory deviceCategory) {
+        this.deviceCategory = deviceCategory;
+    }
+
     public String getDeviceModel() {
         return deviceModel;
     }
@@ -71,22 +78,6 @@ public class Device implements Serializable {
 
     public void setDeviceSpec(String deviceSpec) {
         this.deviceSpec = deviceSpec;
-    }
-
-    public DeviceEnum.DeviceBgType getDeviceBgType() {
-        return deviceBgType;
-    }
-
-    public void setDeviceBgType(DeviceEnum.DeviceBgType deviceBgType) {
-        this.deviceBgType = deviceBgType;
-    }
-
-    public DeviceEnum.DeviceSmType getDeviceSmType() {
-        return deviceSmType;
-    }
-
-    public void setDeviceSmType(DeviceEnum.DeviceSmType deviceSmType) {
-        this.deviceSmType = deviceSmType;
     }
 
     public String getDeviceBrand() {
