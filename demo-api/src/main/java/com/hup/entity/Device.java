@@ -14,33 +14,24 @@ import java.util.Date;
  * Time: 14:03
  */
 public class Device implements Serializable {
+    /** 设备固有属性 */
     private Long id;
-    private String deviceCode; //设备编码
-    private String deviceName; //设备名称
-    private String deviceModel; //设备型号
-    private String deviceSpec;  //设备规格
+    private String deviceCode;      //设备编码
     private DeviceEnum.DeviceBgType deviceBgType; //设备大类
     private DeviceEnum.DeviceSmType deviceSmType; //设备小类
-    private String energyType; //能源类型
-    private String deviceImgUrls; //设备图片 多个；隔开
-
-    private String deviceBrand; //设备品牌
-    private String deviceVender; //设备厂家
-    private String deviceValue;  //设备原值
-    private String devicePrice; //设备价格
-    private String deviceFunction; //设备用途
-
-    private String deviceUnit; //设备隶属单位
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date devicePurchaserDate; //设备采购日期
-    private String devicePurchaserAgent; //设备采购人
-    private String installAddress; //安装地点
+    private String deviceName;      //设备名称
+    private String deviceModel;     //设备型号
+    private String deviceSpec;      //设备规格
+    private String deviceBrand;     //设备品牌
+    private String deviceManufacturer;    //设备厂家 制造商
+    private String deviceValue;     //设备原值
+    private String deviceFunction;  //设备用途
+    private String deviceImgUrls;   //设备图片 多个；隔开
+    private String remark;          //其他未标出的属性
     private DeviceEnum.DeviceStatus deviceStatus; //未安装、已安装（待运行）、已运行、报修中、已报废
 
-    private String remark; //其他未标出的属性
     private Date createDate;
     private Date updateDate;
-
 
     public Long getId() {
         return id;
@@ -90,18 +81,6 @@ public class Device implements Serializable {
         this.deviceBgType = deviceBgType;
     }
 
-    public void setDeviceStatus(DeviceEnum.DeviceStatus deviceStatus) {
-        this.deviceStatus = deviceStatus;
-    }
-
-    public String getEnergyType() {
-        return energyType;
-    }
-
-    public void setEnergyType(String energyType) {
-        this.energyType = energyType;
-    }
-
     public DeviceEnum.DeviceSmType getDeviceSmType() {
         return deviceSmType;
     }
@@ -118,12 +97,12 @@ public class Device implements Serializable {
         this.deviceBrand = deviceBrand;
     }
 
-    public String getDeviceVender() {
-        return deviceVender;
+    public String getDeviceManufacturer() {
+        return deviceManufacturer;
     }
 
-    public void setDeviceVender(String deviceVender) {
-        this.deviceVender = deviceVender;
+    public void setDeviceManufacturer(String deviceManufacturer) {
+        this.deviceManufacturer = deviceManufacturer;
     }
 
     public String getDeviceValue() {
@@ -134,72 +113,12 @@ public class Device implements Serializable {
         this.deviceValue = deviceValue;
     }
 
-    public String getDevicePrice() {
-        return devicePrice;
-    }
-
-    public void setDevicePrice(String devicePrice) {
-        this.devicePrice = devicePrice;
-    }
-
     public String getDeviceFunction() {
         return deviceFunction;
     }
 
     public void setDeviceFunction(String deviceFunction) {
         this.deviceFunction = deviceFunction;
-    }
-
-    public String getDeviceUnit() {
-        return deviceUnit;
-    }
-
-    public void setDeviceUnit(String deviceUnit) {
-        this.deviceUnit = deviceUnit;
-    }
-
-    public Date getDevicePurchaserDate() {
-        return devicePurchaserDate;
-    }
-
-    public void setDevicePurchaserDate(Date devicePurchaserDate) {
-        this.devicePurchaserDate = devicePurchaserDate;
-    }
-
-    public String getDevicePurchaserAgent() {
-        return devicePurchaserAgent;
-    }
-
-    public void setDevicePurchaserAgent(String devicePurchaserAgent) {
-        this.devicePurchaserAgent = devicePurchaserAgent;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public String getInstallAddress() {
-        return installAddress;
-    }
-
-    public void setInstallAddress(String installAddress) {
-        this.installAddress = installAddress;
-    }
-
-    public DeviceEnum.DeviceStatus getDeviceStatus() {
-        return deviceStatus;
     }
 
     public String getDeviceImgUrls() {
@@ -216,5 +135,29 @@ public class Device implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public DeviceEnum.DeviceStatus getDeviceStatus() {
+        return deviceStatus;
+    }
+
+    public void setDeviceStatus(DeviceEnum.DeviceStatus deviceStatus) {
+        this.deviceStatus = deviceStatus;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

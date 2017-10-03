@@ -69,8 +69,23 @@
                 <link rel="stylesheet" href="${context.contextPath}/js/jquery-treetable/stylesheets/jquery.treetable.css">
                 <link rel="stylesheet" href="${context.contextPath}/js/jquery-treetable/stylesheets/jquery.treetable.theme.default.css">
             </#if>
+            <#if obj == 'pickers_css'>
+                <!--pickers css-->
+                <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/bootstrap-datepicker/css/datepicker-custom.css" />
+                <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/bootstrap-timepicker/css/timepicker.css" />
+                <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/bootstrap-colorpicker/css/colorpicker.css" />
+                <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+                <link rel="stylesheet" type="text/css" href="${context.contextPath}/js/bootstrap-datetimepicker/css/datetimepicker-custom.css" />
+            </#if>
+            <#if obj == 'paging-hup_css'>
+                <!--paging-hup css-->
+                <link rel="stylesheet" type="text/css" href="${context.contextPath}/css/paging-hup.css" />
+            </#if>
 
-
+            <#if obj == 'data_table'>
+                <!--data table-->
+                <link rel="stylesheet" href="${context.contextPath}/js/data-tables/DT_bootstrap.css" />
+            </#if>
 
 
         </#list>
@@ -222,7 +237,7 @@
                 </li>
                 <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>设备管理</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="${context.contextPath}/device/inbound"> 设备采购</a></li>
+                        <li><a href="${context.contextPath}/device/purchase"> 设备采购</a></li>
                         <li><a href="${context.contextPath}/device/inbound"> 设备入库</a></li>
                         <li><a href="${context.contextPath}/device/install"> 设备安装</a></li>
                         <li><a href="${context.contextPath}/device/repair"> 设备检修</a></li>
@@ -588,6 +603,35 @@
                 <!--treetable-->
                 <script src="${context.contextPath}/js/jquery-treetable/javascripts/src/jquery.treetable.js"></script>
             </#if>
+
+            <#if obj == 'pickers_plugins'>
+                <!--pickers plugins-->
+                <script type="text/javascript" src="${context.contextPath}/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+                <script type="text/javascript" src="${context.contextPath}/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+                <script type="text/javascript" src="${context.contextPath}/js/bootstrap-daterangepicker/moment.min.js"></script>
+                <script type="text/javascript" src="${context.contextPath}/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+                <script type="text/javascript" src="${context.contextPath}/js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+                <script type="text/javascript" src="${context.contextPath}/js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+            </#if>
+
+            <#if obj == 'pickers_initialization'>
+                <!--pickers initialization-->
+                <script type="text/javascript" src="${context.contextPath}/js/pickers-init.js"></script>
+            </#if>
+
+            <#if obj == 'paging-hup'>
+                <!--pickers initialization-->
+                <script type="text/javascript" src="${context.contextPath}/js/paging-hup.js"></script>
+            </#if>
+
+            <#if obj == 'data_table'>
+                <!--data table-->
+                <script type="text/javascript" src="${context.contextPath}/js/data-tables/jquery.dataTables.js"></script>
+                <script type="text/javascript" src="${context.contextPath}/js/data-tables/DT_bootstrap.js"></script>
+                <!--script for editable table-->
+                <script type="text/javascript" src="${context.contextPath}/js/editable-table.js"></script>
+            </#if>
+
 
 
 

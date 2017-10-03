@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="设备入库" css_war="responsive_table,gritter_css,pickers_css,paging-hup_css">
+<@header title="设备采购" css_war="responsive_table,gritter_css,pickers_css,paging-hup_css">
 <style>
 
     label {
@@ -41,28 +41,14 @@
     }
 </style>
 </@header>
-
 <body class="sticky-header">
-
 <section>
-    <!-- left side start-->
     <@left title="导航栏"></@left>
-    <!-- left side end-->
-    
-    <!-- main content start-->
     <div class="main-content" >
-
-        <!-- header section start-->
         <@notification title="通知"></@notification>
-        <!-- header section end-->
-
-        <!-- page heading start-->
-        <@pageHeading title_1="设备入库"  title_3="设备管理" title_4="设备入库" title_4_url="#"></@pageHeading>
-        <!-- page heading end-->
-
-        <!--body wrapper start-->
+        <@pageHeading title_1="设备采购"  title_3="设备管理" title_4="设备采购" title_4_url="#"></@pageHeading>
         <div class="wrapper">
-            <div class="row">
+            <#--<div class="row">
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
@@ -88,7 +74,7 @@
 
                                     <label class="control-label"  style="float: left">设备名称：</label>
                                     <div class="col-md-1">
-                                        <#--<p class="form-control-static" style="margin-top: 5px;">水泵3#</p>-->
+                                        &lt;#&ndash;<p class="form-control-static" style="margin-top: 5px;">水泵3#</p>&ndash;&gt;
                                         <input type="text" class="my-form-control" name="deviceName" id="deviceName" value="${device.deviceName}">
                                     </div>
 
@@ -139,7 +125,7 @@
                                     <div class="col-md-1">
                                         <input type="text" class="my-form-control" name="devicePrice" id="devicePrice" value="${device.devicePrice}" >
                                     </div>
-                                    <!--设备新增不现实状态，默认都是入库-->
+                                    <!--设备新增不现实状态，默认都是入库&ndash;&gt;
                                     <#if op == '更新'>
                                         <label class="control-label" style="float: left">设备状态：</label>
                                         <div class="col-md-1">
@@ -166,7 +152,7 @@
 
                                     <label class="control-label"  style="float: left">采购日期：</label>
                                     <div class="col-md-1">
-                                        <#--<input type="text" class="my-form-control" >-->
+                                        &lt;#&ndash;<input type="text" class="my-form-control" >&ndash;&gt;
                                             <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="12-02-2017"  class="input-append date dpYears">
                                                 <input type="text" readonly=""value="<#if device.devicePurchaserDate??>${device.devicePurchaserDate?string("yyyy-MM-dd")}<#else>2017-11-11</#if>" size="16" class="form-control" name="devicePurchaserDate" id="devicePurchaserDate">
                                                 <span class="input-group-btn add-on">
@@ -191,7 +177,7 @@
                                     </div>
                                 </div>
 
-                                <!--************** 第四行 ***************** -->
+                                <!--************** 第四行 ***************** &ndash;&gt;
                                 <div class="row" style="width: 90%">
                                     <label class="control-label" style="float: left">设备备注：</label>
                                     <div class="col-sm-4">
@@ -214,19 +200,20 @@
                         </div>
                     </section>
                 </div>
-            </div>
+            </div>-->
 
             <div class="row">
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
                             <div class="btn-group">
-                                <button class="btn btn-primary" type="button">导入导出</button>
+                                <button class="btn btn-primary" type="button">新增采购</button>
                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul role="menu" class="dropdown-menu">
+                                    <li><a href="${context.contextPath}/device/purchase/create">新增采购</a></li>
                                     <li><a href="#">导入设备</a></li>
                                     <li><a href="#">导出设备</a></li>
                                     <li><a href="#">打印列表</a></li>
@@ -240,32 +227,24 @@
                                 <table class="table table-bordered table-striped table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>编号</th>
-                                            <th>名称</th>
-                                            <th>型号</th>
-                                            <th>规格</th>
-                                            <th>大类</th>
-                                            <th>子类</th>
-                                            <th>品牌</th>
-                                            <th>厂家</th>
-                                            <th>采购日期</th>
-                                            <th>采购人</th>
+                                            <th>采购单号</th>
+                                            <th>采购单名称</th>
+                                            <th>采购人员</th>
+                                            <th>付款方式</th>
+                                            <th>采购时间</th>
+                                            <th>备注</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <#list page.getList() as obj>
-                                            <tr <#if obj.id == device.id> style="color: #eeaa31" </#if> >
-                                                <td>${obj.deviceCode}</td>
-                                                <td>${obj.deviceName}</td>
-                                                <td>${obj.deviceModel}</td>
-                                                <td>${obj.deviceSpec}</td>
-                                                <td>${obj.deviceBgType}</td>
-                                                <td>${obj.deviceSmType}</td>
-                                                <td>${obj.deviceBrand}</td>
-                                                <td>${obj.deviceVender}</td>
-                                                <td>${obj.devicePurchaserDate?string("yyyy-MM-dd")}</td>
-                                                <td>${obj.devicePurchaserAgent}</td>
+                                            <tr>
+                                                <td>${obj.purchaseCode}</td>
+                                                <td>${obj.purchaseName}</td>
+                                                <td>${obj.purchaseAgent}</td>
+                                                <td>${obj.paymentType}</td>
+                                                <td>${obj.purchaseDate?string("yyyy-MM-dd")}</td>
+                                                <td>${obj.remark}</td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button data-toggle="dropdown" type="button" class="btn btn-success btn-sm dropdown-toggle">
@@ -312,19 +291,11 @@
                 </div>
             </div>
         </div>
-        <!--body wrapper end-->
-
-        <!--footer section start-->
         <footer>
             2017 &copy; tansfar by hup
         </footer>
-        <!--footer section end-->
-
-
     </div>
-    <!-- main content end-->
 </section>
-
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war="gritter_script,pickers_plugins,pickers_initialization,paging-hup"></@js_lib>
 <script>
