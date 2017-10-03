@@ -243,6 +243,7 @@
                         <li><a href="${context.contextPath}/device/repair"> 设备检修</a></li>
                         <li><a href="${context.contextPath}/device/scrap"> 设备报废</a></li>
                         <li><a href="${context.contextPath}/device/query"> 设备查询</a></li>
+                        <li><a href="${context.contextPath}/device/category"> 设备分类</a></li>
                     </ul>
                 </li>
                 <li class="menu-list" ><a href=""><i class="fa fa-file-text"></i> <span>系统设置</span></a>
