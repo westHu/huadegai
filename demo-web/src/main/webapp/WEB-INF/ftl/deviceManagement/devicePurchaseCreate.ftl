@@ -47,47 +47,45 @@
 <@left title="导航栏"></@left>
     <div class="main-content" >
     <@notification title="通知"></@notification>
-    <@pageHeading title_1="设备采购"  title_3="设备管理" title_4="设备采购" title_4_url="#"></@pageHeading>
+    <@pageHeading title_1="设备采购"  title_3="设备管理" title_4="采购列表" title_4_url="${context.contextPath}/device/purchase"></@pageHeading>
         <div class="wrapper">
             <div class="row">
                 <div class="col-sm-12">
                     <form class="device-inbound-form" <#if op == '新增'> action="${context.contextPath}/device/purchase/create" <#elseif op == '更新'> action="${context.contextPath}/device/purchase/update"</#if> method="post">
                         <section class="panel">
                             <header class="panel-heading">
-                                展示面板${base}
+                                采购表格
                             </header>
                             <div class="panel-body">
                                 <div class="row">
                                     <label class="control-label"  style="float: left">采购单号：</label>
                                     <div class="col-md-1">
-                                        <input type="hidden" class="my-form-control"  name="id"  id="id" value="${purchase.id}">
-                                        <input class="my-form-control"
-                                               <#if op = '新增'>value=".系统生成"<#elseif op = '更新'>value="${purchase.purchaseCode}"</#if>
-                                               name="purchaseCode"  id="purchaseCode" disabled>
+                                        <input type="hidden" class="my-form-control"  name="id"  id="id" value="${devicePurchase.id}">
+                                        <input class="my-form-control" name="purchaseCode"  id="purchaseCode" <#if op = '新增'>value=".系统生成"<#elseif op = '更新'>value="${devicePurchase.purchaseCode}"</#if> readonly>
                                     </div>
 
                                     <label class="control-label"  style="float: left">采购单名：</label>
                                     <div class="col-md-1">
-                                        <input class="my-form-control" name="purchaseName" id="purchaseName" value="${purchase.purchaseName}">
+                                        <input class="my-form-control" name="purchaseName" id="purchaseName" value="${devicePurchase.purchaseName}">
                                     </div>
 
                                     <label class="control-label" style="float: left">采购人员：</label>
                                     <div class="col-md-1">
-                                        <input class="my-form-control" name="purchaseAgent" id="purchaseAgent" value="${purchase.purchaseAgent}">
+                                        <input class="my-form-control" name="purchaseAgent" id="purchaseAgent" value="${devicePurchase.purchaseAgent}">
                                     </div>
 
                                     <label class="control-label"  style="float: left">付款方式：</label>
                                     <div class="col-md-1">
-                                        <input class="my-form-control" name="paymentType" id="paymentType" value="${purchase.paymentType}">
+                                        <input class="my-form-control" name="purchasePaymentType" id="purchasePaymentType" value="${devicePurchase.purchasePaymentType}">
                                     </div>
 
                                     <label class="control-label"  style="float: left">采购日期：</label>
                                     <div class="col-md-1">
-                                        <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="12-02-2017"  class="input-append date dpYears">
-                                            <input readonly=""value="<#if purchase.purchaseDate??>${purchase.purchaseDate?string("yyyy-MM-dd")}<#else>2017-11-11</#if>" size="16" class="form-control" name="purchaseDate" id="purchaseDate">
+                                        <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="2017-12-02"  class="input-append date dpYears">
+                                            <input readonly="" value="<#if devicePurchase.purchaseDate??>${devicePurchase.purchaseDate?string("yyyy-MM-dd")}<#else>2017-11-11</#if>" size="16" class="form-control" name="purchaseDate" id="purchaseDate">
                                             <span class="input-group-btn add-on">
                                                     <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
-                                                </span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -95,32 +93,32 @@
                                 <div class="row">
                                     <label class="control-label"  style="float: left">采购用途：</label>
                                     <div class="col-md-1">
-                                        <input class="my-form-control" name="purchaseFunction" id="purchaseFunction" value="${purchase.auditors}">
+                                        <input class="my-form-control" name="purchaseReason" id="purchaseReason" value="${devicePurchase.purchaseReason}">
                                     </div>
 
                                     <label class="control-label"  style="float: left">审核人员：</label>
                                     <div class="col-md-1">
-                                        <input class="my-form-control" name="auditors" id="auditors" value="${purchase.auditors!' 系统默认'}">
+                                        <input class="my-form-control" name="purchaseAuditors" id="purchaseAuditors" value="${devicePurchase.purchaseAuditors!'系统默认'}">
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <label class="control-label" style="float: left">采购备注：</label>
                                     <div class="col-sm-4">
-                                        <textarea rows="6" class="my-form-control my-textarea" name="remark" id="remark">${purchase.remark}</textarea>
+                                        <textarea rows="6" class="my-form-control my-textarea" name="purchaseRemark" id="purchaseRemark">${devicePurchase.purchaseRemark}</textarea>
                                     </div>
                                 </div>
 
                                 <#if op == '新增'>
                                     <span class="tools pull-right">
-                                            <button class="btn btn-primary" type="button">&nbsp批量导入&nbsp</button>
-                                            <button class="btn btn-primary"               >&nbsp确认采购&nbsp</button>
-                                            <button class="btn btn-primary" type="reset">&nbsp重&nbsp置&nbsp</button>
-                                        </span>
+                                        <button class="btn btn-primary" type="button">&nbsp批量导入&nbsp</button>
+                                        <button class="btn btn-primary"               >&nbsp确认采购&nbsp</button>
+                                        <button class="btn btn-primary" type="reset">&nbsp重&nbsp置&nbsp</button>
+                                    </span>
                                 <#elseif op == '更新'>
                                     <span class="tools pull-right">
-                                            <button class="btn btn-primary" type="submit">&nbsp更新设备&nbsp</button>
-                                        </span>
+                                        <button class="btn btn-primary" type="submit">&nbsp 确定更新 &nbsp</button>
+                                    </span>
                                 </#if>
                             </div>
                         </section>
@@ -144,23 +142,42 @@
                                     <table id="device-purchase-table" class="table table-bordered table-striped table-condensed">
                                         <thead>
                                             <tr>
-                                                <#--<th>采购单号</th>-->
                                                 <th>设备编号</th>
                                                 <th>设备名称</th>
+                                                <th>设备型号</th>
+                                                <th>设备规格</th>
+                                                <th>设备品牌</th>
                                                 <th>采购单价</th>
                                                 <th>采购数量</th>
                                                 <th>操作</th>
                                             </tr>
                                         </thead>
                                         <tbody id="device-purchase-tbody">
-                                            <tr data-id="1">
-                                                <#--<td><input value="xxxxxxx"></td>-->
-                                                <td><input value="AAC"></td>
-                                                <td><input value="AUSTRALIAN AGRICULTURAL COMPANY LIMITED."></td>
-                                                <td><input value="1.38"></td>
-                                                <td><input value="12"></td>
-                                                <td><a href='javascript：deleteDevice(this)'>删除</a></td>
-                                            </tr>
+                                            <#if devicePurchase.devicePurchaseDetailList??>
+                                                <#list devicePurchase.devicePurchaseDetailList as detail>
+                                                    <tr>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceCode" value="${detail.deviceCode}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceName" value="${detail.deviceName}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceModel" value="${detail.deviceModel}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceSpec" value="${detail.deviceSpec}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceBrand" value="${detail.deviceBrand}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].purchaseUnitPrice" value="${detail.purchaseUnitPrice}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].purchaseNumber" value="${detail.purchaseNumber}"></td>
+                                                        <td onclick="deleteDevice(this)"><a>删除</a></td>
+                                                    </tr>
+                                                </#list>
+                                            <#else>
+                                                <tr>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceCode" value="设备编号"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceName" value="设备名称"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceModel" value="设备型号"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceSpec" value="设备规格"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceBrand" value="设备品牌"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].purchaseUnitPrice" value="100.00"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].purchaseNumber" value="30"></td>
+                                                    <td onclick="deleteDevice(this)"><a>删除</a></td>
+                                                </tr>
+                                            </#if>
                                         </tbody>
                                     </table>
                                 </section>
@@ -188,50 +205,30 @@
             var num = recalculateTd();
             console.info("num == " + num);
             var tr ="<tr>\n" +
-                    "<td><input name=\"devicePurchaseDetailList["+num+"].deviceCode\" value=\"设备编码\"></td>\n" +
-                    "<td><input name=\"devicePurchaseDetailList["+num+"].deviceName\" value=\"设备名称\"></td>\n" +
-                    "<td><input name=\"devicePurchaseDetailList["+num+"].purchaseUnitPrice\" value=\"0.00\"></td>\n" +
-                    "<td><input name=\"devicePurchaseDetailList["+num+"].purchaseNumber\" value=\"0\"></td>\n" +
-                    "<td><a href='javascript：deleteDevice(this)'>删除</a></td>\n" +
+                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceCode\" value=\"设备编码\"></td>\n" +
+                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceName\" value=\"设备名称\"></td>\n" +
+                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceModel\" value=\"设备型号\"></td>\n" +
+                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceSpec\" value=\"设备规格\"></td>\n" +
+                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceBrand\" value=\"设备品牌\"></td>\n" +
+                        "<td><input name=\"devicePurchaseDetailList["+num+"].purchaseUnitPrice\" value=\"0.00\"></td>\n" +
+                        "<td><input name=\"devicePurchaseDetailList["+num+"].purchaseNumber\" value=\"0\"></td>\n" +
+                        "<td onclick=\"deleteDevice(this)\"><a>删除</a></td>\n" +
                     "</tr>";
             $("#device-purchase-tbody").append(tr);
         });
 
     });
-
-    /*function delete(obj) {
-        var tr = this.getRowObj(obj);
+    //删除
+    function deleteDevice(obj) {
+        console.info("obj = " + obj);
+        var tr = obj.parentNode;
         if (tr != null) {
             tr.parentNode.removeChild(tr);
         }
+        //tr td input :name 重新排序
+        recalculateTd();
     }
-    //得到行对象
-    function getRowObj(obj) {
-        var i = 0;
-        while (obj.tagName.toLowerCase() != "tr") {
-            obj = obj.parentNode;
-            if (obj.tagName.toLowerCase() == "table") return null;
-        }
-        return obj;
-    }*/
-    /*function dbl_c() {
-        $("#retable tbody tr").find("td:gt(2)").dblclick(function() {
-            var td = $(this);
-            // 根据表格文本创建文本框 并加入表表中--文本框的样式自己调整
-            var text = td.text();
-            var txt = $("<input type='text' class='edit_text'>").val(text);
-            txt.blur(function() {
-                // 失去焦点，保存值。于服务器交互自己再写,最好ajax
-                var newText = $(this).val();
-                // 移除文本框,显示新值
-                $(this).remove();
-                td.text(newText);
-            });
-            td.text("");
-            td.append(txt);
-            txt.focus();
-        });
-    }*/
+
     function recalculateTd() {
         var trList = $("#device-purchase-table tbody tr");
         var num = 0;
@@ -246,9 +243,18 @@
                     $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceName")
                 }
                 if (j == 2){
-                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].purchaseUnitPrice")
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceModel")
                 }
                 if (j == 3){
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceSpec")
+                }
+                if (j == 4){
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceBrand")
+                }
+                if (j == 5){
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].purchaseUnitPrice")
+                }
+                if (j == 6){
                     $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].purchaseNumber")
                 }
             })

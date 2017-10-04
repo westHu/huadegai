@@ -20,5 +20,9 @@ public interface DevicePurchaseService {
 
     DevicePurchase insertDevicePurchase(DevicePurchase purchase);
 
-    int insertDevicePurchaseList(List<DevicePurchaseDetail> purchaseDetailList);
+    DevicePurchase findOne(Long id);
+
+    DevicePurchase updateDevicePurchase(DevicePurchase devicePurchase);
+
+    int deleteDevicePurchase(Long id);
 }

@@ -52,7 +52,6 @@ public class DevicePurchaseController {
         pager = devicePurchaseService.queryDevicePurchaseList(pager, devicePurchase);
         model.addAttribute("page", pager);
         model.addAttribute("op", "列表");
-
         return "deviceManagement/devicePurchaseList";
     }
 
@@ -78,11 +77,43 @@ public class DevicePurchaseController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String purchaseCreate(DevicePurchase devicePurchase,  RedirectAttributes redirectAttributes) {
         logger.info("----------> 设备采购单操作--");
+        devicePurchase.setPurchaseCode(DeviceManagementUtil.purchaseCode());
         devicePurchaseService.insertDevicePurchase(devicePurchase);
         redirectAttributes.addFlashAttribute("msg", "新增采购单成功！");
         return "redirect:/device/purchase";
     }
 
+
+    /**
+     * <p>@Description:
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/4
+     * <p>@Param:
+     * <p>@return:
+     */
+    @RequestMapping(value = "/{id}/view", method = RequestMethod.GET)
+    public String devicePurchaseView(@PathVariable("id") Long id, Model model) {
+        logger.info("========查看采购单=========" + id);
+        DevicePurchase devicePurchase = devicePurchaseService.findOne(id);
+        model.addAttribute("devicePurchase",devicePurchase);
+        return "deviceManagement/devicePurchaseView";
+    }
+
+    /**
+     * <p>@Description: 更新页面
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/25
+     * <p>@Param:
+     * <p>@return:
+     */
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
+    public String devicePurchaseUpdate(@PathVariable("id") Long id, Model model) {
+        logger.info("========更新采购单=========" + id);
+        DevicePurchase devicePurchase = devicePurchaseService.findOne(id);
+        model.addAttribute("devicePurchase",devicePurchase);
+        model.addAttribute("op","更新");
+        return "deviceManagement/devicePurchaseCreate";
+    }
 
 
     /**
@@ -92,36 +123,12 @@ public class DevicePurchaseController {
      * <p>@Param:
      * <p>@return:
      */
-    //@RequiresPermissions("device:update")
-    /*@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
-    public String  deviceObj(@PathVariable("id") Long id, PageRequest pageRequest, Model model) {
-        logger.info("====== 获取Device：{} for update ======",id);
-        Device device = deviceService.findOne(id);
-        model.addAttribute("device", device);
-        model.addAttribute("deviceBgType", DeviceEnum.DeviceBgType.values());
-        model.addAttribute("deviceSmType", DeviceEnum.DeviceSmType.values());
-        model.addAttribute("deviceStatus", DeviceEnum.DeviceStatus.values());
-
-        Pager<Device> pager = new Pager<>();
-        pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
-        pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
-        pager = deviceService.queryDeviceList(pager, device);
-        //model.addAttribute("request", device);
-        model.addAttribute("page", pager);
-        model.addAttribute("op", "更新");
-
-        return "deviceManagement/inbound";
-    }*/
-
-
-    /*@RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String deviceUpdate(Device device, Model model) {
-        logger.info("========设备更新=========" + JSON.toJSONString(device));
-        deviceService.update(device);
-        model.addAttribute("msg","设备更新成功！");
-        return "redirect:/device/inbound";
-    }*/
-
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String devicePurchaseUpdate(DevicePurchase devicePurchase, RedirectAttributes redirectAttributes) {
+        devicePurchaseService.updateDevicePurchase(devicePurchase);
+        redirectAttributes.addFlashAttribute("msg","采购单更新成功！");
+        return "redirect:/device/purchase";
+    }
 
 
     /**
@@ -131,13 +138,15 @@ public class DevicePurchaseController {
      * <p>@Param:
      * <p>@return:
      */
-    /*@ResponseBody
-//    @RequiresPermissions("device:delete")
+    //@RequiresPermissions("device:delete")
+    @ResponseBody
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public BaseResponse delete(@PathVariable("id") Long id) {
-        logger.info("========删除用户 {}",id);
-        deviceService.deleteDevice(id);
-        return new BaseResponse("0","设备删除成功！");
-    }*/
+        logger.info("========删除采购单： {}",id);
+        devicePurchaseService.deleteDevicePurchase(id);
+        return new BaseResponse("0","采购单删除成功！");
+    }
+
+
 
 }

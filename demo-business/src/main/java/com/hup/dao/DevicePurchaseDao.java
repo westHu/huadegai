@@ -2,6 +2,7 @@ package com.hup.dao;
 
 import com.hup.db.Pager;
 import com.hup.entity.DevicePurchase;
+import com.hup.entity.DevicePurchaseDetail;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,10 +18,20 @@ public interface DevicePurchaseDao {
 
     int insertDevicePurchase(@Param("purchase") DevicePurchase purchase);
 
+    int insertDevicePurchaseDetail(@Param("purchaseDetail") DevicePurchaseDetail devicePurchaseDetail);
+
     List<DevicePurchase> queryDevicePurchaseList(@Param("purchase") DevicePurchase purchase,
                                                  @Param("pager") Pager<DevicePurchase> pager);
 
     int getDevicePurchaseCount(@Param("device") DevicePurchase purchase);
 
     DevicePurchase findOne(Long id);
+
+    List<DevicePurchaseDetail> findPurchaseDetailByCode(String purchaseCode);
+
+    int updateDevicePurchase(@Param("devicePurchase") DevicePurchase devicePurchase);
+
+    int deleteDevicePurchaseDetailByCode(String purchaseCode);
+
+    int deleteDevicePurchase(Long id);
 }

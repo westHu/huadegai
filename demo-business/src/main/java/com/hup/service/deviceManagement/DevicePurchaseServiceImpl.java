@@ -7,9 +7,6 @@ import com.hup.entity.DevicePurchase;
 import com.hup.entity.DevicePurchaseDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,31 +25,72 @@ public class DevicePurchaseServiceImpl implements DevicePurchaseService {
 
     @Override
     public Pager<DevicePurchase> queryDevicePurchaseList(Pager<DevicePurchase> pager, DevicePurchase device) {
-        List<DevicePurchase> list = new ArrayList<>();
-        for (int i= 0; i<100; i++){
-            DevicePurchase p = new DevicePurchase();
-            p.setPurchaseCode("bianhao#" + i );
-            p.setPurchaseName("PurchaseName#"+i);
-            p.setPurchaseAgent("admin");
-            p.setPaymentType("货到付款");
-            p.setPurchaseDate(new Date());
-            p.setRemark("采购备注");
-            list.add(p);
+        if (pager == null) {
+            pager = new Pager<>();
         }
-        pager.setList(list);
-        pager.setPageCount(100);
+        pager.setOrderColumns("id"); //时间倒序查询
+        List<DevicePurchase> purchaseList = devicePurchaseDao.queryDevicePurchaseList(device, pager);
+        int purchaseCount = devicePurchaseDao.getDevicePurchaseCount(device);
+        pager.setList(purchaseList);
+        pager.setTotalCount(purchaseCount);
         return pager;
     }
 
 
+    /**
+     * <p>@Description:  保存采购单 和 采购单明细
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/4
+     * <p>@Param:
+     * <p>@return:
+     */
     @Override
     public DevicePurchase insertDevicePurchase(DevicePurchase purchase) {
         devicePurchaseDao.insertDevicePurchase(purchase);
+        List<DevicePurchaseDetail> purchaseDetailList = purchase.getDevicePurchaseDetailList();
+        for (DevicePurchaseDetail devicePurchaseDetail : purchaseDetailList){
+            if (!devicePurchaseDetail.getDeviceCode().equals("设备编号")) {
+                devicePurchaseDetail.setPurchaseCode(purchase.getPurchaseCode());
+                devicePurchaseDao.insertDevicePurchaseDetail(devicePurchaseDetail);
+            }
+        }
         return purchase;
     }
 
     @Override
-    public int insertDevicePurchaseList(List<DevicePurchaseDetail> purchaseDetailList) {
-        return 0;
+    public DevicePurchase findOne(Long id) {
+        DevicePurchase devicePurchase = devicePurchaseDao.findOne(id);
+         if (devicePurchase != null) {
+            List<DevicePurchaseDetail> purchaseDetailByCode = devicePurchaseDao.findPurchaseDetailByCode(devicePurchase.getPurchaseCode());
+            devicePurchase.setDevicePurchaseDetailList(purchaseDetailByCode);
+        }
+        return devicePurchase;
     }
+
+
+    @Override
+    public DevicePurchase updateDevicePurchase(DevicePurchase devicePurchase) {
+        if (devicePurchaseDao.updateDevicePurchase(devicePurchase) > 0) {
+            devicePurchaseDao.deleteDevicePurchaseDetailByCode(devicePurchase.getPurchaseCode());
+            for (DevicePurchaseDetail devicePurchaseDetail : devicePurchase.getDevicePurchaseDetailList()){
+                if (!devicePurchaseDetail.getDeviceCode().equals("设备编号")) {
+                    devicePurchaseDetail.setPurchaseCode(devicePurchase.getPurchaseCode());
+                    devicePurchaseDao.insertDevicePurchaseDetail(devicePurchaseDetail);
+                }
+            }
+        }
+        return devicePurchase;
+    }
+
+
+    @Override
+    public int deleteDevicePurchase(Long id) {
+        DevicePurchase one = devicePurchaseDao.findOne(id);
+        if (one != null) {
+            devicePurchaseDao.deleteDevicePurchase(id);
+            devicePurchaseDao.deleteDevicePurchaseDetailByCode(one.getPurchaseCode());
+        }
+        return 1;
+    }
+
 }

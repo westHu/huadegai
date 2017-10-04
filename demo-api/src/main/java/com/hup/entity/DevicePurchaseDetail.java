@@ -2,6 +2,7 @@ package com.hup.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,23 +11,21 @@ import java.math.BigDecimal;
  * Date: 2017-10-02
  * Time: 22:47
  */
-public class DevicePurchaseDetail  implements Serializable {
+public class DevicePurchaseDetail extends Device implements Serializable {
 
     private Long id;
     private String purchaseCode; //采购单号
-    private String deviceCode; //设备编号
-    private String deviceName; //设备名称
-    private String deviceModel; //设备型号
-    private String deviceSpec;  //设备规格
-    private String deviceBrand; //设备品牌
+    private String purchaseFunction; //采购用途
     private BigDecimal purchaseUnitPrice; //采购单价
     private Integer purchaseNumber;//采购数量
+    private Date purchaseDate; //采购时间
 
-
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -37,22 +36,6 @@ public class DevicePurchaseDetail  implements Serializable {
 
     public void setPurchaseCode(String purchaseCode) {
         this.purchaseCode = purchaseCode;
-    }
-
-    public String getDeviceCode() {
-        return deviceCode;
-    }
-
-    public void setDeviceCode(String deviceCode) {
-        this.deviceCode = deviceCode;
-    }
-
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
     }
 
     public BigDecimal getPurchaseUnitPrice() {
@@ -67,7 +50,23 @@ public class DevicePurchaseDetail  implements Serializable {
         return purchaseNumber;
     }
 
+    public String getPurchaseFunction() {
+        return purchaseFunction;
+    }
+
+    public void setPurchaseFunction(String purchaseFunction) {
+        this.purchaseFunction = purchaseFunction;
+    }
+
     public void setPurchaseNumber(Integer purchaseNumber) {
         this.purchaseNumber = purchaseNumber;
+    }
+
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 }

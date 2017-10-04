@@ -19,17 +19,31 @@ public class DevicePurchase  implements Serializable {
     private String purchaseCode; //采购单号
     private String purchaseName; //采购单名称;
     private String purchaseAgent; //采购人员
-    private String paymentType; //付款方式
+    private String purchaseReason; //采购目的
+    private String purchasePaymentType; //付款方式
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date purchaseDate; //采购时间
-    private String remark;
-    private String auditors;  //审核人员
+    private String purchaseRemark; //采购备注
+    private String purchaseAuditors;  //审核人员
 
     //=======非数据库字段
     private List<DevicePurchaseDetail> devicePurchaseDetailList; //明细列表
 
+
+
+
     public Long getId() {
         return id;
+    }
+
+
+
+    public String getPurchaseReason() {
+        return purchaseReason;
+    }
+
+    public void setPurchaseReason(String purchaseReason) {
+        this.purchaseReason = purchaseReason;
     }
 
     public void setId(Long id) {
@@ -60,12 +74,12 @@ public class DevicePurchase  implements Serializable {
         this.purchaseAgent = purchaseAgent;
     }
 
-    public String getPaymentType() {
-        return paymentType;
+    public String getPurchasePaymentType() {
+        return purchasePaymentType;
     }
 
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
+    public void setPurchasePaymentType(String purchasePaymentType) {
+        this.purchasePaymentType = purchasePaymentType;
     }
 
     public Date getPurchaseDate() {
@@ -76,20 +90,20 @@ public class DevicePurchase  implements Serializable {
         this.purchaseDate = purchaseDate;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getPurchaseRemark() {
+        return purchaseRemark;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setPurchaseRemark(String purchaseRemark) {
+        this.purchaseRemark = purchaseRemark;
     }
 
-    public String getAuditors() {
-        return auditors;
+    public String getPurchaseAuditors() {
+        return purchaseAuditors;
     }
 
-    public void setAuditors(String auditors) {
-        this.auditors = auditors;
+    public void setPurchaseAuditors(String purchaseAuditors) {
+        this.purchaseAuditors = purchaseAuditors;
     }
 
     public List<DevicePurchaseDetail> getDevicePurchaseDetailList() {
