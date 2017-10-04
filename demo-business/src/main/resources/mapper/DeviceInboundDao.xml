@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hup.dao.DeviceInboundDao">
+
+    <!--
+        1.属性名,表名等用小写,select / from之类关键字用大写。
+        2.<select>返回值尽量使用resultType，当实体属性名称与表中列名无法匹配时候，使用resultMap进行映射。
+        3.不要用parameterType属性(多余)。
+        4.一般情况下用#{},不要用${}。
+        5.对做了分表分库后的数据集做查询操作时，不支持Join, 嵌套查询，order by, group by等操作。
+        6.对SQL进行排版。
+        7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
+          WHERE t.devicename = #{deviceName}
+    -->
+
+
+
+    <insert id="insertDeviceInbound" useGeneratedKeys="true" keyProperty="inbound.id">
+        insert into dms_device_inbound
+         (inbound_code, inbound_name, inbound_agent, inbound_date, inbound_remark)
+         values
+         (#{inbound.inboundCode}, #{inbound.inboundName}, #{inbound.inboundAgent},
+         #{inbound.inboundDate}, #{inbound.inboundRemark})
+    </insert>
+
+
+    <insert id="insertDeviceInboundDetail" useGeneratedKeys="true" keyProperty="inboundDetail.id">
+        insert into dms_device_inbound_detail
+        (inbound_code, device_code, device_name, device_model, device_spec, device_brand, inbound_number, inbound_date)
+        values
+        (#{inboundDetail.inboundCode}, #{inboundDetail.deviceCode}, #{inboundDetail.deviceName}, #{inboundDetail.deviceModel},
+         #{inboundDetail.deviceSpec}, #{inboundDetail.deviceBrand}, #{inboundDetail.inboundNumber}, #{inboundDetail.inboundDate}
+        )
+    </insert>
+
+
+    <select id="queryDeviceInboundList" resultType="com.hup.entity.DeviceInbound">
+          SELECT id, inbound_code, inbound_name, inbound_agent, inbound_date,  inbound_remark
+           FROM dms_device_inbound
+    </select>
+
+    <select id="getDeviceInboundCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM dms_device_inbound
+    </select>
+
+    <select id="findOne" resultType="com.hup.entity.DeviceInbound">
+        SELECT  id, inbound_code, inbound_name, inbound_agent, inbound_date, inbound_remark
+        FROM dms_device_inbound
+        WHERE id = #{id}
+    </select>
+
+    <select id="findInboundDetailByCode" resultType="com.hup.entity.DeviceInboundDetail">
+        SELECT  id, inbound_code, device_code, device_name, device_model, device_spec, device_brand, inbound_number, inbound_date
+        FROM dms_device_inbound_detail
+        WHERE inbound_code = #{inboundCode}
+    </select>
+
+    <update id="updateDeviceInbound">
+        UPDATE dms_device_inbound SET
+          inbound_name = #{deviceInbound.inboundName},
+          inbound_agent = #{deviceInbound.inboundAgent},
+          inbound_date = #{deviceInbound.inboundDate},
+          inbound_remark = #{deviceInbound.inboundRemark}
+        WHERE id = #{deviceInbound.id}
+    </update>
+
+    <delete id="deleteDeviceInboundDetailByCode">
+        DELETE FROM  dms_device_inbound_detail
+        WHERE  inbound_code = #{inboundCode}
+    </delete>
+
+
+    <delete id="deleteDeviceInbound">
+        DELETE FROM dms_device_inbound
+        WHERE id = #{id}
+    </delete>
+
+
+
+
+
+
+
+</mapper>

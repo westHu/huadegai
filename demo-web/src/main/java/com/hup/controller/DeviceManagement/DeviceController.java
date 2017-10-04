@@ -38,7 +38,7 @@ public class DeviceController {
 
 
 //    @RequiresPermissions("device:insert")
-    @RequestMapping(value = "/inbound",method = RequestMethod.GET)
+    /*@RequestMapping(value = "/inbound",method = RequestMethod.GET)
     public String showInboundPage(Device device, PageRequest pageRequest, Model model) {
         logger.info("========设备入库页面=========");
         model.addAttribute("device", new Device());
@@ -55,7 +55,7 @@ public class DeviceController {
         model.addAttribute("op", "新增");
 
         return "deviceManagement/inbound";
-    }
+    }*/
 
 
     /**
@@ -67,7 +67,7 @@ public class DeviceController {
      * <p>@return:
      */
 //    @RequiresPermissions("device:create")
-    @RequestMapping(value = "/inbound", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/inbound", method = RequestMethod.POST)
     public String inbound(Device device, Model model) {
         logger.info("========设备入库=========" + JSON.toJSONString(device));
         device.setDeviceCode(DeviceManagementUtil.deviceCode());
@@ -75,7 +75,7 @@ public class DeviceController {
         deviceService.insert(device);
         model.addAttribute("msg","设备添加成功！");
         return "redirect:/device/inbound";
-    }
+    }*/
 
 
     /**
@@ -86,7 +86,7 @@ public class DeviceController {
      * <p>@return:
      */
     //@RequiresPermissions("device:update")
-    @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String  deviceObj(@PathVariable("id") Long id, PageRequest pageRequest, Model model) {
         logger.info("====== 获取Device：{} for update ======",id);
         Device device = deviceService.findOne(id);
@@ -104,16 +104,16 @@ public class DeviceController {
         model.addAttribute("op", "更新");
 
         return "deviceManagement/inbound";
-    }
+    }*/
 
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/update", method = RequestMethod.POST)
     public String deviceUpdate(Device device, Model model) {
         logger.info("========设备更新=========" + JSON.toJSONString(device));
         deviceService.update(device);
         model.addAttribute("msg","设备更新成功！");
         return "redirect:/device/inbound";
-    }
+    }*/
 
 
 
@@ -124,13 +124,13 @@ public class DeviceController {
      * <p>@Param:
      * <p>@return:
      */
-    @ResponseBody
+    /*@ResponseBody
 //    @RequiresPermissions("device:delete")
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public BaseResponse delete(@PathVariable("id") Long id) {
         logger.info("========删除用户 {}",id);
         deviceService.deleteDevice(id);
         return new BaseResponse("0","设备删除成功！");
-    }
+    }*/
 
 }

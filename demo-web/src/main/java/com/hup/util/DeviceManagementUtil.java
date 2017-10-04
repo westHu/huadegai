@@ -11,14 +11,18 @@ public class DeviceManagementUtil {
 
     private static String DMS = "DMS_";
     private static String DPC = "DPC_";
+    private static String DIC = "DIC_";
 
     public static String deviceCode(){
         return DMS + System.currentTimeMillis();
     };
 
-
     public static String purchaseCode(){
         return DPC + System.currentTimeMillis();
+    };
+
+    public static String inboundCode(){
+        return DIC + System.currentTimeMillis();
     };
 
 }
