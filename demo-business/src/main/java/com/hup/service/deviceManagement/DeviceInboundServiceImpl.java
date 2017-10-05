@@ -9,6 +9,7 @@ import com.hup.entity.DeviceInbound;
 import com.hup.entity.DeviceInboundDetail;
 import com.hup.entity.DeviceInbound;
 import com.hup.entity.DeviceInboundDetail;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +55,7 @@ public class DeviceInboundServiceImpl implements DeviceInboundService {
         deviceInboundDao.insertDeviceInbound(inbound);
         List<DeviceInboundDetail> inboundDetailList = inbound.getDeviceInboundDetailList();
         for (DeviceInboundDetail deviceInboundDetail : inboundDetailList){
-            if (!deviceInboundDetail.getDeviceCode().equals("设备编号")) {
+            if (StringUtils.isNoneBlank(deviceInboundDetail.getDeviceName())) {
                 deviceInboundDetail.setInboundCode(inbound.getInboundCode());
                 deviceInboundDao.insertDeviceInboundDetail(deviceInboundDetail);
             }

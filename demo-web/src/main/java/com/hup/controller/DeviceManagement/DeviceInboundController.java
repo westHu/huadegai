@@ -2,8 +2,9 @@ package com.hup.controller.DeviceManagement;
 
 import com.hup.api.deviceManagement.DeviceInboundService;
 import com.hup.api.deviceManagement.DeviceInboundService;
+import com.hup.api.deviceManagement.DevicePurchaseService;
 import com.hup.db.Pager;
-import com.hup.entity.DeviceInbound;
+import com.hup.entity.*;
 import com.hup.entity.DeviceInbound;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * Description: 入库
@@ -35,6 +39,9 @@ public class DeviceInboundController {
 
     @Autowired
     private DeviceInboundService deviceInboundService;
+
+    @Autowired
+    private DevicePurchaseService devicePurchaseService;
 
 
 //    @RequiresPermissions("inbound:insert")
@@ -62,6 +69,12 @@ public class DeviceInboundController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String inboundCreateForm(Model model) {
         logger.info("--------->入库单页面--");
+        List<DevicePurchase> devicePurchaseByStatus = devicePurchaseService.getDevicePurchaseByStatus("采购完成");
+        List<DevicePurchaseDetail> purchaseDetailList = new ArrayList<>();
+        for (DevicePurchase purchase : devicePurchaseByStatus) {
+            purchaseDetailList.addAll(purchase.getDevicePurchaseDetailList());
+        }
+        model.addAttribute("purchaseDetailList", purchaseDetailList);
         model.addAttribute("deviceInbound", new DeviceInbound());
         model.addAttribute("op","新增");
         return "deviceManagement/deviceInboundCreate";
@@ -73,6 +86,9 @@ public class DeviceInboundController {
     public String inboundCreate(DeviceInbound deviceInbound,  RedirectAttributes redirectAttributes) {
         logger.info("----------> 设备采购单操作--");
         deviceInbound.setInboundCode(DeviceManagementUtil.inboundCode());
+        for (DeviceInboundDetail inboundDetail : deviceInbound.getDeviceInboundDetailList()) {
+            inboundDetail.setDeviceCode(DeviceManagementUtil.deviceCode());
+        }
         deviceInboundService.insertDeviceInbound(deviceInbound);
         redirectAttributes.addFlashAttribute("msg", "新增采购单成功！");
         return "redirect:/device/inbound";

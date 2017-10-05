@@ -81,6 +81,13 @@
     </delete>
 
 
+    <select id="getDevicePurchaseByStatus" resultType="com.hup.entity.DevicePurchase">
+        SELECT  id, purchase_code, purchase_name, purchase_agent, purchase_reason, purchase_payment_type, purchase_date, purchase_remark, purchase_status
+        FROM dms_device_purchase
+        WHERE purchase_status = #{purchaseStatus}
+    </select>
+
+
 
 
 

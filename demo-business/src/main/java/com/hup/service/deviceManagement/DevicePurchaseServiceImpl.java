@@ -95,4 +95,15 @@ public class DevicePurchaseServiceImpl implements DevicePurchaseService {
         return 1;
     }
 
+
+    @Override
+    public List<DevicePurchase> getDevicePurchaseByStatus(String purchaseStatus) {
+        List<DevicePurchase> purchaseList = devicePurchaseDao.getDevicePurchaseByStatus(purchaseStatus);
+        for (DevicePurchase devicePurchase : purchaseList){
+            List<DevicePurchaseDetail> detailList = devicePurchaseDao.findPurchaseDetailByCode(devicePurchase.getPurchaseCode());
+            devicePurchase.setDevicePurchaseDetailList(detailList);
+        }
+        return purchaseList;
+    }
+
 }

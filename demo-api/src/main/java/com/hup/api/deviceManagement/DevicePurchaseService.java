@@ -25,4 +25,6 @@ public interface DevicePurchaseService {
     DevicePurchase updateDevicePurchase(DevicePurchase devicePurchase);
 
     int deleteDevicePurchase(Long id);
+
+    List<DevicePurchase> getDevicePurchaseByStatus(String purchaseStatus);
 }

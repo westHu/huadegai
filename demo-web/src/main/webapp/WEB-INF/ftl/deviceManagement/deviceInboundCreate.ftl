@@ -97,7 +97,6 @@
 
                                 <#if op == '新增'>
                                     <span class="tools pull-right">
-                                        <button class="btn btn-primary" type="button">&nbsp批量导入&nbsp</button>
                                         <button class="btn btn-primary"               >&nbsp确认入库&nbsp</button>
                                         <button class="btn btn-primary" type="reset">&nbsp重&nbsp置&nbsp</button>
                                     </span>
@@ -133,6 +132,7 @@
                                                 <th>设备型号</th>
                                                 <th>设备规格</th>
                                                 <th>设备品牌</th>
+                                                <th>采购数量</th>
                                                 <th>入库数量</th>
                                                 <th>操作</th>
                                             </tr>
@@ -141,42 +141,36 @@
                                             <#if deviceInbound.deviceInboundDetailList??>
                                                 <#list deviceInbound.deviceInboundDetailList as detail>
                                                     <tr>
-                                                        <td>
-                                                            <#--<input name="deviceInboundDetailList[${detail_index}].deviceCode" value="${detail.deviceCode}">-->
-                                                            <div class="input-group">
-                                                                <input name="deviceInboundDetailList[${detail_index}].deviceCode" value="${detail.deviceCode}" class="form-control" placeholder="设备编号">
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" class="btn btn-default"><i class="fa fa-search" onclick='searchDevice()'></i></button>
-                                                                </span>
-                                                            </div>
-                                                        </td>
                                                         <td><input name="deviceInboundDetailList[${detail_index}].deviceName" value="${detail.deviceName}"></td>
+                                                        <td><input name="deviceInboundDetailList[${detail_index}].deviceCategory" value="${detail.deviceCategory}"></td>
                                                         <td><input name="deviceInboundDetailList[${detail_index}].deviceModel" value="${detail.deviceModel}"></td>
                                                         <td><input name="deviceInboundDetailList[${detail_index}].deviceSpec" value="${detail.deviceSpec}"></td>
                                                         <td><input name="deviceInboundDetailList[${detail_index}].deviceBrand" value="${detail.deviceBrand}"></td>
-                                                        <td><input name="deviceInboundDetailList[${detail_index}].inboundNumber" value="${detail.inboundNumber}"></td>
+                                                        <td><input name="deviceInboundDetailList[${detail_index}].purchaseNumber" value="${detail.purchaseNumber}" type="number"></td>
+                                                        <td><input name="deviceInboundDetailList[${detail_index}].inboundNumber" value="${detail.inboundNumber}" type="number"></td>
                                                         <td onclick="deleteDevice(this)"><a>删除</a></td>
                                                     </tr>
                                                 </#list>
                                             <#else>
                                                 <tr>
                                                     <td>
-                                                        <#--<input name="deviceInboundDetailList[0].deviceCode" value="设备编号">-->
-                                                        <div class="input-group">
-                                                            <input name="deviceInboundDetailList[0].deviceCode" class="form-control" placeholder="设备编号">
-                                                            <span class="input-group-btn">
-                                                                    <button type="button" class="btn btn-default" onclick="searchDevice()">
-                                                                        <i class="fa fa-search"></i>
-                                                                    </button>
-                                                            </span>
-                                                        </div>
+                                                        <input name="deviceInboundDetailList[0].deviceName" placeholder="设备名称">
+                                                        <#--<div class="input-group">
+                                                                <input name="deviceInboundDetailList[0].deviceCode" class="form-control" placeholder="设备编号">
+                                                                <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-default">
+                                                                            <i class="fa fa-search"></i>
+                                                                        </button>
+                                                                </span>
+                                                            </div>-->
                                                     </td>
-                                                    <td><input name="deviceInboundDetailList[0].deviceName" readonly></td>
-                                                    <td><input name="deviceInboundDetailList[0].deviceModel" readonly></td>
-                                                    <td><input name="deviceInboundDetailList[0].deviceSpec" readonly></td>
-                                                    <td><input name="deviceInboundDetailList[0].deviceBrand" readonly></td>
-                                                    <td><input name="deviceInboundDetailList[0].inboundNumber" placeholder="入库数量"></td>
-                                                    <td onclick="deleteDevice(this)"><a>删除</a></td>
+                                                    <td><input name="deviceInboundDetailList[0].deviceCategory" placeholder="设备类别"></td>
+                                                    <td><input name="deviceInboundDetailList[0].deviceModel" placeholder="设备型号"></td>
+                                                    <td><input name="deviceInboundDetailList[0].deviceSpec" placeholder="设备规格"></td>
+                                                    <td><input name="deviceInboundDetailList[0].deviceBrand" placeholder="设备品牌"></td>
+                                                    <td><input name="deviceInboundDetailList[0].purchaseNumber" placeholder="采购数量" type="number"></td>
+                                                    <td><input name="deviceInboundDetailList[0].inboundNumber" placeholder="入库数量" type="number"></td>
+                                                    <td>----</td>
                                                 </tr>
                                             </#if>
                                         </tbody>
@@ -186,68 +180,36 @@
                         </section>
                     </form>
 
-                    <section id="search-device-section" class="panel" style="display: none">
+                    <section id="search-device-section" class="panel">
                         <header class="panel-heading">
-                            选中设备进行安装...
-                            <span class="tools pull-right">
-                                    <#--<a href="javascript:;" class="fa fa-chevron-down"></a>
-                                    <a href="javascript:;" class="fa fa-times"></a>-->
-                                        <div class="btn-group">
-                                        <button id="add-new-1" class="btn btn-primary" type="button" onclick="checkDevice()">
-                                            确定安装
-                                        </button>
-                                    </div>
-                                </span>
+                            选中设备进行入库...
                         </header>
                         <div class="panel-body">
                             <section id="unseen">
-                                <table id="device-inbound-table-1" class="table table-bordered table-striped table-condensed" style="width: 50%">
+                                <table id="device-purchaseDetail-table" class="table table-bordered table-striped table-condensed">
                                     <thead>
-                                    <tr>
-                                        <th>设备编号</th>
-                                        <th>设备名称</th>
-                                        <th>设备型号</th>
-                                        <th>设备规格</th>
-                                        <th>设备品牌</th>
-                                    </tr>
+                                        <tr>
+                                            <th>采购单号</th>
+                                            <th>设备名称</th>
+                                            <th>设备类别</th>
+                                            <th>设备型号</th>
+                                            <th>设备规格</th>
+                                            <th>设备品牌</th>
+                                            <th>设备数量</th>
+                                        </tr>
                                     </thead>
-                                    <tbody id="device-inbound-tbody-1">
-                                    <tr>
-                                        <td>AAC</td>
-                                        <td>AUSTRAL.</td>
-                                        <td class="numeric">$1.38</td>
-                                        <td class="numeric">-0.01</td>
-                                        <td class="numeric">-0.36%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>AAC</td>
-                                        <td>AUSTRAL.</td>
-                                        <td class="numeric">$1.38</td>
-                                        <td class="numeric">-0.01</td>
-                                        <td class="numeric">-0.36%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>AAC</td>
-                                        <td>AUSTRAL.</td>
-                                        <td class="numeric">$1.38</td>
-                                        <td class="numeric">-0.01</td>
-                                        <td class="numeric">-0.36%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>AAC</td>
-                                        <td>AUSTRAL.</td>
-                                        <td class="numeric">$1.38</td>
-                                        <td class="numeric">-0.01</td>
-                                        <td class="numeric">-0.36%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>AAC</td>
-                                        <td>AUSTRAL.</td>
-                                        <td class="numeric">$1.38</td>
-                                        <td class="numeric">-0.01</td>
-                                        <td class="numeric">-0.36%</td>
-                                    </tr>
-
+                                    <tbody id="device-purchaseDetail-tbody">
+                                        <#list purchaseDetailList as purchaseDetail>
+                                            <tr>
+                                                <td>${purchaseDetail.purchaseCode}</td>
+                                                <td>${purchaseDetail.deviceName}</td>
+                                                <td>${purchaseDetail.deviceCategory}</td>
+                                                <td>${purchaseDetail.deviceModel}</td>
+                                                <td>${purchaseDetail.deviceSpec}</td>
+                                                <td>${purchaseDetail.deviceBrand}</td>
+                                                <td>${purchaseDetail.purchaseNumber}</td>
+                                            </tr>
+                                        </#list>
                                     </tbody>
                                 </table>
                             </section>
@@ -256,8 +218,6 @@
                 </div>
             </div>
         </div>
-
-
         <footer>
             2017 &copy; tansfar by hup
         </footer>
@@ -271,17 +231,13 @@
             var num = recalculateTd();
             console.info("num == " + num);
             var tr ="<tr>\n" +
-                        "<td><div class=\"input-group\">\n" +
-                            "<input name=\"deviceInboundDetailList[0].deviceCode\" class=\"form-control\" placeholder=\"设备编号\">\n" +
-                            "<span class=\"input-group-btn\">\n" +
-                            "<button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-search\" onclick='searchDevice()'></i></button>\n" +
-                            "</span>\n" +
-                        "</div></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceName\" readonly></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceModel\" readonly></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceSpec\" readonly></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceBrand\" readonly></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].inboundNumber\" value=\"0\"></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceName' placeholder='设备名称'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceCategory' placeholder='设备类别'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceModel' placeholder='设备模型'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceSpec' placeholder='设备规格'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceBrand' placeholder='设备品牌'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].purchaseNumber' placeholder='采购数量' type='number'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].inboundNumber' placeholder='入库数量' type='number'></td>\n" +
                         "<td onclick=\"deleteDevice(this)\"><a>删除</a></td>\n" +
                     "</tr>";
             $("#device-inbound-tbody").append(tr);
@@ -290,12 +246,10 @@
     });
     //删除
     function deleteDevice(obj) {
-        console.info("obj = " + obj);
         var tr = obj.parentNode;
         if (tr != null) {
             tr.parentNode.removeChild(tr);
         }
-        //tr td input :name 重新排序
         recalculateTd();
     }
 
@@ -304,13 +258,13 @@
         var num = 0;
         trList.each(function (i) {
             num = i;
-            var tdList = $(this).children("td:lt(4)");
+            var tdList = $(this).children("td");
             tdList.each(function (j) {
                 if (j == 0){
-                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceCode")
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceName")
                 }
                 if (j == 1){
-                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceName")
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceCategory")
                 }
                 if (j == 2){
                     $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceModel")
@@ -322,19 +276,14 @@
                     $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceBrand")
                 }
                 if (j == 5){
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].purchaseNumber")
+                }
+                if (j == 6){
                     $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].inboundNumber")
                 }
             })
         });
         return num + 1;
-    }
-
-    function searchDevice() {
-        $('#search-device-section').show();
-    }
-
-    function checkDevice() {
-        $('#search-device-section').hide();
     }
 
 

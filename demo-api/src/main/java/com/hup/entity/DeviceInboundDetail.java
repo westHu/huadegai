@@ -15,7 +15,8 @@ public class DeviceInboundDetail extends Device implements Serializable {
 
     private Long id;
     private String inboundCode; //入库单号
-    private Integer inboundNumber;//入库数量
+    private String purchaseNumber; //采购数量
+    private String inboundNumber;//入库数量 实际到货数量
     private String inboundLocation; //入库位置
     private Date inboundDate; //入库时间
 
@@ -38,11 +39,19 @@ public class DeviceInboundDetail extends Device implements Serializable {
         this.inboundCode = inboundCode;
     }
 
-    public Integer getInboundNumber() {
+    public String getPurchaseNumber() {
+        return purchaseNumber;
+    }
+
+    public void setPurchaseNumber(String purchaseNumber) {
+        this.purchaseNumber = purchaseNumber;
+    }
+
+    public String getInboundNumber() {
         return inboundNumber;
     }
 
-    public void setInboundNumber(Integer inboundNumber) {
+    public void setInboundNumber(String inboundNumber) {
         this.inboundNumber = inboundNumber;
     }
 
