@@ -18,7 +18,7 @@ public class Device implements Serializable {
     private Long id;
     private String deviceCode;      //设备编码
     private String deviceName;      //设备名称
-    private DeviceCategory deviceCategory; // 设备分类
+    private String deviceCategory; // 设备分类
     private String deviceModel;     //设备型号
     private String deviceSpec;      //设备规格
     private String deviceBrand;     //设备品牌
@@ -26,7 +26,7 @@ public class Device implements Serializable {
     private String deviceValue;     //设备原值
     private String deviceFunction;  //设备用途
     private String deviceImgUrls;   //设备图片 多个；隔开
-    private String remark;          //其他未标出的属性
+    private String deviceRemark;          //其他未标出的属性
     private DeviceEnum.DeviceStatus deviceStatus; //未安装、已安装（待运行）、已运行、报修中、已报废
 
     private Date createDate;
@@ -56,11 +56,11 @@ public class Device implements Serializable {
         this.deviceName = deviceName;
     }
 
-    public DeviceCategory getDeviceCategory() {
+    public String getDeviceCategory() {
         return deviceCategory;
     }
 
-    public void setDeviceCategory(DeviceCategory deviceCategory) {
+    public void setDeviceCategory(String deviceCategory) {
         this.deviceCategory = deviceCategory;
     }
 
@@ -120,12 +120,12 @@ public class Device implements Serializable {
         this.deviceImgUrls = deviceImgUrls;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getDeviceRemark() {
+        return deviceRemark;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setDeviceRemark(String deviceRemark) {
+        this.deviceRemark = deviceRemark;
     }
 
     public DeviceEnum.DeviceStatus getDeviceStatus() {

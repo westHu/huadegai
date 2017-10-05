@@ -16,9 +16,10 @@ public class DevicePurchaseDetail extends Device implements Serializable {
     private Long id;
     private String purchaseCode; //采购单号
     private String purchaseFunction; //采购用途
-    private BigDecimal purchaseUnitPrice; //采购单价
-    private Integer purchaseNumber;//采购数量
+    private String purchaseUnitPrice; //采购单价
+    private String purchaseNumber;//采购数量
     private Date purchaseDate; //采购时间
+
 
     @Override
     public Long getId() {
@@ -38,18 +39,6 @@ public class DevicePurchaseDetail extends Device implements Serializable {
         this.purchaseCode = purchaseCode;
     }
 
-    public BigDecimal getPurchaseUnitPrice() {
-        return purchaseUnitPrice;
-    }
-
-    public void setPurchaseUnitPrice(BigDecimal purchaseUnitPrice) {
-        this.purchaseUnitPrice = purchaseUnitPrice;
-    }
-
-    public Integer getPurchaseNumber() {
-        return purchaseNumber;
-    }
-
     public String getPurchaseFunction() {
         return purchaseFunction;
     }
@@ -58,7 +47,19 @@ public class DevicePurchaseDetail extends Device implements Serializable {
         this.purchaseFunction = purchaseFunction;
     }
 
-    public void setPurchaseNumber(Integer purchaseNumber) {
+    public String getPurchaseUnitPrice() {
+        return purchaseUnitPrice;
+    }
+
+    public void setPurchaseUnitPrice(String purchaseUnitPrice) {
+        this.purchaseUnitPrice = purchaseUnitPrice;
+    }
+
+    public String getPurchaseNumber() {
+        return purchaseNumber;
+    }
+
+    public void setPurchaseNumber(String purchaseNumber) {
         this.purchaseNumber = purchaseNumber;
     }
 

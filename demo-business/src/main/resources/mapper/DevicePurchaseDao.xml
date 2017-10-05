@@ -17,27 +17,28 @@
 
     <insert id="insertDevicePurchase" useGeneratedKeys="true" keyProperty="purchase.id">
         insert into dms_device_purchase
-         (purchase_code, purchase_name, purchase_agent, purchase_reason, purchase_payment_type, purchase_date, purchase_remark)
+         (purchase_code, purchase_name, purchase_agent, purchase_reason, purchase_payment_type, purchase_date, purchase_remark, purchase_status)
          values
          (#{purchase.purchaseCode}, #{purchase.purchaseName}, #{purchase.purchaseAgent},  #{purchase.purchaseReason}, #{purchase.purchasePaymentType},
-         #{purchase.purchaseDate}, #{purchase.purchaseRemark})
+         #{purchase.purchaseDate}, #{purchase.purchaseRemark}, #{purchase.purchaseStatus})
     </insert>
 
 
     <insert id="insertDevicePurchaseDetail" useGeneratedKeys="true" keyProperty="purchaseDetail.id">
         insert into dms_device_purchase_detail
-        (purchase_code, device_code, device_name, device_model, device_spec, device_brand, purchase_function,
+        (purchase_code, device_name, device_category, device_model, device_spec, device_brand, device_manufacturer, purchase_function,
           purchase_unit_price, purchase_number, purchase_date)
         values
-        (#{purchaseDetail.purchaseCode}, #{purchaseDetail.deviceCode}, #{purchaseDetail.deviceName}, #{purchaseDetail.deviceModel},
-         #{purchaseDetail.deviceSpec}, #{purchaseDetail.deviceBrand},#{purchaseDetail.purchaseFunction}, #{purchaseDetail.purchaseUnitPrice},
-         #{purchaseDetail.purchaseNumber}, #{purchaseDetail.purchaseDate}
+        (#{purchaseDetail.purchaseCode},  #{purchaseDetail.deviceName},  #{purchaseDetail.deviceCategory}, #{purchaseDetail.deviceModel},
+         #{purchaseDetail.deviceSpec}, #{purchaseDetail.deviceBrand}, #{purchaseDetail.deviceManufacturer}, #{purchaseDetail.purchaseFunction},
+         #{purchaseDetail.purchaseUnitPrice},#{purchaseDetail.purchaseNumber}, #{purchaseDetail.purchaseDate}
         )
     </insert>
 
 
     <select id="queryDevicePurchaseList" resultType="com.hup.entity.DevicePurchase">
-          SELECT id, purchase_code, purchase_name, purchase_agent, purchase_reason, purchase_payment_type, purchase_date,  purchase_remark
+          SELECT id, purchase_code, purchase_name, purchase_agent, purchase_reason, purchase_payment_type, purchase_date,
+          purchase_remark, purchase_status, purchase_auditors
            FROM dms_device_purchase
     </select>
 
@@ -52,7 +53,7 @@
     </select>
 
     <select id="findPurchaseDetailByCode" resultType="com.hup.entity.DevicePurchaseDetail">
-        SELECT  id, purchase_code, device_code, device_name, device_model, device_spec, device_brand, purchase_function,
+        SELECT  id, purchase_code, device_name, device_category, device_model, device_spec, device_brand, device_manufacturer, purchase_function,
           purchase_unit_price, purchase_number, purchase_date
         FROM dms_device_purchase_detail
         WHERE purchase_code = #{purchaseCode}

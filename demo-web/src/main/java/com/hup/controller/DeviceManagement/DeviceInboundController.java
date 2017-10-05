@@ -61,7 +61,7 @@ public class DeviceInboundController {
 //    @RequiresPermissions("device:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String inboundCreateForm(Model model) {
-        logger.info("--------->采购单页面--");
+        logger.info("--------->入库单页面--");
         model.addAttribute("deviceInbound", new DeviceInbound());
         model.addAttribute("op","新增");
         return "deviceManagement/deviceInboundCreate";

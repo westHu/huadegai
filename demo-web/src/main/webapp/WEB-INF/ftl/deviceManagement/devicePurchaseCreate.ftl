@@ -76,7 +76,13 @@
 
                                     <label class="control-label"  style="float: left">付款方式：</label>
                                     <div class="col-md-1">
-                                        <input class="my-form-control" name="purchasePaymentType" id="purchasePaymentType" value="${devicePurchase.purchasePaymentType}">
+                                        <input class="my-form-control" list="payList" name="purchasePaymentType" id="purchasePaymentType" value="${devicePurchase.purchasePaymentType}">
+                                        <datalist id="payList">
+                                            <option value="货到付款">货到付款</option>
+                                            <option value="TT付款">TT付款</option>
+                                            <option value="分期付款">分期付款</option>
+                                        </datalist>
+
                                     </div>
 
                                     <label class="control-label"  style="float: left">采购日期：</label>
@@ -142,11 +148,12 @@
                                     <table id="device-purchase-table" class="table table-bordered table-striped table-condensed">
                                         <thead>
                                             <tr>
-                                                <th>设备编号</th>
                                                 <th>设备名称</th>
+                                                <th>设备类别</th>
                                                 <th>设备型号</th>
                                                 <th>设备规格</th>
                                                 <th>设备品牌</th>
+                                                <th>设备厂家</th>
                                                 <th>采购单价</th>
                                                 <th>采购数量</th>
                                                 <th>操作</th>
@@ -156,26 +163,28 @@
                                             <#if devicePurchase.devicePurchaseDetailList??>
                                                 <#list devicePurchase.devicePurchaseDetailList as detail>
                                                     <tr>
-                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceCode" value="${detail.deviceCode}"></td>
-                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceName" value="${detail.deviceName}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceName"  value="${detail.deviceName}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceCategory" value="${detail.deviceCategory}"></td>
                                                         <td><input name="devicePurchaseDetailList[${detail_index}].deviceModel" value="${detail.deviceModel}"></td>
                                                         <td><input name="devicePurchaseDetailList[${detail_index}].deviceSpec" value="${detail.deviceSpec}"></td>
                                                         <td><input name="devicePurchaseDetailList[${detail_index}].deviceBrand" value="${detail.deviceBrand}"></td>
-                                                        <td><input name="devicePurchaseDetailList[${detail_index}].purchaseUnitPrice" value="${detail.purchaseUnitPrice}"></td>
-                                                        <td><input name="devicePurchaseDetailList[${detail_index}].purchaseNumber" value="${detail.purchaseNumber}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].deviceManufacturer" value="${detail.deviceManufacturer}"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].purchaseUnitPrice" value="${detail.purchaseUnitPrice}" type="number"></td>
+                                                        <td><input name="devicePurchaseDetailList[${detail_index}].purchaseNumber" value="${detail.purchaseNumber}" type="number"></td>
                                                         <td onclick="deleteDevice(this)"><a>删除</a></td>
                                                     </tr>
                                                 </#list>
                                             <#else>
                                                 <tr>
-                                                    <td><input name="devicePurchaseDetailList[0].deviceCode" value="设备编号"></td>
-                                                    <td><input name="devicePurchaseDetailList[0].deviceName" value="设备名称"></td>
-                                                    <td><input name="devicePurchaseDetailList[0].deviceModel" value="设备型号"></td>
-                                                    <td><input name="devicePurchaseDetailList[0].deviceSpec" value="设备规格"></td>
-                                                    <td><input name="devicePurchaseDetailList[0].deviceBrand" value="设备品牌"></td>
-                                                    <td><input name="devicePurchaseDetailList[0].purchaseUnitPrice" value="100.00"></td>
-                                                    <td><input name="devicePurchaseDetailList[0].purchaseNumber" value="30"></td>
-                                                    <td onclick="deleteDevice(this)"><a>删除</a></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceName" placeholder="设备名称"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceCategory" placeholder="设备类别"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceModel" placeholder="设备型号"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceSpec" placeholder="设备规格"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceBrand" placeholder="设备品牌"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].deviceManufacturer" placeholder="设备厂家"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].purchaseUnitPrice" placeholder="采购价格" type="number"></td>
+                                                    <td><input name="devicePurchaseDetailList[0].purchaseNumber" placeholder="采购数量" type="number"></td>
+                                                    <td>----</td>
                                                 </tr>
                                             </#if>
                                         </tbody>
@@ -203,15 +212,15 @@
     jQuery(document).ready(function() {
         $('#add-new').click(function (e) {
             var num = recalculateTd();
-            console.info("num == " + num);
             var tr ="<tr>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceCode\" value=\"设备编码\"></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceName\" value=\"设备名称\"></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceModel\" value=\"设备型号\"></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceSpec\" value=\"设备规格\"></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].deviceBrand\" value=\"设备品牌\"></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].purchaseUnitPrice\" value=\"0.00\"></td>\n" +
-                        "<td><input name=\"devicePurchaseDetailList["+num+"].purchaseNumber\" value=\"0\"></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceName' placeholder='设备名称'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceCategory' placeholder='设备类别'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceModel' placeholder='设备型号'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceSpec' placeholder='设备规格'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceBrand' placeholder='设备品牌'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].deviceManufacturer' placeholder='设备厂家'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].purchaseUnitPrice' placeholder='采购价格' type='number'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].purchaseNumber' placeholder='采购数量' type='number'></td>\n" +
                         "<td onclick=\"deleteDevice(this)\"><a>删除</a></td>\n" +
                     "</tr>";
             $("#device-purchase-tbody").append(tr);
@@ -220,7 +229,6 @@
     });
     //删除
     function deleteDevice(obj) {
-        console.info("obj = " + obj);
         var tr = obj.parentNode;
         if (tr != null) {
             tr.parentNode.removeChild(tr);
@@ -234,13 +242,13 @@
         var num = 0;
         trList.each(function (i) {
             num = i;
-            var tdList = $(this).children("td:lt(4)");
+            var tdList = $(this).children("td");
             tdList.each(function (j) {
                 if (j == 0){
-                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceCode")
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceName")
                 }
                 if (j == 1){
-                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceName")
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceCategory")
                 }
                 if (j == 2){
                     $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceModel")
@@ -252,9 +260,12 @@
                     $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceBrand")
                 }
                 if (j == 5){
-                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].purchaseUnitPrice")
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].deviceManufacturer")
                 }
                 if (j == 6){
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].purchaseUnitPrice")
+                }
+                if (j == 7){
                     $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].purchaseNumber")
                 }
             })

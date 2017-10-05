@@ -2,12 +2,8 @@ package com.hup.controller.DeviceManagement;
 
 import com.alibaba.fastjson.JSON;
 import com.hup.api.deviceManagement.DevicePurchaseService;
-import com.hup.api.deviceManagement.DeviceService;
 import com.hup.db.Pager;
-import com.hup.entity.Device;
 import com.hup.entity.DevicePurchase;
-import com.hup.entity.DevicePurchaseDetail;
-import com.hup.enums.DeviceEnum;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.DeviceManagementUtil;
@@ -22,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -63,11 +57,11 @@ public class DevicePurchaseController {
      * <p>@Param:
      * <p>@return:
      */
-//    @RequiresPermissions("device:create")
+//    @RequiresPermissions("purchase:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String purchaseCreateForm(Model model) {
-        logger.info("--------->采购单页面--");
-        model.addAttribute("purchase", new DevicePurchase());
+        logger.info("--------->跳转至采购单页面--");
+        model.addAttribute("devicePurchase", new DevicePurchase());
         model.addAttribute("op","新增");
         return "deviceManagement/devicePurchaseCreate";
     }
@@ -76,7 +70,7 @@ public class DevicePurchaseController {
     //@RequiresPermissions("purchase:insert")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String purchaseCreate(DevicePurchase devicePurchase,  RedirectAttributes redirectAttributes) {
-        logger.info("----------> 设备采购单操作--");
+        logger.info("----------> 设备采购单操作-- " + JSON.toJSONString(devicePurchase));
         devicePurchase.setPurchaseCode(DeviceManagementUtil.purchaseCode());
         devicePurchaseService.insertDevicePurchase(devicePurchase);
         redirectAttributes.addFlashAttribute("msg", "新增采购单成功！");

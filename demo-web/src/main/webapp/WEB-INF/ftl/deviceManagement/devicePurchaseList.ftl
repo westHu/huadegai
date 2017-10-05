@@ -76,10 +76,12 @@
                                             <th>采购单号</th>
                                             <th>采购单名称</th>
                                             <th>采购人员</th>
+                                            <th>采购原因</th>
                                             <th>付款方式</th>
                                             <th>采购时间</th>
-                                            <th>备注</th>
-                                            <th>流程状态</th>
+                                            <th>采购备注</th>
+                                            <th>采购状态</th>
+                                            <th>审核人员</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -89,10 +91,12 @@
                                                 <td>${obj.purchaseCode}</td>
                                                 <td>${obj.purchaseName}</td>
                                                 <td>${obj.purchaseAgent}</td>
+                                                <td>${obj.purchaseReason}</td>
                                                 <td>${obj.purchasePaymentType}</td>
                                                 <td>${obj.purchaseDate?string("yyyy-MM-dd")}</td>
                                                 <td>${obj.purchaseRemark}</td>
-                                                <td>流程状态</td>
+                                                <td>${obj.purchaseStatus}</td>
+                                                <td>${obj.purchaseAuditors}</td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button data-toggle="dropdown" type="button" class="btn btn-success btn-sm dropdown-toggle">

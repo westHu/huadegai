@@ -119,11 +119,12 @@
                                     <table id="device-purchase-table" class="table table-bordered table-striped table-condensed">
                                         <thead>
                                             <tr>
-                                                <th>设备编号</th>
                                                 <th>设备名称</th>
+                                                <th>设备类别</th>
                                                 <th>设备型号</th>
                                                 <th>设备规格</th>
                                                 <th>设备品牌</th>
+                                                <th>设备厂家</th>
                                                 <th>采购单价</th>
                                                 <th>采购数量</th>
                                             </tr>
@@ -131,11 +132,12 @@
                                         <tbody id="device-purchase-tbody">
                                             <#list devicePurchase.devicePurchaseDetailList as detail>
                                                 <tr>
-                                                    <td>${detail.deviceCode}</td>
                                                     <td>${detail.deviceName}</td>
+                                                    <td>${detail.deviceCategory}</td>
                                                     <td>${detail.deviceModel}</td>
                                                     <td>${detail.deviceSpec}</td>
                                                     <td>${detail.deviceBrand}</td>
+                                                    <td>${detail.deviceManufacturer}</td>
                                                     <td>${detail.purchaseUnitPrice}</td>
                                                     <td>${detail.purchaseNumber}</td>
                                                 </tr>

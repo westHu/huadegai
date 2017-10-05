@@ -24,6 +24,7 @@ public class DevicePurchase  implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date purchaseDate; //采购时间
     private String purchaseRemark; //采购备注
+    private String purchaseStatus; //采购状态
     private String purchaseAuditors;  //审核人员
 
     //=======非数据库字段
@@ -112,5 +113,13 @@ public class DevicePurchase  implements Serializable {
 
     public void setDevicePurchaseDetailList(List<DevicePurchaseDetail> devicePurchaseDetailList) {
         this.devicePurchaseDetailList = devicePurchaseDetailList;
+    }
+
+    public String getPurchaseStatus() {
+        return purchaseStatus;
+    }
+
+    public void setPurchaseStatus(String purchaseStatus) {
+        this.purchaseStatus = purchaseStatus;
     }
 }

@@ -5,6 +5,7 @@ import com.hup.dao.DevicePurchaseDao;
 import com.hup.db.Pager;
 import com.hup.entity.DevicePurchase;
 import com.hup.entity.DevicePurchaseDetail;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -46,10 +47,11 @@ public class DevicePurchaseServiceImpl implements DevicePurchaseService {
      */
     @Override
     public DevicePurchase insertDevicePurchase(DevicePurchase purchase) {
+        purchase.setPurchaseStatus("创建完成");
         devicePurchaseDao.insertDevicePurchase(purchase);
         List<DevicePurchaseDetail> purchaseDetailList = purchase.getDevicePurchaseDetailList();
         for (DevicePurchaseDetail devicePurchaseDetail : purchaseDetailList){
-            if (!devicePurchaseDetail.getDeviceCode().equals("设备编号")) {
+            if (StringUtils.isNoneBlank(devicePurchaseDetail.getDeviceName())) {
                 devicePurchaseDetail.setPurchaseCode(purchase.getPurchaseCode());
                 devicePurchaseDao.insertDevicePurchaseDetail(devicePurchaseDetail);
             }
@@ -73,7 +75,7 @@ public class DevicePurchaseServiceImpl implements DevicePurchaseService {
         if (devicePurchaseDao.updateDevicePurchase(devicePurchase) > 0) {
             devicePurchaseDao.deleteDevicePurchaseDetailByCode(devicePurchase.getPurchaseCode());
             for (DevicePurchaseDetail devicePurchaseDetail : devicePurchase.getDevicePurchaseDetailList()){
-                if (!devicePurchaseDetail.getDeviceCode().equals("设备编号")) {
+                if (StringUtils.isNoneBlank(devicePurchaseDetail.getDeviceName())) {
                     devicePurchaseDetail.setPurchaseCode(devicePurchase.getPurchaseCode());
                     devicePurchaseDao.insertDevicePurchaseDetail(devicePurchaseDetail);
                 }

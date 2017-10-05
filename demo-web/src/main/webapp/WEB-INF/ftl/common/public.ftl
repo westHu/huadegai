@@ -142,8 +142,8 @@
 
             <!--sidebar nav start-->
             <ul class="nav nav-pills nav-stacked custom-nav">
-                <li><a href="${context.contextPath}/"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
-                <li class="menu-list"><a href=""><i class="fa fa-laptop"></i> <span>Layouts</span></a>
+                <li><a href="${context.contextPath}/"><i class="fa fa-home"></i> <span>首页.</span></a></li>
+                <li class="menu-list"><a href=""><i class="fa fa-laptop"></i> <span>系统风格</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="blank_page.html"> Blank Page</a></li>
                         <li><a href="boxed_view.html"> Boxed Page</a></li>
@@ -152,7 +152,7 @@
 
                     </ul>
                 </li>
-                <li class="menu-list"><a href=""><i class="fa fa-book"></i> <span>UI Elements</span></a>
+                <li class="menu-list"><a href=""><i class="fa fa-book"></i> <span>综合管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="general.html"> General</a></li>
                         <li><a href="buttons.html"> Buttons</a></li>
@@ -162,7 +162,7 @@
                         <li><a href="panels.html"> Panels</a></li>
                     </ul>
                 </li>
-                <li class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>Components</span></a>
+                <li class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>水质管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="grids.html"> Grids</a></li>
                         <li><a href="gallery.html"> Media Gallery</a></li>
@@ -173,9 +173,9 @@
                     </ul>
                 </li>
 
-                <li><a href="fontawesome.html"><i class="fa fa-bullhorn"></i> <span>Fontawesome</span></a></li>
+                <li><a href="fontawesome.html"><i class="fa fa-bullhorn"></i> <span>视频管理</span></a></li>
 
-                <li class="menu-list"><a href=""><i class="fa fa-envelope"></i> <span>Mail</span></a>
+                <li class="menu-list"><a href=""><i class="fa fa-envelope"></i> <span>OA管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="mail.html"> Inbox</a></li>
                         <li><a href="mail_compose.html"> Compose Mail</a></li>
@@ -183,7 +183,7 @@
                     </ul>
                 </li>
 
-                <li class="menu-list"><a href=""><i class="fa fa-tasks"></i> <span>Forms</span></a>
+                <li class="menu-list"><a href=""><i class="fa fa-tasks"></i> <span>应急指挥</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="form_layouts.html"> Form Layouts</a></li>
                         <li><a href="form_advanced_components.html"> Advanced Components</a></li>
@@ -196,7 +196,7 @@
                         <li><a href="http://www.weidea.net"> More</a></li>
                     </ul>
                 </li>
-                <li class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>Charts</span></a>
+                <li class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>报表管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="flot_chart.html"> Flot Charts</a></li>
                         <li><a href="morris.html"> Morris Charts</a></li>
@@ -204,7 +204,7 @@
                         <li><a href="c3chart.html"> C3 Charts</a></li>
                     </ul>
                 </li>
-                <li class="menu-list"><a href="#"><i class="fa fa-th-list"></i> <span>Data Tables</span></a>
+                <li class="menu-list"><a href="#"><i class="fa fa-th-list"></i> <span>消息管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="basic_table.html"> Basic Table</a></li>
                         <li><a href="dynamic_table.html"> Advanced Table</a></li>
@@ -213,26 +213,10 @@
                     </ul>
                 </li>
 
-                <li class="menu-list"><a href="#"><i class="fa fa-map-marker"></i> <span>Maps</span></a>
+                <li class="menu-list"><a href="#"><i class="fa fa-map-marker"></i> <span>地图系统</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="google_map.html"> Google Map</a></li>
                         <li><a href="vector_map.html"> Vector Map</a></li>
-                    </ul>
-                </li>
-                <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>Extra Pages</span></a>
-                    <ul class="sub-menu-list">
-                        <li><a href="profile.html"> Profile</a></li>
-                        <li><a href="invoice.html"> Invoice</a></li>
-                        <li><a href="pricing_table.html"> Pricing Table</a></li>
-                        <li><a href="timeline.html"> Timeline</a></li>
-                        <li><a href="blog_list.html"> Blog List</a></li>
-                        <li><a href="blog_details.html"> Blog Details</a></li>
-                        <li><a href="directory.html"> Directory </a></li>
-                        <li><a href="chat.html"> Chat </a></li>
-                        <li><a href="404.html"> 404 Error</a></li>
-                        <li><a href="500.html"> 500 Error</a></li>
-                        <li><a href="registration.html"> Registration Page</a></li>
-                        <li><a href="lock_screen.html"> Lockscreen </a></li>
                     </ul>
                 </li>
                 <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>设备管理</span></a>
@@ -254,8 +238,6 @@
                         <li><a href="${context.contextPath}/organization"> 组织管理</a></li>
                     </ul>
                 </li>
-                <li><a href="login.login.ftl"><i class="fa fa-sign-in"></i> <span>Login Page</span></a></li>
-
             </ul>
             <!--sidebar nav end-->
 
