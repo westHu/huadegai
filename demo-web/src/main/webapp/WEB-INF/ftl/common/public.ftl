@@ -206,6 +206,7 @@
                 </li>
                 <li class="menu-list"><a href="#"><i class="fa fa-th-list"></i> <span>消息管理</span></a>
                     <ul class="sub-menu-list">
+                        <li><a href="${context.contextPath}/smsMessage"> 短信管理</a></li>
                         <li><a href="basic_table.html"> Basic Table</a></li>
                         <li><a href="dynamic_table.html"> Advanced Table</a></li>
                         <li><a href="/user"> Responsive Table</a></li>

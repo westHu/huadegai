@@ -1,24 +1,11 @@
 package com.hup.controller.DeviceManagement;
 
-import com.alibaba.fastjson.JSON;
 import com.hup.api.deviceManagement.DeviceService;
-import com.hup.db.Pager;
-import com.hup.entity.Device;
-import com.hup.enums.DeviceEnum;
-import com.hup.request.PageRequest;
-import com.hup.response.BaseResponse;
-import com.hup.util.DeviceManagementUtil;
-import com.hup.util.PageUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created with IntelliJ IDEA.

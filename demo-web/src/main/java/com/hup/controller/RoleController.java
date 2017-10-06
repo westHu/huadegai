@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.hup.constant.CantDelete.INNATE_ROLE;
-
 /**
  * <p>User: hup
  * <p>Date: 14-2-14

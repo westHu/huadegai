@@ -1,7 +1,6 @@
 package com.hup.controller.DeviceManagement;
 
 import com.hup.api.deviceManagement.DeviceInboundService;
-import com.hup.api.deviceManagement.DeviceInboundService;
 import com.hup.api.deviceManagement.DevicePurchaseService;
 import com.hup.db.Pager;
 import com.hup.entity.*;
