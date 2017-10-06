@@ -24,14 +24,12 @@
     </select>
 
 
-    <insert id="insertSmsMessage">
+    <insert id="insertSmsMessage" useGeneratedKeys="true" keyProperty="message.id">
         INSERT INTO im_sms_message
         (mobile, gateway, template_code, template_param, content, execute_time, create_time)
         VALUES
         (#{message.mobile}, #{message.gateway}, #{message.templateCode}, #{message.templateParam}, #{message.content},
         NOW(), NOW())
-
-
     </insert>
 
 

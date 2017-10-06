@@ -2,6 +2,7 @@ package com.hup.dao;
 
 import com.hup.db.Pager;
 import com.hup.entity.SmsMessage;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface SmsMessageDao {
 
     int getSmsMessageCount(SmsMessage message);
 
-    int insertSmsMessage(SmsMessage message);
+    int insertSmsMessage(@Param("message") SmsMessage message);
 }

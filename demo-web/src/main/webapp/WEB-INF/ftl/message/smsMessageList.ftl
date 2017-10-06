@@ -12,7 +12,20 @@
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Form validations
+                            <div class="btn-group">
+                                <button class="btn btn-primary" type="button">短信模板</button>
+                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a href="${context.contextPath}/smsMessage/smsTemplateList">短信模板</a></li>
+                                    <li><a href="${context.contextPath}/smsMessage/smsTemplateList">网关管理</a></li>
+                                </ul>
+                            </div>
+                            <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                             </span>
                         </header>
                         <div class="panel-body">
                             <div class=" form">
@@ -51,7 +64,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-offset-2 col-lg-10">
                                             <button class="btn btn-primary" type="submit">发送</button>
-                                            <button class="btn btn-default" type="button">取消</button>
+                                            <button class="btn btn-default" type="reset">取消</button>
                                         </div>
                                     </div>
                                 </form>
@@ -102,7 +115,7 @@
                                                 <td>${obj.templateCode}</td>
                                                 <td>${obj.templateParam}</td>
                                                 <td>${obj.gateway}</td>
-                                                <td>${obj.executeTime}</td>
+                                                <td>${obj.executeTime?string("yyyy-MM-dd HH:ss:mm")}</td>
                                             </tr>
                                         </#list>
                                     </tbody>

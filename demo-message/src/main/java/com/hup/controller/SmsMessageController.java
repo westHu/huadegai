@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.hup.api.message.SmsMessageService;
 import com.hup.db.Pager;
 import com.hup.entity.SmsMessage;
+import com.hup.entity.SmsTemplate;
 import com.hup.util.PageRequest;
 import com.hup.util.PageUtils;
 import org.slf4j.Logger;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 /**
  * <p>User: hup
@@ -51,6 +54,30 @@ public class SmsMessageController {
         model.addAttribute("flag", "消息管理,短信管理");
         return "message/smsMessageList";
     }
+
+
+    /**
+     * <p>@Description: 模板列表
+     * <p>@Author: hupj
+     * <p>@Date: 2017/9/28
+     * <p>@Param:
+     * <p>@return:
+     */
+//    @RequiresPermissions("message:view")
+    @RequestMapping(value = "/smsTemplateList", method = RequestMethod.GET)
+    public String templateList(SmsMessage smsMessage, PageRequest pageRequest, Model model) {
+        logger.info("-----> 短信模板列表");
+        Pager<SmsTemplate> pager = new Pager<>();
+        pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
+        pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
+        List<SmsTemplate> templates = SmsTemplate.getAllSmsTemplate();
+        pager.setList(templates);
+        pager.setTotalCount(templates.size());
+        model.addAttribute("page", pager);
+        model.addAttribute("flag", "消息管理,短信管理");
+        return "message/smsTemplateList";
+    }
+
 
     /**
      * <p>@Description:
