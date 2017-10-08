@@ -34,7 +34,7 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="${context.contextPath}/device/purchase/create">新增模板</a></li>
+                                    <li><a href="#">新增模板</a></li>
                                     <li><a href="#">导入模板</a></li>
                                     <li><a href="#">导出模板</a></li>
                                     <li class="divider"></li>
@@ -50,6 +50,7 @@
                                             <th>ID</th>
                                             <th>模板编码</th>
                                             <th>模板内容</th>
+                                            <th>状态</th>
                                             <th>创建日期</th>
                                             <th>操作</th>
                                         </tr>
@@ -60,6 +61,7 @@
                                                 <td>${obj.id}</td>
                                                 <td>${obj.code}</td>
                                                 <td>${obj.content}</td>
+                                                <td>${obj.status}</td>
                                                 <td>${obj.createDate?string("yyyy-MM-dd")}</td>
                                                 <td>
                                                     <div class="btn-group">
@@ -124,7 +126,7 @@
 
     function confirmDeleteSmsTemplate() {
         var id = $('#deleteId').val().trim();
-        var url =  "/device/purchase/"+id+"/delete";
+        var url =  "/smsMessage/smsTemplate/"+id+"/delete";
         $.ajax({
             url: url,
             type: 'post',

@@ -21,4 +21,6 @@ public interface SmsMessageDao {
     int getSmsMessageCount(SmsMessage message);
 
     int insertSmsMessage(@Param("message") SmsMessage message);
+
+    void updateStatus(@Param("message") SmsMessage message);
 }

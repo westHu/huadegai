@@ -31,23 +31,43 @@
                             <div class=" form">
                                 <form class="cmxform form-horizontal adminex-form" id="commentForm" method="post" action="${context.contextPath}/smsMessage/create">
                                     <div class="form-group ">
-                                        <label for="cname" class="control-label col-lg-2">手机号 (required)</label>
+                                        <label for="cname" class="control-label col-lg-2">手机号 (*)</label>
                                         <div class="col-lg-10">
                                             <input class="form-control" id="mobile" name="mobile" minlength="2" placeholder="手机号，多个逗号分隔" required />
                                         </div>
                                     </div>
                                     <div class="form-group ">
-                                        <label for="cemail" class="control-label col-lg-2">网关 (required)</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control " id="gateway" type="gateway" name="gateway"  placeholder="发送网关" required />
-                                        </div>
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="curl" class="control-label col-lg-2">模板编码 (optional)</label>
+                                        <label for="cemail" class="control-label col-lg-2">网关&类型 (*)</label>
                                         <div class="col-lg-10">
                                             <div class="row">
                                                 <div class="col-lg-2">
-                                                    <input class="form-control" name="templateCode" placeholder="模板编码">
+                                                    <input class="form-control" name="gateway" placeholder="网关" value="阿里大鱼" readonly>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <select class="form-control" name="type">
+                                                        <option value ="notification" selected>通知短信</option>
+                                                        <option value ="marketing">营销短信</option>
+                                                        <option value="other">其他类型</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">模板编码 (-)</label>
+                                        <div class="col-lg-10">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <div class="input-group">
+                                                        <input class="form-control" name="templateCode" placeholder="模板编码">
+                                                        <span class="input-group-btn">
+                                                             <a data-toggle="modal" href="#templateList">
+                                                                <button type="button" class="btn btn-default">
+                                                                   <i class="fa fa-search"></i>
+                                                                </button>
+                                                             </a>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input class="form-control" name="templateParam" placeholder="模板参数">
@@ -56,7 +76,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group ">
-                                        <label for="comment" class="control-label col-lg-2">短信内容 (required)</label>
+                                        <label for="comment" class="control-label col-lg-2">短信内容 (*)</label>
                                         <div class="col-lg-10">
                                             <textarea class="form-control " id="content" name="content" placeholder="短信内容" required></textarea>
                                         </div>
@@ -72,6 +92,69 @@
 
                         </div>
                     </section>
+                    <!-- Modal -->
+                    <div class="modal fade" id="templateList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">短信模板列表</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-bordered table-striped table-condensed cf">
+                                        <thead class="cf">
+                                        <tr>
+                                            <th>模板编码</th>
+                                            <th>模板内容</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>code-1</td>
+                                            <td>你的验证码是：{code}, 请在10分钟内进行操作，逾期无效！</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>code-1</td>
+                                            <td>你的验证码是：{code}, 请在10分钟内进行操作，逾期无效！</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>code-1</td>
+                                            <td>你的验证码是：{code}, 请在10分钟内进行操作，逾期无效！</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>code-1</td>
+                                            <td>ADELAIDEADELAIDEADELAIDEADELAIDEADELAIDEADELAIDE</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>code-1</td>
+                                            <td>你的验证码是：{code}, 请在10分钟内进行操作，逾期无效！</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>code-1</td>
+                                            <td>你的验证码是：{code}, 请在10分钟内进行操作，逾期无效！</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>code-1</td>
+                                            <td>ACRUX 你的验证码是：{code}, 请在10分钟内进行操作，逾期无效！</td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-primary" type="button">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- modal -->
                 </div>
             </div>
 
@@ -105,6 +188,7 @@
                                             <th>模板内容</th>
                                             <th>发送网关</th>
                                             <th>发送时间</th>
+                                            <th>状态</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -116,6 +200,7 @@
                                                 <td>${obj.templateParam}</td>
                                                 <td>${obj.gateway}</td>
                                                 <td>${obj.executeTime?string("yyyy-MM-dd HH:ss:mm")}</td>
+                                                <td>${obj.status}</td>
                                             </tr>
                                         </#list>
                                     </tbody>
@@ -163,7 +248,7 @@
             //alert(num)
             var pageSize = $('#pageSize option:selected').val();
             console.info(pageSize);
-            var pageUrl =  "${context.contextPath}/device/inbound?currentPage="+num+"&pageSize="+pageSize;
+            var pageUrl =  "${context.contextPath}/smsMessage?currentPage="+num+"&pageSize="+pageSize;
             console.info(pageUrl)
             location.href = pageUrl;
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hup.dao.SmsMessageDao">
+<mapper namespace="com.hup.dao.SmsTemplateDao">
 
     <!--
         1.属性名,表名等用小写,select / from之类关键字用大写。
@@ -13,29 +13,23 @@
           WHERE t.username = #{userName}
     -->
 
-    <select id="querySmsMessageList" resultType="com.hup.entity.SmsMessage">
-        SELECT id, mobile, content, gateway, template_code, template_param, execute_time, type, status, create_time
-        FROM im_sms_message t
+    <select id="querySmsTemplateList" resultType="com.hup.entity.SmsTemplate">
+        SELECT id, code, content, status, create_date
+        FROM im_sms_template t
     </select>
 
-    <select id="getSmsMessageCount" resultType="java.lang.Integer">
+    <select id="getSmsTemplateCount" resultType="java.lang.Integer">
         SELECT COUNT(1)
-        FROM im_sms_message t
+        FROM im_sms_template t
     </select>
 
 
-    <insert id="insertSmsMessage" useGeneratedKeys="true" keyProperty="message.id">
-        INSERT INTO im_sms_message
-        (mobile, gateway, template_code, template_param, content, execute_time, type, status, create_time)
+    <insert id="insertSmsTemplate" useGeneratedKeys="true" keyProperty="template.id">
+        INSERT INTO im_sms_template
+        (code, content, status, create_date)
         VALUES
-        (#{message.mobile}, #{message.gateway}, #{message.templateCode}, #{message.templateParam}, #{message.content},
-        NOW(), #{message.type}, #{message.status}, NOW())
+        (#{template.code}, #{template.content}, 1, NOW())
     </insert>
-
-    <update id="updateStatus">
-        UPDATE im_sms_message SET
-        status = #{message.status}, comment = #{message.comment} WHERE id = #{message.id}
-    </update>
 
 
 

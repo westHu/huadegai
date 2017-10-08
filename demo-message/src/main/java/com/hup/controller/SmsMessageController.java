@@ -1,7 +1,9 @@
 package com.hup.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.hup.api.message.SmsMessageSendService;
 import com.hup.api.message.SmsMessageService;
+import com.hup.api.message.SmsTemplateService;
 import com.hup.db.Pager;
 import com.hup.entity.SmsMessage;
 import com.hup.entity.SmsTemplate;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 
 /**
  * <p>User: hup
@@ -30,9 +31,13 @@ public class SmsMessageController {
     Logger logger = LoggerFactory.getLogger(SmsMessageController.class);
 
     @Autowired
+    private SmsMessageSendService smsMessageSendService;
+
+    @Autowired
     private SmsMessageService smsMessageService;
 
-
+    @Autowired
+    private SmsTemplateService smsTemplateService;
 
 
     /**
@@ -65,14 +70,12 @@ public class SmsMessageController {
      */
 //    @RequiresPermissions("message:view")
     @RequestMapping(value = "/smsTemplateList", method = RequestMethod.GET)
-    public String templateList(SmsMessage smsMessage, PageRequest pageRequest, Model model) {
+    public String templateList(SmsTemplate smsTemplate, PageRequest pageRequest, Model model) {
         logger.info("-----> 短信模板列表");
         Pager<SmsTemplate> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
-        List<SmsTemplate> templates = SmsTemplate.getAllSmsTemplate();
-        pager.setList(templates);
-        pager.setTotalCount(templates.size());
+        pager = smsTemplateService.querySmsTemplateList(pager, smsTemplate);
         model.addAttribute("page", pager);
         model.addAttribute("flag", "消息管理,短信管理");
         return "message/smsTemplateList";
@@ -80,7 +83,7 @@ public class SmsMessageController {
 
 
     /**
-     * <p>@Description:
+     * <p>@Description: 短信保存并且立即发送
      * <p>@Author: hupj
      * <p>@Date: 2017/10/6
      * <p>@Param:
@@ -89,8 +92,17 @@ public class SmsMessageController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(SmsMessage smsMessage, RedirectAttributes redirectAttributes) {
         logger.info("-------保存并发送短信 --" + JSON.toJSONString(smsMessage));
+        /** 保存 */
+        smsMessage.setStatus("发送中");
         smsMessageService.insertSmsMessage(smsMessage);
-        redirectAttributes.addFlashAttribute("msg", "短信发送成功！");
+        /** 立即发送 */
+        String msg = "短信保存，发送失败！";
+        boolean send = smsMessageSendService.singleSend(smsMessage);
+        if (send){
+            msg = "短信发送成功！";
+        }
+
+        redirectAttributes.addFlashAttribute("msg", msg);
         return "redirect:/smsMessage";
     }
 
