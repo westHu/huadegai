@@ -66,6 +66,12 @@
     </appender>
 
 
+    <logger name="com.hup" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="console"/>
+        <appender-ref ref="file-business"/>
+        <appender-ref ref="file-error"/>
+    </logger>
 
     <!--druid-stat-->
     <logger name="com.alibaba.druid" additivity="false">

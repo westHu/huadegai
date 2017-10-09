@@ -8,30 +8,14 @@
 
 <section>
     <@left title="导航栏"></@left>
-    <!-- main content start-->
     <div class="main-content" >
-
-        <!-- header section start-->
         <div class="header-section">
-
-            <!--toggle button start-->
             <a class="toggle-btn"><i class="fa fa-bars"></i></a>
-            <!--toggle button end-->
-
-            <!--search start-->
             <form class="searchform" action="index.index.ftl" method="post">
                 <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
             </form>
-            <!--search end-->
-
-            <!--notification menu start -->
             <@notification title="通知"></@notification>
-            <!--notification menu end -->
-
         </div>
-        <!-- header section end-->
-
-        <!-- page heading start-->
         <div class="page-heading">
             <h3>
                 Dashboard
@@ -541,5 +525,39 @@
 
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war="easy_pie_chart,sparkline_chart,icheck,jQuery_flot_chart,morris_chart,calendar,dashboard_charts"></@js_lib>
+<script type="text/javascript">
+    var socket;
+    if (!window.WebSocket) {
+        window.WebSocket = window.MozWebSocket;
+    }
+    if (window.WebSocket) {
+        socket = new WebSocket("ws://localhost:8881/websocket?token=${token}");
+        socket.onmessage = function(event) {
+            var ta = document.getElementById('responseText');
+            ta.value = ta.value + '\n' + event.data
+        };
+        socket.onopen = function(event) {
+            var ta = document.getElementById('responseText');
+            ta.value = "连接开启!";
+        };
+        socket.onclose = function(event) {
+            var ta = document.getElementById('responseText');
+            ta.value = ta.value + "连接被关闭";
+        };
+    } else {
+        alert("你的浏览器不支持 WebSocket！");
+    }
+
+    function send(message) {
+        if (!window.WebSocket) {
+            return;
+        }
+        if (socket.readyState == WebSocket.OPEN) {
+            socket.send(message);
+        } else {
+            alert("连接没有开启.");
+        }
+    }
+</script>
 </body>
 </html>

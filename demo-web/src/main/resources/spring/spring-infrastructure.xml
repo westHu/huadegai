@@ -30,6 +30,7 @@
     </context:component-scan>
     <context:component-scan base-package="com.hup.service" />
     <context:component-scan base-package="com.hup.controller" />
+    <context:component-scan base-package="com.hup.server,com.hup.handler"/>
 
     <bean id="conversionService"
           class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
@@ -105,5 +106,12 @@
             <ref bean="freemarkerConfig"/>
         </property>
     </bean>-->
+
+
+    <!-- webSocket + protoBuf通信协议配置 -->
+    <bean id="webSocketServer" class="com.hup.server.WebSocketServer" init-method="init"
+          destroy-method="destroy">
+    </bean>
+
 
 </beans>
