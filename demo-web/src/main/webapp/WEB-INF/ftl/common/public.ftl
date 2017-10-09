@@ -129,7 +129,7 @@
                 <div class="media logged-user">
                     <img alt="" src="${context.contextPath}/images/photos/user-avatar.png" class="media-object">
                     <div class="media-body">
-                        <h4><a href="#">John Doe</a></h4>
+                        <h4><a href="#"><@shiro.principal/></a></h4>
                         <span>"Hello There..."</span>
                     </div>
                 </div>
@@ -439,14 +439,14 @@
                 </li>
                 <li>
                     <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <img src="${context.contextPath}/images/photos/user-avatar.png" alt="" />
-                        John Doe
+                        <img src="${context.contextPath}/images/photos/user2.png" alt="" />
+                        <@shiro.principal/>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-                        <li><a href="#"><i class="fa fa-user"></i>  Profile</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i>  Settings</a></li>
-                        <li><a href="#"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                        <li><a href="#"><i class="fa fa-user"></i>个人信息</a></li>
+                        <li><a href="#"><i class="fa fa-cog"></i>个人设置</a></li>
+                        <li><a href="${context.contextPath}/logout"><i class="fa fa-sign-out"></i> 登 出</a></li>
                     </ul>
                 </li>
 

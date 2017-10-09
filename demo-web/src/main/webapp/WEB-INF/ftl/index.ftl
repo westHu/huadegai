@@ -18,20 +18,20 @@
         </div>
         <div class="page-heading">
             <h3>
-                Dashboard
+                首页
             </h3>
             <ul class="breadcrumb">
                 <li>
-                    <a href="#">Dashboard</a>
+                    <a href="#">系统</a>
                 </li>
-                <li class="active"> My Dashboard </li>
+                <li class="active"> 我的首页 </li>
             </ul>
             <div class="state-info">
                 <section class="panel">
                     <div class="panel-body">
                         <div class="summary">
-                            <span>yearly expense</span>
-                            <h3 class="red-txt">$ 45,600</h3>
+                            <span>维修 费用</span>
+                            <h3 class="red-txt">￥ 45,600</h3>
                         </div>
                         <div id="income" class="chart-bar"></div>
                     </div>
@@ -39,8 +39,8 @@
                 <section class="panel">
                     <div class="panel-body">
                         <div class="summary">
-                            <span>yearly  income</span>
-                            <h3 class="green-txt">$ 45,600</h3>
+                            <span>采购  费用</span>
+                            <h3 class="green-txt">￥ 45,600</h3>
                         </div>
                         <div id="expense" class="chart-bar"></div>
                     </div>
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="state-value">
                                     <div class="value">230</div>
-                                    <div class="title">New Order</div>
+                                    <div class="title">采购单</div>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="state-value">
                                     <div class="value">3490</div>
-                                    <div class="title">Copy Sold</div>
+                                    <div class="title">设备数量</div>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="state-value">
                                     <div class="value">22014</div>
-                                    <div class="title"> Total Revenue</div>
+                                    <div class="title"> 总收入</div>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="state-value">
                                     <div class="value">390</div>
-                                    <div class="title"> Unique Visitors</div>
+                                    <div class="title"> 访客 数量</div>
                                 </div>
                             </div>
                         </div>
@@ -533,16 +533,19 @@
     if (window.WebSocket) {
         socket = new WebSocket("ws://localhost:8881/websocket?token=${token}");
         socket.onmessage = function(event) {
-            var ta = document.getElementById('responseText');
-            ta.value = ta.value + '\n' + event.data
+            //var ta = document.getElementById('responseText');
+            //ta.value = ta.value + '\n' + event.data
+            console.info("Ws " + event.data)
         };
         socket.onopen = function(event) {
-            var ta = document.getElementById('responseText');
-            ta.value = "连接开启!";
+            //var ta = document.getElementById('responseText');
+            //ta.value = "连接开启!";
+            console.info("Ws 连接开启!")
         };
         socket.onclose = function(event) {
-            var ta = document.getElementById('responseText');
-            ta.value = ta.value + "连接被关闭";
+            //var ta = document.getElementById('responseText');
+            //ta.value = ta.value + "连接被关闭";
+            console.info("Ws 连接被关闭!")
         };
     } else {
         alert("你的浏览器不支持 WebSocket！");

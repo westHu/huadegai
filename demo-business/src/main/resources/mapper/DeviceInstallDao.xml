@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hup.dao.DeviceInstallDao">
+
+    <!--
+        1.属性名,表名等用小写,select / from之类关键字用大写。
+        2.<select>返回值尽量使用resultType，当实体属性名称与表中列名无法匹配时候，使用resultMap进行映射。
+        3.不要用parameterType属性(多余)。
+        4.一般情况下用#{},不要用${}。
+        5.对做了分表分库后的数据集做查询操作时，不支持Join, 嵌套查询，order by, group by等操作。
+        6.对SQL进行排版。
+        7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
+          WHERE t.devicename = #{deviceName}
+    -->
+
+
+
+    <insert id="insertDeviceInstall" useGeneratedKeys="true" keyProperty="install.id">
+        insert into dms_device_install
+         (install_code, install_name, install_agent, install_date, install_remark)
+         values
+         (#{install.installCode}, #{install.installName}, #{install.installAgent},
+         #{install.installDate}, #{install.installRemark})
+    </insert>
+
+
+    <insert id="insertDeviceInstallDetail" useGeneratedKeys="true" keyProperty="installDetail.id">
+        insert into dms_device_install_detail
+        (install_code, device_code, device_name, device_model, device_spec, device_brand, install_number, install_date)
+        values
+        (#{installDetail.installCode}, #{installDetail.deviceCode}, #{installDetail.deviceName}, #{installDetail.deviceModel},
+         #{installDetail.deviceSpec}, #{installDetail.deviceBrand}, #{installDetail.installNumber}, #{installDetail.installDate}
+        )
+    </insert>
+
+
+    <select id="queryDeviceInstallList" resultType="com.hup.entity.DeviceInstall">
+          SELECT id, install_code, install_name, install_persion, install_unit, install_cost, install_date, install_remark
+           FROM dms_device_install
+    </select>
+
+    <select id="getDeviceInstallCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM dms_device_install
+    </select>
+
+    <select id="findOne" resultType="com.hup.entity.DeviceInstall">
+        SELECT  id, install_code, install_name, install_agent, install_date, install_remark
+        FROM dms_device_install
+        WHERE id = #{id}
+    </select>
+
+    <select id="findInstallDetailByCode" resultType="com.hup.entity.DeviceInstallDetail">
+        SELECT  id, install_code, device_code, device_name, device_model, device_spec, device_brand, install_number, install_date
+        FROM dms_device_install_detail
+        WHERE install_code = #{installCode}
+    </select>
+
+    <update id="updateDeviceInstall">
+        UPDATE dms_device_install SET
+          install_name = #{deviceInstall.installName},
+          install_agent = #{deviceInstall.installAgent},
+          install_date = #{deviceInstall.installDate},
+          install_remark = #{deviceInstall.installRemark}
+        WHERE id = #{deviceInstall.id}
+    </update>
+
+    <delete id="deleteDeviceInstallDetailByCode">
+        DELETE FROM  dms_device_install_detail
+        WHERE  install_code = #{installCode}
+    </delete>
+
+
+    <delete id="deleteDeviceInstall">
+        DELETE FROM dms_device_install
+        WHERE id = #{id}
+    </delete>
+
+
+
+
+
+
+
+</mapper>

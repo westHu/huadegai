@@ -18,6 +18,8 @@ public class DevicePurchase  implements Serializable {
     private Long id;
     private String purchaseCode; //采购单号
     private String purchaseName; //采购单名称;
+    private String purchasePlanCode; //采购计划编码
+
     private String purchaseAgent; //采购人员
     private String purchaseReason; //采购目的
     private String purchasePaymentType; //付款方式
@@ -113,6 +115,14 @@ public class DevicePurchase  implements Serializable {
 
     public void setDevicePurchaseDetailList(List<DevicePurchaseDetail> devicePurchaseDetailList) {
         this.devicePurchaseDetailList = devicePurchaseDetailList;
+    }
+
+    public String getPurchasePlanCode() {
+        return purchasePlanCode;
+    }
+
+    public void setPurchasePlanCode(String purchasePlanCode) {
+        this.purchasePlanCode = purchasePlanCode;
     }
 
     public String getPurchaseStatus() {
