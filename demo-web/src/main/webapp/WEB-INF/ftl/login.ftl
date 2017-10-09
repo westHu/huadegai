@@ -9,27 +9,28 @@
             <img src="images/login-logo.png" alt=""/>
         </div>
         <div class="login-wrap">
-            <input name="username" value="admin" type="text" class="form-control" placeholder="User ID" autofocus>
-            <input name="password" value="123456" type="password" class="form-control" placeholder="Password">
+            <input name="username" value="admin"  type="text" class="form-control" placeholder="登录名、手机号、邮箱" autofocus>
+            <input name="password" value="123456" type="password" class="form-control" placeholder="密码">
 
             <button class="btn btn-lg btn-login btn-block" type="submit">
                 <i class="fa fa-check"></i>
             </button>
 
             <div class="registration">
-                Not a member yet?
-                <a class="" href="registration.html">
-                    Signup
+               有何疑问?
+                <a class="" href="#">
+                    请联系管理员
                 </a>
+                <br>
+                400-2837-3842
             </div>
             <label class="checkbox">
-                <input type="checkbox" value="remember-me"> Remember me
+                <input type="checkbox" value="remember-me"> 记住我?
                 <span class="pull-right">
-                    <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
+                    <a data-toggle="modal" href="#myModal"> 忘记密码?</a>
 
                 </span>
             </label>
-
         </div>
 
         <!-- Modal -->

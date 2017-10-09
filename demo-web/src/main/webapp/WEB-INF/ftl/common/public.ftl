@@ -112,11 +112,13 @@
     <div class="left-side sticky-left-side">
         <!--logo and iconic logo start-->
         <div class="logo">
-            <a href="${context.contextPath}/"><img src="${context.contextPath}/images/logo.png" alt=""></a>
+            <a href="${context.contextPath}/" style="font-size: 20px; margin: 10px 0px 0px 25px;">
+                <img src="${context.contextPath}/images/iconfont-01-copy.png" alt="">
+                 &nbsp导航栏
+            </a>
         </div>
-
         <div class="logo-icon text-center">
-            <a href="${context.contextPath}/"><img src="${context.contextPath}/images/logo_icon.png" alt=""></a>
+            <a href="${context.contextPath}/"></a>
         </div>
         <!--logo and iconic logo end-->
 
