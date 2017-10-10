@@ -126,7 +126,7 @@ public class DevicePurchaseController {
 
 
     /**
-     * <p>@Description: 删除设备
+     * <p>@Description: 删除采购单
      * <p>@Author: hupj
      * <p>@Date: 2017/9/26
      * <p>@Param:
@@ -140,6 +140,27 @@ public class DevicePurchaseController {
         devicePurchaseService.deleteDevicePurchase(id);
         return new BaseResponse("0","采购单删除成功！");
     }
+
+
+    /**
+     * <p>@Description:审核采购单
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/10
+     * <p>@Param:
+     * <p>@return:
+     */
+    @RequestMapping(value = "/{id}/audit", method = RequestMethod.POST)
+    public BaseResponse audit(@PathVariable("id") Long id) {
+        logger.info("========审核采购单： {}",id);
+        DevicePurchase devicePurchase = devicePurchaseService.findOne(id);
+        devicePurchase.setPurchaseStatus("审核中");
+        devicePurchaseService.updateDevicePurchase(devicePurchase);
+
+
+
+        return new BaseResponse("0","采购单删除成功！");
+    }
+
 
 
 

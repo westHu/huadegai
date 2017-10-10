@@ -12,6 +12,7 @@
         <module>demo-business</module>
         <module>demo-web</module>
         <module>demo-message</module>
+        <module>demo-flow</module>
     </modules>
 
 

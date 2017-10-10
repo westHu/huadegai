@@ -67,7 +67,7 @@
                                                             <li><a href="${context.contextPath}/device/purchase/${obj.id}/update?currentPage=${page.currentPage}&pageSize=${page.pageSize}" >编辑采购单</a></li>
                                                             <li><a href="#deleteDevicePurchase" data-toggle="modal" onclick="delete_device_purchase(${obj.id},this)" >删除采购单</a></li>
                                                             <li class="divider"></li>
-                                                            <li><a href="#">复制采购单</a></li>
+                                                            <li><a href="${context.contextPath}/device/purchase/${obj.id}/audit">提交审核</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
