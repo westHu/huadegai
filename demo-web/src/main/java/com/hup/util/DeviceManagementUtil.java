@@ -30,4 +30,11 @@ public class DeviceManagementUtil {
         return DTC + System.currentTimeMillis();
     };
 
+    public static String repairCode(){
+        return "DRC" + System.currentTimeMillis();
+    };
+
+    public static String scrapCode(){
+        return "DSC" + System.currentTimeMillis();
+    };
 }

@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="设备入库" css_war="responsive_table,gritter_css,pickers_css,paging-hup_css">
+<@header title="设备维修" css_war="responsive_table,gritter_css,pickers_css,paging-hup_css">
 <style>
 
     label {
@@ -47,39 +47,39 @@
 <@left title="导航栏"></@left>
     <div class="main-content" >
     <@notification title="通知"></@notification>
-    <@pageHeading title_1="设备入库"  title_3="设备管理" title_4="入库列表" title_4_url="${context.contextPath}/device/install"></@pageHeading>
+    <@pageHeading title_1="设备维修"  title_3="设备管理" title_4="维修列表" title_4_url="${context.contextPath}/device/repair"></@pageHeading>
         <div class="wrapper">
             <div class="row">
                 <div class="col-sm-12">
-                    <form class="device-install-form" <#if op == '新增'> action="${context.contextPath}/device/install/create" <#elseif op == '更新'> action="${context.contextPath}/device/install/update"</#if> method="post">
+                    <form class="device-repair-form" <#if op == '新增'> action="${context.contextPath}/device/repair/create" <#elseif op == '更新'> action="${context.contextPath}/device/repair/update"</#if> method="post">
                         <section class="panel">
                             <header class="panel-heading">
                                 采购表格
                             </header>
                             <div class="panel-body">
                                 <div class="row">
-                                    <label class="control-label"  style="float: left">入库单号：</label>
+                                    <label class="control-label"  style="float: left">维修单号：</label>
                                     <div class="col-md-1">
-                                        <input type="hidden" class="my-form-control"  name="id"  id="id" value="${deviceInstall.id}">
-                                        <input class="my-form-control" name="installCode"  id="installCode" <#if op = '新增'>value=".系统生成"<#elseif op = '更新'>value="${deviceInstall.installCode}"</#if> readonly>
+                                        <input type="hidden" class="my-form-control"  name="id"  id="id" value="${deviceRepair.id}">
+                                        <input class="my-form-control" name="repairCode"  id="repairCode" <#if op = '新增'>value=".系统生成"<#elseif op = '更新'>value="${deviceRepair.repairCode}"</#if> readonly>
                                     </div>
 
-                                    <label class="control-label"  style="float: left">入库单名：</label>
+                                    <label class="control-label"  style="float: left">维修单名：</label>
                                     <div class="col-md-1">
-                                        <input class="my-form-control" name="installName" id="installName" value="${deviceInstall.installName}">
+                                        <input class="my-form-control" name="repairName" id="repairName" value="${deviceRepair.repairName}">
                                     </div>
 
-                                    <label class="control-label" style="float: left">入库人员：</label>
+                                    <label class="control-label" style="float: left">维修人员：</label>
                                     <div class="col-md-1">
-                                        <input class="my-form-control" name="installAgent" id="installAgent" value="${deviceInstall.installAgent}">
+                                        <input class="my-form-control" name="repairAgent" id="repairAgent" value="${deviceRepair.repairAgent}">
                                     </div>
 
 
 
-                                    <label class="control-label"  style="float: left">入库日期：</label>
+                                    <label class="control-label"  style="float: left">维修日期：</label>
                                     <div class="col-md-1">
                                         <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="2017-12-02"  class="input-append date dpYears">
-                                            <input readonly="" value="<#if deviceInstall.installDate??>${deviceInstall.installDate?string("yyyy-MM-dd")}<#else>2017-11-11</#if>" size="16" class="form-control" name="installDate" id="installDate">
+                                            <input readonly="" value="<#if deviceRepair.repairDate??>${deviceRepair.repairDate?string("yyyy-MM-dd")}<#else>2017-11-11</#if>" size="16" class="form-control" name="repairDate" id="repairDate">
                                             <span class="input-group-btn add-on">
                                                     <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
                                             </span>
@@ -89,15 +89,15 @@
 
 
                                 <div class="row">
-                                    <label class="control-label" style="float: left">入库备注：</label>
+                                    <label class="control-label" style="float: left">维修备注：</label>
                                     <div class="col-sm-4">
-                                        <textarea rows="6" class="my-form-control my-textarea" name="installRemark" id="installRemark">${deviceInstall.installRemark}</textarea>
+                                        <textarea rows="6" class="my-form-control my-textarea" name="repairRemark" id="repairRemark">${deviceRepair.repairRemark}</textarea>
                                     </div>
                                 </div>
 
                                 <#if op == '新增'>
                                     <span class="tools pull-right">
-                                        <button class="btn btn-primary"               >&nbsp确认入库&nbsp</button>
+                                        <button class="btn btn-primary"               >&nbsp确认维修&nbsp</button>
                                         <button class="btn btn-primary" type="reset">&nbsp重&nbsp置&nbsp</button>
                                     </span>
                                 <#elseif op == '更新'>
@@ -124,7 +124,7 @@
                             </header>
                             <div class="panel-body">
                                 <section id="unseen">
-                                    <table id="device-install-table" class="table table-bordered table-striped table-condensed">
+                                    <table id="device-repair-table" class="table table-bordered table-striped table-condensed">
                                         <thead>
                                             <tr>
                                                 <th>设备编号</th>
@@ -133,30 +133,30 @@
                                                 <th>设备规格</th>
                                                 <th>设备品牌</th>
                                                 <th>采购数量</th>
-                                                <th>入库数量</th>
+                                                <th>维修数量</th>
                                                 <th>操作</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="device-install-tbody">
-                                            <#if deviceInstall.deviceInstallDetailList??>
-                                                <#list deviceInstall.deviceInstallDetailList as detail>
+                                        <tbody id="device-repair-tbody">
+                                            <#if deviceRepair.deviceRepairDetailList??>
+                                                <#list deviceRepair.deviceRepairDetailList as detail>
                                                     <tr>
-                                                        <td><input name="deviceInstallDetailList[${detail_index}].deviceName" value="${detail.deviceName}"></td>
-                                                        <td><input name="deviceInstallDetailList[${detail_index}].deviceCategory" value="${detail.deviceCategory}"></td>
-                                                        <td><input name="deviceInstallDetailList[${detail_index}].deviceModel" value="${detail.deviceModel}"></td>
-                                                        <td><input name="deviceInstallDetailList[${detail_index}].deviceSpec" value="${detail.deviceSpec}"></td>
-                                                        <td><input name="deviceInstallDetailList[${detail_index}].deviceBrand" value="${detail.deviceBrand}"></td>
-                                                        <td><input name="deviceInstallDetailList[${detail_index}].purchaseNumber" value="${detail.purchaseNumber}" type="number"></td>
-                                                        <td><input name="deviceInstallDetailList[${detail_index}].installNumber" value="${detail.installNumber}" type="number"></td>
+                                                        <td><input name="deviceRepairDetailList[${detail_index}].deviceName" value="${detail.deviceName}"></td>
+                                                        <td><input name="deviceRepairDetailList[${detail_index}].deviceCategory" value="${detail.deviceCategory}"></td>
+                                                        <td><input name="deviceRepairDetailList[${detail_index}].deviceModel" value="${detail.deviceModel}"></td>
+                                                        <td><input name="deviceRepairDetailList[${detail_index}].deviceSpec" value="${detail.deviceSpec}"></td>
+                                                        <td><input name="deviceRepairDetailList[${detail_index}].deviceBrand" value="${detail.deviceBrand}"></td>
+                                                        <td><input name="deviceRepairDetailList[${detail_index}].purchaseNumber" value="${detail.purchaseNumber}" type="number"></td>
+                                                        <td><input name="deviceRepairDetailList[${detail_index}].repairNumber" value="${detail.repairNumber}" type="number"></td>
                                                         <td onclick="deleteDevice(this)"><a>删除</a></td>
                                                     </tr>
                                                 </#list>
                                             <#else>
                                                 <tr>
                                                     <td>
-                                                        <input name="deviceInstallDetailList[0].deviceName" placeholder="设备名称">
+                                                        <input name="deviceRepairDetailList[0].deviceName" placeholder="设备名称">
                                                         <#--<div class="input-group">
-                                                                <input name="deviceInstallDetailList[0].deviceCode" class="form-control" placeholder="设备编号">
+                                                                <input name="deviceRepairDetailList[0].deviceCode" class="form-control" placeholder="设备编号">
                                                                 <span class="input-group-btn">
                                                                         <button type="button" class="btn btn-default">
                                                                             <i class="fa fa-search"></i>
@@ -164,12 +164,12 @@
                                                                 </span>
                                                             </div>-->
                                                     </td>
-                                                    <td><input name="deviceInstallDetailList[0].deviceCategory" placeholder="设备类别"></td>
-                                                    <td><input name="deviceInstallDetailList[0].deviceModel" placeholder="设备型号"></td>
-                                                    <td><input name="deviceInstallDetailList[0].deviceSpec" placeholder="设备规格"></td>
-                                                    <td><input name="deviceInstallDetailList[0].deviceBrand" placeholder="设备品牌"></td>
-                                                    <td><input name="deviceInstallDetailList[0].purchaseNumber" placeholder="采购数量" type="number"></td>
-                                                    <td><input name="deviceInstallDetailList[0].installNumber" placeholder="入库数量" type="number"></td>
+                                                    <td><input name="deviceRepairDetailList[0].deviceCategory" placeholder="设备类别"></td>
+                                                    <td><input name="deviceRepairDetailList[0].deviceModel" placeholder="设备型号"></td>
+                                                    <td><input name="deviceRepairDetailList[0].deviceSpec" placeholder="设备规格"></td>
+                                                    <td><input name="deviceRepairDetailList[0].deviceBrand" placeholder="设备品牌"></td>
+                                                    <td><input name="deviceRepairDetailList[0].purchaseNumber" placeholder="采购数量" type="number"></td>
+                                                    <td><input name="deviceRepairDetailList[0].repairNumber" placeholder="维修数量" type="number"></td>
                                                     <td>----</td>
                                                 </tr>
                                             </#if>
@@ -182,7 +182,7 @@
 
                     <section id="search-device-section" class="panel">
                         <header class="panel-heading">
-                            选中设备进行入库...
+                            选中设备进行维修...
                         </header>
                         <div class="panel-body">
                             <section id="unseen">
@@ -237,10 +237,10 @@
                         "<td><input name='devicePurchaseDetailList["+num+"].deviceSpec' placeholder='设备规格'></td>\n" +
                         "<td><input name='devicePurchaseDetailList["+num+"].deviceBrand' placeholder='设备品牌'></td>\n" +
                         "<td><input name='devicePurchaseDetailList["+num+"].purchaseNumber' placeholder='采购数量' type='number'></td>\n" +
-                        "<td><input name='devicePurchaseDetailList["+num+"].installNumber' placeholder='入库数量' type='number'></td>\n" +
+                        "<td><input name='devicePurchaseDetailList["+num+"].repairNumber' placeholder='维修数量' type='number'></td>\n" +
                         "<td onclick=\"deleteDevice(this)\"><a>删除</a></td>\n" +
                     "</tr>";
-            $("#device-install-tbody").append(tr);
+            $("#device-repair-tbody").append(tr);
         });
 
     });
@@ -254,7 +254,7 @@
     }
 
     function recalculateTd() {
-        var trList = $("#device-install-table tbody tr");
+        var trList = $("#device-repair-table tbody tr");
         var num = 0;
         trList.each(function (i) {
             num = i;
@@ -279,7 +279,7 @@
                     $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].purchaseNumber")
                 }
                 if (j == 6){
-                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].installNumber")
+                    $(this).find('input').attr('name', "devicePurchaseDetailList["+i+"].repairNumber")
                 }
             })
         });

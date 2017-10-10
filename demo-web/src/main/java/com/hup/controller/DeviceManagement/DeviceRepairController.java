@@ -1,9 +1,9 @@
 package com.hup.controller.DeviceManagement;
 
-import com.hup.api.deviceManagement.DeviceInstallService;
-import com.hup.api.deviceManagement.DevicePurchaseService;
+import com.hup.api.deviceManagement.DeviceRepairService;
 import com.hup.db.Pager;
-import com.hup.entity.*;
+import com.hup.entity.DeviceRepair;
+import com.hup.entity.DeviceRepairDetail;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.DeviceManagementUtil;
@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * Description: 入库
@@ -30,28 +27,28 @@ import java.util.List;
  * Time: 13:28
  */
 @Controller
-@RequestMapping("/device/install")
-public class DeviceInstallController {
+@RequestMapping("/device/repair")
+public class DeviceRepairController {
 
-    Logger logger = LoggerFactory.getLogger(DeviceInstallController.class);
+    Logger logger = LoggerFactory.getLogger(DeviceRepairController.class);
 
     @Autowired
-    private DeviceInstallService deviceInstallService;
+    private DeviceRepairService deviceRepairService;
 
 
 
 
-//    @RequiresPermissions("install:insert")
+//    @RequiresPermissions("repair:insert")
     @RequestMapping(method = RequestMethod.GET)
-    public String showInstallPage(DeviceInstall deviceInstall, PageRequest pageRequest, Model model) {
-        logger.info("----------> 设备安装单列表");
-        Pager<DeviceInstall> pager = new Pager<>();
+    public String showRepairPage(DeviceRepair deviceRepair, PageRequest pageRequest, Model model) {
+        logger.info("----------> 维修单列表");
+        Pager<DeviceRepair> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
-        pager = deviceInstallService.queryDeviceInstallList(pager, deviceInstall);
+        pager = deviceRepairService.queryDeviceRepairList(pager, deviceRepair);
         model.addAttribute("page", pager);
         model.addAttribute("op", "列表");
-        return "deviceManagement/deviceInstallList";
+        return "deviceManagement/deviceRepairList";
     }
 
 
@@ -64,31 +61,31 @@ public class DeviceInstallController {
      */
 //    @RequiresPermissions("device:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String installCreateForm(Model model) {
-        logger.info("--------->安装单页面--");
+    public String repairCreateForm(Model model) {
+        logger.info("--------->维修单页面--");
         /*List<DevicePurchase> devicePurchaseByStatus = devicePurchaseService.getDevicePurchaseByStatus("采购完成");
         List<DevicePurchaseDetail> purchaseDetailList = new ArrayList<>();
         for (DevicePurchase purchase : devicePurchaseByStatus) {
             purchaseDetailList.addAll(purchase.getDevicePurchaseDetailList());
         }
         model.addAttribute("purchaseDetailList", purchaseDetailList);*/
-        model.addAttribute("deviceInstall", new DeviceInstall());
+        model.addAttribute("deviceRepair", new DeviceRepair());
         model.addAttribute("op","新增");
-        return "deviceManagement/deviceInstallCreate";
+        return "deviceManagement/deviceRepairCreate";
     }
 
 
-    //@RequiresPermissions("install:insert")
+    //@RequiresPermissions("repair:insert")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String installCreate(DeviceInstall deviceInstall,  RedirectAttributes redirectAttributes) {
-        logger.info("----------> 设备采购单操作--");
-        deviceInstall.setInstallCode(DeviceManagementUtil.installCode());
-        for (DeviceInstallDetail installDetail : deviceInstall.getDeviceInstallDetailList()) {
-            installDetail.setDeviceCode(DeviceManagementUtil.deviceCode());
+    public String repairCreate(DeviceRepair deviceRepair,  RedirectAttributes redirectAttributes) {
+        logger.info("----------> 设备维修单操作--");
+        deviceRepair.setRepairCode(DeviceManagementUtil.repairCode());
+        for (DeviceRepairDetail repairDetail : deviceRepair.getDeviceRepairDetailList()) {
+            repairDetail.setDeviceCode(DeviceManagementUtil.deviceCode());
         }
-        deviceInstallService.insertDeviceInstall(deviceInstall);
-        redirectAttributes.addFlashAttribute("msg", "新增采购单成功！");
-        return "redirect:/device/install";
+        deviceRepairService.insertDeviceRepair(deviceRepair);
+        redirectAttributes.addFlashAttribute("msg", "新增维修单成功！");
+        return "redirect:/device/repair";
     }
 
 
@@ -100,11 +97,11 @@ public class DeviceInstallController {
      * <p>@return:
      */
     @RequestMapping(value = "/{id}/view", method = RequestMethod.GET)
-    public String deviceInstallView(@PathVariable("id") Long id, Model model) {
+    public String deviceRepairView(@PathVariable("id") Long id, Model model) {
         logger.info("========查看采购单=========" + id);
-        DeviceInstall deviceInstall = deviceInstallService.findOne(id);
-        model.addAttribute("deviceInstall",deviceInstall);
-        return "deviceManagement/deviceInstallView";
+        DeviceRepair deviceRepair = deviceRepairService.findOne(id);
+        model.addAttribute("deviceRepair",deviceRepair);
+        return "deviceManagement/deviceRepairView";
     }
 
     /**
@@ -115,12 +112,12 @@ public class DeviceInstallController {
      * <p>@return:
      */
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
-    public String deviceInstallUpdate(@PathVariable("id") Long id, Model model) {
+    public String deviceRepairUpdate(@PathVariable("id") Long id, Model model) {
         logger.info("========更新采购单=========" + id);
-        DeviceInstall deviceInstall = deviceInstallService.findOne(id);
-        model.addAttribute("deviceInstall",deviceInstall);
+        DeviceRepair deviceRepair = deviceRepairService.findOne(id);
+        model.addAttribute("deviceRepair",deviceRepair);
         model.addAttribute("op","更新");
-        return "deviceManagement/deviceInstallCreate";
+        return "deviceManagement/deviceRepairCreate";
     }
 
 
@@ -132,15 +129,15 @@ public class DeviceInstallController {
      * <p>@return:
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String deviceInstallUpdate(DeviceInstall deviceInstall, RedirectAttributes redirectAttributes) {
-        deviceInstallService.updateDeviceInstall(deviceInstall);
-        redirectAttributes.addFlashAttribute("msg","采购单更新成功！");
-        return "redirect:/device/install";
+    public String deviceRepairUpdate(DeviceRepair deviceRepair, RedirectAttributes redirectAttributes) {
+        deviceRepairService.updateDeviceRepair(deviceRepair);
+        redirectAttributes.addFlashAttribute("msg","维修单更新成功！");
+        return "redirect:/device/repair";
     }
 
 
     /**
-     * <p>@Description: 删除设备
+     * <p>@Description: 删除维修单
      * <p>@Author: hupj
      * <p>@Date: 2017/9/26
      * <p>@Param:
@@ -150,8 +147,8 @@ public class DeviceInstallController {
     @ResponseBody
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public BaseResponse delete(@PathVariable("id") Long id) {
-        logger.info("========删除安装单： {}",id);
-        deviceInstallService.deleteDeviceInstall(id);
+        logger.info("========删除维修单： {}",id);
+        deviceRepairService.deleteDeviceRepair(id);
         return new BaseResponse("0","采购单删除成功！");
     }
 

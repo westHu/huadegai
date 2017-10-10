@@ -1,9 +1,8 @@
 package com.hup.controller.DeviceManagement;
 
-import com.hup.api.deviceManagement.DeviceInstallService;
-import com.hup.api.deviceManagement.DevicePurchaseService;
+import com.hup.api.deviceManagement.DeviceScrapService;
 import com.hup.db.Pager;
-import com.hup.entity.*;
+import com.hup.entity.DeviceScrap;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.DeviceManagementUtil;
@@ -19,39 +18,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
- * Description: 入库
+ * Description: 报废
  * User: west_
  * Date: 2017-09-24
  * Time: 13:28
  */
 @Controller
-@RequestMapping("/device/install")
-public class DeviceInstallController {
+@RequestMapping("/device/scrap")
+public class DeviceScrapController {
 
-    Logger logger = LoggerFactory.getLogger(DeviceInstallController.class);
+    Logger logger = LoggerFactory.getLogger(DeviceScrapController.class);
 
     @Autowired
-    private DeviceInstallService deviceInstallService;
+    private DeviceScrapService deviceScrapService;
 
 
-
-
-//    @RequiresPermissions("install:insert")
+//    @RequiresPermissions("scrap:insert")
     @RequestMapping(method = RequestMethod.GET)
-    public String showInstallPage(DeviceInstall deviceInstall, PageRequest pageRequest, Model model) {
-        logger.info("----------> 设备安装单列表");
-        Pager<DeviceInstall> pager = new Pager<>();
+    public String showScrapPage(DeviceScrap deviceScrap, PageRequest pageRequest, Model model) {
+        logger.info("----------> 报废单列表");
+        Pager<DeviceScrap> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
-        pager = deviceInstallService.queryDeviceInstallList(pager, deviceInstall);
+        pager = deviceScrapService.queryDeviceScrapList(pager, deviceScrap);
         model.addAttribute("page", pager);
         model.addAttribute("op", "列表");
-        return "deviceManagement/deviceInstallList";
+        return "deviceManagement/deviceScrapList";
     }
 
 
@@ -64,31 +58,31 @@ public class DeviceInstallController {
      */
 //    @RequiresPermissions("device:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String installCreateForm(Model model) {
-        logger.info("--------->安装单页面--");
+    public String scrapCreateForm(Model model) {
+        logger.info("--------->报废单页面--");
         /*List<DevicePurchase> devicePurchaseByStatus = devicePurchaseService.getDevicePurchaseByStatus("采购完成");
         List<DevicePurchaseDetail> purchaseDetailList = new ArrayList<>();
         for (DevicePurchase purchase : devicePurchaseByStatus) {
             purchaseDetailList.addAll(purchase.getDevicePurchaseDetailList());
         }
         model.addAttribute("purchaseDetailList", purchaseDetailList);*/
-        model.addAttribute("deviceInstall", new DeviceInstall());
+        model.addAttribute("deviceScrap", new DeviceScrap());
         model.addAttribute("op","新增");
-        return "deviceManagement/deviceInstallCreate";
+        return "deviceManagement/deviceScrapCreate";
     }
 
 
-    //@RequiresPermissions("install:insert")
+    //@RequiresPermissions("scrap:insert")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String installCreate(DeviceInstall deviceInstall,  RedirectAttributes redirectAttributes) {
-        logger.info("----------> 设备采购单操作--");
-        deviceInstall.setInstallCode(DeviceManagementUtil.installCode());
-        for (DeviceInstallDetail installDetail : deviceInstall.getDeviceInstallDetailList()) {
-            installDetail.setDeviceCode(DeviceManagementUtil.deviceCode());
-        }
-        deviceInstallService.insertDeviceInstall(deviceInstall);
-        redirectAttributes.addFlashAttribute("msg", "新增采购单成功！");
-        return "redirect:/device/install";
+    public String scrapCreate(DeviceScrap deviceScrap,  RedirectAttributes redirectAttributes) {
+        logger.info("----------> 设备报废单操作--");
+        deviceScrap.setScrapCode(DeviceManagementUtil.scrapCode());
+        /*for (DeviceScrapDetail scrapDetail : deviceScrap.getDeviceScrapDetailList()) {
+            scrapDetail.setDeviceCode(DeviceManagementUtil.deviceCode());
+        }*/
+        deviceScrapService.insertDeviceScrap(deviceScrap);
+        redirectAttributes.addFlashAttribute("msg", "新增报废单成功！");
+        return "redirect:/device/scrap";
     }
 
 
@@ -100,11 +94,11 @@ public class DeviceInstallController {
      * <p>@return:
      */
     @RequestMapping(value = "/{id}/view", method = RequestMethod.GET)
-    public String deviceInstallView(@PathVariable("id") Long id, Model model) {
+    public String deviceScrapView(@PathVariable("id") Long id, Model model) {
         logger.info("========查看采购单=========" + id);
-        DeviceInstall deviceInstall = deviceInstallService.findOne(id);
-        model.addAttribute("deviceInstall",deviceInstall);
-        return "deviceManagement/deviceInstallView";
+        DeviceScrap deviceScrap = deviceScrapService.findOne(id);
+        model.addAttribute("deviceScrap",deviceScrap);
+        return "deviceManagement/deviceScrapView";
     }
 
     /**
@@ -115,12 +109,12 @@ public class DeviceInstallController {
      * <p>@return:
      */
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
-    public String deviceInstallUpdate(@PathVariable("id") Long id, Model model) {
+    public String deviceScrapUpdate(@PathVariable("id") Long id, Model model) {
         logger.info("========更新采购单=========" + id);
-        DeviceInstall deviceInstall = deviceInstallService.findOne(id);
-        model.addAttribute("deviceInstall",deviceInstall);
+        DeviceScrap deviceScrap = deviceScrapService.findOne(id);
+        model.addAttribute("deviceScrap",deviceScrap);
         model.addAttribute("op","更新");
-        return "deviceManagement/deviceInstallCreate";
+        return "deviceManagement/deviceScrapCreate";
     }
 
 
@@ -132,15 +126,15 @@ public class DeviceInstallController {
      * <p>@return:
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String deviceInstallUpdate(DeviceInstall deviceInstall, RedirectAttributes redirectAttributes) {
-        deviceInstallService.updateDeviceInstall(deviceInstall);
-        redirectAttributes.addFlashAttribute("msg","采购单更新成功！");
-        return "redirect:/device/install";
+    public String deviceScrapUpdate(DeviceScrap deviceScrap, RedirectAttributes redirectAttributes) {
+        deviceScrapService.updateDeviceScrap(deviceScrap);
+        redirectAttributes.addFlashAttribute("msg","报废单更新成功！");
+        return "redirect:/device/scrap";
     }
 
 
     /**
-     * <p>@Description: 删除设备
+     * <p>@Description: 删除报废单
      * <p>@Author: hupj
      * <p>@Date: 2017/9/26
      * <p>@Param:
@@ -150,8 +144,8 @@ public class DeviceInstallController {
     @ResponseBody
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public BaseResponse delete(@PathVariable("id") Long id) {
-        logger.info("========删除安装单： {}",id);
-        deviceInstallService.deleteDeviceInstall(id);
+        logger.info("========删除报废单： {}",id);
+        deviceScrapService.deleteDeviceScrap(id);
         return new BaseResponse("0","采购单删除成功！");
     }
 

@@ -1,45 +1,5 @@
 <#include "common/public.ftl">
 <@header title="设备采购" css_war="responsive_table,gritter_css,pickers_css,paging-hup_css">
-<style>
-
-    label {
-        display: inline-block;
-        margin-bottom: 5px;
-        margin-left: 15px;
-        margin-top: 5px;
-        font-weight: 1000;
-    }
-
-    .row {
-        margin-bottom: 5px;
-    }
-
-    .my-form-control {
-        display: block;
-        width: 100%;
-        height: 27px;
-        /*padding: 6px 12px;*/
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #000000;
-        background-color: #c3c3c3;
-        background-image: none;
-        border: 1px solid #03a806;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    }
-
-    .my-textarea {
-        height: 47px;
-    }
-
-    .col-md-1 {
-        width: 10% !important;
-    }
-</style>
 </@header>
 <body class="sticky-header">
 <section>
