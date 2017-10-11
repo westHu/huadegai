@@ -187,10 +187,7 @@ public class XMessageContext {
         }
 
         String contentType = request.getContentType();
-        if (contentType.contains("application/json") || contentType.contains("text/json")){
-            return true;
-        }
-        return false;
+        return contentType.contains("application/json") || contentType.contains("text/json");
     }
 
     public boolean isOpenApiRequest(){

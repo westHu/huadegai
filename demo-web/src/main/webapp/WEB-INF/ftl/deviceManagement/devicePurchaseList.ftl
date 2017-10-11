@@ -59,7 +59,7 @@
                                                 <td>${obj.purchaseAuditors}</td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <button data-toggle="dropdown" type="button" class="btn btn-success btn-sm dropdown-toggle">
+                                                        <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
                                                             操&nbsp作 <span class="caret"></span>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu">
@@ -67,7 +67,11 @@
                                                             <li><a href="${context.contextPath}/device/purchase/${obj.id}/update?currentPage=${page.currentPage}&pageSize=${page.pageSize}" >编辑采购单</a></li>
                                                             <li><a href="#deleteDevicePurchase" data-toggle="modal" onclick="delete_device_purchase(${obj.id},this)" >删除采购单</a></li>
                                                             <li class="divider"></li>
-                                                            <li><a href="${context.contextPath}/device/purchase/${obj.id}/audit">提交审核</a></li>
+                                                            <li>
+                                                                <#if obj.purchaseStatus?? && obj.purchaseStatus == '创建' && canAuditors?contains(obj.purchaseAgent)>
+                                                                    <a href="${context.contextPath}/device/purchase/${obj.id}/audit">提交审核</a>
+                                                                </#if>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </td>

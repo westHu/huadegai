@@ -102,7 +102,7 @@ public class GlobalExceptionResolver extends SimpleMappingExceptionResolver {
             response.setCharacterEncoding("UTF-8");
             response.setHeader("Cache-Control", "no-cache, must-revalidate");
             stream = response.getOutputStream();
-            stream.write(JSON.toJSONBytes(result,new SerializerFeature[]{SerializerFeature.QuoteFieldNames}));
+            stream.write(JSON.toJSONBytes(result, SerializerFeature.QuoteFieldNames));
         } catch (Exception e1) {
         } finally {
             if (stream != null) {
@@ -166,7 +166,7 @@ public class GlobalExceptionResolver extends SimpleMappingExceptionResolver {
 
     private Result getFaultResponse(Exception e) {
         if ((e instanceof XBusinessException)) {
-            return ResponseUtils.getXBusinessResult((XBusinessException) e);
+            return ResponseUtils.getXBusinessResult(e);
         }
         if ((e instanceof ValidationException)) {
             if ((e.getCause() instanceof XBusinessException)) {

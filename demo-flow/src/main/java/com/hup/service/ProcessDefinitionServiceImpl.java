@@ -31,4 +31,16 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService {
     public List<ProcessDefinition> findDefinitionStepByName(String name) {
         return processDefinitionDao.findDefinitionStepByName(name);
     }
+
+    @Override
+    public ProcessDefinition findOne(String id) {
+        return processDefinitionDao.findOne(id);
+    }
+
+    @Override
+    public ProcessDefinition findDefinitionByNameAndStep(String name, String step) {
+        return processDefinitionDao.findDefinitionByNameAndStep(name, step);
+    }
+
+
 }

@@ -20,7 +20,7 @@ public class ReflectionUtils {
     }
 
     public static void invokeSetter(Object obj, String propertyName, Object value) {
-        invokeSetter(obj, propertyName, value, (Class)null);
+        invokeSetter(obj, propertyName, value, null);
     }
 
     public static void invokeSetter(Object obj, String propertyName, Object value, Class<?> propertyType) {
@@ -104,8 +104,8 @@ public class ReflectionUtils {
     }
 
     public static Field getAccessibleField(Object obj, String fieldName) {
-        Validate.notNull(obj, "object can\'t be null", new Object[0]);
-        Validate.notBlank(fieldName, "fieldName can\'t be blank", new Object[0]);
+        Validate.notNull(obj, "object can\'t be null");
+        Validate.notBlank(fieldName, "fieldName can\'t be blank");
         Class superClass = obj.getClass();
 
         while(superClass != Object.class) {
@@ -122,7 +122,7 @@ public class ReflectionUtils {
     }
 
     public static Method getAccessibleMethod(Object obj, String methodName, Class... parameterTypes) {
-        Validate.notNull(obj, "object can\'t be null", new Object[0]);
+        Validate.notNull(obj, "object can\'t be null");
         Class superClass = obj.getClass();
 
         while(superClass != Object.class) {
@@ -180,6 +180,6 @@ public class ReflectionUtils {
     }
 
     public static RuntimeException convertReflectionExceptionToUnchecked(Exception e) {
-        return (RuntimeException)(!(e instanceof IllegalAccessException) && !(e instanceof IllegalArgumentException) && !(e instanceof NoSuchMethodException)?(e instanceof InvocationTargetException ?new RuntimeException(((InvocationTargetException)e).getTargetException()):(e instanceof RuntimeException?(RuntimeException)e:new RuntimeException("Unexpected Checked Exception.", e))):new IllegalArgumentException(e));
+        return !(e instanceof IllegalAccessException) && !(e instanceof IllegalArgumentException) && !(e instanceof NoSuchMethodException)?(e instanceof InvocationTargetException ?new RuntimeException(((InvocationTargetException)e).getTargetException()):(e instanceof RuntimeException?(RuntimeException)e:new RuntimeException("Unexpected Checked Exception.", e))):new IllegalArgumentException(e);
     }
 }

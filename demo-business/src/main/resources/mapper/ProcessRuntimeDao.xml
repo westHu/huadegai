@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hup.dao.ProcessDefinitionDao">
+<mapper namespace="com.hup.dao.ProcessRuntimeDao">
 
     <!--
         1.属性名,表名等用小写,select / from之类关键字用大写。
@@ -12,21 +12,18 @@
         7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
           WHERE t.username = #{userName}
     -->
-   <select id="findAllDefinition" resultType="com.hup.entity.ProcessDefinition">
-       SELECT * FROM flow_process_definition GROUP BY name
+   <select id="findAllRuntime" resultType="com.hup.entity.ProcessRuntime">
+       SELECT * FROM flow_process_runtime GROUP BY name
    </select>
 
-    <select id="findDefinitionStepByName"  resultType="com.hup.entity.ProcessDefinition">
-        SELECT * FROM flow_process_definition WHERE name = #{name}
-    </select>
+    <insert id="insertProcessRuntime" useGeneratedKeys="true" keyProperty="runtime.id">
+        INSERT INTO flow_process_runtime
+        (name, code, members, groups, remark)
+        VALUES
+        (#{runtime.name}, #{runtime.code}, #{runtime.members}, #{runtime.groups}, #{runtime.remark})
+    </insert>
 
-    <select id="findOne" resultType="com.hup.entity.ProcessDefinition">
-        SELECT * FROM flow_process_definition WHERE id = #{id}
-    </select>
 
-    <select id="findDefinitionByNameAndStep" resultType="com.hup.entity.ProcessDefinition">
-        SELECT * FROM flow_process_definition WHERE name = #{name} AND step = #{step}
-    </select>
 
 
 </mapper>

@@ -12,7 +12,7 @@ public enum SignType {
 
     private String value;
 
-    private SignType(String value) {
+    SignType(String value) {
         this.value = value;
     }
 

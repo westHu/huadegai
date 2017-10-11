@@ -10,11 +10,12 @@ package com.hup.entity;
 public class ProcessDefinition {
 
     private Long id;
-    private String name;
-    private String desc;
-    private String step;
-    private String user;
-    private String group;
+    private String name;  //流程号
+    private String desc;  //流程名称  流程描述
+    private String step; //步骤节点
+    private String stepDesc; //节点描述
+    private String members; //多个人员
+    private String groups;  //多个组
     private String rule;
 
 
@@ -50,20 +51,28 @@ public class ProcessDefinition {
         this.step = step;
     }
 
-    public String getUser() {
-        return user;
+    public String getStepDesc() {
+        return stepDesc;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setStepDesc(String stepDesc) {
+        this.stepDesc = stepDesc;
     }
 
-    public String getGroup() {
-        return group;
+    public String getMembers() {
+        return members;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setMembers(String members) {
+        this.members = members;
+    }
+
+    public String getGroups() {
+        return groups;
+    }
+
+    public void setGroups(String groups) {
+        this.groups = groups;
     }
 
     public String getRule() {

@@ -1,6 +1,7 @@
-package com.hup.api.flow;
+package com.hup.dao;
 
 import com.hup.entity.ProcessRuntime;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,11 +10,12 @@ import java.util.List;
  * Description:
  * User: west_
  * Date: 2017-10-10
- * Time: 16:14
+ * Time: 16:35
  */
-public interface ProcessRuntimeService {
+public interface ProcessRuntimeDao {
+
 
     List<ProcessRuntime> findAllRuntime();
 
-    ProcessRuntime insertProcessRuntime(ProcessRuntime processRuntime);
+    void insertProcessRuntime(@Param("runtime") ProcessRuntime runtime);
 }

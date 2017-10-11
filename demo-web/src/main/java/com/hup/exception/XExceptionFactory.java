@@ -26,7 +26,7 @@ public class XExceptionFactory {
 
     private static ExceptionDefinitions getExceptionDefinitions() {
         if(exceptionDefinitions == null) {
-            exceptionDefinitions = (ExceptionDefinitions) ApplicationContextHelper.getContext().getBean(ExceptionDefinitions.class);
+            exceptionDefinitions = ApplicationContextHelper.getContext().getBean(ExceptionDefinitions.class);
         }
 
         return exceptionDefinitions;

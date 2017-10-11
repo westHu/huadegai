@@ -1,6 +1,7 @@
 package com.hup.dao;
 
 import com.hup.entity.ProcessDefinition;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface ProcessDefinitionDao {
 
     List<ProcessDefinition> findDefinitionStepByName(String name);
 
+    ProcessDefinition findOne(String id);
+
+    ProcessDefinition findDefinitionByNameAndStep(@Param("name") String name, @Param("step") String step);
 }

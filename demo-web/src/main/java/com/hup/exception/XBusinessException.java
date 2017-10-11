@@ -20,7 +20,7 @@ public class XBusinessException extends XRuntimeException {
     }
 
     public XBusinessException(String xCode, String message, String internalMessage) {
-        this(xCode, message, internalMessage, (Throwable)null);
+        this(xCode, message, internalMessage, null);
     }
 
     public XBusinessException(String code, String message, Throwable throwable) {

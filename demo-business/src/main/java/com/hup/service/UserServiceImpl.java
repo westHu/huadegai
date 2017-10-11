@@ -2,11 +2,14 @@ package com.hup.service;
 
 import com.hup.api.RoleService;
 import com.hup.api.UserService;
+import com.hup.dao.OrganizationDao;
 import com.hup.dao.UserDao;
+import com.hup.entity.Organization;
 import com.hup.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private OrganizationDao organizationDao;
 
     @Autowired
     private PasswordHelper passwordHelper;
@@ -167,6 +173,22 @@ public class UserServiceImpl implements UserService {
         passwordHelper.encryptPassword(user);
         userDao.updateUser(user);
         return true;
+    }
+
+    /**
+     * <p>@Description: 获取某人的leaders
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/11
+     * <p>@Param:
+     * <p>@return:
+     */
+    @Override
+    public String findLeaders(String username) {
+        User user = userDao.findByUsername(username);
+        if (null == user) return null;
+        Organization organization = organizationDao.findOne(user.getOrganizationId());
+        Organization parent = organizationDao.findOne(organization.getParentId());
+        return parent.getLeaders();
     }
 
 }

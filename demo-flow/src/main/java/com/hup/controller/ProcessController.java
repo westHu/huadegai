@@ -2,7 +2,10 @@ package com.hup.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.hup.api.flow.ProcessDefinitionService;
+import com.hup.api.flow.ProcessRuntimeService;
 import com.hup.entity.ProcessDefinition;
+import com.hup.entity.ProcessRuntime;
+import com.hup.response.BaseResponse;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +35,11 @@ public class ProcessController {
     @Autowired
     private ProcessDefinitionService processDefinitionService;
 
+    @Autowired
+    private ProcessRuntimeService processRuntimeService;
+
+
+
     @RequestMapping(value = "/definitionList", method = RequestMethod.GET)
     public String processDefinitionList(Model model) {
         logger.info("----->工作流定义列表");
@@ -51,7 +59,7 @@ public class ProcessController {
     }
 
     @RequestMapping(value = "/{name}/definitionView", method = RequestMethod.GET)
-    public String processDefinitionList(@PathVariable("name") String name,  Model model) {
+    public String definitionView(@PathVariable("name") String name,  Model model) {
         logger.info("----->工作流 -- name : " + name);
         setDefinitions(model);
         List<ProcessDefinition> definitionsByName = processDefinitionService.findDefinitionStepByName(name);
@@ -60,6 +68,50 @@ public class ProcessController {
         model.addAttribute("flag", "流程管理,流程定义");
         return "flow/definitionList";
     }
+
+    /**
+     * <p>@Description: 查询单个流程定义进行更新
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/11
+     * <p>@Param:
+     * <p>@return:
+     */
+    @RequestMapping(value = "/{id}/definition", method = RequestMethod.POST)
+    public BaseResponse definitionUpdate(@PathVariable("id") String id) {
+        logger.info("----->工作流更新 -- id : " + id);
+        ProcessDefinition processDefinition = processDefinitionService.findOne(id);
+        return new BaseResponse("0", "查询成功！", processDefinition);
+    }
+
+
+    @RequestMapping(value = "/definitionUpdate", method = RequestMethod.POST)
+    public String definitionUpdate(ProcessDefinition processDefinition) {
+        logger.info("----->工作流更新 -- processDefinition : " + JSON.toJSONString(processDefinition));
+//        ProcessDefinition processDefinition = processDefinitionService.update(processDefinition);
+        return "redirect:process/definitionList";
+    }
+
+
+    /***====runtime=====================*/
+
+
+
+    @RequestMapping(value = "/runtimeList", method = RequestMethod.GET)
+    public String processRuntimeList(Model model) {
+        logger.info("----->工作流进行时记录列表");
+        List<ProcessRuntime> processRuntimes = processRuntimeService.findAllRuntime();
+
+        model.addAttribute("processRuntimes", processRuntimes);
+        model.addAttribute("flag", "流程管理,流程");
+        return "flow/runtimeList";
+    }
+
+
+
+
+
+
+
 
 
 

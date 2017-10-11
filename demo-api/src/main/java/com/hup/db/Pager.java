@@ -108,17 +108,11 @@ public class Pager<E> implements Serializable {
     }
 
     public boolean hasNext() {
-        if (this.pageCount > this.currentPage) {
-            return true;
-        }
-        return false;
+        return this.pageCount > this.currentPage;
     }
 
     public boolean hasForward() {
-        if (this.currentPage <= 1) {
-            return false;
-        }
-        return true;
+        return this.currentPage > 1;
     }
 
     public String getOrderColumns() {

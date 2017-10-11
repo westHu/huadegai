@@ -61,11 +61,11 @@ public class ExceptionDefinitions {
         try {
             message = (String)this.getDefinitions().get(errorCode);
         } catch (IOException var5) {
-            this.logger.error(String.format("Error message for [code=%s] is not defined", new Object[]{errorCode}));
+            this.logger.error(String.format("Error message for [code=%s] is not defined", errorCode));
         }
 
         if(StringUtils.isEmpty(message)) {
-            message = String.format("系统错误[ErrorType = ERROR_MESSAGE_DEFINITION, ErrorCode=%s]", new Object[]{errorCode});
+            message = String.format("系统错误[ErrorType = ERROR_MESSAGE_DEFINITION, ErrorCode=%s]", errorCode);
         }
 
         return message;

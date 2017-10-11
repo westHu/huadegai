@@ -131,11 +131,7 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
     private static boolean isBase64(byte octect) {
         if (octect == PAD) {
             return true;
-        } else if (base64Alphabet[octect] == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        } else return base64Alphabet[octect] != -1;
     }
 
     /**

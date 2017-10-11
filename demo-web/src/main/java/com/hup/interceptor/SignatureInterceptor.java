@@ -90,10 +90,7 @@ public class SignatureInterceptor extends XInterceptor {
     public boolean requestCanBeIgnored(HttpServletRequest httpServletRequest){
         String servletPath = httpServletRequest.getServletPath();
 
-        if(ignoreList != null && ignoreList.contains(servletPath)){
-            return true;
-        }
-        return false;
+        return ignoreList != null && ignoreList.contains(servletPath);
     }
 
     @Override

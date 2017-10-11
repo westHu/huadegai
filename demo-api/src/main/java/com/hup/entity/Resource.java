@@ -24,11 +24,11 @@ public class Resource implements Serializable {
     private List<Resource> childrenList;
     private List<String> tags;
 
-    public static enum ResourceType {
+    public enum ResourceType {
         menu("菜单"), button("按钮");
 
         private final String info;
-        private ResourceType(String info) {
+        ResourceType(String info) {
             this.info = info;
         }
 
@@ -142,9 +142,7 @@ public class Resource implements Serializable {
 
         Resource resource = (Resource) o;
 
-        if (id != null ? !id.equals(resource.id) : resource.id != null) return false;
-
-        return true;
+        return id != null ? id.equals(resource.id) : resource.id == null;
     }
 
     @Override

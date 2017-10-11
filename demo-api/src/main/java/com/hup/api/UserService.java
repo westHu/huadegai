@@ -62,4 +62,9 @@ public interface UserService {
 
     boolean resetPassword(Long id);
 
+    /**
+     * 查询用户的所有上级领导
+     */
+    String findLeaders(String username);
+
 }

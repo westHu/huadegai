@@ -97,7 +97,7 @@ public class RSACryptor {
             RSAPublicKey publicKey = getRSAPublicKey(publicKeyStr);
 
             Cipher cipher = Cipher.getInstance(algorithm, new org.bouncycastle.jce.provider.BouncyCastleProvider());
-            cipher.init(cipher.DECRYPT_MODE, publicKey);
+            cipher.init(Cipher.DECRYPT_MODE, publicKey);
             int blockSize = cipher.getBlockSize();
             ByteArrayOutputStream bout = new ByteArrayOutputStream(64);
             int j = 0;

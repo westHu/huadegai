@@ -11,9 +11,9 @@ public class ProcessRuntime {
 
     private Long id;
     private String name;
-    private String step;
-    private String user;
-    private String group;
+    private String code;
+    private String members;
+    private String groups;
     private String remark;
 
     public Long getId() {
@@ -32,28 +32,28 @@ public class ProcessRuntime {
         this.name = name;
     }
 
-    public String getStep() {
-        return step;
+    public String getCode() {
+        return code;
     }
 
-    public void setStep(String step) {
-        this.step = step;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getUser() {
-        return user;
+    public String getMembers() {
+        return members;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setMembers(String members) {
+        this.members = members;
     }
 
-    public String getGroup() {
-        return group;
+    public String getGroups() {
+        return groups;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setGroups(String groups) {
+        this.groups = groups;
     }
 
     public String getRemark() {

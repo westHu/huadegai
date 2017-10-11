@@ -1,13 +1,20 @@
 package com.hup.controller.DeviceManagement;
 
 import com.alibaba.fastjson.JSON;
+import com.hup.api.UserService;
 import com.hup.api.deviceManagement.DevicePurchaseService;
+import com.hup.api.flow.ProcessDefinitionService;
+import com.hup.api.flow.ProcessRuntimeService;
 import com.hup.db.Pager;
 import com.hup.entity.DevicePurchase;
+import com.hup.entity.ProcessDefinition;
+import com.hup.entity.ProcessRuntime;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.DeviceManagementUtil;
 import com.hup.util.PageUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,6 +44,15 @@ public class DevicePurchaseController {
     @Autowired
     private DevicePurchaseService devicePurchaseService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ProcessRuntimeService processRuntimeService;
+
+    @Autowired
+    private ProcessDefinitionService processDefinitionService;
+
 
 //    @RequiresPermissions("purchase:insert")
     @RequestMapping(method = RequestMethod.GET)
@@ -46,6 +64,10 @@ public class DevicePurchaseController {
         pager = devicePurchaseService.queryDevicePurchaseList(pager, devicePurchase);
         model.addAttribute("page", pager);
         model.addAttribute("op", "列表");
+
+        String name = (String) SecurityUtils.getSubject().getPrincipal();
+        String leaders = userService.findLeaders(name);
+        model.addAttribute("canAuditors", leaders+","+name);
         return "deviceManagement/devicePurchaseList";
     }
 
@@ -149,16 +171,27 @@ public class DevicePurchaseController {
      * <p>@Param:
      * <p>@return:
      */
-    @RequestMapping(value = "/{id}/audit", method = RequestMethod.POST)
-    public BaseResponse audit(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/{id}/audit", method = RequestMethod.GET)
+    public String audit(@PathVariable("id") Long id) {
         logger.info("========审核采购单： {}",id);
         DevicePurchase devicePurchase = devicePurchaseService.findOne(id);
         devicePurchase.setPurchaseStatus("审核中");
         devicePurchaseService.updateDevicePurchase(devicePurchase);
+        //---
+        ProcessRuntime runtime = new ProcessRuntime();
+        runtime.setName("devicePurchase");
+        runtime.setCode(devicePurchase.getPurchaseCode());
+        if (StringUtils.isBlank(devicePurchase.getPurchaseAuditors())){
+            ProcessDefinition byNameAndStep = processDefinitionService.findDefinitionByNameAndStep("devicePurchase", "2");
+            runtime.setMembers(byNameAndStep.getMembers());
+            runtime.setGroups(byNameAndStep.getGroups());
+        }else {
+            runtime.setMembers(devicePurchase.getPurchaseAuditors());
+        }
+        runtime.setRemark("sadasd");
+        processRuntimeService.insertProcessRuntime(runtime);
 
-
-
-        return new BaseResponse("0","采购单删除成功！");
+        return "redirect:/device/purchase";
     }
 
 

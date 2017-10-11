@@ -65,7 +65,8 @@
           purchase_agent = #{devicePurchase.purchaseAgent},
           purchase_payment_type = #{devicePurchase.purchasePaymentType},
           purchase_date = #{devicePurchase.purchaseDate},
-          purchase_remark = #{devicePurchase.purchaseRemark}
+          purchase_remark = #{devicePurchase.purchaseRemark},
+          purchase_status = #{devicePurchase.purchaseStatus}
         WHERE id = #{devicePurchase.id}
     </update>
 

@@ -16,25 +16,25 @@ public class DeviceManagementUtil {
 
     public static String deviceCode(){
         return DMS + System.currentTimeMillis();
-    };
+    }
 
     public static String purchaseCode(){
         return DPC + System.currentTimeMillis();
-    };
+    }
 
     public static String inboundCode(){
         return DIC + System.currentTimeMillis();
-    };
+    }
 
     public static String installCode(){
         return DTC + System.currentTimeMillis();
-    };
+    }
 
     public static String repairCode(){
         return "DRC" + System.currentTimeMillis();
-    };
+    }
 
     public static String scrapCode(){
         return "DSC" + System.currentTimeMillis();
-    };
+    }
 }
