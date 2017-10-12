@@ -38,7 +38,7 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService {
     }
 
     @Override
-    public ProcessDefinition findDefinitionByNameAndStep(String name, String step) {
+    public ProcessDefinition findDefinitionByNameAndStep(String name, Integer step) {
         return processDefinitionDao.findDefinitionByNameAndStep(name, step);
     }
 

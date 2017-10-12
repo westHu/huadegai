@@ -19,5 +19,5 @@ public interface ProcessDefinitionService {
 
     ProcessDefinition findOne(String id);
 
-    ProcessDefinition findDefinitionByNameAndStep(String name, String step);
+    ProcessDefinition findDefinitionByNameAndStep(String name, Integer step);
 }

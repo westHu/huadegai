@@ -12,9 +12,18 @@
         7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
           WHERE t.username = #{userName}
     -->
-   <select id="toDoList" resultType="com.hup.entity.ToDoTask">
+   <select id="processTaskList" resultType="com.hup.entity.ProcessTask">
        SELECT * FROM flow_process_task t  WHERE  t.owner = #{toDoTask.owner} AND t.status = #{toDoTask.status}
    </select>
+
+
+    <insert id="insertTodoTask" useGeneratedKeys="true" keyProperty="toDoTask.id">
+        INSERT INTO flow_process_task
+        (code, name, url, status, owner, emergency_state, create_date)
+        VALUES
+        (#{toDoTask.code},#{toDoTask.name},#{toDoTask.url},#{toDoTask.status},#{toDoTask.owner},
+        #{toDoTask.emergencyState},NOW())
+    </insert>
 
 
 </mapper>

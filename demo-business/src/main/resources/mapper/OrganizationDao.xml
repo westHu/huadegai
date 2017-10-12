@@ -58,4 +58,9 @@
         FROM sys_organization t
         WHERE t.parent_id = #{parentId}
     </select>
+
+    <select id="findOneByName" resultType="com.hup.entity.Organization">
+        SELECT  * FROM  sys_organization t WHERE  t.name = #{name}
+    </select>
+
 </mapper>

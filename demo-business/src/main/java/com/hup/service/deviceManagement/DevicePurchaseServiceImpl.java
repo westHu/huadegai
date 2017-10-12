@@ -106,4 +106,14 @@ public class DevicePurchaseServiceImpl implements DevicePurchaseService {
         return purchaseList;
     }
 
+    @Override
+    public DevicePurchase findOneByCode(String purchaseCode) {
+        DevicePurchase devicePurchase = devicePurchaseDao.findOneByCode(purchaseCode);
+        if (null != devicePurchase) {
+            List<DevicePurchaseDetail> detailList = devicePurchaseDao.findPurchaseDetailByCode(devicePurchase.getPurchaseCode());
+            devicePurchase.setDevicePurchaseDetailList(detailList);
+        }
+        return devicePurchase;
+    }
+
 }

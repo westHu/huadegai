@@ -11,6 +11,7 @@ public class ProcessRuntime {
 
     private Long id;
     private String name;
+    private Integer step; //步骤节点
     private String code;
     private String members;
     private String groups;
@@ -30,6 +31,14 @@ public class ProcessRuntime {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getStep() {
+        return step;
+    }
+
+    public void setStep(Integer step) {
+        this.step = step;
     }
 
     public String getCode() {

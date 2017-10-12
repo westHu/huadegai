@@ -9,7 +9,7 @@ import java.util.Date;
  * Date: 2017-10-10
  * Time: 13:20
  */
-public class ToDoTask {
+public class ProcessTask {
 
     private Long id;
     private String code; //待办编码
@@ -19,6 +19,8 @@ public class ToDoTask {
     private String owner; //待办任务操作人
     private String emergencyState = "normal";
     private Date createDate;
+
+    private Double completionRate = Math.random() * 100; //完成比例
 
 
     public Long getId() {
@@ -83,5 +85,13 @@ public class ToDoTask {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Double getCompletionRate() {
+        return completionRate;
+    }
+
+    public void setCompletionRate(Double completionRate) {
+        this.completionRate = completionRate;
     }
 }

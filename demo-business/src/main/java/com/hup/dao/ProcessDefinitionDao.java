@@ -21,5 +21,5 @@ public interface ProcessDefinitionDao {
 
     ProcessDefinition findOne(String id);
 
-    ProcessDefinition findDefinitionByNameAndStep(@Param("name") String name, @Param("step") String step);
+    ProcessDefinition findDefinitionByNameAndStep(@Param("name") String name, @Param("step") Integer step);
 }

@@ -172,24 +172,20 @@ public class DevicePurchaseController {
      * <p>@return:
      */
     @RequestMapping(value = "/{id}/audit", method = RequestMethod.GET)
-    public String audit(@PathVariable("id") Long id) {
+    public String audit(@PathVariable("id") Long id, ProcessRuntime processRuntime) {
         logger.info("========审核采购单： {}",id);
         DevicePurchase devicePurchase = devicePurchaseService.findOne(id);
         devicePurchase.setPurchaseStatus("审核中");
         devicePurchaseService.updateDevicePurchase(devicePurchase);
         //---
-        ProcessRuntime runtime = new ProcessRuntime();
-        runtime.setName("devicePurchase");
-        runtime.setCode(devicePurchase.getPurchaseCode());
         if (StringUtils.isBlank(devicePurchase.getPurchaseAuditors())){
-            ProcessDefinition byNameAndStep = processDefinitionService.findDefinitionByNameAndStep("devicePurchase", "2");
-            runtime.setMembers(byNameAndStep.getMembers());
-            runtime.setGroups(byNameAndStep.getGroups());
+            ProcessDefinition byNameAndStep = processDefinitionService.findDefinitionByNameAndStep(processRuntime.getName(), processRuntime.getStep() + 1);
+            processRuntime.setMembers(byNameAndStep.getMembers());
+            processRuntime.setGroups(byNameAndStep.getGroups());
         }else {
-            runtime.setMembers(devicePurchase.getPurchaseAuditors());
+            processRuntime.setMembers(devicePurchase.getPurchaseAuditors());
         }
-        runtime.setRemark("sadasd");
-        processRuntimeService.insertProcessRuntime(runtime);
+        processRuntimeService.insertProcessRuntime(processRuntime);
 
         return "redirect:/device/purchase";
     }

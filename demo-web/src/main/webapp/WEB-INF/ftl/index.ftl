@@ -195,91 +195,31 @@
                 <div class="col-md-4">
                     <div class="panel">
                         <header class="panel-heading">
-                            goal progress
-                            <span class="tools pull-right">
-                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                <a href="javascript:;" class="fa fa-times"></a>
-                             </span>
+                            待办任务
                         </header>
                         <div class="panel-body">
                             <ul class="goal-progress">
-                                <li>
-                                    <div class="prog-avatar">
-                                        <img src="images/photos/user1.png" alt=""/>
-                                    </div>
-                                    <div class="details">
-                                        <div class="title">
-                                            <a href="#">John Doe</a> - Project Lead
+                                <#list processTaskList as processTask>
+                                    <li>
+                                        <div class="prog-avatar">
+                                            <img src="images/todo-task.png" alt=""/>
                                         </div>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-                                                <span class="">70%</span>
+                                        <div class="details">
+                                            <div class="title">
+                                                <a href="${processTask.url}"><sapn class="red">${processTask.name}</sapn>
+                                            </div>
+                                            <div class="progress progress-xs">
+                                                <#if processTask.id??>
+                                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: ${processTask.completionRate}%">
+                                                        <span class="">${processTask.completionRate}</span>
+                                                    </div>
+                                                </#if>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="prog-avatar">
-                                        <img src="images/photos/user2.png" alt=""/>
-                                    </div>
-                                    <div class="details">
-                                        <div class="title">
-                                            <a href="#">Cameron Doe</a> - Sales
-                                        </div>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 91%">
-                                                <span class="">91%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="prog-avatar">
-                                        <img src="images/photos/user3.png" alt=""/>
-                                    </div>
-                                    <div class="details">
-                                        <div class="title">
-                                            <a href="#">Hoffman Doe</a> - Support
-                                        </div>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                <span class="">40%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="prog-avatar">
-                                        <img src="images/photos/user4.png" alt=""/>
-                                    </div>
-                                    <div class="details">
-                                        <div class="title">
-                                            <a href="#">Jane Doe</a> - Marketing
-                                        </div>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                                <span class="">20%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="prog-avatar">
-                                        <img src="images/photos/user5.png" alt=""/>
-                                    </div>
-                                    <div class="details">
-                                        <div class="title">
-                                            <a href="#">Hoffman Doe</a> - Support
-                                        </div>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                                <span class="">45%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                </#list>
                             </ul>
-                            <div class="text-center"><a href="#">View all Goals</a></div>
+                            <div class="text-center"><a href="#">查看所有</a></div>
                         </div>
                     </div>
                 </div>

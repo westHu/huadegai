@@ -29,4 +29,5 @@ public interface UserDao {
 
     User findByMobile(String mobile);
 
+    List<User> findByOrganizationId(Long organizationId);
 }

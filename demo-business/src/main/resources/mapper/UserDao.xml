@@ -80,4 +80,9 @@
     </select>
 
 
+    <select id="findByOrganizationId" resultType="com.hup.entity.User">
+        SELECT * FROM sys_user t WHERE t.organization_id = #{organizationId}
+    </select>
+
+
 </mapper>

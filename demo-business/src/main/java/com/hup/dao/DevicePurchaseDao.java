@@ -36,4 +36,6 @@ public interface DevicePurchaseDao {
     int deleteDevicePurchase(Long id);
 
     List<DevicePurchase> getDevicePurchaseByStatus(String purchaseStatus);
+
+    DevicePurchase findOneByCode(String purchaseCode);
 }

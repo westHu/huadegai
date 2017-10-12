@@ -12,7 +12,7 @@ public class ProcessDefinition {
     private Long id;
     private String name;  //流程号
     private String desc;  //流程名称  流程描述
-    private String step; //步骤节点
+    private Integer step; //步骤节点
     private String stepDesc; //节点描述
     private String members; //多个人员
     private String groups;  //多个组
@@ -43,11 +43,11 @@ public class ProcessDefinition {
         this.desc = desc;
     }
 
-    public String getStep() {
+    public Integer getStep() {
         return step;
     }
 
-    public void setStep(String step) {
+    public void setStep(Integer step) {
         this.step = step;
     }
 

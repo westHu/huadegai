@@ -1,8 +1,7 @@
 package com.hup.dao;
 
 
-import com.hup.entity.ToDoTask;
-import com.hup.entity.User;
+import com.hup.entity.ProcessTask;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,5 +13,7 @@ import java.util.List;
  */
 public interface TaskDao {
 
-    List<ToDoTask> toDoList(@Param("toDoTask") ToDoTask toDoTask);
+    List<ProcessTask> processTaskList(@Param("toDoTask") ProcessTask toDoTask);
+
+    void insertTodoTask(@Param("toDoTask") ProcessTask toDoTask);
 }

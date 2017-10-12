@@ -188,7 +188,10 @@ public class UserServiceImpl implements UserService {
         if (null == user) return null;
         Organization organization = organizationDao.findOne(user.getOrganizationId());
         Organization parent = organizationDao.findOne(organization.getParentId());
-        return parent.getLeaders();
+        if (parent != null) {
+            return parent.getLeaders();
+        }
+        return null;
     }
 
 }

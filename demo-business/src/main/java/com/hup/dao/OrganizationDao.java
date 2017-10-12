@@ -28,4 +28,6 @@ public interface OrganizationDao {
     List<Organization> findAllWithExclude(Organization excludeOraganization);
 
     void move(Organization source, Organization target);
+
+    Organization findOneByName(String name);
 }

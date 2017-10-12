@@ -1,7 +1,7 @@
 package com.hup.service;
 
 import com.hup.dao.TaskDao;
-import com.hup.entity.ToDoTask;
+import com.hup.entity.ProcessTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,12 @@ public class TaskService {
     @Autowired
     private TaskDao taskDao;
 
-    public List<ToDoTask> toDoList(ToDoTask toDoTask) {
-        return taskDao.toDoList(toDoTask);
+    public List<ProcessTask> processTaskList(ProcessTask toDoTask) {
+        List<ProcessTask> processTasks = taskDao.processTaskList(toDoTask);
+        for (int i= 0; i< 5; i++) {
+            processTasks.add(new ProcessTask());
+        }
+        return processTasks;
 
     }
 }
