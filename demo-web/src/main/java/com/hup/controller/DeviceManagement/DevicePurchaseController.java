@@ -47,12 +47,6 @@ public class DevicePurchaseController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ProcessRuntimeService processRuntimeService;
-
-    @Autowired
-    private ProcessDefinitionService processDefinitionService;
-
 
 //    @RequiresPermissions("purchase:insert")
     @RequestMapping(method = RequestMethod.GET)
@@ -173,20 +167,9 @@ public class DevicePurchaseController {
      */
     @RequestMapping(value = "/{id}/audit", method = RequestMethod.GET)
     public String audit(@PathVariable("id") Long id, ProcessRuntime processRuntime) {
-        logger.info("========审核采购单： {}",id);
-        DevicePurchase devicePurchase = devicePurchaseService.findOne(id);
-        devicePurchase.setPurchaseStatus("审核中");
-        devicePurchaseService.updateDevicePurchase(devicePurchase);
-        //---
-        if (StringUtils.isBlank(devicePurchase.getPurchaseAuditors())){
-            ProcessDefinition byNameAndStep = processDefinitionService.findDefinitionByNameAndStep(processRuntime.getName(), processRuntime.getStep() + 1);
-            processRuntime.setMembers(byNameAndStep.getMembers());
-            processRuntime.setGroups(byNameAndStep.getGroups());
-        }else {
-            processRuntime.setMembers(devicePurchase.getPurchaseAuditors());
-        }
-        processRuntimeService.insertProcessRuntime(processRuntime);
+        logger.info("========审核采购单 id ： {}",id);
 
+        Boolean audit = devicePurchaseService.auditProcess(id, processRuntime);
         return "redirect:/device/purchase";
     }
 

@@ -10,8 +10,8 @@ package com.hup.entity;
 public class ProcessRuntime extends  ProcessDefinition{
 
     private String code;
-    private Boolean receipted; //流程是否已签收
-    private Boolean executed;  //流程是否已执行
+    private String receipted; //签收人。可以多个，参考rule 规则
+    private String executed;  //执行人
     private String comment; //执行评论
     private String remark;
 
@@ -24,19 +24,19 @@ public class ProcessRuntime extends  ProcessDefinition{
         this.code = code;
     }
 
-    public Boolean getReceipted() {
+    public String getReceipted() {
         return receipted;
     }
 
-    public void setReceipted(Boolean receipted) {
+    public void setReceipted(String receipted) {
         this.receipted = receipted;
     }
 
-    public Boolean getExecuted() {
+    public String getExecuted() {
         return executed;
     }
 
-    public void setExecuted(Boolean executed) {
+    public void setExecuted(String executed) {
         this.executed = executed;
     }
 

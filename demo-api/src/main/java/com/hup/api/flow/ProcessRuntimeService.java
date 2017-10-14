@@ -15,7 +15,9 @@ public interface ProcessRuntimeService {
 
     List<ProcessRuntime> findAllRuntime();
 
-    ProcessRuntime insertProcessRuntime(ProcessRuntime processRuntime);
+    ProcessRuntime insertProcessRuntime(ProcessRuntime processRuntime, Boolean taskCreate);
 
     List<ProcessRuntime> findByCode(String code);
+
+    List<ProcessRuntime> findByCodeAndExecuted(String code, Boolean executed);
 }

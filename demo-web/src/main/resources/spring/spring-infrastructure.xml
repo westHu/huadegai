@@ -109,9 +109,9 @@
 
 
     <!-- webSocket + protoBuf通信协议配置 -->
-    <bean id="webSocketServer" class="com.hup.server.WebSocketServer" init-method="init"
+    <!--<bean id="webSocketServer" class="com.hup.server.WebSocketServer" init-method="init"
           destroy-method="destroy">
-    </bean>
+    </bean>-->
 
 
 </beans>

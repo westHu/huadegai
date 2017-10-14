@@ -1,11 +1,17 @@
 package com.hup.service.deviceManagement;
 
 import com.hup.api.deviceManagement.DevicePurchaseService;
+import com.hup.api.flow.ProcessRuntimeService;
 import com.hup.dao.DevicePurchaseDao;
+import com.hup.dao.ProcessDefinitionDao;
+import com.hup.dao.ProcessRuntimeDao;
 import com.hup.db.Pager;
 import com.hup.entity.DevicePurchase;
 import com.hup.entity.DevicePurchaseDetail;
+import com.hup.entity.ProcessDefinition;
+import com.hup.entity.ProcessRuntime;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -22,6 +28,12 @@ public class DevicePurchaseServiceImpl implements DevicePurchaseService {
 
     @Autowired
     private DevicePurchaseDao devicePurchaseDao;
+
+    @Autowired
+    private ProcessDefinitionDao processDefinitionDao;
+
+    @Autowired
+    private ProcessRuntimeService processRuntimeService;
 
 
     @Override
@@ -114,6 +126,42 @@ public class DevicePurchaseServiceImpl implements DevicePurchaseService {
             devicePurchase.setDevicePurchaseDetailList(detailList);
         }
         return devicePurchase;
+    }
+
+
+    @Override
+    public Boolean auditProcess(Long id, ProcessRuntime processRuntime) {
+        DevicePurchase devicePurchase = devicePurchaseDao.findOne(id);
+        if (null == devicePurchase) return Boolean.FALSE;
+
+        //1,插入创建记录---
+        ProcessDefinition definition = processDefinitionDao.findDefinitionByNameAndStep(processRuntime.getName(), processRuntime.getStep());
+        if (null == definition) return Boolean.FALSE;
+
+        ProcessRuntime createRuntime = new ProcessRuntime();
+        BeanUtils.copyProperties(definition, createRuntime);
+        createRuntime.setCode(devicePurchase.getPurchaseCode()); //业务关联编号
+        createRuntime.setMembers(devicePurchase.getPurchaseAgent()); //采购单的创建人
+        createRuntime.setReceipted(devicePurchase.getPurchaseAgent()); //已签收人
+        createRuntime.setExecuted(devicePurchase.getPurchaseAgent()); //已执行人
+        createRuntime.setComment(devicePurchase.getPurchaseAgent() + "创建了该流程，并且提交了审核。");
+        processRuntimeService.insertProcessRuntime(createRuntime, Boolean.FALSE); //不需要创建task
+
+        definition = processDefinitionDao.findDefinitionByNameAndStep(processRuntime.getName(), processRuntime.getStep()+ 1);
+        if (null == definition) return Boolean.FALSE;
+        BeanUtils.copyProperties(definition, processRuntime);
+        if (StringUtils.isBlank(devicePurchase.getPurchaseAuditors())){
+            processRuntime.setMembers(definition.getMembers());
+            processRuntime.setGroups(definition.getGroups());
+        }else {
+            processRuntime.setMembers(devicePurchase.getPurchaseAuditors());
+        }
+        processRuntimeService.insertProcessRuntime(processRuntime, Boolean.TRUE); //需要创建task
+
+        //devicePurchase.setPurchaseStatus("审核中");
+        devicePurchase.setPurchaseStatus(definition.getStepDesc());
+        devicePurchaseDao.updateDevicePurchase(devicePurchase);
+        return null;
     }
 
 }

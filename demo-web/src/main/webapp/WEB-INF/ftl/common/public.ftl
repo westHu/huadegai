@@ -235,7 +235,8 @@
                 </li>
                 <li class="menu-list" ><a href=""><i class="fa fa-file-text"></i> <span>流程管理</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="${context.contextPath}/process/definitionList"> 流程定义</a></li>
+                        <li><a href="${context.contextPath}/task/list?status=todo"> 任务管理</a></li>
+                        <li><a href="${context.contextPath}/process/definitionList"> 流程管理</a></li>
                         <li><a href="${context.contextPath}/process/runtimeList"> 流程运行记录</a></li>
                     </ul>
                 </li>

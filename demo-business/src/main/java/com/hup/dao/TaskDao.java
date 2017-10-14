@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface TaskDao {
 
-    List<ProcessTask> processTaskList(@Param("toDoTask") ProcessTask toDoTask);
+    List<ProcessTask> processTaskList(@Param("processTask") ProcessTask processTask);
 
     void insertTodoTask(@Param("toDoTask") ProcessTask toDoTask);
 }

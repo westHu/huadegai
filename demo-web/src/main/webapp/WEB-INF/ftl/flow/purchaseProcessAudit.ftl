@@ -102,11 +102,11 @@
                                         <img src="${context.contextPath}/images/photos/user1.png" alt="" class="avatar">
                                         <div class="message">
                                             <span class="arrow"></span>
-                                            <a class="name" href="#">hup</a>
-                                            <span class="datetime">2017-11-11 12:21:11</span>
+                                            <a class="name" href="#">${runtime.executed}</a>
+                                            <span class="datetime">${runtime.createDate}</span>
                                             <span class="body">
-                                                同意， 具体设备请注意型号
-                                        </span>
+                                                ${runtime.comment}
+                                            </span>
                                         </div>
                                     </li>
                                 </#list>

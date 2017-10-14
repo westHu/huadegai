@@ -20,12 +20,8 @@ public class TaskService {
     @Autowired
     private TaskDao taskDao;
 
-    public List<ProcessTask> processTaskList(ProcessTask toDoTask) {
-        List<ProcessTask> processTasks = taskDao.processTaskList(toDoTask);
-        for (int i= 0; i< 5; i++) {
-            processTasks.add(new ProcessTask());
-        }
-        return processTasks;
+    public List<ProcessTask> processTaskList(ProcessTask processTask) {
+        return taskDao.processTaskList(processTask);
 
     }
 }

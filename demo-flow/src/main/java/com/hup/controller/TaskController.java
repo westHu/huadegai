@@ -44,15 +44,33 @@ public class TaskController {
     @Autowired
     private DevicePurchaseService devicePurchaseService;
 
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String list(ProcessTask processTask, Model model) {
+        logger.info("----->工作流任务列表 -- processTask " + JSON.toJSONString(processTask));
+        String username = SecurityUtils.getSubject().getPrincipal().toString();
+        processTask.setOwner(username);
+        List<ProcessTask> taskList = taskService.processTaskList(processTask);
+        model.addAttribute("taskList", taskList);
+        model.addAttribute("todoSize", taskList.size());
+        model.addAttribute("flag", "任务管理,待办任务");
+        return "flow/taskList";
+    }
+
+
     @RequestMapping(value = "/audit", method = RequestMethod.GET)
     public String audit(String processType, String code, Model model) {
         logger.info("----->审核页面, processType = " + processType + ", code = " + code);
         if (processType.equalsIgnoreCase("devicePurchase")) {
-            setPurchaseModel(code, model);
-            return "flow/purchaseProcessAudit";
+            return setPurchaseModel(code, model);
         }
+
+        //这是默认
         return "flow/processAudit";
     }
+
+
+
 
 
     @RequestMapping(value = "/todoList", method = RequestMethod.GET)
@@ -70,12 +88,13 @@ public class TaskController {
 
 
 
-    private void setPurchaseModel(String code, Model model) {
+    private String setPurchaseModel(String code, Model model) {
         DevicePurchase devicePurchase = devicePurchaseService.findOneByCode(code);
         if (null != devicePurchase) {
             model.addAttribute("devicePurchase", devicePurchase);
         }
-        List<ProcessRuntime> runtimes = processRuntimeService.findByCode(code);
+        List<ProcessRuntime> runtimes = processRuntimeService.findByCodeAndExecuted(code, Boolean.TRUE); //已经被执行的runtime
         model.addAttribute("runtimes", runtimes);
+        return "flow/purchaseProcessAudit";
     }
 }

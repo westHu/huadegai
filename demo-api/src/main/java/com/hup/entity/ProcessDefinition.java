@@ -11,7 +11,7 @@ public class ProcessDefinition {
 
     private Long id;
     private String name;  //流程号
-    private String desc;  //流程名称  流程描述
+    private String nameDesc;  //流程名称  流程描述
     private Integer step; //步骤节点
     private String stepDesc; //节点描述
     private String members; //多个人员
@@ -35,12 +35,12 @@ public class ProcessDefinition {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getNameDesc() {
+        return nameDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setNameDesc(String nameDesc) {
+        this.nameDesc = nameDesc;
     }
 
     public Integer getStep() {

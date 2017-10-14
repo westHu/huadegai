@@ -18,15 +18,28 @@
 
     <insert id="insertProcessRuntime" useGeneratedKeys="true" keyProperty="runtime.id">
         INSERT INTO flow_process_runtime
-        (name, code, members, groups, remark)
+        (name, name_desc, step, step_desc, code,  members, groups, remark, receipted, executed, comment)
         VALUES
-        (#{runtime.name}, #{runtime.code}, #{runtime.members}, #{runtime.groups}, #{runtime.remark})
+        (#{runtime.name}, #{runtime.nameDesc}, #{runtime.step}, #{runtime.stepDesc}, #{runtime.code}, #{runtime.members},
+         #{runtime.groups}, #{runtime.remark}, #{runtime.receipted}, #{runtime.executed}, #{runtime.comment})
     </insert>
 
     <select id="findByCode" resultType="com.hup.entity.ProcessRuntime">
         SELECT * FROM flow_process_runtime t WHERE t.code = #{code}
     </select>
 
+
+    <select id="findByCodeAndExecuted" resultType="com.hup.entity.ProcessRuntime">
+        SELECT * FROM flow_process_runtime t WHERE
+        t.code = #{code}
+        <if test="executed != null and executed == true">
+            AND t.executed is not null
+        </if>
+        <if test="executed != null and executed == false">
+            AND t.executed is null
+        </if>
+
+    </select>
 
 
 

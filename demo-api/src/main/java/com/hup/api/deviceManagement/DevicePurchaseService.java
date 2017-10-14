@@ -3,6 +3,7 @@ package com.hup.api.deviceManagement;
 import com.hup.db.Pager;
 import com.hup.entity.DevicePurchase;
 import com.hup.entity.DevicePurchaseDetail;
+import com.hup.entity.ProcessRuntime;
 
 import java.util.List;
 
@@ -29,4 +30,6 @@ public interface DevicePurchaseService {
     List<DevicePurchase> getDevicePurchaseByStatus(String purchaseStatus);
 
     DevicePurchase findOneByCode(String purchaseCode);
+
+    Boolean auditProcess(Long id, ProcessRuntime processRuntime);
 }

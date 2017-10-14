@@ -44,14 +44,16 @@ public class IndexController {
         model.addAttribute("token", token);
 
         //待办任务
-
         ProcessTask task = new ProcessTask();
         task.setStatus("todo");
         task.setOwner(loginUser.getUsername());
         List<ProcessTask> processTaskList = taskService.processTaskList(task);
-        if (processTaskList.size() >= 5 ){
-            model.addAttribute("processTaskList", processTaskList.subList(0,5));
+        if (processTaskList.size() < 5 ){
+            for (int i= 0; i < 5; i++) {
+                processTaskList.add(new ProcessTask());
+            }
         }
+        model.addAttribute("processTaskList", processTaskList.subList(0,5));
         //
 
 

@@ -42,9 +42,12 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
     }
 
     @Override
-    public ProcessRuntime insertProcessRuntime(ProcessRuntime processRuntime){
+    public ProcessRuntime insertProcessRuntime(ProcessRuntime processRuntime, Boolean taskCreate){
         processRuntimeDao.insertProcessRuntime(processRuntime);
-
+        //taskCreate 是否需要创建task的开关
+        if (!taskCreate) {
+            return processRuntime;
+        }
         List<User> ownerList = new ArrayList<>();
         if (StringUtils.isNoneBlank(processRuntime.getGroups())){
             String groups = processRuntime.getGroups();
@@ -88,6 +91,11 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
     @Override
     public List<ProcessRuntime> findByCode(String code) {
         return processRuntimeDao.findByCode(code);
+    }
+
+    @Override
+    public List<ProcessRuntime> findByCodeAndExecuted(String code, Boolean executed) {
+        return processRuntimeDao.findByCodeAndExecuted(code, executed);
     }
 
 

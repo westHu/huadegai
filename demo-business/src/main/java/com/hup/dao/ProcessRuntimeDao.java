@@ -20,4 +20,6 @@ public interface ProcessRuntimeDao {
     void insertProcessRuntime(@Param("runtime") ProcessRuntime runtime);
 
     List<ProcessRuntime> findByCode(@Param("code") String code);
+
+    List<ProcessRuntime> findByCodeAndExecuted(@Param("code") String code, @Param("executed") Boolean executed);
 }

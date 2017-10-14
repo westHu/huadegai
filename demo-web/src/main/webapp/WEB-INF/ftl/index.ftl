@@ -219,7 +219,7 @@
                                     </li>
                                 </#list>
                             </ul>
-                            <div class="text-center"><a href="#">查看所有</a></div>
+                            <div class="text-center"><a href="${context.contextPath}/task/list?status=todo">查看所有</a></div>
                         </div>
                     </div>
                 </div>
@@ -453,7 +453,7 @@
 
         <!--footer section start-->
         <footer>
-            2014 &copy; AdminEx by <a href="http://www.mycodes.net/" target="_blank">源码之家</a>
+            2017 &copy; transfar by hup
         </footer>
         <!--footer section end-->
 
