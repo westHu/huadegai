@@ -23,6 +23,10 @@
         (#{runtime.name}, #{runtime.code}, #{runtime.members}, #{runtime.groups}, #{runtime.remark})
     </insert>
 
+    <select id="findByCode" resultType="com.hup.entity.ProcessRuntime">
+        SELECT * FROM flow_process_runtime t WHERE t.code = #{code}
+    </select>
+
 
 
 

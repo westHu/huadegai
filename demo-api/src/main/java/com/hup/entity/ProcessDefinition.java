@@ -17,7 +17,7 @@ public class ProcessDefinition {
     private String members; //多个人员
     private String groups;  //多个组
     private String rule;
-
+    private Boolean status;  //是否可用
 
     public Long getId() {
         return id;
@@ -81,5 +81,13 @@ public class ProcessDefinition {
 
     public void setRule(String rule) {
         this.rule = rule;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

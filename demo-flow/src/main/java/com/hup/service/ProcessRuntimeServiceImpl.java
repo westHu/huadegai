@@ -85,4 +85,10 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
     }
 
 
+    @Override
+    public List<ProcessRuntime> findByCode(String code) {
+        return processRuntimeDao.findByCode(code);
+    }
+
+
 }

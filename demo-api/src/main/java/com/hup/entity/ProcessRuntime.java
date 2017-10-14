@@ -7,39 +7,14 @@ package com.hup.entity;
  * Date: 2017-10-10
  * Time: 16:09
  */
-public class ProcessRuntime {
+public class ProcessRuntime extends  ProcessDefinition{
 
-    private Long id;
-    private String name;
-    private Integer step; //步骤节点
     private String code;
-    private String members;
-    private String groups;
+    private Boolean receipted; //流程是否已签收
+    private Boolean executed;  //流程是否已执行
+    private String comment; //执行评论
     private String remark;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getStep() {
-        return step;
-    }
-
-    public void setStep(Integer step) {
-        this.step = step;
-    }
 
     public String getCode() {
         return code;
@@ -49,20 +24,28 @@ public class ProcessRuntime {
         this.code = code;
     }
 
-    public String getMembers() {
-        return members;
+    public Boolean getReceipted() {
+        return receipted;
     }
 
-    public void setMembers(String members) {
-        this.members = members;
+    public void setReceipted(Boolean receipted) {
+        this.receipted = receipted;
     }
 
-    public String getGroups() {
-        return groups;
+    public Boolean getExecuted() {
+        return executed;
     }
 
-    public void setGroups(String groups) {
-        this.groups = groups;
+    public void setExecuted(Boolean executed) {
+        this.executed = executed;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String getRemark() {

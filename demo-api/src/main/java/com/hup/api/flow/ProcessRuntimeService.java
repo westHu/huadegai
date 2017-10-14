@@ -16,4 +16,6 @@ public interface ProcessRuntimeService {
     List<ProcessRuntime> findAllRuntime();
 
     ProcessRuntime insertProcessRuntime(ProcessRuntime processRuntime);
+
+    List<ProcessRuntime> findByCode(String code);
 }

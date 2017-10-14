@@ -18,4 +18,6 @@ public interface ProcessRuntimeDao {
     List<ProcessRuntime> findAllRuntime();
 
     void insertProcessRuntime(@Param("runtime") ProcessRuntime runtime);
+
+    List<ProcessRuntime> findByCode(@Param("code") String code);
 }

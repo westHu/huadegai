@@ -2,8 +2,10 @@ package com.hup.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.hup.api.deviceManagement.DevicePurchaseService;
+import com.hup.api.flow.ProcessRuntimeService;
 import com.hup.entity.DevicePurchase;
 import com.hup.entity.DevicePurchaseDetail;
+import com.hup.entity.ProcessRuntime;
 import com.hup.entity.ProcessTask;
 import com.hup.response.TaskAuditResponse;
 import com.hup.service.TaskService;
@@ -37,36 +39,18 @@ public class TaskController {
     private TaskService taskService;
 
     @Autowired
+    private ProcessRuntimeService processRuntimeService;
+
+    @Autowired
     private DevicePurchaseService devicePurchaseService;
 
     @RequestMapping(value = "/audit", method = RequestMethod.GET)
     public String audit(String processType, String code, Model model) {
         logger.info("----->审核页面, processType = " + processType + ", code = " + code);
-        StringBuilder builder = new StringBuilder();
-        String title = "流程审核";
-        List<String> comments = new ArrayList<>();
         if (processType.equalsIgnoreCase("devicePurchase")) {
-            title = "采购单流程审核";
-            DevicePurchase devicePurchase = devicePurchaseService.findOneByCode(code);
-            if (null != devicePurchase) {
-                builder.append(devicePurchase.getPurchaseCode()).append(",")
-                        .append(devicePurchase.getPurchaseName()).append(",")
-                        .append(devicePurchase.getPurchaseName()).append(",")
-                        .append(devicePurchase.getPurchaseAgent()).append(",")
-                        .append(devicePurchase.getPurchaseDate()).append(",")
-                        .append(devicePurchase.getPurchasePaymentType());
-                for (DevicePurchaseDetail detail : devicePurchase.getDevicePurchaseDetailList()) {
-                    comments.add(JSON.toJSONString(detail));
-                }
-            }
-
-
-
+            setPurchaseModel(code, model);
+            return "flow/purchaseProcessAudit";
         }
-        TaskAuditResponse response = new TaskAuditResponse();
-        response.setTitle(title);
-        response.setContent(StringUtils.isBlank(builder.toString()) ? "审核内容？？" : builder.toString());
-        model.addAttribute("response",response);
         return "flow/processAudit";
     }
 
@@ -81,5 +65,17 @@ public class TaskController {
         model.addAttribute("toDoTaskList", toDoTaskList);
         model.addAttribute("flag", "任务管理,待办任务");
         return "flow/todoList";
+    }
+
+
+
+
+    private void setPurchaseModel(String code, Model model) {
+        DevicePurchase devicePurchase = devicePurchaseService.findOneByCode(code);
+        if (null != devicePurchase) {
+            model.addAttribute("devicePurchase", devicePurchase);
+        }
+        List<ProcessRuntime> runtimes = processRuntimeService.findByCode(code);
+        model.addAttribute("runtimes", runtimes);
     }
 }
