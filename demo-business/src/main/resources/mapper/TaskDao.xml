@@ -25,5 +25,12 @@
         #{toDoTask.emergencyState},NOW())
     </insert>
 
+    <update id="updateStatus">
+        UPDATE flow_process_task SET
+        status = #{status}
+        WHERE code = #{code}
+    </update>
+
+
 
 </mapper>

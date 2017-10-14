@@ -22,4 +22,8 @@ public interface ProcessRuntimeDao {
     List<ProcessRuntime> findByCode(@Param("code") String code);
 
     List<ProcessRuntime> findByCodeAndExecuted(@Param("code") String code, @Param("executed") Boolean executed);
+
+    ProcessRuntime findByCodeAndStep(@Param("code") String code, @Param("step") Integer step);
+
+    void updateRuntimeService(ProcessRuntime processRuntime);
 }

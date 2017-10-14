@@ -20,4 +20,8 @@ public interface ProcessRuntimeService {
     List<ProcessRuntime> findByCode(String code);
 
     List<ProcessRuntime> findByCodeAndExecuted(String code, Boolean executed);
+
+    ProcessRuntime findByCodeAndStep(String code, Integer step);
+
+    void updateRuntimeService(ProcessRuntime processRuntime);
 }

@@ -16,4 +16,6 @@ public interface TaskDao {
     List<ProcessTask> processTaskList(@Param("processTask") ProcessTask processTask);
 
     void insertTodoTask(@Param("toDoTask") ProcessTask toDoTask);
+
+    void updateStatus(@Param("code") String code, @Param("status") String status);
 }

@@ -465,7 +465,7 @@
 
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war="easy_pie_chart,sparkline_chart,icheck,jQuery_flot_chart,morris_chart,calendar,dashboard_charts"></@js_lib>
-<script type="text/javascript">
+<#--<script type="text/javascript">
     var socket;
     if (!window.WebSocket) {
         window.WebSocket = window.MozWebSocket;
@@ -501,6 +501,6 @@
             alert("连接没有开启.");
         }
     }
-</script>
+</script>-->
 </body>
 </html>

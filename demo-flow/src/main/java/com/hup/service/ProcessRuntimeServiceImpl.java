@@ -76,9 +76,9 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
             for (User user : ownerList ){
                 ProcessTask toDoTask = new ProcessTask();
 
-                toDoTask.setName("待办任务-"+ DateUtils.formatDate(new Date(), "yyyyMMddHHmmss"));
+                toDoTask.setName("待办任务-" + processRuntime.getNameDesc() + "-" + processRuntime.getStepDesc() + DateUtils.formatDate(new Date(), "yyyyMMddHHmmss"));
                 toDoTask.setCode(processRuntime.getCode());
-                toDoTask.setUrl("/task/audit?processType=" + processRuntime.getName() +"&code=" + processRuntime.getCode());
+                toDoTask.setUrl("/task/audit?processType=" + processRuntime.getName() + "&code=" + processRuntime.getCode() + "&step=" + processRuntime.getStep());
                 toDoTask.setStatus("todo");
                 toDoTask.setOwner(user.getUsername());
                 taskDao.insertTodoTask(toDoTask);
@@ -96,6 +96,17 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
     @Override
     public List<ProcessRuntime> findByCodeAndExecuted(String code, Boolean executed) {
         return processRuntimeDao.findByCodeAndExecuted(code, executed);
+    }
+
+    @Override
+    public ProcessRuntime findByCodeAndStep(String code, Integer step) {
+        return processRuntimeDao.findByCodeAndStep(code, step);
+    }
+
+    @Override
+    public void updateRuntimeService(ProcessRuntime processRuntime) {
+        processRuntimeDao.updateRuntimeService(processRuntime);
+        taskDao.updateStatus(processRuntime.getCode(), "done");
     }
 
 

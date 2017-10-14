@@ -18,10 +18,10 @@
 
     <insert id="insertProcessRuntime" useGeneratedKeys="true" keyProperty="runtime.id">
         INSERT INTO flow_process_runtime
-        (name, name_desc, step, step_desc, code,  members, groups, remark, receipted, executed, comment)
+        (name, name_desc, step, step_desc, code,  members, groups, remark, receipted, executed, comment, create_date)
         VALUES
         (#{runtime.name}, #{runtime.nameDesc}, #{runtime.step}, #{runtime.stepDesc}, #{runtime.code}, #{runtime.members},
-         #{runtime.groups}, #{runtime.remark}, #{runtime.receipted}, #{runtime.executed}, #{runtime.comment})
+         #{runtime.groups}, #{runtime.remark}, #{runtime.receipted}, #{runtime.executed}, #{runtime.comment}, NOW())
     </insert>
 
     <select id="findByCode" resultType="com.hup.entity.ProcessRuntime">
@@ -38,9 +38,20 @@
         <if test="executed != null and executed == false">
             AND t.executed is null
         </if>
-
     </select>
 
+    <select id="findByCodeAndStep" resultType="com.hup.entity.ProcessRuntime">
+         SELECT * FROM flow_process_runtime t WHERE
+                t.code = #{code} AND t.step = #{step}
+    </select>
+
+    <update id="updateRuntimeService">
+        UPDATE flow_process_runtime SET
+        receipted = #{receipted},
+        executed = #{executed},
+        comment = #{comment}
+        WHERE code =#{code} AND step = #{step}
+    </update>
 
 
 </mapper>

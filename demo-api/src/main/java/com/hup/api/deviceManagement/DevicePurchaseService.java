@@ -31,5 +31,5 @@ public interface DevicePurchaseService {
 
     DevicePurchase findOneByCode(String purchaseCode);
 
-    Boolean auditProcess(Long id, ProcessRuntime processRuntime);
+    Boolean auditProcess(String code, ProcessRuntime processRuntime);
 }

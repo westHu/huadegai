@@ -59,12 +59,12 @@ public class TaskController {
 
 
     @RequestMapping(value = "/audit", method = RequestMethod.GET)
-    public String audit(String processType, String code, Model model) {
+    public String audit(String processType, String code, Integer step, Model model) {
         logger.info("----->审核页面, processType = " + processType + ", code = " + code);
+        model.addAttribute("username", SecurityUtils.getSubject().getPrincipal());
         if (processType.equalsIgnoreCase("devicePurchase")) {
-            return setPurchaseModel(code, model);
+            return setPurchaseModel(code, step, model);
         }
-
         //这是默认
         return "flow/processAudit";
     }
@@ -88,13 +88,16 @@ public class TaskController {
 
 
 
-    private String setPurchaseModel(String code, Model model) {
+    private String setPurchaseModel(String code, Integer step, Model model) {
         DevicePurchase devicePurchase = devicePurchaseService.findOneByCode(code);
         if (null != devicePurchase) {
             model.addAttribute("devicePurchase", devicePurchase);
         }
         List<ProcessRuntime> runtimes = processRuntimeService.findByCodeAndExecuted(code, Boolean.TRUE); //已经被执行的runtime
         model.addAttribute("runtimes", runtimes);
+
+        ProcessRuntime latestRuntime = processRuntimeService.findByCodeAndStep(code, step);
+        model.addAttribute("latestRuntime", latestRuntime);
         return "flow/purchaseProcessAudit";
     }
 }

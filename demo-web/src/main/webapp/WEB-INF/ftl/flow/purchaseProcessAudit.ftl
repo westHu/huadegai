@@ -1,6 +1,6 @@
 <#include "common/public.ftl">
 <@header title="流程审核" css_war = ""></@header>
-<body class="sticky-header">
+<body class="sticky-header" xmlns="http://www.w3.org/1999/html">
 
 <section>
     <@left title="导航栏"></@left>
@@ -112,12 +112,19 @@
                                 </#list>
                             </ul>
                             <div class="chat-form ">
-                                <form role="form" class="form-inline">
+                                <form role="form" class="form-inline"  action="${context.contextPath}/device/purchase/${latestRuntime.code}/audit" method="get">
                                     <div class="col-md-9">
-                                        <input type="text" style="width: 100%" placeholder="请尽量写入您的理由..." class="form-control">
+                                        <input type="hidden" name="name" value="devicePurchase">
+                                        <input type="hidden" name="step" value="${latestRuntime.step}">
+                                        <input type="hidden" name="code" value="${latestRuntime.code}">
+                                        <input type="hidden" name="receipted" value="${username}">
+                                        <input type="hidden" name="executed" value="${username}">
+                                        <input type="text" name="comment" style="width: 100%" placeholder="请尽量写入您的理由..." class="form-control">
                                     </div>
-                                    <button class="btn btn-primary" type="button">同意</button>
-                                    <button class="btn btn-danger" type="button">拒绝</button>
+                                        <button class="btn btn-primary" type="submit">同意</button>
+                                    <a>
+                                        <button class="btn btn-danger" type="button">拒绝</button>
+                                    </a>
                                 </form>
                             </div>
                         </div>

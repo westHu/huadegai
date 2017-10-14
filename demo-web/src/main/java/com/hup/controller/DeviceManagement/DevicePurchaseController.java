@@ -165,11 +165,11 @@ public class DevicePurchaseController {
      * <p>@Param:
      * <p>@return:
      */
-    @RequestMapping(value = "/{id}/audit", method = RequestMethod.GET)
-    public String audit(@PathVariable("id") Long id, ProcessRuntime processRuntime) {
-        logger.info("========审核采购单 id ： {}",id);
-
-        Boolean audit = devicePurchaseService.auditProcess(id, processRuntime);
+    @RequestMapping(value = "/{code}/audit", method = RequestMethod.GET)
+    public String audit(@PathVariable("code") String code, ProcessRuntime processRuntime) {
+        logger.info("========审核采购单 code ：{}",code);
+        
+        Boolean audit = devicePurchaseService.auditProcess(code, processRuntime);
         return "redirect:/device/purchase";
     }
 
