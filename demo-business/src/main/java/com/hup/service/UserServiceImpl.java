@@ -1,5 +1,6 @@
 package com.hup.service;
 
+import com.alibaba.fastjson.JSON;
 import com.hup.api.RoleService;
 import com.hup.api.UserService;
 import com.hup.dao.OrganizationDao;
@@ -192,6 +193,13 @@ public class UserServiceImpl implements UserService {
             return parent.getLeaders();
         }
         return null;
+    }
+
+    @Override
+    public String getUserTree() {
+        String jsonString = JSON.toJSONString(findAll());
+        String result = jsonString.replaceAll("name","text");
+        return result;
     }
 
 }

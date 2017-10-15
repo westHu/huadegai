@@ -12,6 +12,7 @@ public class ProcessRuntime extends  ProcessDefinition{
     private String code;
     private String receipted; //签收人。可以多个，参考rule 规则
     private String executed;  //执行人
+    private String auditOpinion; //审核建议 同意、拒绝
     private String comment; //执行评论
     private String remark;
 
@@ -38,6 +39,14 @@ public class ProcessRuntime extends  ProcessDefinition{
 
     public void setExecuted(String executed) {
         this.executed = executed;
+    }
+
+    public String getAuditOpinion() {
+        return auditOpinion;
+    }
+
+    public void setAuditOpinion(String auditOpinion) {
+        this.auditOpinion = auditOpinion;
     }
 
     public String getComment() {

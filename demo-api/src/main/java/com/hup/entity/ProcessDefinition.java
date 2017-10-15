@@ -1,5 +1,7 @@
 package com.hup.entity;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * Description: 流程定义
@@ -18,6 +20,7 @@ public class ProcessDefinition {
     private String groups;  //多个组
     private String rule;
     private Boolean status;  //是否可用
+    private Date createDate;
 
     public Long getId() {
         return id;
@@ -89,5 +92,13 @@ public class ProcessDefinition {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

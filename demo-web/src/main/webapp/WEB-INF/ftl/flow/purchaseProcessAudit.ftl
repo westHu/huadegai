@@ -115,16 +115,15 @@
                                 <form role="form" class="form-inline"  action="${context.contextPath}/device/purchase/${latestRuntime.code}/audit" method="get">
                                     <div class="col-md-9">
                                         <input type="hidden" name="name" value="devicePurchase">
-                                        <input type="hidden" name="step" value="${latestRuntime.step}">
+                                        <input type="hidden" name="step" id="step" value="${latestRuntime.step}">
                                         <input type="hidden" name="code" value="${latestRuntime.code}">
                                         <input type="hidden" name="receipted" value="${username}">
                                         <input type="hidden" name="executed" value="${username}">
+                                        <input type="hidden" name="auditOpinion" id="auditOpinion">
                                         <input type="text" name="comment" style="width: 100%" placeholder="请尽量写入您的理由..." class="form-control">
                                     </div>
-                                        <button class="btn btn-primary" type="submit">同意</button>
-                                    <a>
-                                        <button class="btn btn-danger" type="button">拒绝</button>
-                                    </a>
+                                        <button class="btn btn-primary" type="submit" onclick="setAuditOpinion(1)">同意</button>
+                                        <button class="btn btn-danger"  type="submit" onclick="setAuditOpinion(-1)">拒绝</button>
                                 </form>
                             </div>
                         </div>
@@ -140,5 +139,17 @@
 </section>
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war=""></@js_lib>
+<script>
+    
+    function setAuditOpinion(num) {
+        if (num == 1){
+            $('#auditOpinion').val("AGREE")
+        }
+        if (num == -1) {
+            $('#auditOpinion').val("REFUSE")
+        }
+    }
+    
+</script>
 </body>
 </html>

@@ -13,7 +13,7 @@
           WHERE t.username = #{userName}
     -->
    <select id="findAllDefinition" resultType="com.hup.entity.ProcessDefinition">
-       SELECT * FROM flow_process_definition GROUP BY name
+       SELECT * FROM flow_process_definition t WHERE t.status = 1 GROUP BY name
    </select>
 
     <select id="findDefinitionStepByName"  resultType="com.hup.entity.ProcessDefinition">

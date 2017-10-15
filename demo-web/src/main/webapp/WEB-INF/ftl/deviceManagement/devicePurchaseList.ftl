@@ -69,7 +69,7 @@
                                                             <li class="divider"></li>
                                                             <li>
                                                                 <#if obj.purchaseStatus?? && obj.purchaseStatus == '创建' && canAuditors?contains(obj.purchaseAgent)>
-                                                                    <a href="${context.contextPath}/device/purchase/${obj.purchaseCode}/audit?name=devicePurchase&step=1&code=${obj.purchaseCode}&members=${obj.purchaseAuditors}">提交审核</a>
+                                                                    <a href="${context.contextPath}/device/purchase/${obj.purchaseCode}/audit?name=devicePurchase&step=1&code=${obj.purchaseCode}&members=${obj.purchaseAuditors}&auditOpinion=AGREE">提交审核</a>
                                                                 </#if>
                                                             </li>
                                                         </ul>

@@ -1,6 +1,8 @@
 package com.hup.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.hup.api.OrganizationService;
+import com.hup.api.UserService;
 import com.hup.api.flow.ProcessDefinitionService;
 import com.hup.api.flow.ProcessRuntimeService;
 import com.hup.entity.ProcessDefinition;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,27 +41,40 @@ public class ProcessController {
     @Autowired
     private ProcessRuntimeService processRuntimeService;
 
+    @Autowired
+    private OrganizationService organizationService;
+
+    @Autowired
+    private UserService userService;
 
 
+    /**
+     * <p>@Description: 流程定义列表
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/15
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequestMapping(value = "/definitionList", method = RequestMethod.GET)
-    public String processDefinitionList(Model model) {
+    public String processDefinitionList(ProcessDefinition processDefinition, Model model) {
         logger.info("----->工作流定义列表");
         List<ProcessDefinition> processDefinitions = processDefinitionService.findAllDefinition();
         if (CollectionUtils.isNotEmpty(processDefinitions)){
-            String name =  processDefinitions.get(0).getName();
-            List<ProcessDefinition> definitionsByName = processDefinitionService.findDefinitionStepByName(name);
+            List<ProcessDefinition> definitionsByName = processDefinitionService.findDefinitionStepByName(processDefinition.getName());
             model.addAttribute("definitionsByName", definitionsByName);
-            model.addAttribute("name", name);
+            model.addAttribute("name", processDefinition.getName());
         }else {
             model.addAttribute("definitionsByName", new ArrayList<ProcessDefinition>());
             model.addAttribute("name", "");
         }
         model.addAttribute("processDefinitions", processDefinitions);
+        model.addAttribute("organizations", organizationService.findAll());
+        model.addAttribute("users", userService.findAll());
         model.addAttribute("flag", "流程管理,流程定义");
         return "flow/definitionList";
     }
 
-    @RequestMapping(value = "/{name}/definitionView", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/{name}/definitionView", method = RequestMethod.GET)
     public String definitionView(@PathVariable("name") String name,  Model model) {
         logger.info("----->工作流 -- name : " + name);
         setDefinitions(model);
@@ -67,7 +83,7 @@ public class ProcessController {
         model.addAttribute("name", name);
         model.addAttribute("flag", "流程管理,流程定义");
         return "flow/definitionList";
-    }
+    }*/
 
     /**
      * <p>@Description: 查询单个流程定义进行更新
@@ -76,6 +92,7 @@ public class ProcessController {
      * <p>@Param:
      * <p>@return:
      */
+    @ResponseBody
     @RequestMapping(value = "/{id}/definition", method = RequestMethod.POST)
     public BaseResponse definitionUpdate(@PathVariable("id") String id) {
         logger.info("----->工作流更新 -- id : " + id);

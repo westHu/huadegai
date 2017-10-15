@@ -147,36 +147,62 @@ public class DevicePurchaseServiceImpl implements DevicePurchaseService {
             createRuntime.setMembers(devicePurchase.getPurchaseAgent()); //采购单的创建人
             createRuntime.setReceipted(devicePurchase.getPurchaseAgent()); //已签收人
             createRuntime.setExecuted(devicePurchase.getPurchaseAgent()); //已执行人
+            createRuntime.setAuditOpinion("BEGIN"); //开始流程
             createRuntime.setComment(devicePurchase.getPurchaseAgent() + "创建了该流程，并且提交了审核。");
             processRuntimeService.insertProcessRuntime(createRuntime, Boolean.FALSE); //不需要创建task
-        }else { //大于第一步
+        }else { //大于第一步 更新当前步骤
             processRuntimeService.updateRuntimeService(processRuntime);
         }
 
-        definition = processDefinitionDao.findDefinitionByNameAndStep(processRuntime.getName(), processRuntime.getStep()+ 1);
-        if (null == definition) {
-            //如果取不到下一步流程，判断则认为流程结束 去获取 -1 = step
+        if (processRuntime.getAuditOpinion().equalsIgnoreCase("REFUSE")){ //REFUSE 拒绝
             definition = processDefinitionDao.findDefinitionByNameAndStep(processRuntime.getName(), -1); //结束流程
             if (null == definition) return Boolean.FALSE;
-        }
-        ProcessRuntime nextRuntime = new ProcessRuntime();
-        BeanUtils.copyProperties(definition, nextRuntime);
-        nextRuntime.setCode(devicePurchase.getPurchaseCode()); //业务关联编号
-        if (StringUtils.isBlank(devicePurchase.getPurchaseAuditors())){
-            nextRuntime.setMembers(definition.getMembers());
-            nextRuntime.setGroups(definition.getGroups());
-        }else {
-            nextRuntime.setMembers(devicePurchase.getPurchaseAuditors());
-        }
-        if (nextRuntime.getStep() == -1) {
-            nextRuntime.setComment("采购流程成功");
-            processRuntimeService.insertProcessRuntime(nextRuntime, Boolean.FALSE); //是否需要创建task
-        }else {
-            processRuntimeService.insertProcessRuntime(nextRuntime, Boolean.TRUE); //是否需要创建task
+
+            ProcessRuntime refuseRuntime = new ProcessRuntime();
+            BeanUtils.copyProperties(definition, refuseRuntime);
+            refuseRuntime.setCode(devicePurchase.getPurchaseCode()); //业务关联编号
+            refuseRuntime.setAuditOpinion("END"); //开始流程
+            refuseRuntime.setComment("采购流程失败");
+            processRuntimeService.insertProcessRuntime(refuseRuntime, Boolean.FALSE); //是否需要创建task
+
+            devicePurchase.setPurchaseStatus("采购流程失败");
+            devicePurchaseDao.updateDevicePurchase(devicePurchase);
+            return Boolean.TRUE;
         }
 
-        devicePurchase.setPurchaseStatus(definition.getStepDesc());
-        devicePurchaseDao.updateDevicePurchase(devicePurchase);
+        if (processRuntime.getAuditOpinion().equalsIgnoreCase("AGREE")) { //AGREE 同意
+            definition = processDefinitionDao.findDefinitionByNameAndStep(processRuntime.getName(), processRuntime.getStep() + 1);
+            if (null == definition) {
+                //如果取不到下一步流程，判断则认为流程结束 去获取 -1 = step
+                definition = processDefinitionDao.findDefinitionByNameAndStep(processRuntime.getName(), -1); //结束流程
+                if (null == definition) return Boolean.FALSE;
+
+                ProcessRuntime finishRuntime = new ProcessRuntime();
+                BeanUtils.copyProperties(definition, finishRuntime);
+                finishRuntime.setCode(devicePurchase.getPurchaseCode()); //业务关联编号
+                finishRuntime.setAuditOpinion("END"); //开始流程
+                finishRuntime.setComment("采购流程成功");
+                processRuntimeService.insertProcessRuntime(finishRuntime, Boolean.FALSE); //是否需要创建task
+
+                devicePurchase.setPurchaseStatus("采购流程成功");
+                devicePurchaseDao.updateDevicePurchase(devicePurchase);
+                return Boolean.TRUE;
+            }else {
+                ProcessRuntime nextRuntime = new ProcessRuntime();
+                BeanUtils.copyProperties(definition, nextRuntime);
+                nextRuntime.setCode(devicePurchase.getPurchaseCode()); //业务关联编号
+                if (StringUtils.isBlank(devicePurchase.getPurchaseAuditors())){
+                    nextRuntime.setMembers(definition.getMembers());
+                    nextRuntime.setGroups(definition.getGroups());
+                }else {
+                    nextRuntime.setMembers(devicePurchase.getPurchaseAuditors());
+                }
+                devicePurchase.setPurchaseStatus(nextRuntime.getStepDesc());
+                devicePurchaseDao.updateDevicePurchase(devicePurchase);
+                processRuntimeService.insertProcessRuntime(nextRuntime, Boolean.TRUE); //是否需要创建task
+                return Boolean.TRUE;
+            }
+        }
         return Boolean.TRUE;
     }
 

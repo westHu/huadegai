@@ -18,10 +18,10 @@
 
     <insert id="insertProcessRuntime" useGeneratedKeys="true" keyProperty="runtime.id">
         INSERT INTO flow_process_runtime
-        (name, name_desc, step, step_desc, code,  members, groups, remark, receipted, executed, comment, create_date)
+        (name, name_desc, step, step_desc, code,  members, groups, remark, receipted, executed, audit_opinion, comment, create_date)
         VALUES
         (#{runtime.name}, #{runtime.nameDesc}, #{runtime.step}, #{runtime.stepDesc}, #{runtime.code}, #{runtime.members},
-         #{runtime.groups}, #{runtime.remark}, #{runtime.receipted}, #{runtime.executed}, #{runtime.comment}, NOW())
+         #{runtime.groups}, #{runtime.remark}, #{runtime.receipted}, #{runtime.executed}, #{runtime.auditOpinion}, #{runtime.comment}, NOW())
     </insert>
 
     <select id="findByCode" resultType="com.hup.entity.ProcessRuntime">
@@ -49,6 +49,7 @@
         UPDATE flow_process_runtime SET
         receipted = #{receipted},
         executed = #{executed},
+        audit_opinion = #{auditOpinion},
         comment = #{comment}
         WHERE code =#{code} AND step = #{step}
     </update>

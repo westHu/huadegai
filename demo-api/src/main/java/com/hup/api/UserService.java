@@ -67,4 +67,6 @@ public interface UserService {
      */
     String findLeaders(String username);
 
+    String getUserTree();
+
 }

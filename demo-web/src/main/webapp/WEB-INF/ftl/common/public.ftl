@@ -236,7 +236,7 @@
                 <li class="menu-list" ><a href=""><i class="fa fa-file-text"></i> <span>流程管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="${context.contextPath}/task/list?status=todo"> 任务管理</a></li>
-                        <li><a href="${context.contextPath}/process/definitionList"> 流程管理</a></li>
+                        <li><a href="${context.contextPath}/process/definitionList?name=devicePurchase"> 流程管理</a></li>
                         <li><a href="${context.contextPath}/process/runtimeList"> 流程运行记录</a></li>
                     </ul>
                 </li>
@@ -624,9 +624,11 @@
                 <!--script for editable table-->
                 <script type="text/javascript" src="${context.contextPath}/js/editable-table.js"></script>
             </#if>
-
-
-
+            <#if obj == 'spinner'>
+                <!--spinner-->
+                <script type="text/javascript" src="${context.contextPath}/js/fuelux/js/spinner.min.js"></script>
+                <script type="text/javascript" src="${context.contextPath}/js/spinner-init.js"></script>
+            </#if>
 
             <#if obj == 'dashboard_charts'>
                 <!--Dashboard Charts-->
@@ -634,6 +636,8 @@
             </#if>
         </#list>
     </#if>
+
+    <#nested>
     <!--common scripts for all pages-->
     <script src="${context.contextPath}/js/scripts.js"></script>
     <#--hup    -->
