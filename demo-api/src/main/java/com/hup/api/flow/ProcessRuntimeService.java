@@ -1,6 +1,8 @@
 package com.hup.api.flow;
 
+import com.hup.db.Pager;
 import com.hup.entity.ProcessRuntime;
+import com.hup.entity.ProcessTask;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ public interface ProcessRuntimeService {
 
     List<ProcessRuntime> findAllRuntime();
 
+    Pager<ProcessRuntime> queryRuntimeListByName(Pager<ProcessRuntime> pager, ProcessRuntime processRuntime);
+
     ProcessRuntime insertProcessRuntime(ProcessRuntime processRuntime, Boolean taskCreate);
 
     List<ProcessRuntime> findByCode(String code);
@@ -26,4 +30,6 @@ public interface ProcessRuntimeService {
     void updateRuntimeService(ProcessRuntime processRuntime);
 
     List<ProcessRuntime> findRuntimeByName(String name);
+
+
 }

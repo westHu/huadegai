@@ -6,7 +6,7 @@ import com.hup.bind.annotation.CurrentUser;
 import com.hup.entity.ProcessTask;
 import com.hup.entity.Resource;
 import com.hup.entity.User;
-import com.hup.service.TaskService;
+import com.hup.service.ProcessTaskServiceImpl;
 import com.hup.util.uuid.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,7 @@ public class IndexController {
     private UserService userService;
 
     @Autowired
-    private TaskService taskService;
+    private ProcessTaskServiceImpl taskService;
 
     @RequestMapping("/")
     public String index(@CurrentUser User loginUser, Model model) {

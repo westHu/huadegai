@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="流程运行列表" css_war="">
+<@header title="流程运行列表" css_war="paging-hup_css">
 </@header>
 <body class="sticky-header">
 <section>
@@ -14,7 +14,7 @@
                     <div class="mail-nav-body">
                         <ul class="nav nav-pills nav-stacked mail-navigation">
                             <#list processRuntimes as runtime>
-                                <li <#if runtime.name == name>class="active"</#if> ><a href="${context.contextPath}/process/runtimeList?name=${runtime.name}"> <i class="fa fa-envelope-o"></i> ${runtime.nameDesc}</a></li>
+                                <li <#if runtime.name == request.name>class="active"</#if> ><a href="${context.contextPath}/process/runtimeList?name=${request.name}"> <i class="fa fa-envelope-o"></i> ${runtime.nameDesc}<span class="label label-danger pull-right inbox-notification">${pager.totalCount}</span></a></li>
                             </#list>
                         </ul>
                     </div>
@@ -23,70 +23,89 @@
                     <header class="header">
                         流程步骤
                     </header>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <section class="mail-list">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>流程步骤</th>
-                                        <th>步骤描述</th>
-                                        <th>流程编码</th>
-                                        <th>业务编码</th>
-                                        <#--<th>定义执行人</th>-->
-                                        <#--<th>定义执行组</th>-->
-                                        <#--<th>流程规则</th>-->
-                                        <th>签收人</th>
-                                        <th>执行人</th>
-                                        <th>执行结果</th>
-                                        <th>执行意见</th>
-                                        <th>时间</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        <#list runtimeByName as obj>
-                                            <tr>
-                                                <td>第[${obj.step}]步</td>
-                                                <td>${obj.stepDesc}</td>
-                                                <td>${obj.name}</td>
-                                                <td>${obj.code}</td>
-                                                <#--<td>${obj.members}</td>-->
-                                                <#--<td>${obj.groups}</td>-->
-                                                <#--<td>${obj.rule}</td>-->
-                                                <td>${obj.receipted}</td>
-                                                <td>${obj.executed}</td>
-                                                <td>${obj.auditOpinion}</td>
-                                                <td>${obj.comment}</td>
-                                                <td>${obj.createDate?string("yyyy-MM-dd HH:mm:ss")}</td>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
-                                                            操&nbsp作 <span class="caret"></span>
-                                                        </button>
-                                                        <ul role="menu" class="dropdown-menu">
-                                                            <li><a href="javascript:updateDefinition(${obj.id})">编辑该节点</a></li>
-                                                            <li><a href="#myModal2" data-toggle="modal" onclick="delete_process(${obj.id},this)" >删除该节点</a></li>
-                                                            <li class="divider"></li>
-                                                            <li><a href="#myModal3" data-toggle="modal" onclick="resetPwd(${obj.id})" >复制该节点</a></li>
-                                                        </ul>
+                    <div class="col-sm-12">
+                        <section class="mail-list">
+                            <section class="panel">
+                                <div class="panel-body">
+                                    <form class="form-horizontal adminex-form" action="" method="get">
+                                        <div class="form-group">
+                                        <#--<label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Column sizing</label>-->
+                                            <div class="col-lg-10">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <input type="hidden" name="name" value="${request.name}">
+                                                        <input type="text" class="form-control" name="code" value="${request.code}" placeholder="业务编码...">
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        </#list>
-                                    </tbody>
-                                </table>
-                                <section class="panel">
-                                    <header class="panel-heading">
-                                        展示面板
-                                    </header>
-                                    <div class="panel-body">
-                                        dothing
-                                    </div>
-                                </section>
+                                                    <button class="btn btn-default" type="submit">查询</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </section>
 
-                        </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>流程步骤</th>
+                                    <th>步骤描述</th>
+                                    <th>流程编码</th>
+                                    <th>业务编码</th>
+                                    <th>定义执行人</th>
+                                    <th>定义执行组</th>
+                                    <#--<th>流程规则</th>-->
+                                    <th>签收人</th>
+                                    <th>执行人</th>
+                                    <th>执行结果</th>
+                                    <th>执行意见</th>
+                                    <th>时间</th>
+                                    <#--<th>操作</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <#list pager.getList() as obj>
+                                        <tr>
+                                            <td>第[${obj.step}]步</td>
+                                            <td>${obj.stepDesc}</td>
+                                            <td>${obj.name}</td>
+                                            <td>${obj.code}</td>
+                                            <td>${obj.members}</td>
+                                            <td>${obj.groups}</td>
+                                            <#--<td>${obj.rule}</td>-->
+                                            <td>${obj.receipted}</td>
+                                            <td>${obj.executed}</td>
+                                            <td>${obj.auditOpinion}</td>
+                                            <td>${obj.comment}</td>
+                                            <td>${obj.createDate?string("yyyy-MM-dd HH:mm:ss")}</td>
+                                            <#--<td>
+                                                <div class="btn-group">
+                                                    <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                                        操&nbsp作 <span class="caret"></span>
+                                                    </button>
+                                                    <ul role="menu" class="dropdown-menu">
+                                                        <li><a href="javascript:updateDefinition(${obj.id})">编辑该节点</a></li>
+                                                        <li><a href="#myModal2" data-toggle="modal" onclick="delete_process(${obj.id},this)" >删除该节点</a></li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#myModal3" data-toggle="modal" onclick="resetPwd(${obj.id})" >复制该节点</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>-->
+                                        </tr>
+                                    </#list>
+                                </tbody>
+                            </table>
+                            <@hup_pagination  showBegin = "${ (pager.currentPage-1) * pager.pageSize + 1 }"  showEnd = "${pager.currentPage * pager.pageSize}"></@hup_pagination>
+                            <#--<section class="panel">
+                                <header class="panel-heading">
+                                    展示面板
+                                </header>
+                                <div class="panel-body">
+                                    dothing
+                                </div>
+                            </section>-->
+                        </section>
+
                     </div>
                 </section>
             </div>
@@ -99,7 +118,7 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war=""></@js_lib>
+<@js_lib js_war="paging-hup"></@js_lib>
 <script>
     jQuery(document).ready(function() {
 
@@ -122,7 +141,19 @@
         });
     }
 </script>
-
+<script>
+    //分页
+    $("#page").paging({
+        pageNo: ${pager.currentPage},
+        totalPage: ${pager.pageCount},
+        totalSize: ${pager.totalCount},
+        callback: function(num) {
+            var pageSize = $('#pageSize option:selected').val();
+            var pageUrl =  "${context.contextPath}/process/runtimeList?name=${request.name}&currentPage="+num+"&pageSize="+pageSize;
+            location.href = pageUrl;
+        }
+    })
+</script>
 
 </body>
 </html>

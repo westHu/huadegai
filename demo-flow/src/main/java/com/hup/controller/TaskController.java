@@ -3,13 +3,13 @@ package com.hup.controller;
 import com.alibaba.fastjson.JSON;
 import com.hup.api.deviceManagement.DevicePurchaseService;
 import com.hup.api.flow.ProcessRuntimeService;
+import com.hup.db.Pager;
 import com.hup.entity.DevicePurchase;
-import com.hup.entity.DevicePurchaseDetail;
 import com.hup.entity.ProcessRuntime;
 import com.hup.entity.ProcessTask;
-import com.hup.response.TaskAuditResponse;
-import com.hup.service.TaskService;
-import org.apache.commons.lang3.StringUtils;
+import com.hup.service.ProcessTaskServiceImpl;
+import com.hup.util.PageRequest;
+import com.hup.util.PageUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +35,7 @@ public class TaskController {
     Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     @Autowired
-    private TaskService taskService;
+    private ProcessTaskServiceImpl processTaskService;
 
     @Autowired
     private ProcessRuntimeService processRuntimeService;
@@ -46,13 +45,17 @@ public class TaskController {
 
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(ProcessTask processTask, Model model) {
+    public String list(ProcessTask processTask, PageRequest pageRequest,Model model) {
         logger.info("----->工作流任务列表 -- processTask " + JSON.toJSONString(processTask));
-        String username = SecurityUtils.getSubject().getPrincipal().toString();
-        processTask.setOwner(username);
-        List<ProcessTask> taskList = taskService.processTaskList(processTask);
-        model.addAttribute("taskList", taskList);
-        model.addAttribute("todoSize", taskList.size());
+//        String username = SecurityUtils.getSubject().getPrincipal().toString();
+//        processTask.setOwner(username);
+        Pager<ProcessTask> pager = new Pager<>();
+        pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
+        pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
+        pager = processTaskService.queryProcessTaskList(pager, processTask);
+        model.addAttribute("pager", pager);
+
+        model.addAttribute("request", processTask);
         model.addAttribute("flag", "任务管理,待办任务");
         return "flow/taskList";
     }
@@ -79,7 +82,7 @@ public class TaskController {
         String username = SecurityUtils.getSubject().getPrincipal().toString();
         toDoTask.setOwner(username);
         toDoTask.setStatus("todo");
-        List<ProcessTask> toDoTaskList = taskService.processTaskList(toDoTask);
+        List<ProcessTask> toDoTaskList = processTaskService.processTaskList(toDoTask);
         model.addAttribute("toDoTaskList", toDoTaskList);
         model.addAttribute("flag", "任务管理,待办任务");
         return "flow/todoList";

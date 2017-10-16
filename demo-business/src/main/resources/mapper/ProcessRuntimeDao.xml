@@ -16,6 +16,24 @@
        SELECT * FROM flow_process_runtime GROUP BY name
    </select>
 
+    <select id="queryRuntimeList" resultType="com.hup.entity.ProcessRuntime">
+          SELECT * FROM flow_process_runtime t WHERE
+          t.name = #{processRuntime.name}
+          <if test="processRuntime.code != null and processRuntime.code != ''">
+              AND t.code = #{processRuntime.code}
+          </if>
+
+    </select>
+
+    <select id="getRuntimeCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM flow_process_runtime t
+        WHERE
+        t.name = #{processRuntime.name}
+        <if test="processRuntime.code != null and processRuntime.code != ''">
+            AND t.code = #{processRuntime.code}
+        </if>
+    </select>
+
     <insert id="insertProcessRuntime" useGeneratedKeys="true" keyProperty="runtime.id">
         INSERT INTO flow_process_runtime
         (name, name_desc, step, step_desc, code,  members, groups, remark, receipted, executed, audit_opinion, comment, create_date)

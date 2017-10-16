@@ -500,10 +500,10 @@
         <div id="dynamic-table_length" class="dataTables_length">
             <label>
                 <select class="form-control" size="1" name="dynamic-table_length" aria-controls="dynamic-table" id="pageSize">
-                    <option value="10" <#if page.pageSize == 10>selected="selected"</#if> >10</option>
-                    <option value="20" <#if page.pageSize == 20>selected="selected"</#if> >20</option>
-                    <option value="30" <#if page.pageSize == 30>selected="selected"</#if> >30</option>
-                    <option value="40" <#if page.pageSize == 40>selected="selected"</#if> >40</option>
+                    <option value="10" <#if pager.pageSize == 10>selected="selected"</#if> >10</option>
+                    <option value="20" <#if pager.pageSize == 20>selected="selected"</#if> >20</option>
+                    <option value="30" <#if pager.pageSize == 30>selected="selected"</#if> >30</option>
+                    <option value="40" <#if pager.pageSize == 40>selected="selected"</#if> >40</option>
                 </select>
             </label>
         </div>

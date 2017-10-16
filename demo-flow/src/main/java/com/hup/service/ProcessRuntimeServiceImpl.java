@@ -2,6 +2,7 @@ package com.hup.service;
 
 import com.hup.api.flow.ProcessRuntimeService;
 import com.hup.dao.*;
+import com.hup.db.Pager;
 import com.hup.entity.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +28,7 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
     private ProcessRuntimeDao processRuntimeDao;
 
     @Autowired
-    private TaskDao taskDao;
+    private ProcessTaskDao processTaskDao;
 
     @Autowired
     private OrganizationDao organizationDao;
@@ -39,6 +40,19 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
     @Override
     public List<ProcessRuntime> findAllRuntime() {
         return processRuntimeDao.findAllRuntime();
+    }
+
+    @Override
+    public Pager<ProcessRuntime> queryRuntimeListByName(Pager<ProcessRuntime> pager, ProcessRuntime processRuntime) {
+        if (pager == null) {
+            pager = new Pager<>();
+        }
+        pager.setOrderColumns("id"); //时间倒序查询
+        List<ProcessRuntime> runtimeList = processRuntimeDao.queryRuntimeList(processRuntime, pager);
+        int purchaseCount = processRuntimeDao.getRuntimeCount(processRuntime);
+        pager.setList(runtimeList);
+        pager.setTotalCount(purchaseCount);
+        return pager;
     }
 
     @Override
@@ -81,7 +95,7 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
                 toDoTask.setUrl("/task/audit?processType=" + processRuntime.getName() + "&code=" + processRuntime.getCode() + "&step=" + processRuntime.getStep());
                 toDoTask.setStatus("todo");
                 toDoTask.setOwner(user.getUsername());
-                taskDao.insertTodoTask(toDoTask);
+                processTaskDao.insertTodoTask(toDoTask);
             }
         }
         return processRuntime;
@@ -106,7 +120,7 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
     @Override
     public void updateRuntimeService(ProcessRuntime processRuntime) {
         processRuntimeDao.updateRuntimeService(processRuntime);
-        taskDao.updateStatus(processRuntime.getCode(), "done");
+        processTaskDao.updateStatus(processRuntime.getCode(), "done");
     }
 
     @Override

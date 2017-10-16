@@ -5,9 +5,12 @@ import com.hup.api.OrganizationService;
 import com.hup.api.UserService;
 import com.hup.api.flow.ProcessDefinitionService;
 import com.hup.api.flow.ProcessRuntimeService;
+import com.hup.db.Pager;
 import com.hup.entity.ProcessDefinition;
 import com.hup.entity.ProcessRuntime;
 import com.hup.response.BaseResponse;
+import com.hup.util.PageRequest;
+import com.hup.util.PageUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,20 +141,21 @@ public class ProcessController {
      * <p>@return:
      */
     @RequestMapping(value = "/runtimeList", method = RequestMethod.GET)
-    public String processRuntimeList(ProcessRuntime processRuntime, Model model) {
+    public String processRuntimeList(ProcessRuntime processRuntime, PageRequest pageRequest, Model model) {
         logger.info("----->工作流进行时记录列表");
         List<ProcessRuntime> processRuntimes = processRuntimeService.findAllRuntime();
         model.addAttribute("processRuntimes", processRuntimes);
 
         if (CollectionUtils.isNotEmpty(processRuntimes)){
-            List<ProcessRuntime> runtimeByName = processRuntimeService.findRuntimeByName(processRuntime.getName());
-            model.addAttribute("runtimeByName", runtimeByName);
-            model.addAttribute("name", processRuntime.getName());
+            Pager<ProcessRuntime> pager = new Pager<>();
+            pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
+            pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
+            pager = processRuntimeService.queryRuntimeListByName(pager, processRuntime);
+            model.addAttribute("pager", pager);
         }else {
-            model.addAttribute("runtimeByName", new ArrayList<ProcessRuntime>());
-            model.addAttribute("name", "");
+            model.addAttribute("pager", new Pager<>());
         }
-
+        model.addAttribute("request",processRuntime);
         model.addAttribute("flag", "流程管理,流程");
         return "flow/runtimeList";
     }

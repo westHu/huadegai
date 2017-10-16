@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hup.dao.TaskDao">
+<mapper namespace="com.hup.dao.ProcessTaskDao">
 
     <!--
         1.属性名,表名等用小写,select / from之类关键字用大写。
@@ -12,6 +12,26 @@
         7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
           WHERE t.username = #{userName}
     -->
+    <select id="queryProcessTaskList" resultType="com.hup.entity.ProcessTask">
+        SELECT * FROM flow_process_task t  WHERE  t.status = #{processTask.status}
+        <if test="processTask.owner != null and processTask.owner != '' ">
+            AND  t.owner = #{processTask.owner}
+        </if>
+        <if test="processTask.code != null and processTask.code != '' ">
+            AND  t.code = #{processTask.code}
+        </if>
+    </select>
+
+    <select id="getProcessTaskCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM flow_process_task t  WHERE  t.status = #{processTask.status}
+        <if test="processTask.owner != null and processTask.owner != '' ">
+            AND  t.owner = #{processTask.owner}
+        </if>
+        <if test="processTask.code != null and processTask.code != '' ">
+            AND  t.code = #{processTask.code}
+        </if>
+    </select>
+
    <select id="processTaskList" resultType="com.hup.entity.ProcessTask">
        SELECT * FROM flow_process_task t  WHERE  t.owner = #{processTask.owner} AND t.status = #{processTask.status}
    </select>
