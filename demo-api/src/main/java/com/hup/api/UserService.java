@@ -34,6 +34,8 @@ public interface UserService {
 
     List<User> findAll();
 
+    List<User> findSampleUserList();
+
     User findByUsername(String username);
 
     User findByEmail(String email);

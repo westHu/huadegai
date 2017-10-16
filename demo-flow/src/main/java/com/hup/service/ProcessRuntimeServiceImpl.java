@@ -109,5 +109,10 @@ public class ProcessRuntimeServiceImpl implements ProcessRuntimeService {
         taskDao.updateStatus(processRuntime.getCode(), "done");
     }
 
+    @Override
+    public List<ProcessRuntime> findRuntimeByName(String name) {
+        return processRuntimeDao.findRuntimeByName(name);
+    }
+
 
 }

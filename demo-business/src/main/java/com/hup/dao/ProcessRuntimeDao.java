@@ -26,4 +26,6 @@ public interface ProcessRuntimeDao {
     ProcessRuntime findByCodeAndStep(@Param("code") String code, @Param("step") Integer step);
 
     void updateRuntimeService(ProcessRuntime processRuntime);
+
+    List<ProcessRuntime> findRuntimeByName(@Param("name") String name);
 }

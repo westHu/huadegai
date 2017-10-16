@@ -42,5 +42,10 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService {
         return processDefinitionDao.findDefinitionByNameAndStep(name, step);
     }
 
+    @Override
+    public void deleteDefinition(Long id) {
+        processDefinitionDao.deleteDefinition(id);
+    }
+
 
 }

@@ -85,6 +85,11 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
+    @Override
+    public List<User> findSampleUserList() {
+        return userDao.findAll();
+    }
+
     /**
      * 根据用户名查找用户
      * @param username

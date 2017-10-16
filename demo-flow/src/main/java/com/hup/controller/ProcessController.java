@@ -68,10 +68,26 @@ public class ProcessController {
             model.addAttribute("name", "");
         }
         model.addAttribute("processDefinitions", processDefinitions);
-        model.addAttribute("organizations", organizationService.findAll());
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("organizations", organizationService.findSampleOrganizationList());
+        model.addAttribute("users", userService.findSampleUserList());
         model.addAttribute("flag", "流程管理,流程定义");
         return "flow/definitionList";
+    }
+
+
+    /**
+     * <p>@Description: 删除流程定义
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/16
+     * <p>@Param:
+     * <p>@return:
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{id}/definitionDelete", method = RequestMethod.POST)
+    public BaseResponse definitionDelete(@PathVariable("id") Long id) {
+        logger.info("----->工作流 -- name : " + id);
+        processDefinitionService.deleteDefinition(id);
+        return new BaseResponse("0","流程定义删除成功", null);
     }
 
     /*@RequestMapping(value = "/{name}/definitionView", method = RequestMethod.GET)
@@ -109,16 +125,33 @@ public class ProcessController {
     }
 
 
+
+
+
+
     /***====runtime=====================*/
-
-
-
+    /**
+     * <p>@Description: 流程运行记录列表
+     * <p>@Author: hupj
+     * <p>@Date: 2017/10/16
+     * <p>@Param:
+     * <p>@return:
+     */
     @RequestMapping(value = "/runtimeList", method = RequestMethod.GET)
-    public String processRuntimeList(Model model) {
+    public String processRuntimeList(ProcessRuntime processRuntime, Model model) {
         logger.info("----->工作流进行时记录列表");
         List<ProcessRuntime> processRuntimes = processRuntimeService.findAllRuntime();
-
         model.addAttribute("processRuntimes", processRuntimes);
+
+        if (CollectionUtils.isNotEmpty(processRuntimes)){
+            List<ProcessRuntime> runtimeByName = processRuntimeService.findRuntimeByName(processRuntime.getName());
+            model.addAttribute("runtimeByName", runtimeByName);
+            model.addAttribute("name", processRuntime.getName());
+        }else {
+            model.addAttribute("runtimeByName", new ArrayList<ProcessRuntime>());
+            model.addAttribute("name", "");
+        }
+
         model.addAttribute("flag", "流程管理,流程");
         return "flow/runtimeList";
     }

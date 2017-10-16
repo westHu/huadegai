@@ -24,4 +24,6 @@ public interface ProcessRuntimeService {
     ProcessRuntime findByCodeAndStep(String code, Integer step);
 
     void updateRuntimeService(ProcessRuntime processRuntime);
+
+    List<ProcessRuntime> findRuntimeByName(String name);
 }

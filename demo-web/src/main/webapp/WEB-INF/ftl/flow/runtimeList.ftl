@@ -6,23 +6,16 @@
     <@left title="导航栏"></@left>
     <div class="main-content" style="min-height: 800px">
         <@notification title="通知"></@notification>
-        <@pageHeading title_1="任务管理"  title_3="消息管理" title_4="流程运行" title_4_url="#"></@pageHeading>
+        <@pageHeading title_1="流程运行"  title_3="消息管理" title_4="流程运行" title_4_url="#"></@pageHeading>
         <div class="wrapper">
             <div class="mail-box">
                 <aside class="mail-nav mail-nav-bg-color">
                     <header class="header"> <h4>流程运行</h4> </header>
                     <div class="mail-nav-body">
                         <ul class="nav nav-pills nav-stacked mail-navigation">
-
                             <#list processRuntimes as runtime>
-                                <li><a href="${context.contextPath}/process/${runtime.name}/runtimeView"> <i class="fa fa-envelope-o"></i> ${runtime.code}</a></li>
+                                <li <#if runtime.name == name>class="active"</#if> ><a href="${context.contextPath}/process/runtimeList?name=${runtime.name}"> <i class="fa fa-envelope-o"></i> ${runtime.nameDesc}</a></li>
                             </#list>
-
-                           <#-- <li class="active"><a href="mail.html"> <i class="fa fa-inbox"></i> 待办任务  <span class="label label-danger pull-right inbox-notification">4</span></a></li>
-                            <li><a href="#"> <i class="fa fa-envelope-o"></i> 历史任务</a></li>
-                            <li><a href="#"> <i class="fa fa-certificate"></i> 定时任务</a></li>
-                            <li><a href="#"> <i class="fa fa-file-text-o"></i> 起草任务 <span class="label label-info pull-right inbox-notification">34</span></a></li>
-                            <li><a href="#"> <i class="fa fa-trash-o"></i> 回收站</a></li>-->
                         </ul>
                     </div>
                 </aside>
@@ -37,36 +30,50 @@
                                     <thead>
                                     <tr>
                                         <th>流程步骤</th>
+                                        <th>步骤描述</th>
                                         <th>流程编码</th>
-                                        <th>节点描述</th>
-                                        <th>流程执行人</th>
-                                        <th>流程规则</th>
+                                        <th>业务编码</th>
+                                        <#--<th>定义执行人</th>-->
+                                        <#--<th>定义执行组</th>-->
+                                        <#--<th>流程规则</th>-->
+                                        <th>签收人</th>
+                                        <th>执行人</th>
+                                        <th>执行结果</th>
+                                        <th>执行意见</th>
+                                        <th>时间</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <#--<#list definitionsByName as obj>
-                                        <tr>
-                                            <td>第[${obj_index + 1}]步</td>
-                                            <td>${obj.name}-${obj.step}</td>
-                                            <td>${obj.stepDesc}</td>
-                                            <td>${obj.user}, ${obj.group}</td>
-                                            <td>${obj.rule} <#if obj.rule == 'ONE'>（所有的执行者只要有一个人执行即可）</#if></td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
-                                                        操&nbsp作 <span class="caret"></span>
-                                                    </button>
-                                                    <ul role="menu" class="dropdown-menu">
-                                                        <li><a href="javascript:updateDefinition(${obj.id})">编辑该节点</a></li>
-                                                        <li><a href="#myModal2" data-toggle="modal" onclick="delete_process(${obj.id},this)" >删除该节点</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#myModal3" data-toggle="modal" onclick="resetPwd(${obj.id})" >复制该节点</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </#list>-->
+                                        <#list runtimeByName as obj>
+                                            <tr>
+                                                <td>第[${obj.step}]步</td>
+                                                <td>${obj.stepDesc}</td>
+                                                <td>${obj.name}</td>
+                                                <td>${obj.code}</td>
+                                                <#--<td>${obj.members}</td>-->
+                                                <#--<td>${obj.groups}</td>-->
+                                                <#--<td>${obj.rule}</td>-->
+                                                <td>${obj.receipted}</td>
+                                                <td>${obj.executed}</td>
+                                                <td>${obj.auditOpinion}</td>
+                                                <td>${obj.comment}</td>
+                                                <td>${obj.createDate?string("yyyy-MM-dd HH:mm:ss")}</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                                            操&nbsp作 <span class="caret"></span>
+                                                        </button>
+                                                        <ul role="menu" class="dropdown-menu">
+                                                            <li><a href="javascript:updateDefinition(${obj.id})">编辑该节点</a></li>
+                                                            <li><a href="#myModal2" data-toggle="modal" onclick="delete_process(${obj.id},this)" >删除该节点</a></li>
+                                                            <li class="divider"></li>
+                                                            <li><a href="#myModal3" data-toggle="modal" onclick="resetPwd(${obj.id})" >复制该节点</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </#list>
                                     </tbody>
                                 </table>
                                 <section class="panel">

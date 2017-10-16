@@ -1,11 +1,11 @@
 <#include "common/public.ftl">
-<@header title="流程定义列表" css_war="data_table,icheck"></@header>
+<@header title="流程定义列表" css_war="data_table,icheck,jquery_confirm"></@header>
 <body class="sticky-header">
 <section>
     <@left title="导航栏"></@left>
     <div class="main-content" style="min-height: 800px">
         <@notification title="通知"></@notification>
-        <@pageHeading title_1="任务管理"  title_3="消息管理" title_4="流程定义" title_4_url="#"></@pageHeading>
+        <@pageHeading title_1="流程定义"  title_3="消息管理" title_4="流程定义" title_4_url="#"></@pageHeading>
         <div class="wrapper">
             <div class="mail-box">
                 <aside class="mail-nav mail-nav-bg-color">
@@ -53,9 +53,9 @@
                                                 </button>
                                                 <ul role="menu" class="dropdown-menu">
                                                     <li><a href="javascript:updateDefinition(${obj.id})">编辑该节点</a></li>
-                                                    <li><a href="#myModal2" data-toggle="modal" onclick="delete_process(${obj.id},this)" >删除该节点</a></li>
+                                                    <li><a href="javascript:delete_process(${obj.id})">删除该节点</a></li>
                                                     <li class="divider"></li>
-                                                    <li><a href="#myModal3" data-toggle="modal" onclick="resetPwd(${obj.id})" >复制该节点</a></li>
+                                                    <li><a href="javascript:copyDefinition(${obj.id})">复制该节点</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -262,7 +262,7 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="spinner,data_table,icheck"></@js_lib>
+<@js_lib js_war="spinner,data_table,icheck,jquery_confirm"></@js_lib>
 <script>
     jQuery(document).ready(function() {
         EditableTable.init();
@@ -312,6 +312,47 @@
                     $('#groups').val(data.result.groups);
                     $('#rule').val(data.result.rule);
                     $('#status').val(data.result.status);
+                }
+            }
+        });
+    }
+
+    function delete_process(id) {
+        console.info("id = " + id);
+        if (id == undefined || id == '') return;
+        $.confirm({
+            icon: 'fa fa-warning',
+            title: '删除提示！',
+            content: '确定要删除该流程节点吗?',
+            type: 'dark',
+            autoClose: 'cancel|8000',
+            buttons: {
+                ok: {
+                    text: "确定",
+                    btnClass: 'btn-primary',
+                    keys: ['enter'],
+                    action: function(){
+                        var url = "/process/"+id+"/definitionDelete";
+                        $.ajax({
+                            url: url,
+                            type: 'post',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status == "0") {
+                                    location.reload();
+                                }
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: "取消",
+                    btnClass: 'btn-primary',
+                    keys: ['esc'],
+                    /*action:function () {
+                        console.info("你点击了取消按钮！")
+                    }*/
                 }
             }
         });

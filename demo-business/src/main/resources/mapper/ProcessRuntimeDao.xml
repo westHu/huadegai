@@ -54,5 +54,9 @@
         WHERE code =#{code} AND step = #{step}
     </update>
 
+    <select id="findRuntimeByName" resultType="com.hup.entity.ProcessRuntime">
+        SELECT * FROM flow_process_runtime t WHERE
+                        t.name = #{name}
+    </select>
 
 </mapper>

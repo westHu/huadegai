@@ -71,6 +71,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    public List<Organization> findSampleOrganizationList() {
+        return organizationDao.findAll();
+    }
+
+    @Override
     public String getOrganizationTree() {
         List<Organization> tree = findTree(0L);
         String jsonString = JSON.toJSONString(tree);

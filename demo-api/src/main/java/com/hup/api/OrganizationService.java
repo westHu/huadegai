@@ -25,6 +25,8 @@ public interface OrganizationService {
 
     List<Organization> findAll();
 
+    List<Organization> findSampleOrganizationList();
+
     String getOrganizationTree();
 
     Object findAllWithExclude(Organization excludeOraganization);

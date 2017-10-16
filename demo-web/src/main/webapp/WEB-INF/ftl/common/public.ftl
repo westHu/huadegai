@@ -87,6 +87,11 @@
                 <link rel="stylesheet" href="${context.contextPath}/js/data-tables/DT_bootstrap.css" />
             </#if>
 
+            <#if obj == 'jquery_confirm'>
+                <!--jquery_confirm-->
+                <link rel="stylesheet" href="${context.contextPath}/js/jquery-confirm/jquery-confirm.min.css" />
+            </#if>
+
 
         </#list>
     </#if>
@@ -236,8 +241,8 @@
                 <li class="menu-list" ><a href=""><i class="fa fa-file-text"></i> <span>流程管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="${context.contextPath}/task/list?status=todo"> 任务管理</a></li>
-                        <li><a href="${context.contextPath}/process/definitionList?name=devicePurchase"> 流程管理</a></li>
-                        <li><a href="${context.contextPath}/process/runtimeList"> 流程运行记录</a></li>
+                        <li><a href="${context.contextPath}/process/definitionList?name=devicePurchase"> 流程定义</a></li>
+                        <li><a href="${context.contextPath}/process/runtimeList?name=devicePurchase"> 流程运行记录</a></li>
                     </ul>
                 </li>
                 <li class="menu-list" ><a href=""><i class="fa fa-file-text"></i> <span>系统设置</span></a>
@@ -634,6 +639,12 @@
                 <!--Dashboard Charts-->
                 <script src="${context.contextPath}/js/dashboard-chart-init.js"></script>
             </#if>
+
+            <#if obj == 'jquery_confirm'>
+            <!--jquery_confirm-->
+            <script src="${context.contextPath}/js/jquery-confirm/jquery-confirm.min.js"></script>
+            </#if>
+
         </#list>
     </#if>
 

@@ -28,5 +28,9 @@
         SELECT * FROM flow_process_definition WHERE name = #{name} AND step = #{step}
     </select>
 
+    <delete id="deleteDefinition">
+        DELETE FROM flow_process_definition WHERE id = #{id}
+    </delete>
+
 
 </mapper>

@@ -20,4 +20,6 @@ public interface ProcessDefinitionService {
     ProcessDefinition findOne(String id);
 
     ProcessDefinition findDefinitionByNameAndStep(String name, Integer step);
+
+    void deleteDefinition(Long id);
 }
