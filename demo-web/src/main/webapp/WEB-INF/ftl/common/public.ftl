@@ -190,19 +190,6 @@
                     </ul>
                 </li>
 
-                <li class="menu-list"><a href=""><i class="fa fa-tasks"></i> <span>应急指挥</span></a>
-                    <ul class="sub-menu-list">
-                        <li><a href="form_layouts.html"> Form Layouts</a></li>
-                        <li><a href="form_advanced_components.html"> Advanced Components</a></li>
-                        <li><a href="form_wizard.html"> Form Wizards</a></li>
-                        <li><a href="form_validation.html"> Form Validation</a></li>
-                        <li><a href="editors.html"> Editors</a></li>
-                        <li><a href="inline_editors.html"> Inline Editors</a></li>
-                        <li><a href="pickers.html"> Pickers</a></li>
-                        <li><a href="dropzone.html"> Dropzone</a></li>
-                        <li><a href="http://www.weidea.net"> More</a></li>
-                    </ul>
-                </li>
                 <li class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>报表管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="flot_chart.html"> Flot Charts</a></li>
@@ -227,6 +214,18 @@
                         <li><a href="vector_map.html"> Vector Map</a></li>
                     </ul>
                 </li>
+
+                <li class="menu-list"><a href=""><i class="fa fa-tasks"></i> <span>巡检系统</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="${context.contextPath}"> 巡检任务</a></li>
+                        <li><a href="${context.contextPath}"> 巡检记录</a></li>
+                        <li><a href="${context.contextPath}"> 巡检考核</a></li>
+                        <li><a href="${context.contextPath}"> 巡检计划</a></li>
+                        <li><a href="${context.contextPath}/patrol/pointList"> 巡检区域</a></li>
+                        <li><a href="${context.contextPath}/patrol/pointList"> 巡检点</a></li>
+                    </ul>
+                </li>
+
                 <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>设备管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="${context.contextPath}/device/purchase"> 设备采购</a></li>

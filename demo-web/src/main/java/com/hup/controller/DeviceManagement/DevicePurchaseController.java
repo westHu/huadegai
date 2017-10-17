@@ -56,7 +56,7 @@ public class DevicePurchaseController {
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
         pager = devicePurchaseService.queryDevicePurchaseList(pager, devicePurchase);
-        model.addAttribute("page", pager);
+        model.addAttribute("pager", pager);
         model.addAttribute("op", "列表");
 
         String name = (String) SecurityUtils.getSubject().getPrincipal();

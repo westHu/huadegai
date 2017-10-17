@@ -43,7 +43,7 @@ public class DeviceScrapController {
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
         pager = deviceScrapService.queryDeviceScrapList(pager, deviceScrap);
-        model.addAttribute("page", pager);
+        model.addAttribute("pager", pager);
         model.addAttribute("op", "列表");
         return "deviceManagement/deviceScrapList";
     }

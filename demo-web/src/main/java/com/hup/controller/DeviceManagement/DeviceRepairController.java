@@ -46,7 +46,7 @@ public class DeviceRepairController {
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
         pager = deviceRepairService.queryDeviceRepairList(pager, deviceRepair);
-        model.addAttribute("page", pager);
+        model.addAttribute("pager", pager);
         model.addAttribute("op", "列表");
         return "deviceManagement/deviceRepairList";
     }

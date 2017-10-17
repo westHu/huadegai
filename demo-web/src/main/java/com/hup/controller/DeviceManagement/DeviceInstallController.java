@@ -49,7 +49,7 @@ public class DeviceInstallController {
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
         pager = deviceInstallService.queryDeviceInstallList(pager, deviceInstall);
-        model.addAttribute("page", pager);
+        model.addAttribute("pager", pager);
         model.addAttribute("op", "列表");
         return "deviceManagement/deviceInstallList";
     }
