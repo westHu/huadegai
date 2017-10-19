@@ -3,6 +3,8 @@ package com.hup.controller;
 import com.hup.api.ResourceService;
 import com.hup.entity.Resource;
 import com.hup.response.BaseResponse;
+import com.hup.util.encrypt.Base64Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +41,12 @@ public class ResourceController {
      * <p>@return:
      */
     @RequiresPermissions("resource:view")
-    @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model) {
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public String list(String msg, Model model) {
+        if (StringUtils.isNotBlank(msg)) {
+            String decode = Base64Utils.decodeStr(msg);
+            model.addAttribute("msg", decode);
+        }
         model.addAttribute("resourceList", resourceService.findAll());
         return "resource/resourceList";
     }
@@ -79,7 +85,7 @@ public class ResourceController {
         logger.info("========= 添加子节点 =========");
         resourceService.createResource(resource);
         redirectAttributes.addFlashAttribute("msg", "新增子节点成功");
-        return "redirect:/resource";
+        return "redirect:/resource/list";
     }
 
     /**
@@ -109,7 +115,7 @@ public class ResourceController {
     public String update(Resource resource, RedirectAttributes redirectAttributes) {
         resourceService.updateResource(resource);
         redirectAttributes.addFlashAttribute("msg", "修改成功");
-        return "redirect:/resource";
+        return "redirect:/resource/list";
     }
 
     /**

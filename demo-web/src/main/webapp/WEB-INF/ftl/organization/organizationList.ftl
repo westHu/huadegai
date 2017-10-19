@@ -2,22 +2,11 @@
 <@header title="组织管理" css_war="treeview,gritter_css,icheck"></@header>
 <body class="sticky-header">
 <section>
-    <!-- left side start-->
     <@left title="导航栏"></@left>
-    <!-- left side end-->
-    
-    <!-- main content start-->
     <div class="main-content" >
-
-        <!-- header section start-->
         <@notification title="通知"></@notification>
-        <!-- header section end-->
-
-        <!-- page heading start-->
         <@pageHeading title_1="组织列表"  title_3="系统设置" title_4="组织管理" title_4_url="${context.contextPath}/organization"></@pageHeading>
-        <!-- page heading end-->
         <hr/>
-        <!--body wrapper start-->
         <div class="wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -87,8 +76,8 @@
                                         </div>
 
                                         <span class="tools pull-right">
-                                            <button class="btn btn-info">&nbsp修&nbsp改&nbsp</button>
-                                            <button class="btn btn-info" type="button">&nbsp删&nbsp除&nbsp</button>
+                                            <button class="btn btn-primary" type="submit">&nbsp修&nbsp改&nbsp</button>
+                                            <button class="btn btn-primary" type="button">&nbsp删&nbsp除&nbsp</button>
                                         </span>
                                     </form>
                                 </div>
@@ -123,7 +112,7 @@
                                             </div>
                                         </div>
                                         <span class="tools pull-right">
-                                                <button class="btn btn-info">&nbsp新&nbsp增&nbsp</button>
+                                                <button class="btn btn-primary">&nbsp新&nbsp增&nbsp</button>
                                         </span>
                                     </form>
                                 </div>
@@ -133,17 +122,10 @@
                 </div>
             </div>
         </div>
-        <!--body wrapper end-->
-
-        <!--footer section start-->
         <footer class="sticky-footer">
             2014 &copy; transfar by hup
         </footer>
-        <!--footer section end-->
-
-
     </div>
-    <!-- main content end-->
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->

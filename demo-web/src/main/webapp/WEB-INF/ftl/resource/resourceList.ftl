@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="资源列表" css_war = "responsive_table,treetable,gritter_css"></@header>
+<@header title="资源列表" css_war = "responsive_table,treetable,gritter_css,jquery_confirm"></@header>
 <body class="sticky-header">
 <section>
     <!-- left side start-->
@@ -46,14 +46,14 @@
                                                 <td class="numeric">${resource.permission}</td>
                                                 <td class="numeric">
                                                     <div class="btn-group">
-                                                        <button data-toggle="dropdown" type="button" class="btn btn-success btn-sm dropdown-toggle">
+                                                        <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
                                                             操&nbsp作 <span class="caret"></span>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu">
                                                             <li><a href="${context.contextPath}/resource/${resource.id}/appendChild">添加子节点</a></li>
                                                             <li><a href="${context.contextPath}/resource/${resource.id}/update">修改</a></li>
                                                             <li class="divider"></li>
-                                                            <li><a href="#myModalResource" data-toggle="modal" onclick="delete_resource(${resource.id}, this)" >删除</a></li>
+                                                            <li><a href="javascript:delete_resource(${resource.id})"  >删除</a></li>
                                                         </ul>
                                                     </div>
 
@@ -75,26 +75,6 @@
                                                 </td>
                                             </tr>
                                         </#list>
-                                        <!-- 删除资源  Modal -->
-                                        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModalResource" class="modal fade">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                        <h4 class="modal-title">确认删除</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <input id="deleteId" type="hidden"/>
-                                                        你确定要删除该资源吗？
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="confirmDeleteResource()"> 确定</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- modal -->
                                     </tbody>
                                 </table>
                             </section>
@@ -115,38 +95,64 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="gritter_script,treetable"></@js_lib>
+<@js_lib js_war="gritter_script,treetable,jquery_confirm">
+<script src="${context.contextPath}/js/encrypt/base64.js"></script>
+</@js_lib>
 <script>
     $(function() {
         $(".table").treetable({ expandable: true }).treetable("expandNode", 1);
+
+        //显示小提示
+        var tip = '${msg}';
+        console.info("tip = " + tip)
+        if (tip !== null && tip !== ''){
+            TipsNotice(null, tip);
+        }
     });
 
-    //删除的标签
-    var parentTR, parentTBODY;
-    function delete_resource(id, inputObj) {
-        $('#deleteId').val(id);
-        //如果后台成功则调用下列参数进行页面删除
-        var parentTD = inputObj.parentNode.parentNode.parentNode.parentNode;
-        parentTR = parentTD.parentNode;
-        parentTBODY = parentTR.parentNode;
-    }
-    function confirmDeleteResource() {
-        var id = $('#deleteId').val().trim();
-        var url = "/resource/"+id+"/delete";
-        $.ajax({
-            url: url,
-            type: 'post',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data) {
-                TipsNotice(null, data.description);
-                if (data.status == "0") {
-                    parentTBODY.removeChild(parentTR);
-                }
+    function delete_resource(id) {
+        console.info("id = " + id);
+        if (id == undefined || id == '') return;
+        $.confirm({
+            icon: 'fa fa-warning',
+            title: '删除提示！',
+            content: '确定要删除该资源吗?',
+            type: 'dark',
+            autoClose: 'cancel|8000',
+            buttons: {
+                ok: {
+                    text: "确定",
+                    btnClass: 'btn-primary',
+                    keys: ['enter'],
+                    action: function(){
+                        $.ajax({
+                            url: "/resource/"+id+"/delete",
+                            type: 'post',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status == "0") {
+                                    location.href = "${context.contextPath}/resource/list?msg=" + (new Base64()).encode("资源删除成功");
+                                }
 
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: "取消",
+                    btnClass: 'btn-primary',
+                    keys: ['esc'],
+                    /*action:function () {
+                        console.info("你点击了取消按钮！")
+                    }*/
+                }
             }
         });
     }
+
+
+
     function TipsNotice(title, text) {
         console.info("TipsNotice");
         $.gritter.add({
