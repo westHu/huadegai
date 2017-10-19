@@ -2,19 +2,11 @@
 <@header title="新增用户" css_war = "stepy,treeview,icheck,gritter_css"></@header>
 <body class="sticky-header">
 <section>
-    <!-- left side start-->
     <@left title="导航栏"></@left>
-    <!-- left side end-->
-    <!-- main content start-->
     <div class="main-content" >
-        <!-- header section start-->
         <@notification title="通知"></@notification>
-        <!-- header section end-->
-        <!-- page heading start-->
         <@pageHeading title_1="新增用户"  title_3="系统设置" title_4="用户管理" title_4_url="${context.contextPath}/user"></@pageHeading>
-        <!-- page heading end-->
         <hr/>
-        <!--body wrapper start-->
         <div class="wrapper">
             <div class="row">
                 <div class="col-md-12">
@@ -158,19 +150,11 @@
                 </div>
             </div>
         </div>
-        <!--body wrapper end-->
-
-        <!--footer section start-->
         <footer class="sticky-footer">
             2017 &copy; transfar by hup
         </footer>
-        <!--footer section end-->
-
-
     </div>
-    <!-- main content end-->
 </section>
-
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war="validate_stepy,treeview,input_mask,icheck,gritter_script"></@js_lib>
 <script>

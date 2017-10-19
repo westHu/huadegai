@@ -6,6 +6,7 @@ import com.hup.api.UserService;
 import com.hup.constant.CantDelete;
 import com.hup.entity.User;
 import com.hup.response.BaseResponse;
+import com.hup.util.encrypt.Base64Utils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -51,10 +52,11 @@ public class UserController {
      */
     @RequiresPermissions("user:view")
     @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model) {
+    public String list(String msg, Model model) {
         logger.info("-----> 用户列表页面");
         List<User> userList = userService.findAll();
         model.addAttribute("userList", userList);
+        model.addAttribute("msg", Base64Utils.decodeStr(msg));
         model.addAttribute("flag", "系统设置,用户管理");
         return "user/userList";
     }

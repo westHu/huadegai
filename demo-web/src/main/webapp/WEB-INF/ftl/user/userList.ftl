@@ -1,22 +1,11 @@
 <#include "common/public.ftl">
-<@header title="用户管理" css_war = "responsive_table,gritter_css"></@header>
+<@header title="用户管理" css_war = "responsive_table,gritter_css,jquery_confirm"></@header>
 <body class="sticky-header">
 <section>
-    <!-- left side start-->
     <@left title="导航栏"></@left>
-    <!-- left side end-->
-    
-    <!-- main content start-->
     <div class="main-content" >
-        <!-- header section start-->
         <@notification title="通知"></@notification>
-        <!-- header section end-->
-
-        <!-- page heading start-->
         <@pageHeading title_1="用户列表" title_3="系统设置" title_4="用户管理" title_4_url="${context.contextPath}/user" ></@pageHeading>
-        <!-- page heading end-->
-
-        <!--body wrapper start-->
         <div class="wrapper">
             <div class="row">
                 <div class="col-sm-12">
@@ -36,12 +25,6 @@
                                     <li><a href="#">保存PDF</a></li>
                                 </ul>
                             </div>
-                            <#--<span class="tools pull-right">
-                                <a href="1" class="fa fa-download"></a>
-                                <a href="2" class="fa fa-print"></a>
-                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                <a href="javascript:;" class="fa fa-times"></a>
-                            </span>-->
                         </header>
                         <div class="panel-body">
                             <section id="unseen">
@@ -71,61 +54,19 @@
                                                 <td>
                                                 <#--<a href="javascript:void(0)" class="pop pop_recharge" data-toggle='modal' data-target="#user-recharge" data-id="${user.id}">充值</a>-->
                                                     <div class="btn-group">
-                                                        <button data-toggle="dropdown" type="button" class="btn btn-success btn-sm dropdown-toggle">
+                                                        <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
                                                             操&nbsp作 <span class="caret"></span>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu">
                                                             <li><a href="${context.contextPath}/user/${user.id}/update">编辑用户</a></li>
-                                                            <li><a href="#myModal2" data-toggle="modal" onclick="delete_user(${user.id},this)" >删除用户</a></li>
+                                                            <li><a href="javascript:delete_user(${user.id})">删除用户</a></li>
                                                             <li class="divider"></li>
-                                                            <li><a href="#myModal3" data-toggle="modal" onclick="resetPwd(${user.id})" >重置密码</a></li>
+                                                            <li><a href="javascript:resetPwd(${user.id})">重置密码</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
                                             </tr>
                                         </#list>
-                                        <!-- 删除用户  Modal -->
-                                        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                        <h4 class="modal-title">确认删除</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <input id="deleteId" type="hidden"/>
-                                                        你确定要删除该用户吗？
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="confirm()"> 确定</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- modal -->
-
-
-                                        <!-- 重置密码  Modal -->
-                                        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal3" class="modal fade">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                        <h4 class="modal-title">确认重置密码</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <input id="resetPwdId" type="hidden"/>
-                                                        你确定要重置该用户的密码吗？
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="confirmReset()"> 确定</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- modal -->
                                     </tbody>
                                 </table>
                             </section>
@@ -146,7 +87,9 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="gritter_script"></@js_lib>
+<@js_lib js_war="gritter_script,jquery_confirm">
+    <script src="${context.contextPath}/js/encrypt/base64.js"></script>
+</@js_lib>
 <script>
     $(function () {
         //显示小提示
@@ -155,9 +98,52 @@
             TipsNotice(null, tip);
         }
     })
+
+    function delete_user(id) {
+        console.info("id = " + id);
+        if (id == undefined || id == '') return;
+        $.confirm({
+            icon: 'fa fa-warning',
+            title: '删除提示！',
+            content: '确定要删除该用户吗?',
+            type: 'dark',
+            autoClose: 'cancel|8000',
+            buttons: {
+                ok: {
+                    text: "确定",
+                    btnClass: 'btn-primary',
+                    keys: ['enter'],
+                    action: function(){
+                        $.ajax({
+                            url: "/user/"+id+"/delete",
+                            type: 'post',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status == "0") {
+                                    location.href = "${context.contextPath}/user?msg=" + (new Base64()).encode("用户删除成功");
+                                }
+
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: "取消",
+                    btnClass: 'btn-primary',
+                    keys: ['esc'],
+                    /*action:function () {
+                        console.info("你点击了取消按钮！")
+                    }*/
+                }
+            }
+        });
+    }
+
+
     //删除的标签
     var parentTR, parentTBODY;
-    function delete_user(id, inputObj) {
+    function delete_user11(id, inputObj) {
         $('#deleteId').val(id);
         //如果后台成功则调用下列参数进行页面删除
         var parentTD = inputObj.parentNode.parentNode.parentNode.parentNode;

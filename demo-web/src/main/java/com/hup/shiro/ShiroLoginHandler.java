@@ -2,7 +2,7 @@ package com.hup.shiro;
 
 import com.alibaba.fastjson.JSON;
 import com.hup.shiro.exception.ShiroExceptionHandler;
-import com.hup.util.EnCryptors;
+import com.hup.util.encrypt.Base64Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.util.SavedRequest;
@@ -217,7 +217,7 @@ public class ShiroLoginHandler {
     public void settingRememberMeCookie(HttpServletResponse response, UserToken userToken) {
         if (userToken.isRememberMe()) {//记住我
             String cookieValue = userToken.getUsername() + X_COOKIE_SPLIT + String.valueOf(userToken.getPassword());
-            Cookie cookie = new Cookie(X_COOKIE_USER, EnCryptors.AES.encrypt(cookieValue));
+            Cookie cookie = new Cookie(X_COOKIE_USER, Base64Utils.encodeStr(cookieValue));
             cookie.setPath("/");
             cookie.setMaxAge(60 * 60 * 60 * 24 * 30);//30天
             response.addCookie(cookie);
