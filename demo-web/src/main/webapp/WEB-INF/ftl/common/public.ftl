@@ -246,7 +246,7 @@
                 </li>
                 <li class="menu-list" ><a href=""><i class="fa fa-file-text"></i> <span>系统设置</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="${context.contextPath}/user"> 用户管理</a></li>
+                        <li><a href="${context.contextPath}/user/list"> 用户管理</a></li>
                         <li><a href="${context.contextPath}/role"> 角色管理</a></li>
                         <li><a href="${context.contextPath}/resource"> 资源管理</a></li>
                         <li><a href="${context.contextPath}/organization"> 组织管理</a></li>

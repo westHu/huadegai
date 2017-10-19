@@ -4,9 +4,14 @@ import com.hup.api.OrganizationService;
 import com.hup.api.RoleService;
 import com.hup.api.UserService;
 import com.hup.constant.CantDelete;
+import com.hup.db.Pager;
+import com.hup.entity.DevicePurchase;
 import com.hup.entity.User;
+import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
+import com.hup.util.PageUtils;
 import com.hup.util.encrypt.Base64Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,12 +56,18 @@ public class UserController {
      * <p>@return:
      */
     @RequiresPermissions("user:view")
-    @RequestMapping(method = RequestMethod.GET)
-    public String list(String msg, Model model) {
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String list(String msg, User user, PageRequest pageRequest, Model model) {
         logger.info("-----> 用户列表页面");
-        List<User> userList = userService.findAll();
-        model.addAttribute("userList", userList);
-        model.addAttribute("msg", Base64Utils.decodeStr(msg));
+        Pager<User> pager = new Pager<>();
+        pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
+        pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
+        pager = userService.queryUserList(user, pager);
+        model.addAttribute("pager", pager);
+        if (StringUtils.isNotBlank(msg)) {
+            String decode = Base64Utils.decodeStr(msg);
+            model.addAttribute("msg", decode);
+        }
         model.addAttribute("flag", "系统设置,用户管理");
         return "user/userList";
     }
@@ -71,11 +82,14 @@ public class UserController {
      */
     @RequiresPermissions("user:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String showCreateForm(Model model) {
+    public String showCreateForm(User user, Model model) {
         logger.info("-----> 创建用户页面");
         setCommonData(model);
         model.addAttribute("organizationTree", organizationService.getOrganizationTree());
-        model.addAttribute("user", new User());
+        if (null == user) {
+            user = new User();
+        }
+        model.addAttribute("user", user);
         model.addAttribute("op", "新增");
         return "user/userCreate";
     }
@@ -95,13 +109,14 @@ public class UserController {
         //用户名不能重复
         User byUsername = userService.findByUsername(user.getUsername());
         if (null != byUsername){
-            //redirectAttributes.addFlashAttribute("user", user);
+            user.setUsername(null);
+            redirectAttributes.addFlashAttribute("user", user);
             redirectAttributes.addFlashAttribute("msg", user.getUsername() + ", 该用户名已经存在，新增用户失败！");
             return "redirect:/user/create";
         }
         userService.createUser(user);
         redirectAttributes.addFlashAttribute("msg", "新增成功");
-        return "redirect:/user";
+        return "redirect:/user/list";
     }
 
 
@@ -118,8 +133,8 @@ public class UserController {
         setCommonData(model);
         model.addAttribute("organizationTree", organizationService.getOrganizationTree());
         model.addAttribute("user", userService.findOne(id));
-        model.addAttribute("op", "修改");
-        return "user/userEdit";
+        model.addAttribute("op", "更新");
+        return "user/userCreate";
     }
 
 
@@ -135,7 +150,7 @@ public class UserController {
     public String update(User user,  RedirectAttributes redirectAttributes) {
         userService.updateUser(user);
         redirectAttributes.addFlashAttribute("msg", "修改成功");
-        return "redirect:/user";
+        return "redirect:/user/list";
     }
 
 

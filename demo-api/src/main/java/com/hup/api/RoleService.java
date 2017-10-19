@@ -29,6 +29,13 @@ public interface RoleService {
     Set<String> findRoles(Long... roleIds);
 
     /**
+     * 根据角色编号得到角色描述列表
+     * @param roleIds
+     * @return
+     */
+    Set<String> findRolesDesc(Long... roleIds);
+
+    /**
      * 根据角色编号得到权限字符串列表
      * @param roleIds
      * @return

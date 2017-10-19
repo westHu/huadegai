@@ -79,6 +79,19 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public Set<String> findRolesDesc(Long... roleIds) {
+        Set<String> roleDescs = new HashSet<String>();
+        for(Long roleId : roleIds) {
+            Role role = findOne(roleId);
+            if(role != null) {
+                roleDescs.add(role.getDescription());
+            }
+        }
+        return roleDescs;
+    }
+
+
+    @Override
     public Set<String> findPermissions(Long[] roleIds) {
         Set<Long> resourceIds = new HashSet<Long>();
         for(Long roleId : roleIds) {

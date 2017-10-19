@@ -1,6 +1,8 @@
 package com.hup.api;
 
 
+import com.hup.db.Pager;
+import com.hup.entity.DevicePurchase;
 import com.hup.entity.User;
 
 import java.util.List;
@@ -70,5 +72,7 @@ public interface UserService {
     String findLeaders(String username);
 
     String getUserTree();
+
+    Pager<User> queryUserList(User user, Pager<User> pager);
 
 }

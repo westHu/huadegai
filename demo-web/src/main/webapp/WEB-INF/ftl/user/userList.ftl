@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="用户管理" css_war = "responsive_table,gritter_css,jquery_confirm"></@header>
+<@header title="用户管理" css_war = "responsive_table,gritter_css,jquery_confirm,paging-hup_css"></@header>
 <body class="sticky-header">
 <section>
     <@left title="导航栏"></@left>
@@ -42,7 +42,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <#list userList as user>
+                                        <#list pager.getList() as user>
                                             <tr>
                                                 <td>${user.username}</td>
                                                 <td>${user.realName}</td>
@@ -69,35 +69,43 @@
                                         </#list>
                                     </tbody>
                                 </table>
+                                <@hup_pagination  showBegin = "${ (pager.currentPage-1) * pager.pageSize + 1 }"  showEnd = "${pager.currentPage * pager.pageSize}"></@hup_pagination>
                             </section>
                         </div>
                     </section>
                 </div>
             </div>
         </div>
-        <!--body wrapper end-->
-
-        <!--footer section start-->
         <footer>
             2017 &copy; tansfar by hup
         </footer>
-        <!--footer section end-->
     </div>
-    <!-- main content end-->
 </section>
-
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="gritter_script,jquery_confirm">
+<@js_lib js_war="gritter_script,jquery_confirm,paging-hup">
     <script src="${context.contextPath}/js/encrypt/base64.js"></script>
 </@js_lib>
 <script>
-    $(function () {
+    jQuery(document).ready(function() {
         //显示小提示
         var tip = '${msg}';
+        console.info("tip = " + tip)
         if (tip !== null && tip !== ''){
             TipsNotice(null, tip);
         }
-    })
+    });
+
+    //分页
+    $("#page").paging({
+        pageNo: ${pager.currentPage},
+        totalPage: ${pager.pageCount},
+        totalSize: ${pager.totalCount},
+        callback: function(num) {
+            var pageSize = $('#pageSize option:selected').val();
+            var pageUrl =  "${context.contextPath}/user/list?currentPage="+num+"&pageSize="+pageSize;
+            location.href = pageUrl;
+        }
+    });
 
     function delete_user(id) {
         console.info("id = " + id);
@@ -121,7 +129,7 @@
                             dataType: 'json',
                             success: function (data) {
                                 if (data.status == "0") {
-                                    location.href = "${context.contextPath}/user?msg=" + (new Base64()).encode("用户删除成功");
+                                    location.href = "${context.contextPath}/user/list?msg=" + (new Base64()).encode("用户删除成功");
                                 }
 
                             }
@@ -141,50 +149,49 @@
     }
 
 
-    //删除的标签
-    var parentTR, parentTBODY;
-    function delete_user11(id, inputObj) {
-        $('#deleteId').val(id);
-        //如果后台成功则调用下列参数进行页面删除
-        var parentTD = inputObj.parentNode.parentNode.parentNode.parentNode;
-        parentTR = parentTD.parentNode;
-        parentTBODY = parentTR.parentNode;
-    }
-    //确认删除
-    function confirm() {
-        var id = $('#deleteId').val().trim();
-        var url = "/user/"+id+"/delete";
-        $.ajax({
-            url: url,
-            type: 'post',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data) {
-                TipsNotice(null, data.description);
-                if (data.status == "0") {
-                    parentTBODY.removeChild(parentTR);
-                }
 
-            }
-        });
-    }
-    //重置密码js
     function resetPwd(id) {
-        $('#resetPwdId').val(id);
-    }
-    function confirmReset() {
-        var id = $('#resetPwdId').val().trim();
-        var url = "/user/"+id+"/resetPassword";
-        $.ajax({
-            url: url,
-            type: 'post',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data) {
-                TipsNotice(null, data.description);
+        console.info("id = " + id);
+        if (id == undefined || id == '') return;
+        $.confirm({
+            icon: 'fa fa-warning',
+            title: '密码提示！',
+            content: '确定要重置该用户的密码吗?',
+            type: 'dark',
+            autoClose: 'cancel|8000',
+            buttons: {
+                ok: {
+                    text: "确定",
+                    btnClass: 'btn-primary',
+                    keys: ['enter'],
+                    action: function(){
+                        $.ajax({
+                            url: "/user/"+id+"/resetPassword",
+                            type: 'post',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status == "0") {
+                                    location.href = "${context.contextPath}/user/list?msg=" + (new Base64()).encode("Pwd重置成功！");
+                                }
+
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: "取消",
+                    btnClass: 'btn-primary',
+                    keys: ['esc'],
+                    /*action:function () {
+                        console.info("你点击了取消按钮！")
+                    }*/
+                }
             }
         });
     }
+
+
     // 提示方法
     function TipsNotice(title, text) {
         $.gritter.add({

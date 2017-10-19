@@ -1,6 +1,7 @@
 package com.hup.dao;
 
 
+import com.hup.db.Pager;
 import com.hup.entity.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,6 +13,10 @@ import java.util.List;
  * <p>Version: 1.0
  */
 public interface UserDao {
+
+    List<User> queryUserList(@Param("user") User user, @Param("pager") Pager<User> pager);
+
+    int getUserCount(@Param("user") User user);
 
     void createUser(@Param("user") User user);
 
@@ -30,4 +35,6 @@ public interface UserDao {
     User findByMobile(String mobile);
 
     List<User> findByOrganizationId(Long organizationId);
+
+
 }

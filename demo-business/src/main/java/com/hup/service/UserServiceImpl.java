@@ -5,6 +5,9 @@ import com.hup.api.RoleService;
 import com.hup.api.UserService;
 import com.hup.dao.OrganizationDao;
 import com.hup.dao.UserDao;
+import com.hup.db.OrderType;
+import com.hup.db.Pager;
+import com.hup.entity.DevicePurchase;
 import com.hup.entity.Organization;
 import com.hup.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,6 +208,25 @@ public class UserServiceImpl implements UserService {
         String jsonString = JSON.toJSONString(findAll());
         String result = jsonString.replaceAll("name","text");
         return result;
+    }
+
+    @Override
+    public Pager<User> queryUserList(User user, Pager<User> pager) {
+        if (pager == null) {
+            pager = new Pager<>();
+        }
+        pager.setOrderColumns("id"); //时间倒序查询
+        List<User> userList = userDao.queryUserList(user, pager);
+        userList.forEach(obj -> {
+            Set<String> rolesDesc = roleService.findRolesDesc(obj.getRoleIds().toArray(new Long[0]));
+            obj.setRoleNames(rolesDesc.toString());
+        });
+        int userCount = userDao.getUserCount(user);
+        pager.setList(userList);
+        pager.setTotalCount(userCount);
+        return pager;
+
+
     }
 
 }

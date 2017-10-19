@@ -30,7 +30,8 @@ public class SignUtils {
                 case MD5:
                 default:
                     signingStr = signingStr + "&password=" + password +"&secret=" + secret;
-                    return EnCryptors.MD5.md5(signingStr);
+                    return signingStr;
+//                    return EnCryptors.MD5.md5(signingStr);
             }
 
         } catch (Exception e){

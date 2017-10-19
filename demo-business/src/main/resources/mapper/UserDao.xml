@@ -19,6 +19,28 @@
     </sql>
 
 
+    <select id="queryUserList" resultType="com.hup.entity.User">
+        SELECT <include refid="table_columns"/>
+        FROM sys_user t
+        LEFT JOIN sys_organization s ON s.id = t.organization_id
+        WHERE 1 = 1
+        <if test="user.username != null and user.username != '' ">
+            AND t.username = #{user.username}
+        </if>
+
+    </select>
+
+    <select id="getUserCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM sys_user t
+        WHERE 1 = 1
+        <if test="user.username != null and user.username != ''">
+            AND t.username = #{user.username}
+        </if>
+    </select>
+
+
+
     <insert id="createUser" useGeneratedKeys="true" keyProperty="user.id">
         insert into sys_user
         (organization_id, username, password, salt, real_name, email, mobile, address, role_ids, locked)

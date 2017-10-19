@@ -1,13 +1,11 @@
 package com.hup.util.encrypt;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import java.io.*;
 
 public class Base64Utils {
 
@@ -26,7 +24,7 @@ public class Base64Utils {
      * @throws Exception
      */
     public static byte[] decode(String base64) throws Exception {
-        return Base64.decode(base64.getBytes());
+        return new BASE64Decoder().decodeBuffer(base64);
     }
     
     /**
@@ -39,7 +37,7 @@ public class Base64Utils {
      * @throws Exception
      */
     public static String encode(byte[] bytes) throws Exception {
-        return new String(Base64.encode(bytes));
+        return new String(new BASE64Encoder().encode(bytes));
     }
     
     /**
@@ -149,14 +147,19 @@ public class Base64Utils {
         byte[] b=encodeStr.getBytes();  
         org.apache.commons.codec.binary.Base64  base64 = new org.apache.commons.codec.binary.Base64();
         b=base64.decode(b);
-        String s=new String(b);  
+        String s= null;
+        try {
+            s = new String(b,"utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return s;  
     }
 
 
     public static void main(String[] args) {
-        String s = "55So5oi35Yig6Zmk5oiQ5Yqf";
-        String s1 = Base64Utils.decodeStr(s);
-        System.out.println(s1);
+//        String s = "5a+G56CB6YeN572u5oiQ5Yqf";
+//        String s1 = Base64Utils.decodeStr(s);
+//        System.out.println(s1);
     }
 }
