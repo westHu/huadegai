@@ -3,8 +3,10 @@ package com.hup.service;
 import com.hup.api.ResourceService;
 import com.hup.api.RoleService;
 import com.hup.dao.RoleDao;
+import com.hup.db.Pager;
 import com.hup.entity.Resource;
 import com.hup.entity.Role;
+import com.hup.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +67,28 @@ public class RoleServiceImpl implements RoleService {
         });
         return roles;
     }
+
+
+    @Override
+    public Pager<Role> queryRoleList(Role role, Pager<Role> pager) {
+        if (pager == null) {
+            pager = new Pager<>();
+        }
+        pager.setOrderColumns("id"); //时间倒序查询
+        List<Role> roleList = roleDao.queryRoleList(role, pager);
+        roleList.forEach(obj -> {
+            Set<String> set = new HashSet<>();
+            for (Long aLong : obj.getResourceIds()) {
+                set.add(resourceService.findOne(aLong).getName());
+            }
+            obj.setResourceNames(set.toString());
+        });
+        int roleCount = roleDao.getRoleCount(role);
+        pager.setList(roleList);
+        pager.setTotalCount(roleCount);
+        return pager;
+    }
+
 
     @Override
     public Set<String> findRoles(Long... roleIds) {

@@ -43,4 +43,14 @@
         FROM sys_role t
     </select>
 
+    <select id="queryRoleList" resultType="com.hup.entity.Role">
+        SELECT t.id, t.role, t.description, t.resource_ids as resourceIdsStr, t.available
+        FROM sys_role t
+    </select>
+
+    <select id="getRoleCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM sys_role t
+    </select>
+
 </mapper>

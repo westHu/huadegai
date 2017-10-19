@@ -1,6 +1,7 @@
 package com.hup.dao;
 
 
+import com.hup.db.Pager;
 import com.hup.entity.Role;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +23,8 @@ public interface RoleDao {
     Role findOne(Long roleId);
 
     List<Role> findAll();
+
+    List<Role> queryRoleList(@Param("role") Role role, @Param("pager") Pager<Role> pager);
+
+    int getRoleCount(@Param("role") Role role);
 }

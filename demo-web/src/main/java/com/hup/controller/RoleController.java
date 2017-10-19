@@ -1,12 +1,18 @@
 package com.hup.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.hup.api.ResourceService;
 import com.hup.api.RoleService;
 import com.hup.constant.CantDelete;
+import com.hup.db.Pager;
 import com.hup.entity.Resource;
 import com.hup.entity.Role;
+import com.hup.entity.User;
+import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.response.RoleTreeResponse;
+import com.hup.util.PageUtils;
+import com.hup.util.encrypt.Base64Utils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -42,9 +48,19 @@ public class RoleController {
     private ResourceService resourceService;
 
     @RequiresPermissions("role:view")
-    @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model) {
-        model.addAttribute("roleList", roleService.findAll());
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public String list(String msg, Role role, PageRequest pageRequest, Model model) {
+        logger.info("---- 角色列表 " + JSON.toJSONString(role));
+        Pager<Role> pager = new Pager<>();
+        pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
+        pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
+        pager = roleService.queryRoleList(role, pager);
+        model.addAttribute("pager", pager);
+        if (StringUtils.isNotBlank(msg)) {
+            String decode = Base64Utils.decodeStr(msg);
+            model.addAttribute("msg", decode);
+        }
+        model.addAttribute("flag", "系统设置,角色管理");
         return "role/roleList";
     }
 
@@ -78,12 +94,12 @@ public class RoleController {
     @RequiresPermissions("role:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(Role role, RedirectAttributes redirectAttributes) {
-        setRoleIds(role);
+       /* setRoleIds(role);
         String resourceIdsStr = role.getResourceIdsStr();
-        System.out.println("resourceIdsStr "  + resourceIdsStr);
+        System.out.println("resourceIdsStr "  + resourceIdsStr);*/
         roleService.createRole(role);
         redirectAttributes.addFlashAttribute("msg", "新增成功");
-        return "redirect:/role";
+        return "redirect:/role/list";
     }
 
 
@@ -116,7 +132,7 @@ public class RoleController {
     public String update(Role role, RedirectAttributes redirectAttributes) {
         roleService.updateRole(role);
         redirectAttributes.addFlashAttribute("msg", "修改成功");
-        return "redirect:/role";
+        return "redirect:/role/list";
     }
     
 

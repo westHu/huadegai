@@ -1,23 +1,11 @@
 <#include "common/public.ftl">
-<@header title="角色管理" css_war="gritter_css"></@header>
+<@header title="角色管理" css_war="responsive_table,gritter_css,jquery_confirm,paging-hup_css"></@header>
 <body class="sticky-header">
 <section>
-    <!-- left side start-->
     <@left title="导航栏"></@left>
-    <!-- left side end-->
-
-    <!-- main content start-->
     <div class="main-content" >
-
-        <!-- header section start-->
         <@notification title="通知"></@notification>
-        <!-- header section end-->
-
-        <!-- page heading start-->
-        <@pageHeading title_1="角色列表"  title_3="系统设置" title_4="角色管理" title_4_url="${context.contextPath}/role" ></@pageHeading>
-        <!-- page heading end-->
-
-        <!--body wrapper start-->
+        <@pageHeading title_1="角色列表"  title_3="系统设置" title_4="角色管理" title_4_url="${context.contextPath}/role/list" ></@pageHeading>
         <div class="wrapper">
             <div class="row">
                 <div class="col-sm-12">
@@ -36,16 +24,11 @@
                                     <li><a href="#">保存PDF</a></li>
                                 </ul>
                             </div>
-                        <#--<span class="tools pull-right">
-                            <a href="1" class="fa fa-download"></a>
-                            <a href="2" class="fa fa-print"></a>
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                            <a href="javascript:;" class="fa fa-times"></a>
-                        </span>-->
                         </header>
                         <div class="panel-body">
-                            <table class="table  table-hover general-table">
-                                <thead>
+                            <section id="unseen">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
                                     <tr>
                                         <th> 角色</th>
                                         <th class="hidden-phone">描述</th>
@@ -53,9 +36,9 @@
                                         <th>权重</th>
                                         <th>操作</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                <#list roleList as role>
+                                    </thead>
+                                    <tbody>
+                                    <#list pager.getList() as role>
                                     <tr>
                                         <td>${role.role} </td>
                                         <td class="hidden-phone">${role.description}</td>
@@ -69,86 +52,100 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <button data-toggle="dropdown" type="button" class="btn btn-success btn-sm dropdown-toggle">
+                                                <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
                                                     操&nbsp作 <span class="caret"></span>
                                                 </button>
                                                 <ul role="menu" class="dropdown-menu">
                                                     <li><a href="${context.contextPath}/role/${role.id}/update">编辑角色</a></li>
-                                                    <li><a href="#myModal2" data-toggle="modal" onclick="delete_role(${role.id}, this)" >删除角色</a></li>
+                                                    <li><a href="javascript:delete_role(${role.id})" >删除角色</a></li>
                                                 </ul>
                                             </div>
                                         </td>
                                     </tr>
-                                </#list>
-                                <!-- 删除角色  Modal -->
-                                <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                <h4 class="modal-title">确认删除</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <input id="deleteId" type="hidden"/>
-                                                你确定要删除该角色吗？ <关联的用户都会失去该角色>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="confirm()"> 确定</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- modal -->
-                                </tbody>
-                            </table>
+                                    </#list>
+                                    </tbody>
+                                </table>
+                                <@hup_pagination  showBegin = "${ (pager.currentPage-1) * pager.pageSize + 1 }"  showEnd = "${pager.currentPage * pager.pageSize}"></@hup_pagination>
+                            </section>
                         </div>
                     </section>
                 </div>
             </div>
         </div>
-        <!--body wrapper end-->
-
-        <!--footer section start-->
         <footer>
             2017 &copy; transfar by hup
         </footer>
-        <!--footer section end-->
-
-
     </div>
-    <!-- main content end-->
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="gritter_script"></@js_lib>
+<@js_lib js_war="gritter_script,jquery_confirm,paging-hup">
+<script src="${context.contextPath}/js/encrypt/base64.js"></script>
+</@js_lib>
 <script>
-    //删除的标签
-    var parentTR, parentTBODY;
-    function delete_role(id, inputObj) {
-        $('#deleteId').val(id);
-        //如果后台成功则调用下列参数进行页面删除
-        var parentTD = inputObj.parentNode.parentNode.parentNode.parentNode;
-        parentTR = parentTD.parentNode;
-        parentTBODY = parentTR.parentNode;
-    }
-    function confirm() {
-        var id = $('#deleteId').val().trim();
-        var url = "/role/"+id+"/delete";
-        $.ajax({
-            url: url,
-            type: 'post',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data) {
-                TipsNotice(null, data.description);
-                if (data.status == "0") {
-                    parentTBODY.removeChild(parentTR);
-                }
 
+    jQuery(document).ready(function() {
+        //显示小提示
+        var tip = '${msg}';
+        console.info("tip = " + tip)
+        if (tip !== null && tip !== ''){
+            TipsNotice(null, tip);
+        }
+    });
+
+    //分页
+    $("#page").paging({
+        pageNo: ${pager.currentPage},
+        totalPage: ${pager.pageCount},
+        totalSize: ${pager.totalCount},
+        callback: function(num) {
+            var pageSize = $('#pageSize option:selected').val();
+            var pageUrl =  "${context.contextPath}/user/list?currentPage="+num+"&pageSize="+pageSize;
+            location.href = pageUrl;
+        }
+    });
+
+    function delete_role(id) {
+        console.info("id = " + id);
+        if (id == undefined || id == '') return;
+        $.confirm({
+            icon: 'fa fa-warning',
+            title: '删除提示！',
+            content: '确定要删除该角色吗?',
+            type: 'dark',
+            autoClose: 'cancel|8000',
+            buttons: {
+                ok: {
+                    text: "确定",
+                    btnClass: 'btn-primary',
+                    keys: ['enter'],
+                    action: function(){
+                        $.ajax({
+                            url: "/role/"+id+"/delete",
+                            type: 'post',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status == "0") {
+                                    location.href = "${context.contextPath}/role/list?msg=" + (new Base64()).encode("角色删除成功");
+                                }
+
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: "取消",
+                    btnClass: 'btn-primary',
+                    keys: ['esc'],
+                    /*action:function () {
+                        console.info("你点击了取消按钮！")
+                    }*/
+                }
             }
         });
     }
+
     function TipsNotice(title, text) {
         console.info("TipsNotice");
         $.gritter.add({

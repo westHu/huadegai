@@ -1,6 +1,7 @@
 package com.hup.api;
 
 
+import com.hup.db.Pager;
 import com.hup.entity.Role;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public interface RoleService {
 
     Role findOne(Long roleId);
     List<Role> findAll();
+
+    Pager<Role> queryRoleList(Role role, Pager<Role> pager);
 
     /**
      * 根据角色编号得到角色标识符列表
@@ -41,4 +44,6 @@ public interface RoleService {
      * @return
      */
     Set<String> findPermissions(Long[] roleIds);
+
+
 }

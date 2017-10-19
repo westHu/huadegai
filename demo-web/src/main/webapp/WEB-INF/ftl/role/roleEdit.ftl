@@ -2,24 +2,11 @@
 <@header title="新增角色" css_war="multi-select,treeview"></@header>
 <body class="sticky-header">
 <section>
-    <!-- left side start-->
     <@left title="导航栏"></@left>
-    <!-- left side end-->
-    
-    <!-- main content start-->
     <div class="main-content" >
-
-        <!-- header section start-->
         <@notification title="通知"></@notification>
-        <!-- header section end-->
-
-        <!-- page heading start-->
-        <@pageHeading title_1="${op}角色"  title_3="系统设置" title_4="角色管理" title_4_url="${context.contextPath}/role"></@pageHeading>
-        <!-- page heading end-->
-
-        <!--body wrapper start-->
+        <@pageHeading title_1="${op}角色"  title_3="系统设置" title_4="角色管理" title_4_url="${context.contextPath}/role/list"></@pageHeading>
         <section class="wrapper">
-        <!-- page start-->
         <div class="row">
             <div class="col-md-12">
                 <section class="panel">
@@ -90,19 +77,12 @@
                 </section>
             </div>
         </div>
-        <!-- page end-->
         </section>
-        <!--body wrapper end-->
-
-        <!--footer section start-->
         <footer>
             2017 &copy; transfar by hup
         </footer>
-        <!--footer section end-->
     </div>
-    <!-- main content end-->
 </section>
-
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war="multi-select,treeview"></@js_lib>
 <script>
