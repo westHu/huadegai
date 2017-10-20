@@ -1,5 +1,8 @@
 package com.hup.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -15,11 +18,14 @@ public class PatrolPlan {
     private String planName; //名称
     private String planDesc; //描述
     private String planCreater; //创建者
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date planBegin; //起止时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date planEnd; //起止时间
     private Integer planPerDay; //时间间隔 天
     private Integer planPerHour; //时间间隔 小时
     private String planRemark; //备注
+    private String pointIds; //关联的巡检点
     private Boolean status;
     private Date createDate;
 
@@ -93,6 +99,14 @@ public class PatrolPlan {
 
     public void setPlanRemark(String planRemark) {
         this.planRemark = planRemark;
+    }
+
+    public String getPointIds() {
+        return pointIds;
+    }
+
+    public void setPointIds(String pointIds) {
+        this.pointIds = pointIds;
     }
 
     public Boolean getStatus() {

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hup.dao.PatrolTaskDao">
+
+    <!--
+        1.属性名,表名等用小写,select / from之类关键字用大写。
+        2.<select>返回值尽量使用resultType，当实体属性名称与表中列名无法匹配时候，使用resultMap进行映射。
+        3.不要用parameterType属性(多余)。
+        4.一般情况下用#{},不要用${}。
+        5.对做了分表分库后的数据集做查询操作时，不支持Join, 嵌套查询，order by, group by等操作。
+        6.对SQL进行排版。
+        7.建立索引，在数据量大的数据表中做查询的时候，对关键字段建立索引。（具体是否要加索引，请与数据组同事讨论）
+          WHERE t.username = #{userName}
+    -->
+    <sql id="table_columns">
+
+    </sql>
+
+    <select id="queryPatrolTaskList" resultType="com.hup.entity.PatrolTask">
+        SELECT * FROM pps_patrol_task
+    </select>
+
+    <select id="getPatrolTaskCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM pps_patrol_task
+    </select>
+
+    <insert id="insertTask" useGeneratedKeys="true" keyProperty="patrolTask.id">
+        INSERT INTO pps_patrol_task
+        (task_name, task_desc, task_creater, task_begin, task_end, task_per_hour, point_ids, status, create_date)
+        VALUES
+        (#{patrolTask.taskName}, #{patrolTask.taskDesc}, #{patrolTask.taskCreater}, #{patrolTask.taskBegin},
+        #{patrolTask.taskEnd}, #{patrolTask.taskPerHour}, #{patrolTask.pointIds}, true,  NOW())
+    </insert>
+
+    <delete id="deleteTask">
+        DELETE FROM pps_patrol_task WHERE id = #{id}
+    </delete>
+
+    <select id="getTask" resultType="com.hup.entity.PatrolTask">
+        SELECT * FROM pps_patrol_task WHERE id = #{id}
+    </select>
+
+    <update id="updateTask">
+        UPDATE pps_patrol_task SET
+        task_name = #{patrolTask.taskName},
+        task_desc = #{patrolTask.taskDesc},
+        task_creater = #{patrolTask.taskCreater},
+        task_begin = #{patrolTask.taskBegin},
+        task_end = #{patrolTask.taskEnd},
+        task_per_hour = #{patrolTask.taskPerHour},
+        point_ids = #{patrolTask.pointIds},
+        WHERE id = #{patrolTask.id}
+    </update>
+
+</mapper>

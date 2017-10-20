@@ -27,4 +27,7 @@ public interface PatrolPointDao {
     PatrolPoint getPoint(Long id);
 
     void updatePoint(@Param("patrolPoint") PatrolPoint patrolPoint);
+
+    List<PatrolPoint> findAllPatrolPoint();
+
 }

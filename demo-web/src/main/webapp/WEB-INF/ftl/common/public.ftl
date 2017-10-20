@@ -217,7 +217,7 @@
 
                 <li class="menu-list"><a href=""><i class="fa fa-tasks"></i> <span>巡检系统</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="${context.contextPath}"> 巡检任务</a></li>
+                        <li><a href="${context.contextPath}/patrol/taskList"> 巡检任务</a></li>
                         <li><a href="${context.contextPath}"> 巡检记录</a></li>
                         <li><a href="${context.contextPath}"> 巡检考核</a></li>
                         <li><a href="${context.contextPath}/patrol/planList"> 巡检计划</a></li>

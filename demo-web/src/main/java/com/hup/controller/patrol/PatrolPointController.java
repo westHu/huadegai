@@ -19,8 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 待开发：巡检点应该关联设备（） 并不是所有在此巡检点的所有设备都需要巡检，或者 并不是每次巡检都要巡检该巡检点的所有设备
  * Created by
- *
  * requestMapping 统一以'/'开头
  * 建议使用restful的接口，比如/operator/{id}。
  * 方法名称使用add/save, update/modify, delete, get/list/view对应RequestMethod里的post, put, delete, get;其他的随意

@@ -49,4 +49,8 @@
         WHERE id = #{patrolPoint.id}
     </update>
 
+    <select id="findAllPatrolPoint" resultType="com.hup.entity.PatrolPoint">
+        SELECT * FROM pps_patrol_point
+    </select>
+
 </mapper>

@@ -1,7 +1,11 @@
 package com.hup.api.patrol;
 
 import com.hup.db.Pager;
-import com.hup.entity.PatrolPoint; /**
+import com.hup.entity.PatrolPoint;
+
+import java.util.List;
+
+/**
  * Created with IntelliJ IDEA.
  * Description:
  * User: west_
@@ -20,4 +24,7 @@ public interface PatrolPointService {
     PatrolPoint getPoint(Long id);
 
     void updatePoint(PatrolPoint patrolPoint);
+
+    List<PatrolPoint> findAllPatrolPoint();
+
 }

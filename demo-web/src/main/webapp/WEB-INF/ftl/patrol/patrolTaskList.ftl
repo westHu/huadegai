@@ -1,27 +1,27 @@
 <#include "common/public.ftl">
-<@header title="巡检计划" css_war="responsive_table,gritter_css,pickers_css,paging-hup_css,jquery_confirm">
+<@header title="巡检任务" css_war="responsive_table,gritter_css,pickers_css,paging-hup_css,jquery_confirm">
 </@header>
 <body class="sticky-header">
 <section>
     <@left title="导航栏"></@left>
     <div class="main-content" >
         <@notification title="通知"></@notification>
-        <@pageHeading title_1="巡检计划"  title_3="巡检管理" title_4="巡检计划" title_4_url="#"></@pageHeading>
+        <@pageHeading title_1="巡检任务"  title_3="巡检管理" title_4="巡检任务" title_4_url="#"></@pageHeading>
         <div class="wrapper">
             <div class="row">
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
                             <div class="btn-group">
-                                <button class="btn btn-primary" type="button">新增巡检计划</button>
+                                <button class="btn btn-primary" type="button">新增巡检任务</button>
                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="${context.contextPath}/patrol/planCreate">新增巡检计划</a></li>
-                                    <li><a href="#">导入巡检计划</a></li>
-                                    <li><a href="#">导出巡检计划</a></li>
+                                    <li><a href="#">新增巡检任务</a></li> <#--${context.contextPath}/patrol/taskCreate-->
+                                    <li><a href="#">导入巡检任务</a></li>
+                                    <li><a href="#">导出巡检任务</a></li>
                                 </ul>
                             </div>
                         </header>
@@ -30,12 +30,13 @@
                                 <table class="table table-bordered table-striped table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>巡检计划</th>
+                                            <th>巡检任务</th>
                                             <th>描述</th>
                                             <th>创建人</th>
-                                            <th>开始时间</th>
-                                            <th>结束时间</th>
-                                            <th>时间间隔</th>
+                                            <th>允许时间</th>
+                                            <th>预计耗时</th>
+                                            <th>实际时间</th>
+                                            <th>巡检人员</th>
                                             <th>状态</th>
                                             <th>时间</th>
                                             <th>操作</th>
@@ -44,13 +45,14 @@
                                     <tbody>
                                         <#list pager.getList() as obj>
                                             <tr>
-                                                <td>${obj.planName}</td>
-                                                <td>${obj.planDesc}</td>
-                                                <td>${obj.planCreater}</td>
-                                                <td>${obj.planBegin?string("yyyy-MM-dd HH:mm:ss")}</td>
-                                                <td>${obj.planEnd?string("yyyy-MM-dd HH:mm:ss")}</td>
-                                                <td>${obj.planPerHour} 小时</td>
-                                                <td><#if obj.status == true>启用<#else>停用</#if></td>
+                                                <td>${obj.taskName}</td>
+                                                <td>${obj.taskDesc}</td>
+                                                <td>${obj.taskCreater}</td>
+                                                <td>[${obj.taskBeginTime?string("yyyy-MM-dd HH:mm:ss")}] ~ [${obj.taskEndTime?string("yyyy-MM-dd HH:mm:ss")}]</td>
+                                                <td>${obj.estimatedTime} 分钟</td>
+                                                <td>[${obj.practiceBeginTime?string(" HH:mm")}] ~ [${obj.practiceEndTime?string("HH:mm")}]</td>
+                                                <td>${obj.agent}</td>
+                                                <td>${obj.status}</td>
                                                 <td>${obj.createDate?string("yyyy-MM-dd HH:mm:ss")}</td>
                                                 <td>
                                                     <div class="btn-group">
@@ -58,8 +60,8 @@
                                                             操&nbsp作 <span class="caret"></span>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu">
-                                                            <li><a href="#" >编辑巡检计划</a></li>
-                                                            <li><a href="javascript:delete_patrol_plan(${obj.id})" >删除巡检计划</a></li>
+                                                            <li><a href="#" >编辑巡检任务</a></li>
+                                                            <li><a href="javascript:delete_patrol_task(${obj.id})" >删除巡检任务</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -91,13 +93,13 @@
         }
     });
 
-    function delete_patrol_plan(id) {
+    function delete_patrol_task(id) {
         console.info("id = " + id);
         if (id == undefined || id == '') return;
         $.confirm({
             icon: 'fa fa-warning',
             title: '删除提示！',
-            content: '确定要删除该巡检计划吗?',
+            content: '确定要删除该巡检任务吗?',
             type: 'dark',
             autoClose: 'cancel|8000',
             buttons: {
@@ -106,7 +108,7 @@
                     btnClass: 'btn-primary',
                     keys: ['enter'],
                     action: function(){
-                        var url = "/patrol/planDelete";
+                        var url = "/patrol/taskDelete";
                         var postData = {id: id};
                         postData = JSON.stringify(postData);
                         console.info("postData= " + postData);
@@ -118,7 +120,7 @@
                             dataType: 'json',
                             success: function (data) {
                                 if (data.status == "0") {
-                                    location.href= "${context.contextPath}/patrol/planList?msg="+data.description;
+                                    location.href= "${context.contextPath}/patrol/taskList?msg="+data.description;
                                 }
                             }
                         });
@@ -160,7 +162,7 @@
         totalSize: ${pager.totalCount},
         callback: function(num) {
             var pageSize = $('#pageSize option:selected').val();
-            var pageUrl =  "${context.contextPath}/patrol/planList?currentPage="+num+"&pageSize="+pageSize;
+            var pageUrl =  "${context.contextPath}/patrol/taskList?currentPage="+num+"&pageSize="+pageSize;
             location.href = pageUrl;
         }
     })

@@ -26,10 +26,10 @@
 
     <insert id="insertPlan" useGeneratedKeys="true" keyProperty="patrolPlan.id">
         INSERT INTO pps_patrol_plan
-        (plan_name, plan_desc, plan_agent, coordinate_x, coordinate_y, create_date)
+        (plan_name, plan_desc, plan_creater, plan_begin, plan_end, plan_per_hour, point_ids, status, create_date)
         VALUES
-        (#{patrolPlan.planName}, #{patrolPlan.planDesc}, #{patrolPlan.planAgent}, #{patrolPlan.coordinateX},
-        #{patrolPlan.coordinateY}, NOW())
+        (#{patrolPlan.planName}, #{patrolPlan.planDesc}, #{patrolPlan.planCreater}, #{patrolPlan.planBegin},
+        #{patrolPlan.planEnd}, #{patrolPlan.planPerHour}, #{patrolPlan.pointIds}, true,  NOW())
     </insert>
 
     <delete id="deletePlan">
@@ -44,8 +44,11 @@
         UPDATE pps_patrol_plan SET
         plan_name = #{patrolPlan.planName},
         plan_desc = #{patrolPlan.planDesc},
-        coordinate_x = #{patrolPlan.coordinateX},
-        coordinate_x = #{patrolPlan.coordinateY}
+        plan_creater = #{patrolPlan.planCreater},
+        plan_begin = #{patrolPlan.planBegin},
+        plan_end = #{patrolPlan.planEnd},
+        plan_per_hour = #{patrolPlan.planPerHour},
+        point_ids = #{patrolPlan.pointIds},
         WHERE id = #{patrolPlan.id}
     </update>
 
