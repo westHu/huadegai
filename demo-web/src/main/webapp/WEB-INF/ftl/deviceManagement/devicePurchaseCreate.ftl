@@ -9,37 +9,7 @@
         margin-top: 5px;
         font-weight: 1000;
     }
-
-    .row {
-        margin-bottom: 5px;
-    }
-
-    .my-form-control {
-        display: block;
-        width: 100%;
-        height: 27px;
-        /*padding: 6px 12px;*/
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #000000;
-        background-color: #c3c3c3;
-        background-image: none;
-        border: 1px solid #03a806;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    }
-
-    .my-textarea {
-        height: 47px;
-    }
-
-    .col-md-1 {
-        width: 10% !important;
-    }
-    td input{background-color:#CCFFFF;margin-top:-1px;margin-bottom:-1px;height:35px; width:100%;border:none;}
+    td input{background-color:#e7e7e7;margin-top:-1px;margin-bottom:-1px;height:35px; width:100%;border:none;}
 </style>
 </@header>
 <body class="sticky-header">
@@ -59,59 +29,58 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <label class="control-label"  style="float: left">采购单号：</label>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <input type="hidden" class="my-form-control"  name="id"  id="id" value="${devicePurchase.id}">
-                                        <input class="my-form-control" name="purchaseCode"  id="purchaseCode" <#if op = '新增'>value=".系统生成"<#elseif op = '更新'>value="${devicePurchase.purchaseCode}"</#if> readonly>
+                                        <input class="form-control" name="purchaseCode"  id="purchaseCode" <#if op = '新增'>value=".系统生成"<#elseif op = '更新'>value="${devicePurchase.purchaseCode}"</#if> readonly>
                                     </div>
 
                                     <label class="control-label"  style="float: left">采购单名：</label>
-                                    <div class="col-md-1">
-                                        <input class="my-form-control" name="purchaseName" id="purchaseName" value="${devicePurchase.purchaseName}">
+                                    <div class="col-md-2">
+                                        <input class="form-control" name="purchaseName" id="purchaseName" value="${devicePurchase.purchaseName}" required>
                                     </div>
 
                                     <label class="control-label" style="float: left">采购人员：</label>
-                                    <div class="col-md-1">
-                                        <input class="my-form-control" name="purchaseAgent" id="purchaseAgent" value="${devicePurchase.purchaseAgent}">
+                                    <div class="col-md-2">
+                                        <input class="form-control" name="purchaseAgent" id="purchaseAgent" value="${devicePurchase.purchaseAgent}" required>
                                     </div>
 
                                     <label class="control-label"  style="float: left">付款方式：</label>
-                                    <div class="col-md-1">
-                                        <input class="my-form-control" list="payList" name="purchasePaymentType" id="purchasePaymentType" value="${devicePurchase.purchasePaymentType}">
+                                    <div class="col-md-2">
+                                        <input class="form-control" list="payList" name="purchasePaymentType" id="purchasePaymentType" value="${devicePurchase.purchasePaymentType}" required>
                                         <datalist id="payList">
                                             <option value="货到付款">货到付款</option>
                                             <option value="TT付款">TT付款</option>
                                             <option value="分期付款">分期付款</option>
                                         </datalist>
-
                                     </div>
-
+                                </div>
+                                <br>
+                                <div class="row">
                                     <label class="control-label"  style="float: left">采购日期：</label>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="2017-12-02"  class="input-append date dpYears">
-                                            <input readonly="" value="<#if devicePurchase.purchaseDate??>${devicePurchase.purchaseDate?string("yyyy-MM-dd")}<#else>2017-11-11</#if>" size="16" class="form-control" name="purchaseDate" id="purchaseDate">
+                                            <input readonly="" value="<#if devicePurchase.purchaseDate??>${devicePurchase.purchaseDate?string("yyyy-MM-dd")}<#else>2017-11-11</#if>" size="16" class="form-control" name="purchaseDate" id="purchaseDate" required>
                                             <span class="input-group-btn add-on">
                                                     <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
                                             </span>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="row">
                                     <label class="control-label"  style="float: left">采购用途：</label>
-                                    <div class="col-md-1">
-                                        <input class="my-form-control" name="purchaseReason" id="purchaseReason" value="${devicePurchase.purchaseReason}">
+                                    <div class="col-md-2">
+                                        <input class="form-control" name="purchaseReason" id="purchaseReason" value="${devicePurchase.purchaseReason}">
                                     </div>
 
                                     <label class="control-label"  style="float: left">审核人员：</label>
-                                    <div class="col-md-1">
-                                        <input class="my-form-control" name="purchaseAuditors" id="purchaseAuditors" value="${devicePurchase.purchaseAuditors!'系统默认'}">
+                                    <div class="col-md-2">
+                                        <input class="form-control" name="purchaseAuditors" id="purchaseAuditors" value="${devicePurchase.purchaseAuditors!'系统默认'}">
                                     </div>
                                 </div>
-
+                                <br>
                                 <div class="row">
                                     <label class="control-label" style="float: left">采购备注：</label>
                                     <div class="col-sm-4">
-                                        <textarea rows="6" class="my-form-control my-textarea" name="purchaseRemark" id="purchaseRemark">${devicePurchase.purchaseRemark}</textarea>
+                                        <textarea rows="6" class="form-control textarea" name="purchaseRemark" id="purchaseRemark">${devicePurchase.purchaseRemark}</textarea>
                                     </div>
                                 </div>
 

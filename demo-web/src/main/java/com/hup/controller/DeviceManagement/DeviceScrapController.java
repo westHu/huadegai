@@ -7,6 +7,7 @@ import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.DeviceManagementUtil;
 import com.hup.util.PageUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +37,17 @@ public class DeviceScrapController {
 
 
 //    @RequiresPermissions("scrap:insert")
-    @RequestMapping(method = RequestMethod.GET)
-    public String showScrapPage(DeviceScrap deviceScrap, PageRequest pageRequest, Model model) {
-        logger.info("----------> 报废单列表");
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String showScrapPage(String msg, DeviceScrap deviceScrap, PageRequest pageRequest, Model model) {
+        logger.info("----------> 报废单列表--");
         Pager<DeviceScrap> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
         pager = deviceScrapService.queryDeviceScrapList(pager, deviceScrap);
         model.addAttribute("pager", pager);
+        if (StringUtils.isNotBlank(msg)) {
+            model.addAttribute("msg", msg);
+        }
         model.addAttribute("op", "列表");
         return "deviceManagement/deviceScrapList";
     }
@@ -82,7 +86,7 @@ public class DeviceScrapController {
         }*/
         deviceScrapService.insertDeviceScrap(deviceScrap);
         redirectAttributes.addFlashAttribute("msg", "新增报废单成功！");
-        return "redirect:/device/scrap";
+        return "redirect:/device/scrap/list";
     }
 
 
@@ -129,7 +133,7 @@ public class DeviceScrapController {
     public String deviceScrapUpdate(DeviceScrap deviceScrap, RedirectAttributes redirectAttributes) {
         deviceScrapService.updateDeviceScrap(deviceScrap);
         redirectAttributes.addFlashAttribute("msg","报废单更新成功！");
-        return "redirect:/device/scrap";
+        return "redirect:/device/scrap/list";
     }
 
 

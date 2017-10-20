@@ -9,36 +9,6 @@
         margin-top: 5px;
         font-weight: 1000;
     }
-
-    .row {
-        margin-bottom: 5px;
-    }
-
-    .my-form-control {
-        display: block;
-        width: 100%;
-        height: 27px;
-        /*padding: 6px 12px;*/
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #000000;
-        background-color: #c3c3c3;
-        background-image: none;
-        border: 1px solid #03a806;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    }
-
-    .my-textarea {
-        height: 47px;
-    }
-
-    .col-md-1 {
-        width: 10% !important;
-    }
     td input{background-color: #e7e7e7;margin-top:-1px;margin-bottom:-1px;height:35px; width:100%;border:none;}
 </style>
 </@header>
@@ -47,7 +17,7 @@
 <@left title="导航栏"></@left>
     <div class="main-content" >
     <@notification title="通知"></@notification>
-    <@pageHeading title_1="设备入库"  title_3="设备管理" title_4="入库列表" title_4_url="${context.contextPath}/device/inbound"></@pageHeading>
+    <@pageHeading title_1="设备入库"  title_3="设备管理" title_4="入库列表" title_4_url="${context.contextPath}/device/inbound/list"></@pageHeading>
         <div class="wrapper">
             <div class="row">
                 <div class="col-sm-12">
@@ -59,25 +29,25 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <label class="control-label"  style="float: left">入库单号：</label>
-                                    <div class="col-md-1">
-                                        <input type="hidden" class="my-form-control"  name="id"  id="id" value="${deviceInbound.id}">
-                                        <input class="my-form-control" name="inboundCode"  id="inboundCode" <#if op = '新增'>value=".系统生成"<#elseif op = '更新'>value="${deviceInbound.inboundCode}"</#if> readonly>
+                                    <div class="col-md-2">
+                                        <input type="hidden" class="form-control"  name="id"  id="id" value="${deviceInbound.id}">
+                                        <input class="form-control" name="inboundCode"  id="inboundCode" <#if op = '新增'>value=".系统生成"<#elseif op = '更新'>value="${deviceInbound.inboundCode}"</#if> readonly>
                                     </div>
 
                                     <label class="control-label"  style="float: left">入库单名：</label>
-                                    <div class="col-md-1">
-                                        <input class="my-form-control" name="inboundName" id="inboundName" value="${deviceInbound.inboundName}">
+                                    <div class="col-md-2">
+                                        <input class="form-control" name="inboundName" id="inboundName" value="${deviceInbound.inboundName}">
                                     </div>
 
                                     <label class="control-label" style="float: left">入库人员：</label>
-                                    <div class="col-md-1">
-                                        <input class="my-form-control" name="inboundAgent" id="inboundAgent" value="${deviceInbound.inboundAgent}">
+                                    <div class="col-md-2">
+                                        <input class="form-control" name="inboundAgent" id="inboundAgent" value="${deviceInbound.inboundAgent}">
                                     </div>
 
 
 
                                     <label class="control-label"  style="float: left">入库日期：</label>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="2017-12-02"  class="input-append date dpYears">
                                             <input readonly="" value="<#if deviceInbound.inboundDate??>${deviceInbound.inboundDate?string("yyyy-MM-dd")}<#else>2017-11-11</#if>" size="16" class="form-control" name="inboundDate" id="inboundDate">
                                             <span class="input-group-btn add-on">
@@ -86,18 +56,17 @@
                                         </div>
                                     </div>
                                 </div>
-
-
+                                <br>
                                 <div class="row">
                                     <label class="control-label" style="float: left">入库备注：</label>
                                     <div class="col-sm-4">
-                                        <textarea rows="6" class="my-form-control my-textarea" name="inboundRemark" id="inboundRemark">${deviceInbound.inboundRemark}</textarea>
+                                        <textarea rows="6" class="form-control my-textarea" name="inboundRemark" id="inboundRemark">${deviceInbound.inboundRemark}</textarea>
                                     </div>
                                 </div>
 
                                 <#if op == '新增'>
                                     <span class="tools pull-right">
-                                        <button class="btn btn-primary"               >&nbsp确认入库&nbsp</button>
+                                        <button class="btn btn-primary" type="submit">&nbsp确认入库&nbsp</button>
                                         <button class="btn btn-primary" type="reset">&nbsp重&nbsp置&nbsp</button>
                                     </span>
                                 <#elseif op == '更新'>
@@ -113,8 +82,6 @@
                             <header class="panel-heading">
                                 采购设备清单
                                 <span class="tools pull-right">
-                                    <#--<a href="javascript:;" class="fa fa-chevron-down"></a>
-                                    <a href="javascript:;" class="fa fa-times"></a>-->
                                     <div class="btn-group">
                                         <button id="add-new" class="btn btn-primary" type="button">
                                             添加设备 <i class="fa fa-plus"></i>

@@ -13,6 +13,7 @@ import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.DeviceManagementUtil;
 import com.hup.util.PageUtils;
+import com.hup.util.encrypt.Base64Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -49,8 +50,8 @@ public class DevicePurchaseController {
 
 
 //    @RequiresPermissions("purchase:insert")
-    @RequestMapping(method = RequestMethod.GET)
-    public String showInboundPage(DevicePurchase devicePurchase, PageRequest pageRequest, Model model) {
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String showInboundPage(String msg, DevicePurchase devicePurchase, PageRequest pageRequest, Model model) {
         logger.info("----------> 设备采购单列表");
         Pager<DevicePurchase> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
@@ -58,7 +59,10 @@ public class DevicePurchaseController {
         pager = devicePurchaseService.queryDevicePurchaseList(pager, devicePurchase);
         model.addAttribute("pager", pager);
         model.addAttribute("op", "列表");
-
+        if (StringUtils.isNotBlank(msg)) {
+            String decode = Base64Utils.decodeStr(msg);
+            model.addAttribute("msg", decode);
+        }
         String name = (String) SecurityUtils.getSubject().getPrincipal();
         String leaders = userService.findLeaders(name);
         model.addAttribute("canAuditors", leaders+","+name);
@@ -90,7 +94,7 @@ public class DevicePurchaseController {
         devicePurchase.setPurchaseCode(DeviceManagementUtil.purchaseCode());
         devicePurchaseService.insertDevicePurchase(devicePurchase);
         redirectAttributes.addFlashAttribute("msg", "新增采购单成功！");
-        return "redirect:/device/purchase";
+        return "redirect:/device/purchase/list";
     }
 
 
@@ -137,7 +141,7 @@ public class DevicePurchaseController {
     public String devicePurchaseUpdate(DevicePurchase devicePurchase, RedirectAttributes redirectAttributes) {
         devicePurchaseService.updateDevicePurchase(devicePurchase);
         redirectAttributes.addFlashAttribute("msg","采购单更新成功！");
-        return "redirect:/device/purchase";
+        return "redirect:/device/purchase/list";
     }
 
 
@@ -169,7 +173,7 @@ public class DevicePurchaseController {
     public String audit(@PathVariable("code") String code, ProcessRuntime processRuntime) {
         logger.info("========审核采购单 code ：{}",code);
         Boolean audit = devicePurchaseService.auditProcess(code, processRuntime);
-        return "redirect:/device/purchase";
+        return "redirect:/device/purchase/list";
     }
 
 

@@ -8,6 +8,7 @@ import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.DeviceManagementUtil;
 import com.hup.util.PageUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,17 @@ public class DeviceRepairController {
 
 
 //    @RequiresPermissions("repair:insert")
-    @RequestMapping(method = RequestMethod.GET)
-    public String showRepairPage(DeviceRepair deviceRepair, PageRequest pageRequest, Model model) {
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String showRepairPage(String msg, DeviceRepair deviceRepair, PageRequest pageRequest, Model model) {
         logger.info("----------> 维修单列表");
         Pager<DeviceRepair> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
         pager = deviceRepairService.queryDeviceRepairList(pager, deviceRepair);
         model.addAttribute("pager", pager);
+        if (StringUtils.isNotBlank(msg)) {
+            model.addAttribute("msg", msg);
+        }
         model.addAttribute("op", "列表");
         return "deviceManagement/deviceRepairList";
     }
@@ -63,7 +67,7 @@ public class DeviceRepairController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String repairCreateForm(Model model) {
         logger.info("--------->维修单页面--");
-        /*List<DevicePurchase> devicePurchaseByStatus = devicePurchaseService.getDevicePurchaseByStatus("采购完成");
+        /*List<DevicePurchase> devicePurchaseByStatus = devicePurchaseService.getDevicePurchaseByStatus("检修完成");
         List<DevicePurchaseDetail> purchaseDetailList = new ArrayList<>();
         for (DevicePurchase purchase : devicePurchaseByStatus) {
             purchaseDetailList.addAll(purchase.getDevicePurchaseDetailList());
@@ -85,7 +89,7 @@ public class DeviceRepairController {
         }
         deviceRepairService.insertDeviceRepair(deviceRepair);
         redirectAttributes.addFlashAttribute("msg", "新增维修单成功！");
-        return "redirect:/device/repair";
+        return "redirect:/device/repair/list";
     }
 
 
@@ -98,7 +102,7 @@ public class DeviceRepairController {
      */
     @RequestMapping(value = "/{id}/view", method = RequestMethod.GET)
     public String deviceRepairView(@PathVariable("id") Long id, Model model) {
-        logger.info("========查看采购单=========" + id);
+        logger.info("========查看检修单=========" + id);
         DeviceRepair deviceRepair = deviceRepairService.findOne(id);
         model.addAttribute("deviceRepair",deviceRepair);
         return "deviceManagement/deviceRepairView";
@@ -113,7 +117,7 @@ public class DeviceRepairController {
      */
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String deviceRepairUpdate(@PathVariable("id") Long id, Model model) {
-        logger.info("========更新采购单=========" + id);
+        logger.info("========更新检修单=========" + id);
         DeviceRepair deviceRepair = deviceRepairService.findOne(id);
         model.addAttribute("deviceRepair",deviceRepair);
         model.addAttribute("op","更新");
@@ -132,7 +136,7 @@ public class DeviceRepairController {
     public String deviceRepairUpdate(DeviceRepair deviceRepair, RedirectAttributes redirectAttributes) {
         deviceRepairService.updateDeviceRepair(deviceRepair);
         redirectAttributes.addFlashAttribute("msg","维修单更新成功！");
-        return "redirect:/device/repair";
+        return "redirect:/device/repair/list";
     }
 
 
@@ -149,7 +153,7 @@ public class DeviceRepairController {
     public BaseResponse delete(@PathVariable("id") Long id) {
         logger.info("========删除维修单： {}",id);
         deviceRepairService.deleteDeviceRepair(id);
-        return new BaseResponse("0","采购单删除成功！");
+        return new BaseResponse("0","检修单删除成功！");
     }
 
 

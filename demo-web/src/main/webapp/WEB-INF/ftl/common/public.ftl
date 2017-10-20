@@ -228,13 +228,13 @@
 
                 <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>设备管理</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="${context.contextPath}/device/purchase"> 设备采购</a></li>
-                        <li><a href="${context.contextPath}/device/inbound"> 设备入库</a></li>
-                        <li><a href="${context.contextPath}/device/install"> 设备安装</a></li>
-                        <li><a href="${context.contextPath}/device/repair"> 设备检修</a></li>
-                        <li><a href="${context.contextPath}/device/scrap"> 设备报废</a></li>
-                        <li><a href="${context.contextPath}/device/query"> 设备查询</a></li>
-                        <li><a href="${context.contextPath}/device/category"> 设备分类</a></li>
+                        <li><a href="${context.contextPath}/device/purchase/list"> 设备采购</a></li>
+                        <li><a href="${context.contextPath}/device/inbound/list"> 设备入库</a></li>
+                        <li><a href="${context.contextPath}/device/install/list"> 设备安装</a></li>
+                        <li><a href="${context.contextPath}/device/repair/list"> 设备检修</a></li>
+                        <li><a href="${context.contextPath}/device/scrap/list"> 设备报废</a></li>
+                        <li><a href="${context.contextPath}/device/query/list"> 设备查询</a></li>
+                        <li><a href="${context.contextPath}/device/category/list"> 设备分类</a></li>
                     </ul>
                 </li>
                 <li class="menu-list" ><a href=""><i class="fa fa-file-text"></i> <span>流程管理</span></a>

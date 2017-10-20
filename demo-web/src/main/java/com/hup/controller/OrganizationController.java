@@ -30,7 +30,7 @@ public class OrganizationController {
      * <p>@return:
      */
     @RequiresPermissions("organization:view")
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "list",method = RequestMethod.GET)
     public String showOrganization(Model model) {
         model.addAttribute("organizationTree", organizationService.getOrganizationTree());
         model.addAttribute("organizationList", organizationService.findAll());

@@ -9,6 +9,8 @@ import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.DeviceManagementUtil;
 import com.hup.util.PageUtils;
+import com.hup.util.encrypt.Base64Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,14 +46,18 @@ public class DeviceInboundController {
 
 
 //    @RequiresPermissions("inbound:insert")
-    @RequestMapping(method = RequestMethod.GET)
-    public String showInboundPage(DeviceInbound deviceInbound, PageRequest pageRequest, Model model) {
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String showInboundPage(String msg, DeviceInbound deviceInbound, PageRequest pageRequest, Model model) {
         logger.info("----------> 设备入库单列表");
         Pager<DeviceInbound> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
         pager = deviceInboundService.queryDeviceInboundList(pager, deviceInbound);
         model.addAttribute("pager", pager);
+        if (StringUtils.isNotBlank(msg)) {
+            String decode = Base64Utils.decodeStr(msg);
+            model.addAttribute("msg", decode);
+        }
         model.addAttribute("op", "列表");
         return "deviceManagement/deviceInboundList";
     }
@@ -90,7 +96,7 @@ public class DeviceInboundController {
         }
         deviceInboundService.insertDeviceInbound(deviceInbound);
         redirectAttributes.addFlashAttribute("msg", "新增采购单成功！");
-        return "redirect:/device/inbound";
+        return "redirect:/device/inbound/list";
     }
 
 
@@ -137,7 +143,7 @@ public class DeviceInboundController {
     public String deviceInboundUpdate(DeviceInbound deviceInbound, RedirectAttributes redirectAttributes) {
         deviceInboundService.updateDeviceInbound(deviceInbound);
         redirectAttributes.addFlashAttribute("msg","采购单更新成功！");
-        return "redirect:/device/inbound";
+        return "redirect:/device/inbound/list";
     }
 
 

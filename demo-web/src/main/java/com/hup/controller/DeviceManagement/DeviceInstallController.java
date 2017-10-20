@@ -8,6 +8,7 @@ import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.DeviceManagementUtil;
 import com.hup.util.PageUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +43,17 @@ public class DeviceInstallController {
 
 
 //    @RequiresPermissions("install:insert")
-    @RequestMapping(method = RequestMethod.GET)
-    public String showInstallPage(DeviceInstall deviceInstall, PageRequest pageRequest, Model model) {
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String showInstallPage(String msg, DeviceInstall deviceInstall, PageRequest pageRequest, Model model) {
         logger.info("----------> 设备安装单列表");
         Pager<DeviceInstall> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
         pager = deviceInstallService.queryDeviceInstallList(pager, deviceInstall);
         model.addAttribute("pager", pager);
+        if (StringUtils.isNotBlank(msg)) {
+            model.addAttribute("msg", msg);
+        }
         model.addAttribute("op", "列表");
         return "deviceManagement/deviceInstallList";
     }
@@ -88,7 +92,7 @@ public class DeviceInstallController {
         }
         deviceInstallService.insertDeviceInstall(deviceInstall);
         redirectAttributes.addFlashAttribute("msg", "新增采购单成功！");
-        return "redirect:/device/install";
+        return "redirect:/device/install/list";
     }
 
 
@@ -134,13 +138,13 @@ public class DeviceInstallController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String deviceInstallUpdate(DeviceInstall deviceInstall, RedirectAttributes redirectAttributes) {
         deviceInstallService.updateDeviceInstall(deviceInstall);
-        redirectAttributes.addFlashAttribute("msg","采购单更新成功！");
-        return "redirect:/device/install";
+        redirectAttributes.addFlashAttribute("msg","安装单更新成功！");
+        return "redirect:/device/install/list";
     }
 
 
     /**
-     * <p>@Description: 删除设备
+     * <p>@Description: 删除安装单
      * <p>@Author: hupj
      * <p>@Date: 2017/9/26
      * <p>@Param:
@@ -152,7 +156,7 @@ public class DeviceInstallController {
     public BaseResponse delete(@PathVariable("id") Long id) {
         logger.info("========删除安装单： {}",id);
         deviceInstallService.deleteDeviceInstall(id);
-        return new BaseResponse("0","采购单删除成功！");
+        return new BaseResponse("0","安装单删除成功！");
     }
 
 
