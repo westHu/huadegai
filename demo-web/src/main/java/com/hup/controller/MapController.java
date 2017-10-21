@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/map")
 public class MapController {
 
-    @RequestMapping("/mapView")
-    public String mapView(){
-        return "map/baiduMap";
+    @RequestMapping("/monitoring")
+    public String monitoringView(){
+        return "map/vector_map";
     }
 
-
-
+    @RequestMapping("/typhoon")
+    public String typhoonView(){
+        return "map/typhoon_full_map";
+    }
 
     @ResponseBody
     @RequestMapping(value = "/mapJson",method = RequestMethod.GET)

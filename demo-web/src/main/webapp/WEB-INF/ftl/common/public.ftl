@@ -210,8 +210,9 @@
 
                 <li class="menu-list"><a href="#"><i class="fa fa-map-marker"></i> <span>地图系统</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="google_map.html"> Google Map</a></li>
-                        <li><a href="vector_map.html"> Vector Map</a></li>
+                        <li><a href="#"> 列表展示</a></li>
+                        <li><a href="${context.contextPath}/map/monitoring"> 地图展示</a></li>
+                        <li><a href="${context.contextPath}/map/typhoon"> 台风云图</a></li>
                     </ul>
                 </li>
 
