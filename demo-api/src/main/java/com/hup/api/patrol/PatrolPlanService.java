@@ -3,6 +3,8 @@ package com.hup.api.patrol;
 import com.hup.db.Pager;
 import com.hup.entity.PatrolPlan;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -12,6 +14,7 @@ import com.hup.entity.PatrolPlan;
  */
 public interface PatrolPlanService {
 
+    List<PatrolPlan> getAllPatrolPlan();
 
     Pager<PatrolPlan> queryPatrolPlanList(PatrolPlan patrolPlan, Pager<PatrolPlan> pager);
 
@@ -22,4 +25,6 @@ public interface PatrolPlanService {
     PatrolPlan getPlan(Long id);
 
     void updatePlan(PatrolPlan patrolPlan);
+
+    int updatePlanRelatedJob(PatrolPlan plan);
 }

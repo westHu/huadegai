@@ -13,6 +13,7 @@
         <module>demo-web</module>
         <module>demo-message</module>
         <module>demo-flow</module>
+        <module>demo-job</module>
     </modules>
 
 
@@ -158,6 +159,13 @@
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
                 <version>3.0.0</version>
+            </dependency>
+
+            <!--定时任务用到的-->
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>2.2.1</version>
             </dependency>
 
 

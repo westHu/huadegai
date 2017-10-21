@@ -7,7 +7,6 @@ import com.hup.constant.CantDelete;
 import com.hup.db.Pager;
 import com.hup.entity.Resource;
 import com.hup.entity.Role;
-import com.hup.entity.User;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.response.RoleTreeResponse;

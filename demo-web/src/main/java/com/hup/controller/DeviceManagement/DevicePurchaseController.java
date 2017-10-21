@@ -3,11 +3,8 @@ package com.hup.controller.DeviceManagement;
 import com.alibaba.fastjson.JSON;
 import com.hup.api.UserService;
 import com.hup.api.deviceManagement.DevicePurchaseService;
-import com.hup.api.flow.ProcessDefinitionService;
-import com.hup.api.flow.ProcessRuntimeService;
 import com.hup.db.Pager;
 import com.hup.entity.DevicePurchase;
-import com.hup.entity.ProcessDefinition;
 import com.hup.entity.ProcessRuntime;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
@@ -26,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

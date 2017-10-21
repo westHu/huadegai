@@ -1,27 +1,27 @@
 <#include "common/public.ftl">
-<@header title="巡检计划" css_war="responsive_table,gritter_css,pickers_css,paging-hup_css,jquery_confirm">
-</@header>
+<@header title="定时任务管理" css_war = "responsive_table,gritter_css,jquery_confirm,paging-hup_css"></@header>
 <body class="sticky-header">
 <section>
     <@left title="导航栏"></@left>
     <div class="main-content" >
         <@notification title="通知"></@notification>
-        <@pageHeading title_1="巡检计划"  title_3="巡检管理" title_4="巡检计划" title_4_url="#"></@pageHeading>
+        <@pageHeading title_1="任务列表" title_3="系统设置" title_4="任务管理" title_4_url="${context.contextPath}/quartz/list" ></@pageHeading>
         <div class="wrapper">
             <div class="row">
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
                             <div class="btn-group">
-                                <button class="btn btn-primary" type="button">新增巡检计划</button>
+                                <button class="btn btn-primary" type="button">新增定时任务</button>
                                 <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="${context.contextPath}/patrol/planCreate">新增巡检计划</a></li>
-                                    <li><a href="#">导入巡检计划</a></li>
-                                    <li><a href="#">导出巡检计划</a></li>
+                                    <li><a href="${context.contextPath}/quartz/create">新增定时任务</a></li>
+                                    <li><a href="#">导出列表</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">保存PDF</a></li>
                                 </ul>
                             </div>
                         </header>
@@ -30,14 +30,14 @@
                                 <table class="table table-bordered table-striped table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>巡检计划</th>
-                                            <th>描述</th>
-                                            <th>创建人</th>
-                                            <th>开始时间</th>
-                                            <th>结束时间</th>
-                                            <th>时间间隔</th>
-                                            <th>状态</th>
-                                            <th>生成任务</th>
+                                            <th>任务名</th>
+                                            <th>任务组</th>
+                                            <th>触发器名</th>
+                                            <th>触发器组</th>
+                                            <th>时间设置</th>
+                                            <th>创建者</th>
+                                            <th>任务类型</th>
+                                            <th>任务状态</th>
                                             <th>时间</th>
                                             <th>操作</th>
                                         </tr>
@@ -45,14 +45,14 @@
                                     <tbody>
                                         <#list pager.getList() as obj>
                                             <tr>
-                                                <td>${obj.planName}</td>
-                                                <td>${obj.planDesc}</td>
-                                                <td>${obj.planCreater}</td>
-                                                <td>${obj.planBegin?string("yyyy-MM-dd HH:mm:ss")}</td>
-                                                <td>${obj.planEnd?string("yyyy-MM-dd HH:mm:ss")}</td>
-                                                <td>${obj.planPerHour} 小时</td>
-                                                <td><#if obj.status == true>启用<#else>停用</#if></td>
-                                                <td><#if obj.relatedQuartzJob == 1>已生成定时任务<#else>未关联定时任务</#if></td>
+                                                <td>${obj.jobName}</td>
+                                                <td>${obj.jobGroupName}</td>
+                                                <td>${obj.triggerName}</td>
+                                                <td>${obj.triggerGroupName}</td>
+                                                <td>${obj.time}</td>
+                                                <td>${obj.jobCreater}</td>
+                                                <td>${obj.jobType}</td>
+                                                <td>${obj.status}</td>
                                                 <td>${obj.createDate?string("yyyy-MM-dd HH:mm:ss")}</td>
                                                 <td>
                                                     <div class="btn-group">
@@ -60,11 +60,16 @@
                                                             操&nbsp作 <span class="caret"></span>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu">
-                                                            <li><a href="#" >编辑巡检计划</a></li>
-                                                            <li><a href="javascript:delete_patrol_plan(${obj.id})" >删除巡检计划</a></li>
+                                                            <li><a href="javascript:startJob(${obj.id}, '${obj.status}')" <#if obj.status == '运行中'> class="line-through"</#if>>
+                                                                    &nbsp&nbsp启动任务&nbsp&nbsp
+                                                                </a>
+                                                            </li>
+                                                            <li><a href="javascript:stopJob(${obj.id},'${obj.status}')" <#if obj.status == '停止中'> class="line-through"</#if>>
+                                                                    &nbsp&nbsp暂停任务&nbsp&nbsp
+                                                                </a>
+                                                            </li>
                                                             <li class="divider"></li>
-                                                            <li><a href="javascript:create_quartz_job(${obj.id},${obj.relatedQuartzJob})" >生成定时任务</a></li>
-                                                            <li><a href="javascript:delete_quartz_job(${obj.id},${obj.relatedQuartzJob})" >删除关联任务</a></li>
+                                                            <li><a href="javascript:deleteJob(${obj.id})">&nbsp&nbsp删除任务&nbsp&nbsp</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -85,7 +90,7 @@
     </div>
 </section>
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="gritter_script,pickers_plugins,pickers_initialization,paging-hup,jquery_confirm"></@js_lib>
+<@js_lib js_war="gritter_script,jquery_confirm,paging-hup"></@js_lib>
 <script>
     jQuery(document).ready(function() {
         //显示小提示
@@ -96,65 +101,30 @@
         }
     });
 
-    function delete_patrol_plan(id) {
-        console.info("id = " + id);
-        if (id == undefined || id == '') return;
-        $.confirm({
-            icon: 'fa fa-warning',
-            title: '删除提示！',
-            content: '确定要删除该巡检计划吗?',
-            type: 'dark',
-            autoClose: 'cancel|8000',
-            buttons: {
-                ok: {
-                    text: "确定",
-                    btnClass: 'btn-primary',
-                    keys: ['enter'],
-                    action: function(){
-                        var url = "/patrol/planDelete";
-                        var postData = {id: id};
-                        postData = JSON.stringify(postData);
-                        console.info("postData= " + postData);
-                        $.ajax({
-                            url: url,
-                            type: 'delete',
-                            contentType: "application/json; charset=utf-8",
-                            data: postData,
-                            dataType: 'json',
-                            success: function (data) {
-                                if (data.status == "0") {
-                                    location.href= "${context.contextPath}/patrol/planList?msg="+data.description;
-                                }
-                            }
-                        });
-                    }
-                },
-                cancel: {
-                    text: "取消",
-                    btnClass: 'btn-primary',
-                    keys: ['esc'],
-                    /*action:function () {
-                        console.info("你点击了取消按钮！")
-                    }*/
-                }
-            }
-        });
-    }
+    //分页
+    $("#page").paging({
+        pageNo: ${pager.currentPage},
+        totalPage: ${pager.pageCount},
+        totalSize: ${pager.totalCount},
+        callback: function(num) {
+            var pageSize = $('#pageSize option:selected').val();
+            var pageUrl =  "${context.contextPath}/user/list?currentPage="+num+"&pageSize="+pageSize;
+            location.href = pageUrl;
+        }
+    });
 
-
-    function create_quartz_job(id, relatedQuartzJob) {
+    function startJob(id, status) {
         console.info("id = " + id);
-        console.info("relatedQuartzJob = " + relatedQuartzJob);
-        if (id == undefined || id == '') return;
-        if (relatedQuartzJob == undefined) return;
-        if (relatedQuartzJob == 1) {
-            TipsNotice(null, "关联该计划的定时任务已经生成！ 不能重复生成！");
+        console.info("status = " + status);
+        if (id == undefined || id == '' || status == undefined || status == '') return;
+        if (status == '运行中'){
+            TipsNotice(null, "任务运行中，不能启动！");
             return;
         }
         $.confirm({
             icon: 'fa fa-warning',
-            title: '删除提示！',
-            content: '确定要创建定时任务并关联该巡检计划吗?',
+            title: '启动提示！',
+            content: '确定要启动该定时任务吗?',
             type: 'dark',
             autoClose: 'cancel|8000',
             buttons: {
@@ -163,19 +133,14 @@
                     btnClass: 'btn-primary',
                     keys: ['enter'],
                     action: function(){
-                        var url = "/patrol/createQuartzJob";
-                        var postData = {id: id};
-                        postData = JSON.stringify(postData);
-                        console.info("postData= " + postData);
                         $.ajax({
-                            url: url,
+                            url: "/quartz/"+id+"/start",
                             type: 'post',
                             contentType: "application/json; charset=utf-8",
-                            data: postData,
                             dataType: 'json',
                             success: function (data) {
                                 if (data.status == "0") {
-                                    location.href= "${context.contextPath}/patrol/planList?msg="+data.description;
+                                    location.href = "${context.contextPath}/quartz/list?msg=" + data.description;
                                 }
                             }
                         });
@@ -194,20 +159,19 @@
     }
 
 
-    function delete_quartz_job(id, relatedQuartzJob) {
+
+    function stopJob(id, status) {
         console.info("id = " + id);
-        console.info("relatedQuartzJob = " + relatedQuartzJob);
-        if (id == undefined || id == '') return;
-        if (relatedQuartzJob == undefined) return;
-        if (relatedQuartzJob == 0) {
-            console.info("11111")
-            TipsNotice(null, "关联该计划的定时任务已经删除或未生成！ 不能删除！");
+        console.info("status = " + status);
+        if (id == undefined || id == '' || status == undefined || status == '') return;
+        if (status == '停止中'){
+            TipsNotice(null, "任务停止中，不能暂停！");
             return;
         }
         $.confirm({
             icon: 'fa fa-warning',
-            title: '删除提示！',
-            content: '确定要创建定时任务并关联该巡检计划吗?',
+            title: '密码提示！',
+            content: '确定要重置该用户的密码吗?',
             type: 'dark',
             autoClose: 'cancel|8000',
             buttons: {
@@ -216,20 +180,57 @@
                     btnClass: 'btn-primary',
                     keys: ['enter'],
                     action: function(){
-                        var url = "/patrol/deleteQuartzJob";
-                        var postData = {id: id};
-                        postData = JSON.stringify(postData);
-                        console.info("postData= " + postData);
                         $.ajax({
-                            url: url,
+                            url: "/user/"+id+"/resetPassword",
                             type: 'post',
                             contentType: "application/json; charset=utf-8",
-                            data: postData,
                             dataType: 'json',
                             success: function (data) {
                                 if (data.status == "0") {
-                                    location.href= "${context.contextPath}/patrol/planList?msg="+data.description;
+                                    location.href = "${context.contextPath}/user/list?msg=" + (new Base64()).encode("Pwd重置成功！");
                                 }
+
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: "取消",
+                    btnClass: 'btn-primary',
+                    keys: ['esc'],
+                    /*action:function () {
+                        console.info("你点击了取消按钮！")
+                    }*/
+                }
+            }
+        });
+    }
+
+    function deleteJob(id) {
+        console.info("id = " + id);
+        if (id == undefined || id == '') return;
+        $.confirm({
+            icon: 'fa fa-warning',
+            title: '密码提示！',
+            content: '确定要重置该用户的密码吗?',
+            type: 'dark',
+            autoClose: 'cancel|8000',
+            buttons: {
+                ok: {
+                    text: "确定",
+                    btnClass: 'btn-primary',
+                    keys: ['enter'],
+                    action: function(){
+                        $.ajax({
+                            url: "/user/"+id+"/resetPassword",
+                            type: 'post',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status == "0") {
+                                    location.href = "${context.contextPath}/user/list?msg=" + (new Base64()).encode("Pwd重置成功！");
+                                }
+
                             }
                         });
                     }
@@ -247,11 +248,12 @@
     }
 
 
+    // 提示方法
     function TipsNotice(title, text) {
         $.gritter.add({
             title: title || " 温馨提示 NOTICE ",
             text:  text || "没有消息！",
-            image:  '${absolutePath}/images/notice.jpg',
+            image: '${absolutePath}/images/notice.jpg',
             sticky: false,
             time: 3000,
             speed:5000,
@@ -260,20 +262,8 @@
         });
     }
 
-</script>
 
-<script>
-    //分页
-    $("#page").paging({
-        pageNo: ${pager.currentPage},
-        totalPage: ${pager.pageCount},
-        totalSize: ${pager.totalCount},
-        callback: function(num) {
-            var pageSize = $('#pageSize option:selected').val();
-            var pageUrl =  "${context.contextPath}/patrol/planList?currentPage="+num+"&pageSize="+pageSize;
-            location.href = pageUrl;
-        }
-    })
+
 </script>
 </body>
 </html>

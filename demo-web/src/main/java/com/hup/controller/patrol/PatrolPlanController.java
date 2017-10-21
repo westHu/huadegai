@@ -2,9 +2,11 @@ package com.hup.controller.patrol;
 
 
 import com.alibaba.fastjson.JSON;
+import com.hup.api.job.JobQuartzService;
 import com.hup.api.patrol.PatrolPlanService;
 import com.hup.api.patrol.PatrolPointService;
 import com.hup.db.Pager;
+import com.hup.entity.JobQuartz;
 import com.hup.entity.PatrolPlan;
 import com.hup.entity.PatrolPoint;
 import com.hup.request.PageRequest;
@@ -45,6 +47,9 @@ public class PatrolPlanController {
 
     @Autowired
     private PatrolPointService patrolPointService;
+
+    @Autowired
+    private JobQuartzService jobQuartzService;
 
 
     @RequestMapping(value = "/planList", method = RequestMethod.GET)
@@ -93,8 +98,62 @@ public class PatrolPlanController {
     @ResponseBody
     @RequestMapping(value = "/planDelete", method = RequestMethod.DELETE)
     public BaseResponse planDelete(@RequestBody PatrolPlan patrolPlan) {
-        logger.info("----巡检点删除 -- patrolPlan id = " + patrolPlan.getId());
+        logger.info("----巡检计划删除 -- patrolPlan id = " + patrolPlan.getId());
         patrolPlanService.deletePlan(patrolPlan.getId());
+        return new BaseResponse("0","巡检计划删除成功！", null);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/createQuartzJob", method = RequestMethod.POST)
+    public BaseResponse planCreateQuartzJob(@RequestBody PatrolPlan patrolPlan) {
+        logger.info("----巡检计划生成定时任务 -- patrolPlan id = " + patrolPlan.getId());
+        PatrolPlan plan = patrolPlanService.getPlan(patrolPlan.getId());
+        if (plan == null ) return null;
+        //判断是否已经生成？
+        JobQuartz one = jobQuartzService.findOneByJobName(plan.getPlanName());
+        if (one != null) {
+            return new BaseResponse("0","关联该计划的定时任务已经生成！", null);
+        }
+        JobQuartz quartz = new JobQuartz();
+        quartz.setJobName(plan.getPlanName());
+        quartz.setJobGroupName("系统默认");
+        quartz.setTriggerName("系统默认");
+        quartz.setTriggerGroupName("系统默认");
+        quartz.setJobCreater("巡检计划生成");
+        quartz.setJobType("system");
+        quartz.setStatus("停止中");
+        quartz.setRemark(plan.getPlanDesc());
+
+        String time = "0 0/min * * * ? *";
+        time = time.replace("min", plan.getPlanPerHour().toString());
+        quartz.setTime(time);
+        jobQuartzService.insertJobQuartz(quartz);
+
+        //更新巡检计划 已关联任务
+        plan.setRelatedQuartzJob(1);
+        patrolPlanService.updatePlanRelatedJob(plan);
+
         return new BaseResponse("0","巡检点删除成功！", null);
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteQuartzJob", method = RequestMethod.POST)
+    public BaseResponse planDeleteQuartzJob(@RequestBody PatrolPlan patrolPlan) {
+        logger.info("----巡检计划删除定时任务 -- patrolPlan id = " + patrolPlan.getId());
+        PatrolPlan plan = patrolPlanService.getPlan(patrolPlan.getId());
+        if (plan == null ) return null;
+        //判断是否已经生成？
+        JobQuartz one = jobQuartzService.findOneByJobName(plan.getPlanName());
+        if (one == null) {
+            return new BaseResponse("0","关联该计划的定时任务已经删除！", null);
+        }
+        jobQuartzService.deleteJobQuartz(one.getId());
+        //更新巡检计划 已删除任务
+        plan.setRelatedQuartzJob(0);
+        patrolPlanService.updatePlanRelatedJob(plan);
+        return new BaseResponse("0","关联该计划的定时任务删除成功！", null);
+    }
+
 }

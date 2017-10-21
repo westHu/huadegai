@@ -250,6 +250,7 @@
                         <li><a href="${context.contextPath}/role/list"> 角色管理</a></li>
                         <li><a href="${context.contextPath}/resource/list"> 资源管理</a></li>
                         <li><a href="${context.contextPath}/organization/list"> 组织管理</a></li>
+                        <li><a href="${context.contextPath}/quartz/list"> 任务管理</a></li>
                     </ul>
                 </li>
             </ul>

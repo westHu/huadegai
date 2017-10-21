@@ -1,7 +1,6 @@
 package com.hup.controller.DeviceManagement;
 
 import com.hup.api.deviceManagement.DeviceInstallService;
-import com.hup.api.deviceManagement.DevicePurchaseService;
 import com.hup.db.Pager;
 import com.hup.entity.*;
 import com.hup.request.PageRequest;
@@ -19,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

@@ -83,7 +83,7 @@ public class GlobalExceptionResolver extends SimpleMappingExceptionResolver {
             }
             for (StackTraceElement trace :  stackTrace) {
                 String className = trace.getClassName();
-                if(StringUtils.contains(className,"hup")){
+                if(StringUtils.contains(className, "com/hup")){
                     logger.error(trace.toString());
                 }
             }

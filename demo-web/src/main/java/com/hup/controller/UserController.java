@@ -5,7 +5,6 @@ import com.hup.api.RoleService;
 import com.hup.api.UserService;
 import com.hup.constant.CantDelete;
 import com.hup.db.Pager;
-import com.hup.entity.DevicePurchase;
 import com.hup.entity.User;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
@@ -24,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
 
 /**
  * <p>User: hup

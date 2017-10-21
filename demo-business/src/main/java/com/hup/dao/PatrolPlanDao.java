@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface PatrolPlanDao {
 
+    List<PatrolPlan> getAllPatrolPlan();
+
     List<PatrolPlan> queryPatrolPlanList(@Param("patrolPlan") PatrolPlan patrolPlan,
                                          @Param("pager") Pager<PatrolPlan> pager);
 
@@ -27,4 +29,6 @@ public interface PatrolPlanDao {
     PatrolPlan getPlan(Long id);
 
     void updatePlan(@Param("patrolPlan") PatrolPlan patrolPlan);
+
+    int updatePlanRelatedJob(@Param("patrolPlan")PatrolPlan patrolPlan);
 }

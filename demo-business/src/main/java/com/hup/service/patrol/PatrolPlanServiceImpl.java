@@ -24,6 +24,11 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 
 
     @Override
+    public List<PatrolPlan> getAllPatrolPlan() {
+        return patrolPlanDao.getAllPatrolPlan();
+    }
+
+    @Override
     public Pager<PatrolPlan> queryPatrolPlanList(PatrolPlan patrolPlan, Pager<PatrolPlan> pager) {
         if (pager == null) {
             pager = new Pager<>();
@@ -55,5 +60,10 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
     @Override
     public void updatePlan(PatrolPlan patrolPlan) {
         patrolPlanDao.updatePlan(patrolPlan);
+    }
+
+    @Override
+    public int updatePlanRelatedJob(PatrolPlan patrolPlan) {
+       return patrolPlanDao.updatePlanRelatedJob(patrolPlan);
     }
 }

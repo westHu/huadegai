@@ -113,5 +113,9 @@
           destroy-method="destroy">
     </bean>-->
 
+    <!-- 巡检计划生成定时任务 -->
+    <bean id="jobQuartzInitialize" class="com.hup.service.JobQuartzInitialize" init-method="init"
+          destroy-method="destroy">
+    </bean>
 
 </beans>
