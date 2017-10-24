@@ -103,7 +103,7 @@
                                         <div class="message">
                                             <span class="arrow"></span>
                                             <a class="name" href="#">${runtime.executed}</a>
-                                            <span class="datetime">${runtime.createDate}</span>
+                                            <span class="datetime">${runtime.createDate?string("yyyy-MM-dd HH:mm:ss")}</span>
                                             <span class="body">
                                                 ${runtime.comment}
                                             </span>

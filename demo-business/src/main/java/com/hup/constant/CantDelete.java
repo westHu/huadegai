@@ -12,7 +12,7 @@ public class CantDelete {
     /**
      *  指定用户，不能删除（开发阶段、测试阶段）
      */
-    public static String INNATE_USER = "admin,hup,lidan,seven,zixi,long";
+    public static String INNATE_USER = "admin,hup,lidan,seven,zixi,long,leaderuser";
     /**
      *  指定角色，不能删除（开发阶段、测试阶段）
      */

@@ -3,10 +3,10 @@
     margin-top: 1px;
 }
 
-.nav > li > a:hover, .nav > li > a:focus {
-    background-color: #353F4F;
+/*.nav > li > a:hover, .nav > li > a:focus {
+    background-color: #c3c3c3;
     text-decoration: none;
-}
+}*/
 
 .panel {
     border: none;

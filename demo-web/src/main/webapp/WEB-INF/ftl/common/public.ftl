@@ -162,14 +162,10 @@
                 <li class="menu-list"><a href=""><i class="fa fa-book"></i> <span>综合管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="general.html"> General</a></li>
-                        <li><a href="buttons.html"> Buttons</a></li>
-                        <li><a href="tabs-accordions.html"> Tabs & Accordions</a></li>
-                        <li><a href="typography.html"> Typography</a></li>
-                        <li><a href="slider.html"> Slider</a></li>
-                        <li><a href="panels.html"> Panels</a></li>
+
                     </ul>
                 </li>
-                <li class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>水质管理</span></a>
+                <li class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>管网管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="grids.html"> Grids</a></li>
                         <li><a href="gallery.html"> Media Gallery</a></li>
@@ -180,33 +176,28 @@
                     </ul>
                 </li>
 
-                <li><a href="fontawesome.html"><i class="fa fa-bullhorn"></i> <span>视频管理</span></a></li>
+                <#--<li><a href="fontawesome.html"><i class="fa fa-bullhorn"></i> <span>视频管理</span></a></li>-->
 
-                <li class="menu-list"><a href=""><i class="fa fa-envelope"></i> <span>OA管理</span></a>
+                <li class="menu-list"><a href=""><i class="fa fa-envelope"></i> <span>水雨情管理</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="mail.html"> Inbox</a></li>
-                        <li><a href="mail_compose.html"> Compose Mail</a></li>
-                        <li><a href="mail_view.html"> View Mail</a></li>
+                        <li><a href="#"> 实时雨情</a></li>
+                        <li><a href="#"> 实时水情</a></li>
+                        <li><a href="#"> 水位信息</a></li>
+                        <li><a href="#"> 潮位信息</a></li>
+                        <li><a href="#"> 风向风速</a></li>
+                        <li><a href="#"> 流量流苏</a></li>
                     </ul>
                 </li>
 
-                <li class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>报表管理</span></a>
+
+                <li class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>应急管理</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="flot_chart.html"> Flot Charts</a></li>
-                        <li><a href="morris.html"> Morris Charts</a></li>
-                        <li><a href="chartjs.html"> Chartjs</a></li>
-                        <li><a href="c3chart.html"> C3 Charts</a></li>
+                        <li><a href="${context.contextPath}/emergencyResource/list"> 应急资源管理</a></li>
+                        <li><a href="#"> 应急响应管理</a></li>
+                        <li><a href="#"> 应急预警管理</a></li>
                     </ul>
                 </li>
-                <li class="menu-list"><a href="#"><i class="fa fa-th-list"></i> <span>消息管理</span></a>
-                    <ul class="sub-menu-list">
-                        <li><a href="${context.contextPath}/smsMessage"> 短信管理</a></li>
-                        <li><a href="basic_table.html"> Basic Table</a></li>
-                        <li><a href="dynamic_table.html"> Advanced Table</a></li>
-                        <li><a href="/user"> Responsive Table</a></li>
-                        <li><a href="editable_table.html"> Edit Table</a></li>
-                    </ul>
-                </li>
+
 
                 <li class="menu-list"><a href="#"><i class="fa fa-map-marker"></i> <span>地图系统</span></a>
                     <ul class="sub-menu-list">
@@ -243,6 +234,15 @@
                         <li><a href="${context.contextPath}/task/list?status=todo"> 任务管理</a></li>
                         <li><a href="${context.contextPath}/process/definitionList?name=devicePurchase"> 流程定义</a></li>
                         <li><a href="${context.contextPath}/process/runtimeList?name=devicePurchase"> 流程运行记录</a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href="#"><i class="fa fa-th-list"></i> <span>消息管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="${context.contextPath}/smsMessage"> 短信管理</a></li>
+                        <li><a href="basic_table.html"> Basic Table</a></li>
+                        <li><a href="dynamic_table.html"> Advanced Table</a></li>
+                        <li><a href="/user"> Responsive Table</a></li>
+                        <li><a href="editable_table.html"> Edit Table</a></li>
                     </ul>
                 </li>
                 <li class="menu-list" ><a href=""><i class="fa fa-file-text"></i> <span>系统设置</span></a>
