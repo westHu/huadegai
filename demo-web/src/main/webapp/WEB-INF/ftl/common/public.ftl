@@ -92,6 +92,10 @@
                 <link rel="stylesheet" href="${context.contextPath}/js/jquery-confirm/jquery-confirm.min.css" />
             </#if>
 
+            <#if obj == 'bootstrap_table'>
+                <!--jquery_confirm-->
+                <link rel="stylesheet" href="${context.contextPath}/js/bootstrap-table/bootstrap-table.css" />
+            </#if>
 
         </#list>
     </#if>
@@ -642,9 +646,16 @@
             </#if>
 
             <#if obj == 'jquery_confirm'>
-            <!--jquery_confirm-->
-            <script src="${context.contextPath}/js/jquery-confirm/jquery-confirm.min.js"></script>
+                <!--jquery_confirm-->
+                <script src="${context.contextPath}/js/jquery-confirm/jquery-confirm.min.js"></script>
             </#if>
+
+            <#if obj == 'bootstrap_table'>
+                <!--bootstrap_table-->
+                <script src="${context.contextPath}/js/bootstrap-table/bootstrap-table.js"></script>
+                <script src="${context.contextPath}/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+            </#if>
+
 
         </#list>
     </#if>

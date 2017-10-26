@@ -3901,7 +3901,7 @@ a:hover.btn-compose {
 
 
 .mail-navigation > li.active > a, .mail-navigation > li.active > a:hover, .mail-navigation > li.active > a:focus {
-    background: #c3c3c3;
+    background: #03d206;
     color: #fff;
 }
 

@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="资源展示" css_war = "">
+<@header title="资源展示" css_war = "bootstrap_table">
 </@header>
 <body class="sticky-header">
 <section>
@@ -40,7 +40,7 @@
                             应急资源展示
                         </header>
                         <div class="panel-body">
-                            <div id="world-vmap" class="vmaps"></div>
+                            <div id="emergencyMap" class="vmaps" style="height: 500px"></div>
                         </div>
                     </section>
                 </div>
@@ -57,7 +57,9 @@
                          </span>
                         </header>
                         <div class="panel-body">
-                            <div id="asia-vmap" class="vmaps"></div>
+                            <div id="asia-vmap" class="vmaps">
+                                <table id="view-table"></table>
+                            </div>
                         </div>
                     </section>
                 </div>
@@ -84,22 +86,11 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="">
+<@js_lib js_war="bootstrap_table">
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wP746Nxc9dhwGHc68oAQviyW"></script>
 </@js_lib>
 
 <script type="text/javascript">
-    /*var markerArr = [
-        { title: "东城广场物资点", point: "120.170742,30.256168", address: "大江东康山庄", tel: "12306" },
-        { title: "九堡三区物资点", point: "120.059712,30.247932", address: "拱墅区下沙路九堡镇（赤岗塔） ", tel: "18500000000" },
-        { title: "解放东路物资点", point: "120.20071,30.20256", address: "解放东路交叉路口", tel: "18500000000" },
-        { title: "环城北路物资点", point: "120.103549,30.175588", address: "环城北路120号", tel: "18500000000" },
-        { title: "汤浦水库物资点", point: "120.123312,30.329948", address: "环城北路1000号", tel: "18500000000" },
-        { title: "城西银泰物资点", point: "120.092877,30.245311", address: "环城北路1000号", tel: "18500000000" },
-        { title: "康亭路口物资点", point: "121.164592,30.206504", address: "环城北路1000号", tel: "18500000000" },
-        { title: "中河双向物资点", point: "120.152587,30.175588", address: "之江路312号", tel: "18500000000" },
-        { title: "杨公堤物资点", point: "120.149579,30.252362", address: "杨公堤20号（原西山路20号）", tel: "18500000000" }
-    ];*/
     //左边菜单的变化
     $("li").each(function () {
         $(this).bind("click", function () {
@@ -119,7 +110,7 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.status == "0") {
-                        map_init(data.result);
+                        map_view(data.result);
                     }
                 }
             });
@@ -132,11 +123,14 @@
         if (tip !== null && tip !== ''){
             TipsNotice(null, tip);
         }
-        map_init(null);
+        map_init();
     });
 
-    function map_init(markerArr) {
-        var map = new BMap.Map("world-vmap"); // 创建Map实例
+    var map;
+    var point = new Array(); //存放标注点经纬信息的数组
+    var marker = new Array(); //存放标注点对象的数组
+    function map_init() {
+        map = new BMap.Map("emergencyMap"); // 创建Map实例
         var point = new BMap.Point(120.185006,30.251013); //地图中心点，
         map.centerAndZoom(point, 12); // 初始化地图,设置中心点坐标和地图级别。
         map.enableScrollWheelZoom(true); //启用滚轮放大缩小
@@ -159,23 +153,23 @@
             anchor: BMAP_ANCHOR_BOTTOM_LEFT
         });
         map.addControl(ctrlSca);
+    }
 
+    function map_view(markerArr) {
+        //先隐藏所有从新加层
+        for (var i = 0; i < marker.length; i++) {
+            marker[i].hide();
+        }
         if (markerArr == undefined || markerArr.length ==0) {
             return;
         }
-        var point = new Array(); //存放标注点经纬信息的数组
-        var marker = new Array(); //存放标注点对象的数组
-        var info = new Array(); //存放提示信息窗口对象的数组
         var data = eval(markerArr);
         for (var i = 0; i < data.length; i++) {
             var p0 = data[i].coordinateX;
             var p1 = data[i].coordinateY;
+            //循环生成point
             point[i] = new window.BMap.Point(p0, p1); //循环生成新的地图点
-
-
             var imageUrl;
-            console.info("i == " + i);
-            console.info("data[i].type == " + data[i].type);
             if (data[i].type == 'Material'){ //物资
                 imageUrl = "${absolutePath}/images/emergency/material-red.png";
             }
@@ -194,63 +188,30 @@
             if (data[i].type == 'Transportation'){ //运输
                 imageUrl = "${absolutePath}/images/emergency/transportation-red.png";
             }
-            console.info("imageUrl= " + imageUrl)
             var myIcon = new BMap.Icon(imageUrl,
                     new BMap.Size(45, 45), {
                         offset: new BMap.Size(10, 25),
                         imageOffset: new BMap.Size(0, 0)
 
                     });
+            //循环生成marker
             marker[i] = new window.BMap.Marker(point[i], { icon: myIcon });  //按照地图点坐标生成标记
             map.addOverlay(marker[i]);
-            //marker[i].setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            marker[i].setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+            //循环生成label
             var label = new window.BMap.Label(data[i].desc, { offset: new window.BMap.Size(20, -10) });
             marker[i].setLabel(label);
-            info[i] = new window.BMap.InfoWindow("<p style=’font-size:12px;lineheight:1.8em;’>" + data[i].desc + "</br>地址：" + data[i].location + "</br> 电话：" + data[i].name + "</br></p>"); // 创建信息窗口对象
 
+            //循环添加InfoWindow
+            addInfo("<p style=’font-size:12px;lineheight:1.8em;’>" + data[i].desc + "</br>地址：" + data[i].location + "</br> 电话：" + data[i].name + "</br></p>",marker[i]);
         }
-
-
-
-
-        /*for (var i = 0; i < markerArr.length; i++) {
-            console.info(markerArr.get);
-            var p0 = markerArr[i].coordinateX;
-            var p1 = markerArr[i].coordinateY;
-            //var p0 = markerArr[i].point.split(",")[0]; //
-            //console.info(p0);
-            //var p1 = markerArr[i].point.split(",")[1]; //按照原数组的point格式将地图点坐标的经纬度分别提出来
-            //console.info(p1);
-            point[i] = new window.BMap.Point(p0, p1); //循环生成新的地图点
-            marker[i] = new window.BMap.Marker(point[i]); //按照地图点坐标生成标记
-            map.addOverlay(marker[i]);
-            //marker[i].setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-            var label = new window.BMap.Label(markerArr[i].desc, { offset: new window.BMap.Size(20, -10) });
-            marker[i].setLabel(label);
-            info[i] = new window.BMap.InfoWindow("<p style=’font-size:12px;lineheight:1.8em;’>" + markerArr[i].desc + "</br>地址：" + markerArr[i].location + "</br> 电话：" + markerArr[i].name + "</br></p>"); // 创建信息窗口对象
-        }*/
-        marker[0].addEventListener("mouseover", function () {
-            this.openInfoWindow(info[0]);
-        });
-        marker[1].addEventListener("mouseover", function () {
-            this.openInfoWindow(info[1]);
-        });
-        marker[2].addEventListener("mouseover", function () {
-            this.openInfoWindow(info[2]);
-        });
-        marker[3].addEventListener("mouseover", function () {
-            this.openInfoWindow(info[3]);
-        });
+        //点击显示详情
+        function addInfo(txt,marker){
+            var infoWindow = new BMap.InfoWindow(txt);
+            marker.addEventListener("click", function(){this.openInfoWindow(infoWindow);});
+        }
     }
-
-//    window.onload = map_init();
-    //异步调用百度js
-   /* function map_load() {
-        var load = document.createElement("script");
-        load.src = "http://api.map.baidu.com/api?v=2.0&ak=wP746Nxc9dhwGHc68oAQviyW&callback=map_init";
-        document.body.appendChild(load);
-    }
-    window.onload = map_load;*/
 </script>
 
 <script>
