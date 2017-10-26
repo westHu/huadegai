@@ -1,4 +1,4 @@
-package com.hup.dao;
+package com.hup.api.emergency;
 
 import com.hup.entity.emergency.EmergencyResourcePoint;
 
@@ -9,9 +9,9 @@ import java.util.List;
  * Description:
  * User: west_
  * Date: 2017-10-24
- * Time: 23:41
+ * Time: 23:38
  */
-public interface EmergencyMaterialPointDao {
+public interface EmergencyResourcePointService {
 
     List<EmergencyResourcePoint> getAll();
 

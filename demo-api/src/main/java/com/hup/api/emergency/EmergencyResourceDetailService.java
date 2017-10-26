@@ -1,5 +1,6 @@
 package com.hup.api.emergency;
 
+import com.hup.entity.emergency.EmergencyResourceDetail;
 import com.hup.entity.emergency.EmergencyResourcePoint;
 
 import java.util.List;
@@ -11,9 +12,8 @@ import java.util.List;
  * Date: 2017-10-24
  * Time: 23:38
  */
-public interface EmergencyMaterialPointService {
+public interface EmergencyResourceDetailService {
 
-    List<EmergencyResourcePoint> getAll();
 
-    List<EmergencyResourcePoint> findPointByType(String type);
+    List<EmergencyResourceDetail> findResourceDetailByPointId(Long pointId);
 }

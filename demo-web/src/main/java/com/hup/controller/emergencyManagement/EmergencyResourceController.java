@@ -1,7 +1,7 @@
 package com.hup.controller.emergencyManagement;
 
 import com.alibaba.fastjson.JSON;
-import com.hup.api.emergency.EmergencyMaterialPointService;
+import com.hup.api.emergency.EmergencyResourcePointService;
 import com.hup.entity.emergency.EmergencyResourcePoint;
 import com.hup.response.BaseResponse;
 import com.hup.response.EmergencyResponse;
@@ -34,7 +34,7 @@ public class EmergencyResourceController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private EmergencyMaterialPointService emergencyMaterialPointService;
+    private EmergencyResourcePointService emergencyResourcePointService;
 
 
 
@@ -55,7 +55,7 @@ public class EmergencyResourceController {
         }
         //设备物资点
         if (type.contains("0")){
-            List<EmergencyResourcePoint> all = emergencyMaterialPointService.findPointByType("Material");
+            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Material");
             for (EmergencyResourcePoint materialPoint : all) {
                 EmergencyResponse response = new EmergencyResponse();
                 BeanUtils.copyProperties(materialPoint, response);
@@ -64,7 +64,7 @@ public class EmergencyResourceController {
         }
         //救援队伍
         if (type.contains("1")){
-            List<EmergencyResourcePoint> all = emergencyMaterialPointService.findPointByType("Team");
+            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Team");
             for (EmergencyResourcePoint materialPoint : all) {
                 EmergencyResponse response = new EmergencyResponse();
                 BeanUtils.copyProperties(materialPoint, response);
@@ -73,7 +73,7 @@ public class EmergencyResourceController {
         }
         //专家资源
         if (type.contains("2")){
-            List<EmergencyResourcePoint> all = emergencyMaterialPointService.findPointByType("zj");
+            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("zj");
             for (EmergencyResourcePoint materialPoint : all) {
                 EmergencyResponse response = new EmergencyResponse();
                 BeanUtils.copyProperties(materialPoint, response);
@@ -82,7 +82,7 @@ public class EmergencyResourceController {
         }
         //通信资源
         if (type.contains("3")){
-            List<EmergencyResourcePoint> all = emergencyMaterialPointService.findPointByType("Communication");
+            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Communication");
             for (EmergencyResourcePoint materialPoint : all) {
                 EmergencyResponse response = new EmergencyResponse();
                 BeanUtils.copyProperties(materialPoint, response);
@@ -91,7 +91,7 @@ public class EmergencyResourceController {
         }
         //运输资源
         if (type.contains("4")){
-            List<EmergencyResourcePoint> all = emergencyMaterialPointService.findPointByType("Transportation");
+            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Transportation");
             for (EmergencyResourcePoint materialPoint : all) {
                 EmergencyResponse response = new EmergencyResponse();
                 BeanUtils.copyProperties(materialPoint, response);
@@ -101,7 +101,7 @@ public class EmergencyResourceController {
 
         //医疗资源
         if (type.contains("5")){
-            List<EmergencyResourcePoint> all = emergencyMaterialPointService.findPointByType("Medical");
+            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Medical");
             for (EmergencyResourcePoint materialPoint : all) {
                 EmergencyResponse response = new EmergencyResponse();
                 BeanUtils.copyProperties(materialPoint, response);
@@ -111,7 +111,7 @@ public class EmergencyResourceController {
 
         //避难所
         if (type.contains("6")){
-            List<EmergencyResourcePoint> all = emergencyMaterialPointService.findPointByType("RefugePlace");
+            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("RefugePlace");
             for (EmergencyResourcePoint materialPoint : all) {
                 EmergencyResponse response = new EmergencyResponse();
                 BeanUtils.copyProperties(materialPoint, response);
