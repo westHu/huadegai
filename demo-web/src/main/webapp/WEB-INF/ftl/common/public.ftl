@@ -97,6 +97,12 @@
                 <link rel="stylesheet" href="${context.contextPath}/js/bootstrap-table/bootstrap-table.css" />
             </#if>
 
+            <#if obj == 'jquery_easyui'>
+                <!--jquery_easyui-->
+                <link rel="stylesheet" href="${context.contextPath}/js/jquery-easyui-1.5.3/themes/default/easyui.css" />
+                <link rel="stylesheet" href="${context.contextPath}/js/jquery-easyui-1.5.3/themes/icon.css" />
+            </#if>
+
         </#list>
     </#if>
 
@@ -654,6 +660,12 @@
                 <!--bootstrap_table-->
                 <script src="${context.contextPath}/js/bootstrap-table/bootstrap-table.js"></script>
                 <script src="${context.contextPath}/js/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+            </#if>
+
+            <#if obj == 'jquery_easyui'>
+                <!--jquery_easyui-->
+                <script src="${context.contextPath}/js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+                <script src="${context.contextPath}/js/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"></script>
             </#if>
 
 

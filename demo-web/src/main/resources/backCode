@@ -1,0 +1,30 @@
+
+########  地图图标
+var imageUrl;
+if (data[i].type == 'Material'){ //物资
+    imageUrl = "${absolutePath}/images/emergency/material-red.png";
+}
+if (data[i].type == 'Team'){ //救援队伍
+    imageUrl = "${absolutePath}/images/emergency/team-red.png";
+}
+if (data[i].type == 'Communication'){ //通信
+    imageUrl = "${absolutePath}/images/emergency/communication-red.png";
+}
+if (data[i].type == 'RefugePlace'){ //避难所
+    imageUrl = "${absolutePath}/images/emergency/refugePlace-red.png";
+}
+if (data[i].type == 'Medical'){ //医疗
+    imageUrl = "${absolutePath}/images/emergency/medical-red.png";
+}
+if (data[i].type == 'Transportation'){ //运输
+    imageUrl = "${absolutePath}/images/emergency/transportation-red.png";
+}
+var myIcon = new BMap.Icon(imageUrl,
+    new BMap.Size(45, 45), {
+        offset: new BMap.Size(10, 25),
+        imageOffset: new BMap.Size(0, 0)
+
+    });
+# ===============================
+
+

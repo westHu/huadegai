@@ -27,4 +27,24 @@ public class PageRequest {
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
     }
+
+    /** easyUi的传参方式**/
+    private String page;
+    private String rows;
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
+
+    public String getRows() {
+        return rows;
+    }
+
+    public void setRows(String rows) {
+        this.rows = rows;
+    }
 }

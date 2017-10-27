@@ -1,10 +1,16 @@
 package com.hup.controller.emergencyManagement;
 
 import com.alibaba.fastjson.JSON;
+import com.hup.api.emergency.EmergencyResourceDetailService;
 import com.hup.api.emergency.EmergencyResourcePointService;
+import com.hup.db.Pager;
+import com.hup.entity.User;
 import com.hup.entity.emergency.EmergencyResourcePoint;
+import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
+import com.hup.response.DataGridResponse;
 import com.hup.response.EmergencyResponse;
+import com.hup.util.PageUtils;
 import net.sf.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -34,7 +40,9 @@ public class EmergencyResourceController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private EmergencyResourcePointService emergencyResourcePointService;
+    private EmergencyResourcePointService pointService;
+
+    private EmergencyResourceDetailService detailService;
 
 
 
@@ -44,75 +52,48 @@ public class EmergencyResourceController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/data", method = RequestMethod.POST)
-    public BaseResponse emergencyResourceList(String type){
-        logger.info("获取数据 --- type： " + type);
+    @RequestMapping(value = "/pointListByType", method = RequestMethod.GET)
+    public DataGridResponse pointListByType(String types, PageRequest pageRequest){
+        if (StringUtils.isBlank(types)) {
+            return new DataGridResponse();
+        }
+        String[] split = types.split(",");
+        Pager<EmergencyResourcePoint> pager = new Pager<>();
+        pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getPage()));
+        pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getRows()));
+        pager = pointService.queryPointListByType(split, pager);
+        DataGridResponse response = new DataGridResponse(pager.getTotalCount(), pager.getList());
+
+        /*String result = "{\"total\":28,\"rows\":[\n" +
+                "\t{\"productid\":\"FI-SW-01\",\"productname\":\"Koi\",\"unitcost\":10.00,\"status\":\"P\",\"listprice\":36.50,\"attr1\":\"Large\",\"itemid\":\"EST-1\"},\n" +
+                "\t{\"productid\":\"K9-DL-01\",\"productname\":\"Dalmation\",\"unitcost\":12.00,\"status\":\"P\",\"listprice\":18.50,\"attr1\":\"Spotted Adult Female\",\"itemid\":\"EST-10\"},\n" +
+                "\t{\"productid\":\"RP-SN-01\",\"productname\":\"Rattlesnake\",\"unitcost\":12.00,\"status\":\"P\",\"listprice\":38.50,\"attr1\":\"Venomless\",\"itemid\":\"EST-11\"},\n" +
+                "\t{\"productid\":\"RP-SN-01\",\"productname\":\"Rattlesnake\",\"unitcost\":12.00,\"status\":\"P\",\"listprice\":26.50,\"attr1\":\"Rattleless\",\"itemid\":\"EST-12\"},\n" +
+                "\t{\"productid\":\"RP-LI-02\",\"productname\":\"Iguana\",\"unitcost\":12.00,\"status\":\"P\",\"listprice\":35.50,\"attr1\":\"Green Adult\",\"itemid\":\"EST-13\"},\n" +
+                "\t{\"productid\":\"FL-DSH-01\",\"productname\":\"Manx\",\"unitcost\":12.00,\"status\":\"P\",\"listprice\":158.50,\"attr1\":\"Tailless\",\"itemid\":\"EST-14\"},\n" +
+                "\t{\"productid\":\"FL-DSH-01\",\"productname\":\"Manx\",\"unitcost\":12.00,\"status\":\"P\",\"listprice\":83.50,\"attr1\":\"With tail\",\"itemid\":\"EST-15\"},\n" +
+                "\t{\"productid\":\"FL-DLH-02\",\"productname\":\"Persian\",\"unitcost\":12.00,\"status\":\"P\",\"listprice\":23.50,\"attr1\":\"Adult Female\",\"itemid\":\"EST-16\"},\n" +
+                "\t{\"productid\":\"FL-DLH-02\",\"productname\":\"Persian\",\"unitcost\":12.00,\"status\":\"P\",\"listprice\":89.50,\"attr1\":\"Adult Male\",\"itemid\":\"EST-17\"},\n" +
+                "\t{\"productid\":\"AV-CB-01\",\"productname\":\"Amazon Parrot\",\"unitcost\":92.00,\"status\":\"P\",\"listprice\":63.50,\"attr1\":\"Adult Male\",\"itemid\":\"EST-18\"}\n" +
+                "]}\n";*/
+        return response;
+    }
+
+
+
+    @ResponseBody
+    @RequestMapping(value = "/pointJson", method = RequestMethod.POST)
+    public BaseResponse emergencyResourceList(String types){
+        logger.info("获取数据 --- type： " + types);
         String desc = null;
         List<EmergencyResponse> list = new ArrayList<>();
 
-        if (StringUtils.isBlank(type)){
+        if (StringUtils.isBlank(types)){
             return new BaseResponse("0", null);
         }
-        //设备物资点
-        if (type.contains("0")){
-            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Material");
-            for (EmergencyResourcePoint materialPoint : all) {
-                EmergencyResponse response = new EmergencyResponse();
-                BeanUtils.copyProperties(materialPoint, response);
-                list.add(response);
-            }
-        }
-        //救援队伍
-        if (type.contains("1")){
-            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Team");
-            for (EmergencyResourcePoint materialPoint : all) {
-                EmergencyResponse response = new EmergencyResponse();
-                BeanUtils.copyProperties(materialPoint, response);
-                list.add(response);
-            }
-        }
-        //专家资源
-        if (type.contains("2")){
-            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("zj");
-            for (EmergencyResourcePoint materialPoint : all) {
-                EmergencyResponse response = new EmergencyResponse();
-                BeanUtils.copyProperties(materialPoint, response);
-                list.add(response);
-            }
-        }
-        //通信资源
-        if (type.contains("3")){
-            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Communication");
-            for (EmergencyResourcePoint materialPoint : all) {
-                EmergencyResponse response = new EmergencyResponse();
-                BeanUtils.copyProperties(materialPoint, response);
-                list.add(response);
-            }
-        }
-        //运输资源
-        if (type.contains("4")){
-            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Transportation");
-            for (EmergencyResourcePoint materialPoint : all) {
-                EmergencyResponse response = new EmergencyResponse();
-                BeanUtils.copyProperties(materialPoint, response);
-                list.add(response);
-            }
-        }
-
-        //医疗资源
-        if (type.contains("5")){
-            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("Medical");
-            for (EmergencyResourcePoint materialPoint : all) {
-                EmergencyResponse response = new EmergencyResponse();
-                BeanUtils.copyProperties(materialPoint, response);
-                list.add(response);
-            }
-        }
-
-        //避难所
-        if (type.contains("6")){
-            List<EmergencyResourcePoint> all = emergencyResourcePointService.findPointByType("RefugePlace");
-            for (EmergencyResourcePoint materialPoint : all) {
+        for (String type : types.split(",")) {
+            List<EmergencyResourcePoint> points = pointService.findPointByType(type);
+            for (EmergencyResourcePoint materialPoint : points) {
                 EmergencyResponse response = new EmergencyResponse();
                 BeanUtils.copyProperties(materialPoint, response);
                 list.add(response);

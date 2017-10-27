@@ -2,6 +2,7 @@ package com.hup.service.emergency;
 
 import com.hup.api.emergency.EmergencyResourcePointService;
 import com.hup.dao.EmergencyResourcePointDao;
+import com.hup.db.Pager;
 import com.hup.entity.emergency.EmergencyResourcePoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,24 @@ public class EmergencyResourcePointServiceImpl implements EmergencyResourcePoint
     @Override
     public List<EmergencyResourcePoint> findPointByType(String type) {
         return emergencyResourcePointDao.findPointByType(type);
+    }
+
+    @Override
+    public List<EmergencyResourcePoint> findPointListByType(String[] types) {
+        return emergencyResourcePointDao.findPointListByType(types);
+    }
+
+    @Override
+    public Pager<EmergencyResourcePoint> queryPointListByType(String[] types, Pager<EmergencyResourcePoint> pager) {
+        if (pager == null) {
+            pager = new Pager<>();
+        }
+        pager.setOrderColumns("id"); //时间倒序查询
+        List<EmergencyResourcePoint> pointList = emergencyResourcePointDao.queryPointListByType(types, pager);
+        int pointCount = emergencyResourcePointDao.getPointListByTypeCount(types);
+        pager.setList(pointList);
+        pager.setTotalCount(pointCount);
+        return pager;
+
     }
 }
