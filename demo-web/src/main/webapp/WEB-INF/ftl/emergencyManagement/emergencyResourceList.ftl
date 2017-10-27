@@ -20,9 +20,9 @@
                         <header class="panel-heading">
                             应急资源分类
                         </header>
-                        <div class="panel-body" style="border-color:#FFFFFF;">
+                        <div class="panel-body" style="border-color:#FFFFFF; padding: 0px;">
                             <div class="vmaps">
-                                <ul class="nav nav-pills nav-stacked mail-navigation">
+                                <ul class="nav nav-pills nav-stacked mail-navigation" style="margin-top: 0px; padding: 10px">
                                     <li data-value="Material" ><a href="#"> <i class="fa fa-certificate"></i> 应急物资设备  <span class="label label-info pull-right inbox-notification">1023</span></a></li>
                                     <li data-value="Team" ><a href="#"> <i class="fa fa-certificate"></i> 应急救援队伍  <span class="label label-info pull-right inbox-notification">20</span></a></li>
                                     <li data-value="Zj" ><a href="#"> <i class="fa fa-certificate"></i> 应急专家资源  <span class="label label-info pull-right inbox-notification">14</span></a></li>
@@ -41,7 +41,7 @@
                         <header class="panel-heading">
                             应急资源展示
                         </header>
-                        <div class="panel-body" style="border-color:#FFFFFF;">
+                        <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div id="emergencyMap" class="vmaps"></div>
                         </div>
                     </section>
@@ -58,9 +58,9 @@
                             <a href="javascript:;" class="fa fa-times"></a>
                          </span>
                         </header>
-                        <div class="my-panel-body" style="border-color:#FFFFFF;">
+                        <div class="my-panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div id="europe-vmap" class="vmaps">
-                                <table id="dg" <#--title="Custom DataGrid Pager"--> style="width:100%;height:400px"
+                                <table id="dg" &lt;#&ndash;title="Custom DataGrid Pager"&ndash;&gt; style="width:100%;height:400px"
                                        data-options="rownumbers:true,fitColumns:true,nowrap:false,singleSelect:true,pagination:true,url:'${context.contextPath}/emergencyResource/pointListByType',method:'get'">
                                     <thead>
                                     <tr>
@@ -74,7 +74,6 @@
                                     </thead>
                                 </table>
                             </div>
-
                         </div>
                     </section>
                 </div>
@@ -87,7 +86,7 @@
                             <a href="javascript:;" class="fa fa-times"></a>
                          </span>
                         </header>
-                        <div class="panel-body" style="border-color:#FFFFFF;">
+                        <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div id="australia-vmap" class="vmaps"></div>
                         </div>
                     </section>

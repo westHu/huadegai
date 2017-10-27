@@ -8,7 +8,22 @@
         <@pageHeading title_1="地图展示" title_3="地图系统" title_4="地图展示" title_4_url="#" ></@pageHeading>
         <div class="wrapper">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-4">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            监测点展示
+                            <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                            <a href="javascript:;" class="fa fa-times"></a>
+                         </span>
+                        </header>
+                        <div class="panel-body">
+                            <div id="world-vmap" class="vmaps" style="height: 800px"></div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="col-sm-8">
                     <section class="panel">
                         <header class="panel-heading">
                             监测点展示
