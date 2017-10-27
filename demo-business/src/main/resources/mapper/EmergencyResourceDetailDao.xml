@@ -16,5 +16,13 @@
         SELECT  * FROM emergency_resource_detail t WHERE t.point_id = #{pointId};
     </select>
 
+    <select id="queryDetailListByPoint" resultType="com.hup.entity.emergency.EmergencyResourceDetail">
+        SELECT  * FROM emergency_resource_detail t WHERE t.point_id = #{point};
+    </select>
+
+    <select id="getDetailListByPointCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM emergency_resource_detail t WHERE t.point_id = #{point};
+    </select>
+
 
 </mapper>

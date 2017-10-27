@@ -1,7 +1,9 @@
 package com.hup.dao;
 
+import com.hup.db.Pager;
 import com.hup.entity.emergency.EmergencyResourceDetail;
 import com.hup.entity.emergency.EmergencyResourcePoint;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,4 +17,8 @@ import java.util.List;
 public interface EmergencyResourceDetailDao {
 
     List<EmergencyResourceDetail> findResourceDetailByPointId(Long pointId);
+
+    List<EmergencyResourceDetail> queryDetailListByPoint(@Param("point") String point, @Param("pager") Pager<EmergencyResourceDetail> pager);
+
+    int getDetailListByPointCount(@Param("point") String point);
 }

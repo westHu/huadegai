@@ -60,7 +60,7 @@
                         </header>
                         <div class="my-panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div id="europe-vmap" class="vmaps">
-                                <table id="dg" &lt;#&ndash;title="Custom DataGrid Pager"&ndash;&gt; style="width:100%;height:400px"
+                                <table id="point-dg" &lt;#&ndash;title="Custom DataGrid Pager"&ndash;&gt; style="width:100%;height:400px"
                                        data-options="rownumbers:true,fitColumns:true,nowrap:false,singleSelect:true,pagination:true,url:'${context.contextPath}/emergencyResource/pointListByType',method:'get'">
                                     <thead>
                                     <tr>
@@ -87,7 +87,18 @@
                          </span>
                         </header>
                         <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
-                            <div id="australia-vmap" class="vmaps"></div>
+                            <div id="australia-vmap" class="vmaps">
+                                <table id="detail-dg" style="width:100%;height:95%"
+                                       data-options="fitColumns:true,nowrap:false,singleSelect:true,pagination:true,url:'${context.contextPath}/emergencyResource/detailListByPoint',method:'get'">
+                                    <thead>
+                                    <tr>
+                                        <th data-options="field:'name',width:60,align:'left'">名称</th>
+                                        <th data-options="field:'number',width:30,align:'left'">数量</th>
+                                        <th data-options="field:'status',width:30,align:'left'">状态</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </section>
                 </div>
@@ -118,10 +129,10 @@
             resource.join(",");
             //console.info("resource = " + resource);
             //查询参数直接添加在queryParams中
-            var queryParams = $('#dg').datagrid('options').queryParams;
+            var queryParams = $('#point-dg').datagrid('options').queryParams;
             queryParams.types = resource.toString();
-            $('#dg').datagrid('options').queryParams=queryParams;
-            $("#dg").datagrid('reload');
+            $('#point-dg').datagrid('options').queryParams=queryParams;
+            $("#point-dg").datagrid('reload');
 
             $.ajax({
                 url: "${context.contextPath}/emergencyResource/pointJson?types="+resource,
@@ -145,11 +156,20 @@
         }
         map_init();
 
-        $('#dg').datagrid({
+        $('#point-dg').datagrid({
             onClickRow: function (index, row) {  //easyui封装好的时间（被单机行的索引，被单击行的值）
-                //alert("index :" + index +". x :" + row["coordinateX"] +". y :" + row["coordinateY"]);
-                //map.setCenter(new BMap.Point(row["coordinateX"], row["coordinateY"]));
                 map.centerAndZoom(new BMap.Point(row["coordinateX"], row["coordinateY"]), 15);
+                //展示应急资源详情
+                var queryParams = $('#detail-dg').datagrid('options').queryParams;
+                queryParams.point = row["pointId"];
+                $('#detail-dg').datagrid('options').queryParams=queryParams;
+                $("#detail-dg").datagrid('reload');
+
+            }
+        });
+        $('#detail-dg').datagrid({
+            onClickRow: function (index, row) {  //easyui封装好的时间（被单机行的索引，被单击行的值）
+                alert(index)
             }
         });
     });
@@ -247,18 +267,5 @@
         return false;
     }
 </script>
-
-
-<#--<script type="text/javascript">
-
-    $(function(){
-        var pager = $('#dg').datagrid({
-            onClickRow: function (index, row) {  //easyui封装好的时间（被单机行的索引，被单击行的值）
-                alert("index :" + index +". x :" + row["coordinateX"] +". y :" + row["coordinateY"]);
-            }
-        });
-        //pager.pagination();
-    })
-</script>-->
 </body>
 </html>

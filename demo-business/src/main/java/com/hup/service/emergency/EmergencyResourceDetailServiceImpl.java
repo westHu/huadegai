@@ -4,6 +4,7 @@ import com.hup.api.emergency.EmergencyResourceDetailService;
 import com.hup.api.emergency.EmergencyResourcePointService;
 import com.hup.dao.EmergencyResourceDetailDao;
 import com.hup.dao.EmergencyResourcePointDao;
+import com.hup.db.Pager;
 import com.hup.entity.emergency.EmergencyResourceDetail;
 import com.hup.entity.emergency.EmergencyResourcePoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,18 @@ public class EmergencyResourceDetailServiceImpl implements EmergencyResourceDeta
     @Override
     public List<EmergencyResourceDetail> findResourceDetailByPointId(Long pointId) {
         return resourceDetailDao.findResourceDetailByPointId(pointId);
+    }
+
+    @Override
+    public Pager<EmergencyResourceDetail> queryDetailListByPoint(String point, Pager<EmergencyResourceDetail> pager) {
+        if (pager == null) {
+            pager = new Pager<>();
+        }
+        pager.setOrderColumns("id"); //时间倒序查询
+        List<EmergencyResourceDetail> detailList = resourceDetailDao.queryDetailListByPoint(point, pager);
+        int detailCount = resourceDetailDao.getDetailListByPointCount(point);
+        pager.setList(detailList);
+        pager.setTotalCount(detailCount);
+        return pager;
     }
 }

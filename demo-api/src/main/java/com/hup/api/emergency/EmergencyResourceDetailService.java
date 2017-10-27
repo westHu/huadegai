@@ -1,5 +1,6 @@
 package com.hup.api.emergency;
 
+import com.hup.db.Pager;
 import com.hup.entity.emergency.EmergencyResourceDetail;
 import com.hup.entity.emergency.EmergencyResourcePoint;
 
@@ -16,4 +17,6 @@ public interface EmergencyResourceDetailService {
 
 
     List<EmergencyResourceDetail> findResourceDetailByPointId(Long pointId);
+
+    Pager<EmergencyResourceDetail> queryDetailListByPoint(String point, Pager<EmergencyResourceDetail> pager);
 }
