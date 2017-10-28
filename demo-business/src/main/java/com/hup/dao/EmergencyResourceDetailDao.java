@@ -18,7 +18,7 @@ public interface EmergencyResourceDetailDao {
 
     List<EmergencyResourceDetail> findResourceDetailByPointId(Long pointId);
 
-    List<EmergencyResourceDetail> queryDetailListByPoint(@Param("point") String point, @Param("pager") Pager<EmergencyResourceDetail> pager);
+    List<EmergencyResourceDetail> queryDetailListByPoint(@Param("resourceDetail") EmergencyResourceDetail resourceDetail, @Param("pager") Pager<EmergencyResourceDetail> pager);
 
-    int getDetailListByPointCount(@Param("point") String point);
+    int getDetailListByPointCount(@Param("resourceDetail") EmergencyResourceDetail resourceDetail);
 }

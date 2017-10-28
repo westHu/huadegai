@@ -22,5 +22,5 @@ public interface EmergencyResourcePointService {
 
     List<EmergencyResourcePoint> findPointListByType(String[] types);
 
-    Pager<EmergencyResourcePoint> queryPointListByType(String[] types, Pager<EmergencyResourcePoint> pager);
+    Pager<EmergencyResourcePoint> queryPointListByType(EmergencyResourcePoint resourcePoint, Pager<EmergencyResourcePoint> pager);
 }

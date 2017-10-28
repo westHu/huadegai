@@ -23,13 +23,13 @@
                         <div class="panel-body" style="border-color:#FFFFFF; padding: 0px;">
                             <div class="vmaps">
                                 <ul class="nav nav-pills nav-stacked mail-navigation" style="margin-top: 0px; padding: 10px">
-                                    <li data-value="Material" ><a href="#"> <i class="fa fa-certificate"></i> 应急物资设备  <span class="label label-info pull-right inbox-notification">1023</span></a></li>
-                                    <li data-value="Team" ><a href="#"> <i class="fa fa-certificate"></i> 应急救援队伍  <span class="label label-info pull-right inbox-notification">20</span></a></li>
-                                    <li data-value="Zj" ><a href="#"> <i class="fa fa-certificate"></i> 应急专家资源  <span class="label label-info pull-right inbox-notification">14</span></a></li>
-                                    <li data-value="Communication" ><a href="#"> <i class="fa fa-certificate"></i> 应急通信资源  <span class="label label-danger pull-right inbox-notification">0</span></a></li>
-                                    <li data-value="Transportation" ><a href="#"> <i class="fa fa-certificate"></i> 应急运输资源  <span class="label label-info pull-right inbox-notification">25</span></a></li>
-                                    <li data-value="Medical" ><a href="#"> <i class="fa fa-certificate"></i> 应急医疗资源  <span class="label label-info pull-right inbox-notification">15</span></a></li>
-                                    <li data-value="RefugePlace" ><a href="#"> <i class="fa fa-certificate"></i> 应急避难场所  <span class="label label-info pull-right inbox-notification">10</span></a></li>
+                                    <li data-value="Material" ><a> <i class="fa fa-certificate"></i> 应急物资设备  <span class="label label-info pull-right inbox-notification">1023</span></a></li>
+                                    <li data-value="Team" ><a> <i class="fa fa-certificate"></i> 应急救援队伍  <span class="label label-info pull-right inbox-notification">20</span></a></li>
+                                    <li data-value="Zj" ><a> <i class="fa fa-certificate"></i> 应急专家资源  <span class="label label-info pull-right inbox-notification">14</span></a></li>
+                                    <li data-value="Communication" ><a> <i class="fa fa-certificate"></i> 应急通信资源  <span class="label label-danger pull-right inbox-notification">0</span></a></li>
+                                    <li data-value="Transportation" ><a> <i class="fa fa-certificate"></i> 应急运输资源  <span class="label label-info pull-right inbox-notification">25</span></a></li>
+                                    <li data-value="Medical" ><a> <i class="fa fa-certificate"></i> 应急医疗资源  <span class="label label-info pull-right inbox-notification">15</span></a></li>
+                                    <li data-value="RefugePlace" ><a> <i class="fa fa-certificate"></i> 应急避难场所  <span class="label label-info pull-right inbox-notification">10</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -49,14 +49,10 @@
             </div>
 
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                     <section class="panel">
                         <header class="panel-heading">
-                            监测点详情
-                        <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                            <a href="javascript:;" class="fa fa-times"></a>
-                         </span>
+                            资源点列表
                         </header>
                         <div class="my-panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div id="europe-vmap" class="vmaps">
@@ -64,12 +60,12 @@
                                        data-options="rownumbers:true,fitColumns:true,nowrap:false,singleSelect:true,pagination:true,url:'${context.contextPath}/emergencyResource/pointListByType',method:'get'">
                                     <thead>
                                     <tr>
-                                        <th data-options="field:'name',width:100,align:'left'">名称</th>
                                         <th data-options="field:'type',width:60,align:'left'">类型</th>
+                                        <th data-options="field:'name',width:100,align:'left'">名称</th>
                                         <th data-options="field:'location',width:180,align:'left'">地址</th>
                                         <th data-options="field:'unit',width:100,align:'left'">单位</th>
-                                        <th data-options="field:'agent',width:60,align:'left'">负责人</th>
-                                        <th data-options="field:'telephone',width:60,align:'left'">联系方式</th>
+                                        <#--<th data-options="field:'agent',width:60,align:'left'">负责人</th>
+                                        <th data-options="field:'telephone',width:60,align:'left'">联系方式</th>-->
                                     </tr>
                                     </thead>
                                 </table>
@@ -77,14 +73,10 @@
                         </div>
                     </section>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <section class="panel">
                         <header class="panel-heading">
-                            参数
-                        <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                            <a href="javascript:;" class="fa fa-times"></a>
-                         </span>
+                            资源详情列表
                         </header>
                         <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div id="australia-vmap" class="vmaps">
@@ -92,6 +84,7 @@
                                        data-options="fitColumns:true,nowrap:false,singleSelect:true,pagination:true,url:'${context.contextPath}/emergencyResource/detailListByPoint',method:'get'">
                                     <thead>
                                     <tr>
+                                        <th data-options="field:'pointName',width:60,align:'left'">名称</th>
                                         <th data-options="field:'name',width:60,align:'left'">名称</th>
                                         <th data-options="field:'number',width:30,align:'left'">数量</th>
                                         <th data-options="field:'status',width:30,align:'left'">状态</th>
@@ -159,9 +152,17 @@
         $('#point-dg').datagrid({
             onClickRow: function (index, row) {  //easyui封装好的时间（被单机行的索引，被单击行的值）
                 map.centerAndZoom(new BMap.Point(row["coordinateX"], row["coordinateY"]), 15);
+                var circle = new BMap.Circle(new BMap.Point(row["coordinateX"], row["coordinateY"]),1000);
+                circle.setFillColor("#4792d9"); //填充颜色
+                circle.setStrokeWeight(1);// 设置圆形边线的宽度，取值为大于等于1的整数。
+                circle.setFillOpacity(0.3);// 返回圆形的填充透明度。
+                circle.setStrokeOpacity(0.3);// 设置圆形的边线透明度，取值范围0 - 1。
+                // 这样画圆 可编辑的圆 这两句js代码的位置不可改变
+                map.addOverlay(circle);// 把圆添加到地图中
+
                 //展示应急资源详情
                 var queryParams = $('#detail-dg').datagrid('options').queryParams;
-                queryParams.point = row["pointId"];
+                queryParams.point = row["id"];
                 $('#detail-dg').datagrid('options').queryParams=queryParams;
                 $("#detail-dg").datagrid('reload');
 
@@ -169,7 +170,6 @@
         });
         $('#detail-dg').datagrid({
             onClickRow: function (index, row) {  //easyui封装好的时间（被单机行的索引，被单击行的值）
-                alert(index)
             }
         });
     });

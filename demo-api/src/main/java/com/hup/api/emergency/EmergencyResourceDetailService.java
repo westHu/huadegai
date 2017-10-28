@@ -18,5 +18,5 @@ public interface EmergencyResourceDetailService {
 
     List<EmergencyResourceDetail> findResourceDetailByPointId(Long pointId);
 
-    Pager<EmergencyResourceDetail> queryDetailListByPoint(String point, Pager<EmergencyResourceDetail> pager);
+    Pager<EmergencyResourceDetail> queryDetailListByPoint(EmergencyResourceDetail resourceDetail, Pager<EmergencyResourceDetail> pager);
 }

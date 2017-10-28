@@ -43,6 +43,7 @@ public class EmergencyResourceController {
     @Autowired
     private EmergencyResourcePointService pointService;
 
+    @Autowired
     private EmergencyResourceDetailService detailService;
 
 
@@ -62,8 +63,26 @@ public class EmergencyResourceController {
         Pager<EmergencyResourcePoint> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getRows()));
-        pager = pointService.queryPointListByType(split, pager);
-        DataGridResponse response = new DataGridResponse(pager.getTotalCount(), pager.getList());
+        EmergencyResourcePoint resourcePoint = new EmergencyResourcePoint();
+        resourcePoint.setTypes(split);
+        pager = pointService.queryPointListByType(resourcePoint, pager);
+        List<EmergencyResourcePoint> pointList = new ArrayList<>();
+        for (EmergencyResourcePoint point : pager.getList()){
+            String type;
+            switch(point.getType()){
+                case "Material":        type = "急救设备物资"; break;
+                case "Team":            type = "急救队伍资源"; break;
+                case "Communication":   type = "急救通信资源"; break;
+                case "Medical":         type = "急救医疗资源"; break;
+                case "Transportation":  type = "急救运输资源"; break;
+                case "RefugePlace" :    type = "急救避难所"; break;
+                default: type = "急救设备物资";
+            }
+            point.setType(type);
+            pointList.add(point);
+        }
+
+        DataGridResponse response = new DataGridResponse(pager.getTotalCount(), pointList);
         return response;
     }
 
@@ -77,7 +96,9 @@ public class EmergencyResourceController {
         Pager<EmergencyResourceDetail> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getRows()));
-        pager = detailService.queryDetailListByPoint(point, pager);
+        EmergencyResourceDetail resourceDetail = new EmergencyResourceDetail();
+        resourceDetail.setPointId(Long.parseLong(point));
+        pager = detailService.queryDetailListByPoint(resourceDetail, pager);
         DataGridResponse response = new DataGridResponse(pager.getTotalCount(), pager.getList());
         return response;
     }

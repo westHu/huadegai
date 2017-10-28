@@ -17,11 +17,19 @@
     </select>
 
     <select id="queryDetailListByPoint" resultType="com.hup.entity.emergency.EmergencyResourceDetail">
-        SELECT  * FROM emergency_resource_detail t WHERE t.point_id = #{point};
+        SELECT  t.*, p.name as pointName FROM emergency_resource_detail t
+        LEFT JOIN emergency_resource_point p on t.point_id = p.id
+        WHERE  1 = 1
+        <if test="resourceDetail.pointId != null">
+            And  t.point_id = #{resourceDetail.pointId}
+        </if>
     </select>
 
     <select id="getDetailListByPointCount" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM emergency_resource_detail t WHERE t.point_id = #{point};
+        SELECT COUNT(1) FROM emergency_resource_detail t WHERE 1 = 1
+        <if test="resourceDetail.pointId != null">
+            And  t.point_id = #{resourceDetail.pointId}
+        </if>
     </select>
 
 

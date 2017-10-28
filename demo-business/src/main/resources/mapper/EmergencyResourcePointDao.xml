@@ -27,15 +27,15 @@
 
     <select id="queryPointListByType" resultType="com.hup.entity.emergency.EmergencyResourcePoint">
         SELECT  * FROM emergency_resource_point t WHERE 1=1
-        <if test="types != null">
-            AND t.type  IN (<foreach collection="types" item="type" separator=",">#{type}</foreach>)
+        <if test="resourcePoint.types != null">
+            AND t.type  IN (<foreach collection="resourcePoint.types" item="type" separator=",">#{type}</foreach>)
         </if>
     </select>
 
     <select id="getPointListByTypeCount" resultType="java.lang.Integer">
         SELECT  COUNT(1) FROM emergency_resource_point t WHERE 1=1
-        <if test="types != null">
-            AND t.type  IN (<foreach collection="types" item="type" separator=",">#{type}</foreach>)
+        <if test="resourcePoint.types != null">
+            AND t.type  IN (<foreach collection="resourcePoint.types" item="type" separator=",">#{type}</foreach>)
         </if>
     </select>
 

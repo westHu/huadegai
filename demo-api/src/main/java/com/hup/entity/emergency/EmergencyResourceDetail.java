@@ -20,6 +20,10 @@ public class EmergencyResourceDetail {
     private String status;
     private Date createDate;
 
+    //----非数据库字段
+    private String pointName;
+
+
     public Long getId() {
         return id;
     }
@@ -82,5 +86,13 @@ public class EmergencyResourceDetail {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getPointName() {
+        return pointName;
+    }
+
+    public void setPointName(String pointName) {
+        this.pointName = pointName;
     }
 }

@@ -31,13 +31,13 @@ public class EmergencyResourceDetailServiceImpl implements EmergencyResourceDeta
     }
 
     @Override
-    public Pager<EmergencyResourceDetail> queryDetailListByPoint(String point, Pager<EmergencyResourceDetail> pager) {
+    public Pager<EmergencyResourceDetail> queryDetailListByPoint(EmergencyResourceDetail resourceDetail, Pager<EmergencyResourceDetail> pager) {
         if (pager == null) {
             pager = new Pager<>();
         }
         pager.setOrderColumns("id"); //时间倒序查询
-        List<EmergencyResourceDetail> detailList = resourceDetailDao.queryDetailListByPoint(point, pager);
-        int detailCount = resourceDetailDao.getDetailListByPointCount(point);
+        List<EmergencyResourceDetail> detailList = resourceDetailDao.queryDetailListByPoint(resourceDetail, pager);
+        int detailCount = resourceDetailDao.getDetailListByPointCount(resourceDetail);
         pager.setList(detailList);
         pager.setTotalCount(detailCount);
         return pager;

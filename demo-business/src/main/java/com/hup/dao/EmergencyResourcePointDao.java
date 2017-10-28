@@ -21,8 +21,8 @@ public interface EmergencyResourcePointDao {
 
     List<EmergencyResourcePoint> findPointListByType(@Param("types") String[] types);
 
-    List<EmergencyResourcePoint> queryPointListByType(@Param("types") String[] types, @Param("pager") Pager<EmergencyResourcePoint> pager);
+    List<EmergencyResourcePoint> queryPointListByType(@Param("resourcePoint") EmergencyResourcePoint resourcePoint, @Param("pager") Pager<EmergencyResourcePoint> pager);
 
-    int getPointListByTypeCount(@Param("types") String[] types);
+    int getPointListByTypeCount(@Param("resourcePoint") EmergencyResourcePoint resourcePoint);
 
 }

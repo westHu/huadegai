@@ -23,6 +23,11 @@ public class EmergencyResourcePoint {
     private String telephone;
     private Date createDate;
 
+
+    ///----非数据库字段
+    private String[] types;
+
+
     public Long getId() {
         return id;
     }
@@ -109,5 +114,13 @@ public class EmergencyResourcePoint {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String[] getTypes() {
+        return types;
+    }
+
+    public void setTypes(String[] types) {
+        this.types = types;
     }
 }

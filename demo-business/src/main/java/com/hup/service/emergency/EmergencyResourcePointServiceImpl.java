@@ -39,13 +39,13 @@ public class EmergencyResourcePointServiceImpl implements EmergencyResourcePoint
     }
 
     @Override
-    public Pager<EmergencyResourcePoint> queryPointListByType(String[] types, Pager<EmergencyResourcePoint> pager) {
+    public Pager<EmergencyResourcePoint> queryPointListByType(EmergencyResourcePoint resourcePoint, Pager<EmergencyResourcePoint> pager) {
         if (pager == null) {
             pager = new Pager<>();
         }
         pager.setOrderColumns("id"); //时间倒序查询
-        List<EmergencyResourcePoint> pointList = emergencyResourcePointDao.queryPointListByType(types, pager);
-        int pointCount = emergencyResourcePointDao.getPointListByTypeCount(types);
+        List<EmergencyResourcePoint> pointList = emergencyResourcePointDao.queryPointListByType(resourcePoint, pager);
+        int pointCount = emergencyResourcePointDao.getPointListByTypeCount(resourcePoint);
         pager.setList(pointList);
         pager.setTotalCount(pointCount);
         return pager;
