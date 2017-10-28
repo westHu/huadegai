@@ -8,6 +8,7 @@
 </style>
 </@header>
 <body class="sticky-header">
+
 <section>
     <@left title="导航栏"></@left>
     <div class="main-content" >
@@ -81,7 +82,7 @@
                         <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div id="australia-vmap" class="vmaps">
                                 <table id="detail-dg" style="width:100%;height:95%"
-                                       data-options="fitColumns:true,nowrap:false,singleSelect:true,pagination:true,url:'${context.contextPath}/emergencyResource/detailListByPoint',method:'get'">
+                                       data-options="rownumbers:true,fitColumns:true,nowrap:false,singleSelect:true,pagination:true,url:'${context.contextPath}/emergencyResource/detailListByPoint',method:'get'">
                                     <thead>
                                     <tr>
                                         <th data-options="field:'pointName',width:60,align:'left'">名称</th>
