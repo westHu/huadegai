@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="资源展示" css_war = "jquery_easyui">
+<@header title="应急信息展示" css_war = "jquery_easyui">
 <style>
     .datagrid-row {
         height: 30px;
@@ -40,7 +40,7 @@
     <@left title="导航栏"></@left>
     <div class="main-content" >
         <@notification title="通知"></@notification>
-        <@pageHeading title_1="资源展示" title_3="应急管理" title_4="资源展示" title_4_url="#" ></@pageHeading>
+        <@pageHeading title_1="应急信息展示" title_3="应急管理" title_4="应急信息展示" title_4_url="#" ></@pageHeading>
         <div class="wrapper">
             <ul class="directory-list with-notification">
                 <li data-value="Material"><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>应急物资设备 <span class="hup-badge">192</span></a></li>

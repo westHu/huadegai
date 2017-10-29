@@ -202,8 +202,8 @@
 
                 <li class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>应急管理</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="${context.contextPath}/emergencyResource/pointList"> 应急信息管理</a></li>
-                        <li><a href="#"> 应急响应管理</a></li>
+                        <li><a href="${context.contextPath}/emergencyResource/resourceList"> 应急信息管理</a></li>
+                        <li><a href="${context.contextPath}/emergencyResponse/responseList"> 应急响应管理</a></li>
                         <li><a href="#"> 应急预警管理</a></li>
                     </ul>
                 </li>

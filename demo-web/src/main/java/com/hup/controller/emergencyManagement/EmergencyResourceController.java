@@ -48,7 +48,7 @@ public class EmergencyResourceController {
 
 
 
-    @RequestMapping(value = "/pointList", method = RequestMethod.GET)
+    @RequestMapping(value = "/resourceList", method = RequestMethod.GET)
     public String emergencyResourceList(){
         return "/emergencyManagement/emergencyResourceList";
     }
