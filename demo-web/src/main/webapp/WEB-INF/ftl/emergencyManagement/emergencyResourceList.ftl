@@ -3,8 +3,35 @@
 <style>
     .datagrid-row {
         height: 30px;
-        /*text-align:center;*/
     }
+    .mail-navigation>li>a {
+        padding: 5px 20px;
+    }
+
+    .with-notification a{
+        position: relative;
+    }
+    .with-notification a span{
+        position: absolute;
+        right: -6px;
+        top: -7px;
+
+        display: inline-block;
+        min-width: 14px;
+        height: 14px;
+        line-height: 13px;
+        padding: 0 4px;
+        background-color: #03a806;
+        border-radius: 7px;
+        text-align: center;
+        font-size: 12px;
+        color: #ffffff;
+        z-index: 10000;
+    }
+
+    .with-notification  li.active a{
+        background: #1d3d5a;
+        color: #fff;
 </style>
 </@header>
 <body class="sticky-header">
@@ -15,29 +42,24 @@
         <@notification title="通知"></@notification>
         <@pageHeading title_1="资源展示" title_3="应急管理" title_4="资源展示" title_4_url="#" ></@pageHeading>
         <div class="wrapper">
+            <ul class="directory-list with-notification">
+                <li data-value="Material"><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>应急物资设备 <span class="hup-badge">192</span></a></li>
+                <li data-value="Team">    <a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>应急救援队伍 <span class="hup-badge">5</span></a></li>
+                <li data-value="Zj">      <a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>应急专家资源 <span class="hup-badge">12</span></a></li>
+                <li data-value="Communication"> <a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>应急通信资源 <span class="hup-badge">93</span></a></li>
+                <li data-value="Transportation"><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>应急运输资源 <span class="hup-badge">8</span></a></li>
+                <li data-value="Medical"><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>应急医疗资源 <span class="hup-badge">4</span></a></li>
+                <li data-value="RefugePlace"><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>应急避难场所 <span class="hup-badge">18</span></a></li>
+                <li data-value="RefugePlace" ><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>应急机构管理 <span class="hup-badge">10</span></a></li>
+                <li data-value="RefugePlace" ><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>联动单位管理 <span class="hup-badge">7</span></a></li>
+                <li data-value="RefugePlace" ><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>敏感单位管理 <span class="hup-badge">14</span></a></li>
+                <li data-value="RefugePlace" ><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>危险品 <span class="hup-badge">24</span></a></li>
+                <li data-value="RefugePlace" ><a href="#"><i class="fa fa-bolt" style="padding-right: 5px;"></i>风险源 <span class="hup-badge">43</span></a></li>
+                <li><a href="#">...</a></li>
+            </ul>
+            <br>
             <div class="row">
-                <div class="col-sm-2">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            应急资源分类
-                        </header>
-                        <div class="panel-body" style="border-color:#FFFFFF; padding: 0px;">
-                            <div class="vmaps">
-                                <ul class="nav nav-pills nav-stacked mail-navigation" style="margin-top: 0px; padding: 10px">
-                                    <li data-value="Material" ><a> <i class="fa fa-certificate"></i> 应急物资设备  <span class="label label-info pull-right inbox-notification">1023</span></a></li>
-                                    <li data-value="Team" ><a> <i class="fa fa-certificate"></i> 应急救援队伍  <span class="label label-info pull-right inbox-notification">20</span></a></li>
-                                    <li data-value="Zj" ><a> <i class="fa fa-certificate"></i> 应急专家资源  <span class="label label-info pull-right inbox-notification">14</span></a></li>
-                                    <li data-value="Communication" ><a> <i class="fa fa-certificate"></i> 应急通信资源  <span class="label label-danger pull-right inbox-notification">0</span></a></li>
-                                    <li data-value="Transportation" ><a> <i class="fa fa-certificate"></i> 应急运输资源  <span class="label label-info pull-right inbox-notification">25</span></a></li>
-                                    <li data-value="Medical" ><a> <i class="fa fa-certificate"></i> 应急医疗资源  <span class="label label-info pull-right inbox-notification">15</span></a></li>
-                                    <li data-value="RefugePlace" ><a> <i class="fa fa-certificate"></i> 应急避难场所  <span class="label label-info pull-right inbox-notification">10</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <div class="col-sm-10">
+                <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
                             应急资源展示
@@ -119,9 +141,9 @@
                 $(this).addClass("active");
             }
             var resource = new Array();
-            $('.nav-pills .active').each(function () {resource.push($(this).data("value")) });
+            $('.with-notification .active').each(function () {resource.push($(this).data("value")) });
             resource.join(",");
-            //console.info("resource = " + resource);
+            console.info("resource = " + resource);
             //查询参数直接添加在queryParams中
             var queryParams = $('#point-dg').datagrid('options').queryParams;
             queryParams.types = resource.toString();

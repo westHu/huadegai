@@ -41,3 +41,35 @@ var myIcon = new BMap.Icon(imageUrl,
                 "]}\n";*/
 
  #=====================================
+
+应急管理左边菜单
+
+
+<div class="col-sm-2">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            应急资源分类
+                        </header>
+                        <div class="panel-body" style="border-color:#FFFFFF; padding: 0px;">
+                            <div class="vmaps">
+                                <ul class="nav nav-pills nav-stacked mail-navigation" style="margin-top: 0px; padding: 10px">
+                                    <li data-value="Material" ><a> <i class="fa fa-certificate"></i> 应急物资设备  <span class="label label-info pull-right inbox-notification">1023</span></a></li>
+                                    <li data-value="Team" ><a> <i class="fa fa-certificate"></i> 应急救援队伍  <span class="label label-info pull-right inbox-notification">20</span></a></li>
+                                    <li data-value="Zj" ><a> <i class="fa fa-certificate"></i> 应急专家资源  <span class="label label-info pull-right inbox-notification">14</span></a></li>
+                                    <li data-value="Communication" ><a> <i class="fa fa-certificate"></i> 应急通信资源  <span class="label label-danger pull-right inbox-notification">0</span></a></li>
+                                    <li data-value="Transportation" ><a> <i class="fa fa-certificate"></i> 应急运输资源  <span class="label label-info pull-right inbox-notification">25</span></a></li>
+                                    <li data-value="Medical" ><a> <i class="fa fa-certificate"></i> 应急医疗资源  <span class="label label-info pull-right inbox-notification">15</span></a></li>
+                                    <li data-value="RefugePlace" ><a> <i class="fa fa-certificate"></i> 应急避难场所  <span class="label label-info pull-right inbox-notification">10</span></a></li>
+                                    <li data-value="RefugePlace" ><a> <i class="fa fa-certificate"></i> 应急机构管理  <span class="label label-info pull-right inbox-notification">10</span></a></li>
+                                    <li data-value="RefugePlace" ><a> <i class="fa fa-certificate"></i> 联动单位管理  <span class="label label-info pull-right inbox-notification">10</span></a></li>
+                                    <li data-value="RefugePlace" ><a> <i class="fa fa-certificate"></i> 敏感单位管理  <span class="label label-info pull-right inbox-notification">10</span></a></li>
+                                    <li data-value="RefugePlace" ><a> <i class="fa fa-certificate"></i> 危险品  <span class="label label-info pull-right inbox-notification">10</span></a></li>
+                                    <li data-value="RefugePlace" ><a> <i class="fa fa-certificate"></i> 风险源  <span class="label label-info pull-right inbox-notification">10</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+                #==================================
