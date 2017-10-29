@@ -20,4 +20,8 @@
         SELECT COUNT(1) FROM  emergency_alarm_event
     </select>
 
+    <select id="findAlarmEventListByStatus" resultType="com.hup.entity.emergency.EmergencyAlarmEvent">
+         SELECT * FROM  emergency_alarm_event t WHERE t.status = #{status}
+    </select>
+
 </mapper>

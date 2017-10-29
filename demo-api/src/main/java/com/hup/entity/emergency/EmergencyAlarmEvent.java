@@ -18,6 +18,7 @@ public class EmergencyAlarmEvent {
     private String degree;
     private String alarmCause;
     private String location;
+    private Integer influenceRange;
     private String coordinateX;
     private String coordinateY;
     private String reporter;
@@ -80,6 +81,14 @@ public class EmergencyAlarmEvent {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Integer getInfluenceRange() {
+        return influenceRange;
+    }
+
+    public void setInfluenceRange(Integer influenceRange) {
+        this.influenceRange = influenceRange;
     }
 
     public String getCoordinateX() {

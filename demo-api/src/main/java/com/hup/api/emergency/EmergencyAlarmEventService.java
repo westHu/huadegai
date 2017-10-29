@@ -3,6 +3,8 @@ package com.hup.api.emergency;
 import com.hup.db.Pager;
 import com.hup.entity.emergency.EmergencyAlarmEvent;
 
+import java.util.List;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,5 +17,5 @@ public interface EmergencyAlarmEventService {
 
     Pager<EmergencyAlarmEvent> queryAlarmEventList(EmergencyAlarmEvent alarmEvent, Pager<EmergencyAlarmEvent> pager);
 
-
+    List<EmergencyAlarmEvent> findAlarmEventListByStatus(String status);
 }

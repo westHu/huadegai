@@ -18,4 +18,6 @@ public interface EmergencyAlarmEventDao {
     List<EmergencyAlarmEvent> queryAlarmEventCountListByPoint(@Param("alarm") EmergencyAlarmEvent alarmEvent, @Param("pager") Pager<EmergencyAlarmEvent> pager);
 
     int getAlarmEventListByPointCount(@Param("alarm") EmergencyAlarmEvent alarmEvent);
+
+    List<EmergencyAlarmEvent> findAlarmEventListByStatus(String status);
 }

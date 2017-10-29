@@ -35,4 +35,9 @@ public class EmergencyAlarmEventServiceImpl implements EmergencyAlarmEventServic
         pager.setTotalCount(alarmEventCount);
         return pager;
     }
+
+    @Override
+    public List<EmergencyAlarmEvent> findAlarmEventListByStatus(String status) {
+        return alarmEventDao.findAlarmEventListByStatus(status);
+    }
 }

@@ -236,6 +236,9 @@
             anchor: BMAP_ANCHOR_BOTTOM_LEFT
         });
         map.addControl(ctrlSca);
+
+        map_view(${eventList});
+       console.info(${eventList})
     }
 
     function map_view(markerArr) {
@@ -245,9 +248,10 @@
             return;
         }
         //先隐藏所有从新加层
-        for (var i = 0; i < marker.length; i++) {
+        /*for (var i = 0; i < marker.length; i++) {
             marker[i].hide();
-        }
+        }*/
+
         var data = eval(markerArr);
         for (var i = 0; i < data.length; i++) {
             var p0 = data[i].coordinateX;
@@ -258,7 +262,7 @@
             var myIcon = new BMap.Icon("${absolutePath}/images/emergency/markers.png",
                     new BMap.Size(23, 25), {
                         offset: new BMap.Size(10, 25),
-                        imageOffset: new BMap.Size(0, 0 -  index * 25)
+                        imageOffset: new BMap.Size(0, 0 -  10 * 25)
 
                     });
 

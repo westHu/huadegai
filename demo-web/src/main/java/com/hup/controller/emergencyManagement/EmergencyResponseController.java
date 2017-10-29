@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,7 +47,10 @@ public class EmergencyResponseController {
 
 
     @RequestMapping(value = "/responseList", method = RequestMethod.GET)
-    public String emergencyResponseList(){
+    public String emergencyResponseList(Model model){
+        //上报的事件List
+        List<EmergencyAlarmEvent> eventList = alarmEventService.findAlarmEventListByStatus("上报");
+        model.addAttribute("eventList", JSONArray.fromObject(eventList).toString());
         return "/emergencyManagement/emergencyResponseList";
     }
 
