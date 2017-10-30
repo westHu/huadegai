@@ -93,7 +93,7 @@
             </#if>
 
             <#if obj == 'bootstrap_table'>
-                <!--jquery_confirm-->
+                <!--bootstrap_table-->
                 <link rel="stylesheet" href="${context.contextPath}/js/bootstrap-table/bootstrap-table.css" />
             </#if>
 
@@ -204,6 +204,8 @@
                     <ul class="sub-menu-list">
                         <li><a href="${context.contextPath}/emergencyResource/resourceList"> 应急信息管理</a></li>
                         <li><a href="${context.contextPath}/emergencyResponse/responseList"> 应急响应管理</a></li>
+                        <li><a href="${context.contextPath}/emergencyResponse/handlePlanList"> 应急处置预案</a></li>
+
                         <li><a href="#"> 应急预警管理</a></li>
                     </ul>
                 </li>

@@ -18,4 +18,8 @@ public interface EmergencyAlarmEventService {
     Pager<EmergencyAlarmEvent> queryAlarmEventList(EmergencyAlarmEvent alarmEvent, Pager<EmergencyAlarmEvent> pager);
 
     List<EmergencyAlarmEvent> findAlarmEventListByStatus(String status);
+
+    EmergencyAlarmEvent findById(Long id);
+
+    int updateEvent(EmergencyAlarmEvent event);
 }

@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="应急响应展示" css_war = "jquery_easyui">
+<@header title="应急响应展示" css_war = "jquery_easyui,jquery_confirm">
 <style>
     .datagrid-row {
         height: 30px;
@@ -54,7 +54,7 @@
                                         <th data-options="field:'reporter',width:40,align:'left'">报告者</th>
                                         <th data-options="field:'reportDate',width:60,align:'left'">报告时间</th>
                                         <th data-options="field:'status',width:30,align:'left'">状态</th>
-                                        <th data-options="field:'_operate',width:20,align:'center',formatter:formatOper"">操作</th>
+                                        <th data-options="field:'_operate',width:40,align:'center',formatter:formatOper">操作</th>
                                     </tr>
                                     </thead>
                                 </table>
@@ -65,7 +65,7 @@
                 <div class="col-sm-5">
                     <section class="panel">
                         <header class="panel-heading">
-                            报警详情
+                            手动上报警报
                             <span class="tools pull-right">
                                 <a href="javascript:;" class="fa fa-chevron-down"></a>
                                 <a href="javascript:;" class="fa fa-times"></a>
@@ -162,7 +162,7 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="jquery_easyui">
+<@js_lib js_war="jquery_easyui,jquery_confirm">
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wP746Nxc9dhwGHc68oAQviyW"></script>
 </@js_lib>
 
@@ -178,36 +178,71 @@
         $('#alarmEvent-dg').datagrid({
             onClickRow: function (index, row) {  //easyui封装好的时间（被单机行的索引，被单击行的值）
                 var point = new BMap.Point(row["coordinateX"], row["coordinateY"]);
-                var myIcon = new BMap.Icon("${absolutePath}/images/emergency/markers.png",
-                        new BMap.Size(23, 25), {
-                            offset: new BMap.Size(10, 25),
-                            imageOffset: new BMap.Size(0, 0 -  10 * 25)
-
-                        });
-
-                //循环生成marker
-                var marker = new window.BMap.Marker(point, { icon: myIcon });  //按照地图点坐标生成标记
-                map.addOverlay(marker);
                 map.centerAndZoom(point, 15);
-                //map.setMapType(BMAP_PERSPECTIVE_MAP);
-                var circle = new BMap.Circle(new BMap.Point(row["coordinateX"], row["coordinateY"]),1500);
-                circle.setFillColor("#d91e0b"); //填充颜色
-                circle.setStrokeWeight(1);// 设置圆形边线的宽度，取值为大于等于1的整数。
-                circle.setFillOpacity(0.3);// 返回圆形的填充透明度。
-                circle.setStrokeOpacity(0.3);// 设置圆形的边线透明度，取值范围0 - 1。
-                // 这样画圆 可编辑的圆 这两句js代码的位置不可改变
-                map.addOverlay(circle);// 把圆添加到地图中
-
                 //展示应急信息
-
-
             }
         });
 
     });
 
-    function formatOper(val,row,index){
-        return '<a href="#" onclick="editUser('+index+')">受理</a>';
+    function formatOper(value, row, index){
+        var id = row["id"];
+        var status = row["status"];
+        if (status != null && status == '上报'){
+            return "<a href=\"JavaScript:accept("+id+")\">受理&忽略</a>";
+        }
+        return "<span>无需操作</span>";
+    }
+
+    function accept(id) {
+        console.info("row id== " + id);
+        $.confirm({
+            icon: 'fa fa-warning',
+            title: '受理提示！',
+            content: '确定要受理此应急事件吗?',
+            type: 'dark',
+            autoClose: 'cancel|8000',
+            buttons: {
+                ok: {
+                    text: "确定",
+                    btnClass: 'btn-primary',
+                    keys: ['enter'],
+                    action: function(){
+                        $.ajax({
+                            url: "/emergencyResponse/"+id+"/eventAccept?status=已受理",
+                            type: 'post',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status == "0") {
+                                    location.reload();
+                                }
+
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: "忽略",
+                    btnClass: 'btn-primary',
+                    keys: ['esc'],
+                    action:function () {
+                        $.ajax({
+                            url: "/emergencyResponse/"+id+"/eventAccept?status=忽略",
+                            type: 'post',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.status == "0") {
+                                    location.reload();
+                                }
+
+                            }
+                        });
+                    }
+                }
+            }
+        });
     }
 
     var map;
@@ -238,7 +273,6 @@
         map.addControl(ctrlSca);
 
         map_view(${eventList});
-       console.info(${eventList})
     }
 
     function map_view(markerArr) {
@@ -247,29 +281,24 @@
         if (markerArr == undefined || markerArr.length ==0) {
             return;
         }
-        //先隐藏所有从新加层
-        /*for (var i = 0; i < marker.length; i++) {
-            marker[i].hide();
-        }*/
-
         var data = eval(markerArr);
         for (var i = 0; i < data.length; i++) {
             var p0 = data[i].coordinateX;
             var p1 = data[i].coordinateY;
             //循环生成point
             var point = new window.BMap.Point(p0, p1); //循环生成新的地图点
-            //循环生成图标
-            var myIcon = new BMap.Icon("${absolutePath}/images/emergency/markers.png",
-                    new BMap.Size(23, 25), {
-                        offset: new BMap.Size(10, 25),
-                        imageOffset: new BMap.Size(0, 0 -  10 * 25)
-
-                    });
-
             //循环生成marker
-            marker[i] = new window.BMap.Marker(point, { icon: myIcon });  //按照地图点坐标生成标记
+            marker[i] = new window.BMap.Marker(point);  //按照地图点坐标生成标记
             map.addOverlay(marker[i]);
             //marker[i].setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+            var circle = new BMap.Circle(point,3000);
+            circle.setFillColor("#d91e0b"); //填充颜色
+            circle.setStrokeWeight(1);// 设置圆形边线的宽度，取值为大于等于1的整数。
+            circle.setFillOpacity(0.3);// 返回圆形的填充透明度。
+            circle.setStrokeOpacity(0.3);// 设置圆形的边线透明度，取值范围0 - 1。
+            // 这样画圆 可编辑的圆 这两句js代码的位置不可改变
+            map.addOverlay(circle);// 把圆添加到地图中
 
             //循环生成label
             var label = new window.BMap.Label(data[i].desc, { offset: new window.BMap.Size(20, -10) });

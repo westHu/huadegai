@@ -24,4 +24,14 @@
          SELECT * FROM  emergency_alarm_event t WHERE t.status = #{status}
     </select>
 
+    <select id="findById" resultType="com.hup.entity.emergency.EmergencyAlarmEvent">
+         SELECT * FROM  emergency_alarm_event t WHERE t.id = #{id}
+    </select>
+
+    <update id="updateEvent">
+        UPDATE emergency_alarm_event SET
+        status = #{alarm.status}
+        WHERE id = #{alarm.id}
+    </update>
+
 </mapper>

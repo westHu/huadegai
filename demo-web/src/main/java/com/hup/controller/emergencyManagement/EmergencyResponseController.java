@@ -21,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,6 +65,19 @@ public class EmergencyResponseController {
         pager = alarmEventService.queryAlarmEventList(alarmEvent, pager);
         DataGridResponse response = new DataGridResponse(pager.getTotalCount(), pager.getList());
         return response;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "{id}/eventAccept", method = RequestMethod.POST)
+    public BaseResponse eventAccept(@PathVariable("id") Long id, String status){
+        logger.info(" 受理应急报警 -- id ：" + id);
+        EmergencyAlarmEvent event = alarmEventService.findById(id);
+        if (null != event) {
+            event.setStatus(status);
+            alarmEventService.updateEvent(event);
+        }
+        return new BaseResponse("0","已受理");
     }
 
 

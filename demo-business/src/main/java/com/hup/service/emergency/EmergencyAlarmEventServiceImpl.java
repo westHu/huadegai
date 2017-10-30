@@ -40,4 +40,14 @@ public class EmergencyAlarmEventServiceImpl implements EmergencyAlarmEventServic
     public List<EmergencyAlarmEvent> findAlarmEventListByStatus(String status) {
         return alarmEventDao.findAlarmEventListByStatus(status);
     }
+
+    @Override
+    public EmergencyAlarmEvent findById(Long id) {
+        return alarmEventDao.findById(id);
+    }
+
+    @Override
+    public int updateEvent(EmergencyAlarmEvent event) {
+        return alarmEventDao.updateEvent(event);
+    }
 }

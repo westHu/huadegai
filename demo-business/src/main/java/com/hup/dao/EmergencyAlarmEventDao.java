@@ -20,4 +20,8 @@ public interface EmergencyAlarmEventDao {
     int getAlarmEventListByPointCount(@Param("alarm") EmergencyAlarmEvent alarmEvent);
 
     List<EmergencyAlarmEvent> findAlarmEventListByStatus(String status);
+
+    EmergencyAlarmEvent findById(Long id);
+
+    int updateEvent(@Param("alarm") EmergencyAlarmEvent alarm);
 }
