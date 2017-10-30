@@ -46,12 +46,20 @@ public class EmergencyResponseController {
     @Autowired
     private EmergencyAlarmEventService alarmEventService;
 
+    @Autowired
+    private EmergencyResourcePointService pointService;
+
 
     @RequestMapping(value = "/responseList", method = RequestMethod.GET)
     public String emergencyResponseList(Model model){
         //上报的事件List
         List<EmergencyAlarmEvent> eventList = alarmEventService.findAlarmEventListByStatus("上报");
         model.addAttribute("eventList", JSONArray.fromObject(eventList).toString());
+
+        List<EmergencyResourcePoint> pointList = pointService.getAll();
+        model.addAttribute("pointList", JSONArray.fromObject(pointList).toString());
+
+
         return "/emergencyManagement/emergencyResponseList";
     }
 

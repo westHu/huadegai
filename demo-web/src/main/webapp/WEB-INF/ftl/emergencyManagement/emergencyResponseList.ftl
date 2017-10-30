@@ -135,9 +135,11 @@
                                         <div class="col-lg-9">
                                             <div class="input-group m-bot15">
                                               <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                                <button type="button" class="btn btn-default">
+                                                       <i class="fa fa-search"></i>
+                                                </button>
                                               </span>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" id="address" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +185,25 @@
             }
         });
 
+        $('.fa-search').on("click", function () {
+            console.info("search address")
+            map.addEventListener("click",function(e){
+                console.info(e.point.lng + ":" + e.point.lat);
+                $('#address').val(e.point.lng + ":" + e.point.lat)
+            });
+        })
+
+
     });
+
+/*    function getMap(){
+
+        map.addEventListener("click",function(e){
+            $("#longitude").val(e.point.lng);
+            $("#latitude").val(e.point.lat);
+        });
+    }*/
+
 
     function formatOper(value, row, index){
         var id = row["id"];
@@ -272,12 +292,11 @@
         });
         map.addControl(ctrlSca);
 
-        map_view(${eventList});
+        map_view(${eventList}, "", true);
+        map_view(${pointList}, "${absolutePath}/images/emergency/star.png", false);
     }
 
-    function map_view(markerArr) {
-        var point = new BMap.Point(120.185006,30.251013); //地图中心点，
-        map.centerAndZoom(point, 12); // 初始化地图,设置中心点坐标和地图级别。
+    function map_view(markerArr, markerUrl, addCircle) {
         if (markerArr == undefined || markerArr.length ==0) {
             return;
         }
@@ -285,25 +304,42 @@
         for (var i = 0; i < data.length; i++) {
             var p0 = data[i].coordinateX;
             var p1 = data[i].coordinateY;
-            //循环生成point
+            /**
+             * 循环生成point
+            */
             var point = new window.BMap.Point(p0, p1); //循环生成新的地图点
-            //循环生成marker
-            marker[i] = new window.BMap.Marker(point);  //按照地图点坐标生成标记
+            /**
+             * 循环生成marker
+            */
+            console.info("markerUrl.length == " + markerUrl.length)
+            if (markerUrl.length > 0 ){
+                var myIcon = new BMap.Icon(markerUrl,
+                        new BMap.Size(23, 25), {
+                            offset: new BMap.Size(10, 25),
+                            imageOffset: new BMap.Size(0, 0)
+                        });
+                marker[i] = new window.BMap.Marker(point, { icon: myIcon });  //按照地图点坐标生成标记
+            }else {
+                marker[i] = new window.BMap.Marker(point);  //按照地图点坐标生成标记
+            }
             map.addOverlay(marker[i]);
             //marker[i].setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-
-            var circle = new BMap.Circle(point,3000);
-            circle.setFillColor("#d91e0b"); //填充颜色
-            circle.setStrokeWeight(1);// 设置圆形边线的宽度，取值为大于等于1的整数。
-            circle.setFillOpacity(0.3);// 返回圆形的填充透明度。
-            circle.setStrokeOpacity(0.3);// 设置圆形的边线透明度，取值范围0 - 1。
-            // 这样画圆 可编辑的圆 这两句js代码的位置不可改变
-            map.addOverlay(circle);// 把圆添加到地图中
-
-            //循环生成label
+            /**
+             * 是否需要添加红圈
+             */
+            if (addCircle) {
+                var circle = new BMap.Circle(point,3000);
+                circle.setFillColor("#d91e0b"); //填充颜色
+                circle.setStrokeWeight(1);// 设置圆形边线的宽度，取值为大于等于1的整数。
+                circle.setFillOpacity(0.3);// 返回圆形的填充透明度。
+                circle.setStrokeOpacity(0.3);// 设置圆形的边线透明度，取值范围0 - 1。
+                map.addOverlay(circle);// 把圆添加到地图中
+            }
+            /**
+             * 循环生成label
+             */
             var label = new window.BMap.Label(data[i].desc, { offset: new window.BMap.Size(20, -10) });
             marker[i].setLabel(label);
-
             //循环添加InfoWindow
             addInfo("<p style=’font-size:12px;lineheight:1.8em;’>" + data[i].desc + "</br>地址：" + data[i].location + "</br> 电话：" + data[i].name + "</br></p>",marker[i]);
         }
