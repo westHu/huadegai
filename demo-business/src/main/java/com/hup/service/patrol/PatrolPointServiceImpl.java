@@ -61,4 +61,9 @@ public class PatrolPointServiceImpl implements PatrolPointService {
     public List<PatrolPoint> findAllPatrolPoint() {
         return patrolPointDao.findAllPatrolPoint();
     }
+
+    @Override
+    public List<PatrolPoint> getAllPoint() {
+        return patrolPointDao.findAllPatrolPoint();
+    }
 }

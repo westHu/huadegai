@@ -1,5 +1,5 @@
 <#include "common/public.ftl">
-<@header title="巡检点" css_war="responsive_table,gritter_css,pickers_css,paging-hup_css,jquery_confirm">
+<@header title="巡检点" css_war="jquery_confirm,jquery_easyui">
 </@header>
 <body class="sticky-header">
 <section>
@@ -12,80 +12,64 @@
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            <div class="btn-group">
-                                <button class="btn btn-primary" type="button">新增巡检点</button>
-                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <ul role="menu" class="dropdown-menu">
-                                    <li><a href="javascript:$('#add-point-panel').show()">新增巡检点</a></li>
-                                    <li><a href="#">导入巡检点</a></li>
-                                    <li><a href="#">导出巡检点</a></li>
-                                </ul>
-                            </div>
-                            <section id="add-point-panel" class="panel" style="display: none;">
-                                <div class="panel-body">
-                                    <form class="form-horizontal adminex-form" action="${context.contextPath}/patrol/pointCreate" method="post">
-                                        <div class="form-group">
-                                            <label class="col-sm-1 control-label">巡检点名称：</label>
-                                            <div class="col-lg-2">
-                                                <div>
-                                                    <input type="text" class="form-control" id="pointName" name="pointName"  placeholder="巡检点名称" required autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <label class="col-sm-1 control-label">巡检点描述：</label>
-                                            <div class="col-lg-2">
-                                                <div>
-                                                    <input type="text" class="form-control" id="pointDesc" name="pointDesc"  placeholder="巡检点描述" required autocomplete="off">
-                                                </div>
-                                            </div>
-
-                                            <label class="col-sm-1 control-label">巡检点坐标：</label>
-                                            <div class="col-sm-1">
-                                                <div>
-                                                    <input type="text" class="form-control" id="coordinateX" name="coordinateX" placeholder="X坐标" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <div>
-                                                    <input type="text" class="form-control" id="coordinateY" name="coordinateY" placeholder="Y坐标" required>
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-default" type="submit">新增</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </section>
+                            巡检点位展示
                         </header>
-                        <div class="panel-body">
-                            <section id="unseen">
-                                <table class="table table-bordered table-striped table-condensed">
+                        <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
+                            <div id="patrol-point-map" class="vmaps"></div>
+                        </div>
+                    </section>
+                </div>
+
+
+                <div class="col-sm-6">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            巡检点位展示
+                        </header>
+                        <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
+                            <div class="vmaps">
+                                <table id="point-dg"  style="width:98%;height:95%"
+                                       data-options="rownumbers:true,fitColumns:true,nowrap:true,collapsible:true,singleSelect:true,pagination:true,url:'${context.contextPath}/patrol/pointListJson',method:'get'">
                                     <thead>
-                                        <tr>
-                                            <th>巡检点</th>
-                                            <th>描述</th>
-                                            <th>负责人</th>
-                                            <th>坐标</th>
-                                            <th>时间</th>
-                                            <th>操作</th>
-                                        </tr>
+                                    <tr>
+                                        <th data-options="field:'pointName',width:40,align:'left'">名称</th>
+                                        <th data-options="field:'pointDesc',width:60,align:'left',
+                                                            formatter: function(value,row,index){return '<span  title='+value+'>'+value+'</span>'}">描述</th>
+                                        <th data-options="field:'pointAgent',width:40,align:'left'">负责人</th>
+                                        <th data-options="field:'coordinateX',width:40,align:'left'">坐标</th>
+                                        <th data-options="field:'coordinateY',width:40,align:'left'">坐标</th>
+                                        <th data-options="field:'createDate',width:60,align:'left'">报告时间</th>
+                                        <th data-options="field:'_operate',width:40,align:'center'">操作</th>
+                                    </tr>
                                     </thead>
-                                    <tbody>
-                                        <#list pager.getList() as obj>
-                                            <tr>
-                                                <td>${obj.pointName}</td>
-                                                <td>${obj.pointDesc}</td>
-                                                <td>${obj.pointDesc}</td>
-                                                <td>[X: ${obj.coordinateX}; Y: ${obj.coordinateY}]</td>
-                                                <td>${obj.createDate?string("yyyy-MM-dd HH:mm:ss")}</td>
-                                                <td><button type="button" class="btn btn-default btn-sm" onclick="delete_point(${obj.id})">删除巡检点</button></td>
-                                            </tr>
-                                        </#list>
-                                    </tbody>
                                 </table>
-                                <@hup_pagination  showBegin = "${ (pager.currentPage-1) * pager.pageSize + 1 }"  showEnd = "${pager.currentPage * pager.pageSize}"></@hup_pagination>
-                            </section>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+                <div class="col-sm-6">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            巡检点位设备展示
+                        </header>
+                        <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
+                            <div class="vmaps">
+                                <table id="point-detail-dg"  style="width:98%;height:95%"
+                                       data-options="rownumbers:true,fitColumns:true,nowrap:true,collapsible:true,singleSelect:true,pagination:true,url:'${context.contextPath}/patrol/pointDetailListJson',method:'get'">
+                                    <thead>
+                                    <tr>
+                                        <th data-options="field:'deviceCode',width:40,align:'left'">设备编码</th>
+                                        <th data-options="field:'deviceName',width:60,align:'left'">设备名称</th>
+                                        <th data-options="field:'deviceModel',width:40,align:'left'">设备型号</th>
+                                        <th data-options="field:'deviceSpec',width:40,align:'left'">设备规格</th>
+                                        <th data-options="field:'deviceBrand',width:40,align:'left'">设备品牌</th>
+                                        <th data-options="field:'_operate',width:40,align:'center'">操作</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </section>
                 </div>
@@ -97,8 +81,109 @@
     </div>
 </section>
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="gritter_script,pickers_plugins,pickers_initialization,paging-hup,jquery_confirm"></@js_lib>
+<@js_lib js_war="jquery_confirm,jquery_easyui">
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wP746Nxc9dhwGHc68oAQviyW"></script>
+</@js_lib>
 <script>
+    var map;
+    jQuery(document).ready(function() {
+        map_init();
+
+        $('#point-dg').datagrid({
+            onClickRow: function (index, row) {  //easyui封装好的时间（被单机行的索引，被单击行的值）
+                var point = new BMap.Point(row["coordinateX"], row["coordinateY"]);
+                map.centerAndZoom(point, 15);
+                var circle = new BMap.Circle(point,1000);
+                circle.setFillColor("#d91e0b"); //填充颜色
+                circle.setStrokeWeight(1);// 设置圆形边线的宽度，取值为大于等于1的整数。
+                circle.setFillOpacity(0.3);// 返回圆形的填充透明度。
+                circle.setStrokeOpacity(0.3);// 设置圆形的边线透明度，取值范围0 - 1。
+                map.addOverlay(circle);// 把圆添加到地图中
+
+                //展示巡检点设备详情
+                var queryParams = $('#point-detail-dg').datagrid('options').queryParams;
+                queryParams.pointId = row["id"];
+                $('#point-detail-dg').datagrid('options').queryParams=queryParams;
+                $("#point-detail-dg").datagrid('reload');
+            }
+        });
+
+        $('#point-detail-dg').datagrid();
+    })
+
+    function map_init() {
+        map = new BMap.Map("patrol-point-map"); // 创建Map实例
+        var point = new BMap.Point(120.185006,30.251013); //地图中心点，
+        map.centerAndZoom(point, 13); // 初始化地图,设置中心点坐标和地图级别。
+        map.enableScrollWheelZoom(true); //启用滚轮放大缩小
+        var ctrlNav = new window.BMap.NavigationControl({
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            type: BMAP_NAVIGATION_CONTROL_LARGE
+        });
+        map.addControl(ctrlNav);
+        map.addControl(new BMap.MapTypeControl());
+        var ctrlOve = new window.BMap.OverviewMapControl({
+            anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+            isOpen: 1
+        });
+        map.addControl(ctrlOve);
+        var ctrlSca = new window.BMap.ScaleControl({
+            anchor: BMAP_ANCHOR_BOTTOM_LEFT
+        });
+        map.addControl(ctrlSca);
+
+        map_view(${patrolPoint})
+
+    }
+
+    function map_view(markerArr) {
+        if (markerArr == undefined || markerArr.length ==0) {
+            return;
+        }
+        var data = eval(markerArr);
+        for (var i = 0; i < data.length; i++) {
+            var p0 = data[i].coordinateX;
+            var p1 = data[i].coordinateY;
+            var point = new window.BMap.Point(p0, p1); //循环生成新的地图点
+            var marker = new window.BMap.Marker(point);  //按照地图点坐标生成标记
+            map.addOverlay(marker);
+            var label = new window.BMap.Label(data[i].pointName, { offset: new window.BMap.Size(20, -10) });
+            marker.setLabel(label);
+            addInfo("<p style=’font-size:12px;lineheight:1.8em;’>" + data[i].pointName + "</br>描述：" + data[i].pointDesc + "</p>",marker);
+        }
+        //点击显示详情
+        function addInfo(txt,marker){
+            var infoWindow = new BMap.InfoWindow(txt);
+            marker.addEventListener("click", function(){this.openInfoWindow(infoWindow);});
+        }
+    }
+
+    /*function mass_view(mass) {
+        if (document.createElement('canvas').getContext) {  // 判断当前浏览器是否支持绘制海量点
+            if (mass == undefined || mass.length ==0) {
+                return;
+            }
+            var data = eval(mass);
+            var points = [];  // 添加海量点数据
+            for (var i = 0; i < data.length; i++) {
+                var p0 = data[i].coordinateX;
+                var p1 = data[i].coordinateY;
+                points.push(new BMap.Point(p0, p1));
+            }
+            var options = {
+                size: BMAP_POINT_SIZE_SMALL,
+                shape: BMAP_POINT_SHAPE_STAR,
+                color: '#d91e0b'
+            }
+            var pointCollection = new BMap.PointCollection(points, options);  // 初始化PointCollection
+            pointCollection.addEventListener('click', function (e) {
+                alert('单击点的坐标为：' + e.point.lng + ',' + e.point.lat);  // 监听点击事件
+            });
+            map.addOverlay(pointCollection);  // 添加Overlay
+        } else {
+            alert('请在chrome、safari、IE8+以上浏览器查看本示例');
+        }
+    }*/
 
 
     function delete_point(id) {
@@ -162,18 +247,5 @@
 
 </script>
 
-<script>
-    //分页
-    $("#page").paging({
-        pageNo: ${pager.currentPage},
-        totalPage: ${pager.pageCount},
-        totalSize: ${pager.totalCount},
-        callback: function(num) {
-            var pageSize = $('#pageSize option:selected').val();
-            var pageUrl =  "${context.contextPath}/patrol/pointList?currentPage="+num+"&pageSize="+pageSize;
-            location.href = pageUrl;
-        }
-    })
-</script>
 </body>
 </html>

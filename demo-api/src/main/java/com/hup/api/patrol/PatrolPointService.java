@@ -27,4 +27,5 @@ public interface PatrolPointService {
 
     List<PatrolPoint> findAllPatrolPoint();
 
+    List<PatrolPoint> getAllPoint();
 }
