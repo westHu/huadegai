@@ -24,4 +24,6 @@ public interface EmergencyAlarmEventDao {
     EmergencyAlarmEvent findById(Long id);
 
     int updateEvent(@Param("alarm") EmergencyAlarmEvent alarm);
+
+    int insertAlarmEvent(@Param("alarm") EmergencyAlarmEvent alarmEvent);
 }

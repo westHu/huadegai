@@ -22,4 +22,6 @@ public interface EmergencyAlarmEventService {
     EmergencyAlarmEvent findById(Long id);
 
     int updateEvent(EmergencyAlarmEvent event);
+
+    int insertAlarmEvent(EmergencyAlarmEvent alarmEvent);
 }

@@ -34,4 +34,13 @@
         WHERE id = #{alarm.id}
     </update>
 
+    <insert id="insertAlarmEvent" useGeneratedKeys="true" keyProperty="alarm.id">
+        INSERT INTO  emergency_alarm_event
+        (alarm_name, alarm_desc, type, degree, alarm_cause, location, influence_range, coordinate_x,coordinate_y, reporter, report_date, creater, status, create_date ) VALUES
+        (#{alarm.alarmName},#{alarm.alarmDesc},#{alarm.type},#{alarm.degree},#{alarm.alarmCause},#{alarm.location},#{alarm.influenceRange},#{alarm.coordinateX},#{alarm.coordinateY},
+        #{alarm.reporter},#{alarm.reportDate},
+        #{alarm.creater},#{alarm.status},NOW())
+    </insert>
+
+
 </mapper>

@@ -50,4 +50,9 @@ public class EmergencyAlarmEventServiceImpl implements EmergencyAlarmEventServic
     public int updateEvent(EmergencyAlarmEvent event) {
         return alarmEventDao.updateEvent(event);
     }
+
+    @Override
+    public int insertAlarmEvent(EmergencyAlarmEvent alarmEvent) {
+        return alarmEventDao.insertAlarmEvent(alarmEvent);
+    }
 }

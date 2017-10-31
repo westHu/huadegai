@@ -15,6 +15,7 @@ import com.hup.response.EmergencyResponse;
 import com.hup.util.PageUtils;
 import net.sf.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -25,8 +26,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,7 +62,6 @@ public class EmergencyResponseController {
         List<EmergencyResourcePoint> pointList = pointService.getAll();
         model.addAttribute("pointList", JSONArray.fromObject(pointList).toString());
 
-
         return "/emergencyManagement/emergencyResponseList";
     }
 
@@ -73,6 +75,21 @@ public class EmergencyResponseController {
         pager = alarmEventService.queryAlarmEventList(alarmEvent, pager);
         DataGridResponse response = new DataGridResponse(pager.getTotalCount(), pager.getList());
         return response;
+    }
+
+
+    @RequestMapping(value = "/alarmEvent/create", method = RequestMethod.POST)
+    public String alarmEventCreate(EmergencyAlarmEvent alarmEvent, RedirectAttributes redirectAttributes){
+        logger.info("--- 手动添加应急事件 -- alarmEvent " + JSON.toJSONString(alarmEvent));
+        String principal = (String) SecurityUtils.getSubject().getPrincipal();
+        alarmEvent.setReporter(principal);
+        alarmEvent.setCreater(principal);
+        alarmEvent.setStatus("上报");
+        alarmEvent.setInfluenceRange(1500);
+        alarmEvent.setReportDate(new Date());
+        alarmEventService.insertAlarmEvent(alarmEvent);
+        redirectAttributes.addAttribute("msg", "手动上报应急事件成功！");
+        return "redirect:/emergencyResponse/responseList";
     }
 
 

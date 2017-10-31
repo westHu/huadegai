@@ -46,8 +46,8 @@
                                        data-options="rownumbers:true,fitColumns:true,nowrap:true,collapsible:true,singleSelect:true,pagination:true,url:'${context.contextPath}/emergencyResponse/alarmEventList',method:'get'">
                                     <thead>
                                     <tr>
-                                        <th data-options="field:'name',width:60,align:'left'">名称</th>
-                                        <th data-options="field:'desc',width:100,align:'left',
+                                        <th data-options="field:'alarmName',width:60,align:'left'">名称</th>
+                                        <th data-options="field:'alarmDesc',width:100,align:'left',
                                                             formatter: function(value,row,index){return '<span  title='+value+'>'+value+'</span>'}">描述</th>
                                         <th data-options="field:'type',width:40,align:'left'">类型</th>
                                         <th data-options="field:'degree',width:20,align:'left'">级别</th>
@@ -73,13 +73,13 @@
                         </header>
                         <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div id="australia-vmap" class="vmaps" style="width: 95%; padding-top: 15px">
-                                <form class="form-horizontal" role="form">
+                                <form class="form-horizontal" role="form" action="/emergencyResponse/alarmEvent/create" method="post">
                                     <div class="form-group">
                                         <label  class="col-lg-3 col-sm-3 control-label">警报名称</label>
                                         <div class="col-lg-9">
                                             <div class="iconic-input">
                                                 <i class="fa fa-bell"></i>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" name="alarmName" required>
                                             </div>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                                         <div class="col-lg-9">
                                             <div class="iconic-input">
                                                 <i class="fa fa-bell"></i>
-                                                <input type="text" class="form-control" placeholder="警报事件描述">
+                                                <input type="text" class="form-control" placeholder="警报事件描述" name="alarmDesc" required>
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                                         <label  class="col-lg-3 col-sm-3 control-label">类型&级别</label>
                                         <div class="col-lg-4">
                                             <div class="iconic-input">
-                                                <select class="form-control">
+                                                <select class="form-control" name="type" required>
                                                     <option value="水管爆裂" >水管爆裂</option>
                                                     <option value="电气故障" >电气故障</option>
                                                     <option value="地区火警" >地区火警</option>
@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="iconic-input">
-                                                <select class="form-control">
+                                                <select class="form-control" name="degree" required>
                                                     <option value="1" >应急 1级 白色预警信号</option>
                                                     <option value="2" >应急 2级 蓝色预警信号</option>
                                                     <option value="3" >应急 3级 黄色预警信号</option>
@@ -125,21 +125,31 @@
                                         <div class="col-lg-9">
                                             <div class="iconic-input">
                                                 <i class="fa fa-bell"></i>
-                                                <input type="text" class="form-control" placeholder="事件起源 可先进行预测">
+                                                <input type="text" class="form-control" placeholder="事件起源 可先进行预测" name="alarmCause">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label col-lg-3">事件地址</label>
-                                        <div class="col-lg-9">
+                                        <div class="col-lg-5">
                                             <div class="input-group m-bot15">
                                               <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default">
                                                        <i class="fa fa-search"></i>
                                                 </button>
                                               </span>
-                                                <input type="text" class="form-control" id="address" value="">
+                                                <input type="text" class="form-control" id="location" name="location" placeholder="具体地址，需要主动填入">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="input-group m-bot15">
+                                                <input type="text" class="form-control" id="coordinateX" name="coordinateX" placeholder="x坐标" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="input-group m-bot15">
+                                                <input type="text" class="form-control" id="coordinateY" name="coordinateY" placeholder="y坐标" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -179,9 +189,12 @@
 
         $('#alarmEvent-dg').datagrid({
             onClickRow: function (index, row) {  //easyui封装好的时间（被单机行的索引，被单击行的值）
-                var point = new BMap.Point(row["coordinateX"], row["coordinateY"]);
-                map.centerAndZoom(point, 15);
-                //展示应急信息
+                var status = row["status"];
+                if (status != undefined && status == "上报") {
+                    var point = new BMap.Point(row["coordinateX"], row["coordinateY"]);
+                    map.centerAndZoom(point, 15);
+                    //展示应急信息
+                }
             }
         });
 
@@ -189,7 +202,9 @@
             console.info("search address")
             map.addEventListener("click",function(e){
                 console.info(e.point.lng + ":" + e.point.lat);
-                $('#address').val(e.point.lng + ":" + e.point.lat)
+                $('#coordinateX').val(e.point.lng)
+                $('#coordinateY').val(e.point.lat)
+                return;
             });
         })
 
@@ -210,6 +225,9 @@
         var status = row["status"];
         if (status != null && status == '上报'){
             return "<a href=\"JavaScript:accept("+id+")\">受理&忽略</a>";
+        }
+        if (status != null && status == '受理'){
+            return "<a href=\"JavaScript:accept("+id+")\">初步指令</a>";
         }
         return "<span>无需操作</span>";
     }
@@ -341,7 +359,7 @@
             var label = new window.BMap.Label(data[i].desc, { offset: new window.BMap.Size(20, -10) });
             marker[i].setLabel(label);
             //循环添加InfoWindow
-            addInfo("<p style=’font-size:12px;lineheight:1.8em;’>" + data[i].desc + "</br>地址：" + data[i].location + "</br> 电话：" + data[i].name + "</br></p>",marker[i]);
+            addInfo("<p style=’font-size:12px;lineheight:1.8em;’>" + data[i].alarmDesc + "</br>地址：" + data[i].location + "</br> 电话：" + data[i].alarmName + "</br></p>",marker[i]);
         }
         //点击显示详情
         function addInfo(txt,marker){

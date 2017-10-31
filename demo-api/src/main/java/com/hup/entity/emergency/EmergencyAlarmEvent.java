@@ -12,8 +12,8 @@ import java.util.Date;
 public class EmergencyAlarmEvent {
 
     private Long id;
-    private String name;
-    private String desc;
+    private String alarmName;
+    private String alarmDesc;
     private String type;
     private String degree;
     private String alarmCause;
@@ -35,20 +35,20 @@ public class EmergencyAlarmEvent {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getAlarmName() {
+        return alarmName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAlarmName(String alarmName) {
+        this.alarmName = alarmName;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getAlarmDesc() {
+        return alarmDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setAlarmDesc(String alarmDesc) {
+        this.alarmDesc = alarmDesc;
     }
 
     public String getType() {
