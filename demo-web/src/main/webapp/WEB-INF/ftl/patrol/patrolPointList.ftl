@@ -86,6 +86,7 @@
 </@js_lib>
 <script>
     var map;
+    var circleArr = new Array();
     jQuery(document).ready(function() {
         map_init();
 
@@ -93,13 +94,15 @@
             onClickRow: function (index, row) {  //easyui封装好的时间（被单机行的索引，被单击行的值）
                 var point = new BMap.Point(row["coordinateX"], row["coordinateY"]);
                 map.centerAndZoom(point, 15);
-                var circle = new BMap.Circle(point,1000);
-                circle.setFillColor("#d91e0b"); //填充颜色
-                circle.setStrokeWeight(1);// 设置圆形边线的宽度，取值为大于等于1的整数。
-                circle.setFillOpacity(0.3);// 返回圆形的填充透明度。
-                circle.setStrokeOpacity(0.3);// 设置圆形的边线透明度，取值范围0 - 1。
-                map.addOverlay(circle);// 把圆添加到地图中
-
+                if (!circleArr.contains(row["id"])) {
+                    var circle = new BMap.Circle(point,1000);
+                    circle.setFillColor("#d91e0b"); //填充颜色
+                    circle.setStrokeWeight(1);// 设置圆形边线的宽度，取值为大于等于1的整数。
+                    circle.setFillOpacity(0.3);// 返回圆形的填充透明度。
+                    circle.setStrokeOpacity(0.3);// 设置圆形的边线透明度，取值范围0 - 1。
+                    map.addOverlay(circle);// 把圆添加到地图中
+                    circleArr.push(row["id"]);
+                }
                 //展示巡检点设备详情
                 var queryParams = $('#point-detail-dg').datagrid('options').queryParams;
                 queryParams.pointId = row["id"];
@@ -245,6 +248,18 @@
         });
     }
 
+</script>
+
+<script>
+    Array.prototype.contains = function(obj) {
+        var i = this.length;
+        while (i--) {
+            if (this[i] === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
 </script>
 
 </body>
