@@ -111,6 +111,14 @@ public class PatrolPointController {
     }
 
 
+    @RequestMapping(value = "/pointDetailCreate", method = RequestMethod.POST)
+    public String pointDetailCreate(PatrolPointDetail patrolPointDetail) {
+        logger.info("----巡检设备新增 -- patrolPointDetail = " + JSON.toJSONString(patrolPointDetail));
+        patrolPointService.insertPointDetail(patrolPointDetail);
+        return "redirect:/patrol/pointList";
+    }
+
+
 
     @ResponseBody
     @RequestMapping(value = "/pointDelete", method = RequestMethod.DELETE)

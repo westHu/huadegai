@@ -32,6 +32,13 @@
         #{patrolPoint.coordinateY}, NOW())
     </insert>
 
+    <insert id="insertPointDetail" useGeneratedKeys="true" keyProperty="pointDetail.id">
+        INSERT INTO pps_patrol_point_detail
+        (point_id, device_code, patrol_notice)
+        VALUES
+        (#{pointDetail.pointId}, #{pointDetail.deviceCode}, #{pointDetail.patrolNotice})
+    </insert>
+
     <delete id="deletePoint">
         DELETE FROM pps_patrol_point WHERE id = #{id}
     </delete>

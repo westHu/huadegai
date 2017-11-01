@@ -25,6 +25,17 @@
                     <section class="panel">
                         <header class="panel-heading">
                             巡检点位展示
+                            <span class="pull-right">
+                               <div class="btn-group">
+                                    <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                        新增巡检点 <span class="caret"></span>
+                                    </button>
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li><a href="#myModal2" data-toggle="modal">新增巡检点</a></li>
+                                        <li><a href="#">导出巡检点</a></li>
+                                    </ul>
+                               </div>
+                            </span>
                         </header>
                         <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div class="vmaps">
@@ -53,6 +64,17 @@
                     <section class="panel">
                         <header class="panel-heading">
                             巡检点位设备展示
+                            <span class="pull-right">
+                               <div class="btn-group">
+                                    <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                        新增巡检设备 <span class="caret"></span>
+                                    </button>
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li><a href="#point-detail" data-toggle="modal">新增巡检设备</a></li>
+                                        <li><a href="#">导出巡检设备</a></li>
+                                    </ul>
+                               </div>
+                            </span>
                         </header>
                         <div class="panel-body" style="border-color:#FFFFFF;padding: 0px;">
                             <div class="vmaps">
@@ -80,6 +102,119 @@
         </footer>
     </div>
 </section>
+
+
+<!-- 添加巡检点  Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">添加巡检点</h4>
+            </div>
+            <form class="form-horizontal" role="form" action="/patrol/pointCreate" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label  class="col-lg-3 col-sm-3 control-label">巡检点名称</label>
+                        <div class="col-lg-9">
+                            <div class="iconic-input">
+                                <i class="fa fa-bell"></i>
+                                <input type="text" class="form-control" name="pointName" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-lg-3 col-sm-3 control-label">巡检点描述</label>
+                        <div class="col-lg-9">
+                            <div class="iconic-input">
+                                <i class="fa fa-bell"></i>
+                                <input type="text" class="form-control" placeholder="巡检点描述" name="pointDesc" required>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label  class="col-lg-3 col-sm-3 control-label">负责人</label>
+                        <div class="col-lg-9">
+                            <div class="iconic-input">
+                                <i class="fa fa-bell"></i>
+                                <input type="text" class="form-control" placeholder="负责人" name="pointAgent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label col-lg-3">地址</label>
+                        <div class="col-lg-5">
+                            <div class="input-group m-bot15">
+                                              <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default">
+                                                       <i class="fa fa-search"></i>
+                                                </button>
+                                              </span>
+                                <input type="text" class="form-control" id="location" name="location" placeholder="具体地址，需要主动填入">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="input-group m-bot15">
+                                <input type="text" class="form-control" id="coordinateX" name="coordinateX" placeholder="x坐标">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="input-group m-bot15">
+                                <input type="text" class="form-control" id="coordinateY" name="coordinateY" placeholder="y坐标">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-warning"> 确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="point-detail" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">添加巡检设备</h4>
+            </div>
+            <form class="form-horizontal" role="form" action="/patrol/pointCreate" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label  class="col-lg-3 col-sm-3 control-label">巡检点名称</label>
+                        <div class="col-lg-9">
+                            <div class="iconic-input">
+                                <i class="fa fa-bell"></i>
+                                <input type="text" class="form-control" name="pointName" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-3 col-sm-3 control-label">设备编码</label>
+                        <div class="col-lg-9">
+                            <div class="iconic-input">
+                                <i class="fa fa-bell"></i>
+                                <input type="text" class="form-control" placeholder="设备编码" name="deviceCode" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-warning"> 确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- modal -->
 <!-- Placed js at the end of the document so the pages load faster -->
 <@js_lib js_war="jquery_confirm,jquery_easyui">
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wP746Nxc9dhwGHc68oAQviyW"></script>

@@ -2,6 +2,7 @@ package com.hup.dao;
 
 import com.hup.db.Pager;
 import com.hup.entity.PatrolPoint;
+import com.hup.entity.PatrolPointDetail;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface PatrolPointDao {
 
     int insertPoint(@Param("patrolPoint") PatrolPoint patrolPoint);
 
+    int insertPointDetail(@Param("pointDetail") PatrolPointDetail patrolPointDetail);
+
     void deletePoint(Long id);
 
     PatrolPoint getPoint(Long id);
@@ -29,5 +32,6 @@ public interface PatrolPointDao {
     void updatePoint(@Param("patrolPoint") PatrolPoint patrolPoint);
 
     List<PatrolPoint> findAllPatrolPoint();
+
 
 }

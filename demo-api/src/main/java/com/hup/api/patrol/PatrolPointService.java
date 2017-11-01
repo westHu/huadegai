@@ -2,6 +2,7 @@ package com.hup.api.patrol;
 
 import com.hup.db.Pager;
 import com.hup.entity.PatrolPoint;
+import com.hup.entity.PatrolPointDetail;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface PatrolPointService {
     Pager<PatrolPoint> queryPatrolPointList(PatrolPoint patrolPoint, Pager<PatrolPoint> pager);
 
     PatrolPoint insertPoint(PatrolPoint patrolPoint);
+
+    PatrolPointDetail insertPointDetail(PatrolPointDetail patrolPointDetail);
 
     void deletePoint(Long id);
 
