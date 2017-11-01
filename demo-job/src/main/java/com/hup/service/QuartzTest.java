@@ -35,21 +35,15 @@ public class QuartzTest {
             String job_name = "动态任务调度";  
             System.out.println("【系统启动】开始(每1秒输出一次)...");    
             QuartzManager.addJob(job_name, QuartzJob.class, "0/1 * * * * ?");
-            List<Map<String, String>> maps = QuartzManager.jobList();
-            System.out.println(JSON.toJSONString(maps));
             Thread.sleep(5000);
 
             System.out.println("【修改时间】开始(每2秒输出一次)...");    
             QuartzManager.modifyJobTime(job_name, "10/2 * * * * ?");
-            maps = QuartzManager.jobList();
-            System.out.println(JSON.toJSONString(maps));
             Thread.sleep(6000);
 
             System.out.println("【移除定时】开始...");    
             QuartzManager.removeJob(job_name);
-            maps = QuartzManager.jobList();
-            System.out.println(JSON.toJSONString(maps));
-            System.out.println("【移除定时】成功");    
+            System.out.println("【移除定时】成功");
               
             System.out.println("【再次添加定时任务】开始(每10秒输出一次)...");    
             QuartzManager.addJob(job_name, QuartzJob.class, "*/10 * * * * ?");    

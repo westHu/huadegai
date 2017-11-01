@@ -1,7 +1,11 @@
 package com.hup.api.job;
 
 import com.hup.db.Pager;
-import com.hup.entity.JobQuartz; /**
+import com.hup.entity.JobQuartz;
+
+import java.util.List;
+
+/**
  * Created with IntelliJ IDEA.
  * Description:
  * User: west_
@@ -9,6 +13,8 @@ import com.hup.entity.JobQuartz; /**
  * Time: 10:03
  */
 public interface JobQuartzService {
+
+    List<JobQuartz> getQuartzJobByStatus(String status);
 
     Pager<JobQuartz> queryJobQuartzList(JobQuartz jobQuartz, Pager<JobQuartz> pager);
 

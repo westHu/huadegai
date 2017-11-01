@@ -171,7 +171,7 @@
         $.confirm({
             icon: 'fa fa-warning',
             title: '密码提示！',
-            content: '确定要重置该用户的密码吗?',
+            content: '确定要停止该任务吗?',
             type: 'dark',
             autoClose: 'cancel|8000',
             buttons: {
@@ -181,13 +181,13 @@
                     keys: ['enter'],
                     action: function(){
                         $.ajax({
-                            url: "/user/"+id+"/resetPassword",
+                            url: "/quartz/"+id+"/stop",
                             type: 'post',
                             contentType: "application/json; charset=utf-8",
                             dataType: 'json',
                             success: function (data) {
                                 if (data.status == "0") {
-                                    location.href = "${context.contextPath}/user/list?msg=" + (new Base64()).encode("Pwd重置成功！");
+                                    location.href = "${context.contextPath}/user/list?msg=停止任务成功";
                                 }
 
                             }
@@ -212,7 +212,7 @@
         $.confirm({
             icon: 'fa fa-warning',
             title: '密码提示！',
-            content: '确定要重置该用户的密码吗?',
+            content: '确定要删除该任务吗?',
             type: 'dark',
             autoClose: 'cancel|8000',
             buttons: {
@@ -228,7 +228,7 @@
                             dataType: 'json',
                             success: function (data) {
                                 if (data.status == "0") {
-                                    location.href = "${context.contextPath}/user/list?msg=" + (new Base64()).encode("Pwd重置成功！");
+                                    location.href = "${context.contextPath}/user/list?msg=删除任务成功";
                                 }
 
                             }

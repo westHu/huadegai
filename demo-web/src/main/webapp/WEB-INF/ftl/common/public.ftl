@@ -225,7 +225,7 @@
                         <li><a href="${context.contextPath}"> 巡检记录</a></li>
                         <li><a href="${context.contextPath}"> 巡检考核</a></li>
                         <li><a href="${context.contextPath}/patrol/planList"> 巡检计划</a></li>
-                        <li><a href="${context.contextPath}/patrol/pointList"> 巡检区域</a></li>
+                        <#--<li><a href="${context.contextPath}/patrol/pointList"> 巡检区域</a></li>-->
                         <li><a href="${context.contextPath}/patrol/pointList"> 巡检点</a></li>
                     </ul>
                 </li>

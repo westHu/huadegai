@@ -23,6 +23,11 @@ public class JobQuartzServiceImpl implements JobQuartzService {
     private JobQuartzDao jobQuartzDao;
 
     @Override
+    public List<JobQuartz> getQuartzJobByStatus(String status) {
+        return jobQuartzDao.getQuartzJobByStatus(status);
+    }
+
+    @Override
     public Pager<JobQuartz> queryJobQuartzList(JobQuartz jobQuartz, Pager<JobQuartz> pager) {
         if (pager == null) {
             pager = new Pager<>();

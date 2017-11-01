@@ -1,5 +1,7 @@
 package com.hup.entity;
 
+import com.hup.enums.job.QuartzJobStatus;
+
 import java.io.Serializable;
 import java.util.Date;
 

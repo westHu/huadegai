@@ -42,27 +42,11 @@ public class JobQuartzInitialize {
      */
     public void init() throws Exception {
         logger.info("-- 根据巡检计划生成定时任务 -- " + new Date());
-        List<PatrolPlan> planList = patrolPlanService.getAllPatrolPlan();
 
-        int delete = jobQuartzService.deleteJobQuartzByType("system");
-        for (PatrolPlan plan : planList) {
-            JobQuartz quartz = new JobQuartz();
-            quartz.setJobName(plan.getPlanName());
-            quartz.setJobGroupName("系统默认");
-            quartz.setTriggerName("系统默认");
-            quartz.setTriggerGroupName("系统默认");
-            quartz.setJobCreater("巡检计划生成");
-            quartz.setJobType("system");
-            quartz.setStatus("停止中");
-            quartz.setRemark(plan.getPlanDesc());
-
-            String time = "0 0/min * * * ? *";
-            time = time.replace("min", plan.getPlanPerHour().toString());
-            quartz.setTime(time);
-            jobQuartzService.insertJobQuartz(quartz);
-
-            plan.setRelatedQuartzJob(1);
-            patrolPlanService.updatePlanRelatedJob(plan);
+        List<JobQuartz> jobList = jobQuartzService.getQuartzJobByStatus("运行中");
+        for (JobQuartz quartz : jobList) {
+            //启动任务
+            //QuartzManager.addJob(quartz.getJobName(), QuartzJob.class, quartz.getTime());
 
         }
     }

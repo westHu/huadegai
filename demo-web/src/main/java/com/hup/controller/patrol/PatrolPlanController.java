@@ -9,6 +9,7 @@ import com.hup.db.Pager;
 import com.hup.entity.JobQuartz;
 import com.hup.entity.PatrolPlan;
 import com.hup.entity.PatrolPoint;
+import com.hup.enums.job.QuartzJobStatus;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
 import com.hup.util.PageUtils;
@@ -117,12 +118,12 @@ public class PatrolPlanController {
         }
         JobQuartz quartz = new JobQuartz();
         quartz.setJobName(plan.getPlanName());
-        quartz.setJobGroupName("系统默认");
-        quartz.setTriggerName("系统默认");
-        quartz.setTriggerGroupName("系统默认");
+        quartz.setJobGroupName(plan.getPlanName());
+        quartz.setTriggerName(plan.getPlanDesc());
+        quartz.setTriggerGroupName(plan.getPlanDesc());
         quartz.setJobCreater("巡检计划生成");
-        quartz.setJobType("system");
-        quartz.setStatus("停止中");
+        quartz.setJobType("系统定时任务");
+        quartz.setStatus(QuartzJobStatus.OFF.getStatus());//停止中
         quartz.setRemark(plan.getPlanDesc());
 
         String time = "0 0/min * * * ? *";

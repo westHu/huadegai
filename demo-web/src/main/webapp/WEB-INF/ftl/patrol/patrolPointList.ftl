@@ -1,5 +1,13 @@
 <#include "common/public.ftl">
 <@header title="巡检点" css_war="jquery_confirm,jquery_easyui">
+<style>
+    .datagrid-row {
+        height: 29px;
+    }
+    .datagrid-cell, .datagrid-cell-group, .datagrid-header-rownumber, .datagrid-cell-rownumber{
+        text-overflow: ellipsis;
+    }
+</style>
 </@header>
 <body class="sticky-header">
 <section>
@@ -50,7 +58,8 @@
                                         <th data-options="field:'coordinateX',width:40,align:'left'">坐标</th>
                                         <th data-options="field:'coordinateY',width:40,align:'left'">坐标</th>
                                         <th data-options="field:'createDate',width:60,align:'left'">报告时间</th>
-                                        <th data-options="field:'_operate',width:40,align:'center'">操作</th>
+                                        <th data-options="field:'_operate',width:40,align:'center',
+                                                formatter: function(value,row,index){return '<a>编辑</a> | <a>删除</a>'}">操作</th>
                                     </tr>
                                     </thead>
                                 </table>
@@ -82,12 +91,13 @@
                                        data-options="rownumbers:true,fitColumns:true,nowrap:true,collapsible:true,singleSelect:true,pagination:true,url:'${context.contextPath}/patrol/pointDetailListJson',method:'get'">
                                     <thead>
                                     <tr>
-                                        <th data-options="field:'deviceCode',width:40,align:'left'">设备编码</th>
+                                        <th data-options="field:'deviceCode',width:60,align:'left'">设备编码</th>
                                         <th data-options="field:'deviceName',width:60,align:'left'">设备名称</th>
                                         <th data-options="field:'deviceModel',width:40,align:'left'">设备型号</th>
                                         <th data-options="field:'deviceSpec',width:40,align:'left'">设备规格</th>
                                         <th data-options="field:'deviceBrand',width:40,align:'left'">设备品牌</th>
-                                        <th data-options="field:'_operate',width:40,align:'center'">操作</th>
+                                        <th data-options="field:'_operate',width:40,align:'center',
+                                                formatter: function(value,row,index){return '<a>编辑</a> | <a>删除</a>'}">操作</th>
                                     </tr>
                                     </thead>
                                 </table>

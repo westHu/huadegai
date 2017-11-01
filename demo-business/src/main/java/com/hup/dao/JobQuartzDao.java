@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface JobQuartzDao {
 
+    List<JobQuartz> getQuartzJobByStatus(String status);
 
     List<JobQuartz> queryJobQuartzList(@Param("jobQuartz") JobQuartz jobQuartz, @Param("pager") Pager<JobQuartz> pager);
 
@@ -31,4 +32,7 @@ public interface JobQuartzDao {
     JobQuartz findOneByJobName(String jobName);
 
     int deleteJobQuartz(Long id);
+
+
+
 }

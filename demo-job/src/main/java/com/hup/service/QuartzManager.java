@@ -13,6 +13,7 @@ package com.hup.service;
  */  
 
   
+import com.hup.entity.JobQuartz;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
@@ -35,28 +36,26 @@ public class QuartzManager {
 
 
 
-    public static List<Map<String,String>> jobList(){
-        List<Map<String,String>> result = new ArrayList<>();
+    public static List<JobQuartz> jobList(){
+        List<JobQuartz> quartzList = new ArrayList<>();
         try {
             Scheduler scheduler = gSchedulerFactory.getScheduler();
             for (String groupName : scheduler.getJobGroupNames()) {
                 for (String jobName : scheduler.getJobNames(groupName)) {
-                    Map<String, String> map = new HashMap<>();
-
                     Trigger[] triggers = scheduler.getTriggersOfJob(jobName,groupName);
-                    Date nextFireTime = triggers[0].getNextFireTime();
-
-                    System.out.println("[jobName] : " + jobName + " [groupName] : "
-                            + groupName + " - " + nextFireTime);
-                    map.put(jobName, groupName);
-                    result.add(map);
+                    //Date nextFireTime = triggers[0].getNextFireTime();
+                    JobQuartz quartz = new JobQuartz();
+                    quartz.setJobName(jobName);
+                    quartz.setJobGroupName(groupName);
+                    quartz.setTriggerName(triggers[0].getName());
+                    quartz.setTriggerGroupName(triggers[0].getGroup());
+                    quartzList.add(quartz);
                 }
-
             }
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-        return result;
+        return quartzList;
     }
 
 

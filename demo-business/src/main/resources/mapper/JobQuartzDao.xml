@@ -56,4 +56,9 @@
         DELETE FROM job_quartz  WHERE  id = #{id}
     </delete>
 
+
+    <select id="getQuartzJobByStatus" resultType="com.hup.entity.JobQuartz">
+        SELECT * FROM job_quartz t WHERE  status = #{status}
+    </select>
+
 </mapper>

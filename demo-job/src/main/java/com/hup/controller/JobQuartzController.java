@@ -1,5 +1,7 @@
 package com.hup.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.hup.enums.job.QuartzJobStatus;
 import com.hup.response.BaseResponse;
 import com.hup.service.QuartzJob;
 import com.hup.service.QuartzManager;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by nt on
@@ -45,12 +50,18 @@ public class JobQuartzController {
 //    @RequiresPermissions("job:view")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(String msg, JobQuartz jobQuartz, PageRequest pageRequest, Model model) {
-        logger.info("-----> 定时任务列表页面");
+        logger.info("-----> 定时任务列表页面 --");
         Pager<JobQuartz> pager = new Pager<>();
         pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getCurrentPage()));
         pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getPageSize()));
         pager = jobQuartzService.queryJobQuartzList(jobQuartz, pager);
         model.addAttribute("pager", pager);
+
+
+        List<JobQuartz> quartzList = QuartzManager.jobList();
+        logger.info("quartzList == " + JSON.toJSONString(quartzList));
+        model.addAttribute("quartzList", quartzList);
+
         if (StringUtils.isNotBlank(msg)) {
             model.addAttribute("msg", msg);
         }
@@ -64,10 +75,22 @@ public class JobQuartzController {
     public BaseResponse startJob(@PathVariable("id") Long id) {
         logger.info("-----> 启动定时任务 --id : " + id);
         JobQuartz jobQuartz = jobQuartzService.findOne(id);
-        QuartzManager.addJob(jobQuartz.getJobName(), QuartzJob.class, "0/15 * * * * ?");
+        QuartzManager.addJob(jobQuartz.getJobName(), QuartzJob.class, jobQuartz.getTime());
 
-        jobQuartz.setStatus("运作中");
+        jobQuartz.setStatus(QuartzJobStatus.ON.getStatus()); //运行中
         jobQuartzService.updateStatus(jobQuartz);
         return new BaseResponse("0", "定时任务启动成功！");
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/{id}/stop", method = RequestMethod.POST)
+    public BaseResponse stopJob(@PathVariable("id") Long id) {
+        logger.info("-----> 暂停定时任务 --id : " + id);
+        JobQuartz jobQuartz = jobQuartzService.findOne(id);
+        QuartzManager.removeJob(jobQuartz.getJobName());
+        jobQuartz.setStatus(QuartzJobStatus.OFF.getStatus()); //停止中
+        jobQuartzService.updateStatus(jobQuartz);
+        return new BaseResponse("0", "定时任务暂停成功！");
     }
 }

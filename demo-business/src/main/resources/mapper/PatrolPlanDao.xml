@@ -33,7 +33,7 @@
         (plan_name, plan_desc, plan_creater, plan_begin, plan_end, plan_per_hour, point_ids, status, related_quartz_job, create_date)
         VALUES
         (#{patrolPlan.planName}, #{patrolPlan.planDesc}, #{patrolPlan.planCreater}, #{patrolPlan.planBegin},
-        #{patrolPlan.planEnd}, #{patrolPlan.planPerHour}, #{patrolPlan.pointIds}, 0, true,  NOW())
+        #{patrolPlan.planEnd}, #{patrolPlan.planPerHour}, #{patrolPlan.pointIds}, 0, 0,  NOW())
     </insert>
 
     <delete id="deletePlan">
