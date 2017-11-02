@@ -2,6 +2,7 @@ package com.hup.dao;
 
 import com.hup.db.Pager;
 import com.hup.entity.PatrolPlan;
+import com.hup.entity.PatrolPlanDetail;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -31,4 +32,6 @@ public interface PatrolPlanDao {
     void updatePlan(@Param("patrolPlan") PatrolPlan patrolPlan);
 
     int updateStatus(@Param("patrolPlan")PatrolPlan patrolPlan);
+
+    void batchInsertPlanDetail(@Param("detailList") List<PatrolPlanDetail> detailList);
 }

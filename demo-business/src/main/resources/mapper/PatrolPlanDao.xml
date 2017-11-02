@@ -30,10 +30,10 @@
 
     <insert id="insertPlan" useGeneratedKeys="true" keyProperty="patrolPlan.id">
         INSERT INTO pps_patrol_plan
-        (plan_name, plan_desc, plan_creater, plan_begin, plan_end, plan_per_hour, point_ids, status, create_date)
+        (plan_name, plan_desc, plan_creater, plan_begin, plan_end, plan_per_hour, status, create_date)
         VALUES
         (#{patrolPlan.planName}, #{patrolPlan.planDesc}, #{patrolPlan.planCreater}, #{patrolPlan.planBegin},
-        #{patrolPlan.planEnd}, #{patrolPlan.planPerHour}, #{patrolPlan.pointIds}, 0,  NOW())
+        #{patrolPlan.planEnd}, #{patrolPlan.planPerHour}, 0,  NOW())
     </insert>
 
     <delete id="deletePlan">
@@ -51,8 +51,7 @@
         plan_creater = #{patrolPlan.planCreater},
         plan_begin = #{patrolPlan.planBegin},
         plan_end = #{patrolPlan.planEnd},
-        plan_per_hour = #{patrolPlan.planPerHour},
-        point_ids = #{patrolPlan.pointIds},
+        plan_per_hour = #{patrolPlan.planPerHour}
         WHERE id = #{patrolPlan.id}
     </update>
 
@@ -61,5 +60,17 @@
         status = #{patrolPlan.status}
         WHERE id = #{patrolPlan.id}
     </delete>
+
+    <insert id="batchInsertPlanDetail">
+        INSERT INTO pps_patrol_plan_detail
+        (plan_id, point_id, device_code, tags)
+        VALUES
+        <foreach collection="detailList" item="detail" separator=",">
+        (#{detail.planId},#{detail.pointId},#{detail.deviceCode},#{detail.tags})
+        </foreach>
+    </insert>
+
+
+
 
 </mapper>

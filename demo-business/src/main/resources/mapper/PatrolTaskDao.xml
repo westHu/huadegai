@@ -26,10 +26,10 @@
 
     <insert id="insertTask" useGeneratedKeys="true" keyProperty="patrolTask.id">
         INSERT INTO pps_patrol_task
-        (task_name, task_desc, task_creater, task_begin, task_end, task_per_hour, point_ids, status, create_date)
+        (task_name, task_desc, task_creater, task_begin, task_end, task_per_hour, status, create_date)
         VALUES
         (#{patrolTask.taskName}, #{patrolTask.taskDesc}, #{patrolTask.taskCreater}, #{patrolTask.taskBegin},
-        #{patrolTask.taskEnd}, #{patrolTask.taskPerHour}, #{patrolTask.pointIds}, true,  NOW())
+        #{patrolTask.taskEnd}, #{patrolTask.taskPerHour}, true,  NOW())
     </insert>
 
     <delete id="deleteTask">
@@ -47,8 +47,7 @@
         task_creater = #{patrolTask.taskCreater},
         task_begin = #{patrolTask.taskBegin},
         task_end = #{patrolTask.taskEnd},
-        task_per_hour = #{patrolTask.taskPerHour},
-        point_ids = #{patrolTask.pointIds},
+        task_per_hour = #{patrolTask.taskPerHour}
         WHERE id = #{patrolTask.id}
     </update>
 

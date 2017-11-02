@@ -25,9 +25,12 @@ public class PatrolPlan {
     private Integer planPerDay; //时间间隔 天
     private Integer planPerHour; //时间间隔 小时
     private String planRemark; //备注
-    private String pointIds; //关联的巡检点
     private Boolean status;
     private Date createDate;
+
+    //-----非数据库字段
+    private String pointIds; //关联的巡检点
+    private String pointDetailIds; //关联的巡检设备
 
     public Long getId() {
         return id;
@@ -107,6 +110,14 @@ public class PatrolPlan {
 
     public void setPointIds(String pointIds) {
         this.pointIds = pointIds;
+    }
+
+    public String getPointDetailIds() {
+        return pointDetailIds;
+    }
+
+    public void setPointDetailIds(String pointDetailIds) {
+        this.pointDetailIds = pointDetailIds;
     }
 
     public Boolean getStatus() {

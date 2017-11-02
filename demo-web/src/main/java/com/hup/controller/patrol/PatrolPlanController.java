@@ -4,11 +4,10 @@ package com.hup.controller.patrol;
 import com.alibaba.fastjson.JSON;
 import com.hup.api.job.JobQuartzService;
 import com.hup.api.patrol.PatrolPlanService;
+import com.hup.api.patrol.PatrolPointDetailService;
 import com.hup.api.patrol.PatrolPointService;
 import com.hup.db.Pager;
-import com.hup.entity.JobQuartz;
-import com.hup.entity.PatrolPlan;
-import com.hup.entity.PatrolPoint;
+import com.hup.entity.*;
 import com.hup.enums.job.QuartzJobStatus;
 import com.hup.enums.job.QuartzJobType;
 import com.hup.request.PageRequest;
@@ -30,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,9 +48,6 @@ public class PatrolPlanController {
 
     @Autowired
     private PatrolPlanService patrolPlanService;
-
-    @Autowired
-    private PatrolPointService patrolPointService;
 
     @Autowired
     private JobQuartzService jobQuartzService;
@@ -81,8 +78,6 @@ public class PatrolPlanController {
         PatrolPlan patrolPlan = new PatrolPlan();
         patrolPlan.setPlanCreater(username);
         model.addAttribute("patrolPlan", patrolPlan);
-        List<PatrolPoint> pointList = patrolPointService.findAllPatrolPoint();
-        model.addAttribute("pointList", pointList);
         model.addAttribute("op", "新增");
         return "patrol/patrolPlanCreate";
     }
@@ -91,6 +86,11 @@ public class PatrolPlanController {
     @RequestMapping(value = "/planCreate", method = RequestMethod.POST)
     public String planCreate(PatrolPlan patrolPlan, RedirectAttributes redirectAttributes) {
         logger.info("----添加巡检计划  -- patrolPlan : " + JSON.toJSONString(patrolPlan));
+        String pointDetailIds = patrolPlan.getPointDetailIds();
+        if (StringUtils.isBlank(pointDetailIds)) {
+            redirectAttributes.addAttribute("msg", "巡检计划添加失败！ 没有添加巡检设备！");
+            return "redirect:/patrol/planList";
+        }
         patrolPlan.setPlanName(PatrolUtil.PLAN_CODE());
         patrolPlanService.insertPlan(patrolPlan);
         redirectAttributes.addAttribute("msg", "巡检计划添加成功");

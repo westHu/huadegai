@@ -2,11 +2,15 @@ package com.hup.service.patrol;
 
 import com.hup.api.patrol.PatrolPlanService;
 import com.hup.dao.PatrolPlanDao;
+import com.hup.dao.PatrolPointDetailDao;
 import com.hup.db.Pager;
 import com.hup.entity.PatrolPlan;
+import com.hup.entity.PatrolPlanDetail;
+import com.hup.entity.PatrolPointDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +25,9 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
 
     @Autowired
     private PatrolPlanDao patrolPlanDao;
+
+    @Autowired
+    private PatrolPointDetailDao patrolPointDetailDao;
 
 
     @Override
@@ -44,6 +51,22 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
     @Override
     public PatrolPlan insertPlan(PatrolPlan patrolPlan) {
         patrolPlanDao.insertPlan(patrolPlan);
+
+        String[] split = patrolPlan.getPointDetailIds().split(",");
+        List<PatrolPlanDetail> detailList = new ArrayList<>();
+        for (String id : split) {
+            PatrolPointDetail pointDetail = patrolPointDetailDao.getPointDetail(Long.parseLong(id));
+            if (null != pointDetail) {
+                PatrolPlanDetail planDetail = new PatrolPlanDetail();
+                planDetail.setPlanId(patrolPlan.getId());
+                planDetail.setPointId(pointDetail.getPointId());
+                planDetail.setDeviceCode(pointDetail.getDeviceCode());
+                planDetail.setTags(pointDetail.getPatrolNotice());
+                detailList.add(planDetail);
+            }
+        }
+        patrolPlanDao.batchInsertPlanDetail(detailList);
+
         return patrolPlan;
     }
 
