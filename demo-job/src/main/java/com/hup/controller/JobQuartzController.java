@@ -93,4 +93,14 @@ public class JobQuartzController {
         jobQuartzService.updateStatus(jobQuartz);
         return new BaseResponse("0", "定时任务暂停成功！");
     }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String quartzCreate(JobQuartz jobQuartz) {
+        logger.info("-----> 暂停定时任务 --jobQuartz : " + JSON.toJSONString(jobQuartz));
+        jobQuartz.setStatus(QuartzJobStatus.OFF.getStatus()); //停止中
+        jobQuartzService.insertJobQuartz(jobQuartz);
+        return "redirect:/quartz/list";
+    }
+
+
 }

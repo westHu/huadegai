@@ -27,7 +27,6 @@ public class PatrolPlan {
     private String planRemark; //备注
     private String pointIds; //关联的巡检点
     private Boolean status;
-    private Integer relatedQuartzJob; //是否已经关联（生成）定时任务 0:1
     private Date createDate;
 
     public Long getId() {
@@ -116,14 +115,6 @@ public class PatrolPlan {
 
     public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    public Integer getRelatedQuartzJob() {
-        return relatedQuartzJob;
-    }
-
-    public void setRelatedQuartzJob(Integer relatedQuartzJob) {
-        this.relatedQuartzJob = relatedQuartzJob;
     }
 
     public Date getCreateDate() {

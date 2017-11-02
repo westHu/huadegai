@@ -30,10 +30,10 @@
 
     <insert id="insertPlan" useGeneratedKeys="true" keyProperty="patrolPlan.id">
         INSERT INTO pps_patrol_plan
-        (plan_name, plan_desc, plan_creater, plan_begin, plan_end, plan_per_hour, point_ids, status, related_quartz_job, create_date)
+        (plan_name, plan_desc, plan_creater, plan_begin, plan_end, plan_per_hour, point_ids, status, create_date)
         VALUES
         (#{patrolPlan.planName}, #{patrolPlan.planDesc}, #{patrolPlan.planCreater}, #{patrolPlan.planBegin},
-        #{patrolPlan.planEnd}, #{patrolPlan.planPerHour}, #{patrolPlan.pointIds}, 0, 0,  NOW())
+        #{patrolPlan.planEnd}, #{patrolPlan.planPerHour}, #{patrolPlan.pointIds}, 0,  NOW())
     </insert>
 
     <delete id="deletePlan">
@@ -56,9 +56,9 @@
         WHERE id = #{patrolPlan.id}
     </update>
 
-    <delete id="updatePlanRelatedJob">
+    <delete id="updateStatus">
          UPDATE pps_patrol_plan SET
-        related_quartz_job = #{patrolPlan.relatedQuartzJob}
+        status = #{patrolPlan.status}
         WHERE id = #{patrolPlan.id}
     </delete>
 

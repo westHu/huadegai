@@ -5,6 +5,7 @@ import com.hup.api.patrol.PatrolPlanService;
 import com.hup.api.patrol.PatrolPointService;
 import com.hup.entity.JobQuartz;
 import com.hup.entity.PatrolPlan;
+import com.hup.enums.job.QuartzJobStatus;
 import jdk.nashorn.internal.scripts.JO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +44,10 @@ public class JobQuartzInitialize {
     public void init() throws Exception {
         logger.info("-- 根据巡检计划生成定时任务 -- " + new Date());
 
-        List<JobQuartz> jobList = jobQuartzService.getQuartzJobByStatus("运行中");
+        List<JobQuartz> jobList = jobQuartzService.getQuartzJobByStatus(QuartzJobStatus.ON.getStatus());
         for (JobQuartz quartz : jobList) {
             //启动任务
-            //QuartzManager.addJob(quartz.getJobName(), QuartzJob.class, quartz.getTime());
+            QuartzManager.addJob(quartz.getJobName(), QuartzJob.class, quartz.getTime());
 
         }
     }

@@ -55,29 +55,71 @@
                                                 <td>${obj.status}</td>
                                                 <td>${obj.createDate?string("yyyy-MM-dd HH:mm:ss")}</td>
                                                 <td>
-                                                    <div class="btn-group">
-                                                        <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
-                                                            操&nbsp作 <span class="caret"></span>
-                                                        </button>
-                                                        <ul role="menu" class="dropdown-menu">
-                                                            <li><a href="javascript:startJob(${obj.id}, '${obj.status}')" <#if obj.status == '运行中'> class="line-through"</#if>>
+                                                    <#if obj.jobType != 'SYSTEM'>
+                                                        <div class="btn-group">
+                                                            <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                                                操&nbsp作 <span class="caret"></span>
+                                                            </button>
+                                                            <ul role="menu" class="dropdown-menu">
+                                                                <li><a href="javascript:startJob(${obj.id}, '${obj.status}')">
                                                                     &nbsp&nbsp启动任务&nbsp&nbsp
                                                                 </a>
-                                                            </li>
-                                                            <li><a href="javascript:stopJob(${obj.id},'${obj.status}')" <#if obj.status == '停止中'> class="line-through"</#if>>
+                                                                </li>
+                                                                <li><a href="javascript:stopJob(${obj.id},'${obj.status}')">
                                                                     &nbsp&nbsp暂停任务&nbsp&nbsp
                                                                 </a>
-                                                            </li>
-                                                            <li class="divider"></li>
-                                                            <li><a href="javascript:deleteJob(${obj.id})">&nbsp&nbsp删除任务&nbsp&nbsp</a></li>
-                                                        </ul>
-                                                    </div>
+                                                                </li>
+                                                                <li class="divider"></li>
+                                                                <li><a href="javascript:deleteJob(${obj.id})">&nbsp&nbsp删除任务&nbsp&nbsp</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    <#else>
+                                                        不能操作
+                                                    </#if>
+
                                                 </td>
                                             </tr>
                                         </#list>
                                     </tbody>
                                 </table>
                                 <@hup_pagination  showBegin = "${ (pager.currentPage-1) * pager.pageSize + 1 }"  showEnd = "${pager.currentPage * pager.pageSize}"></@hup_pagination>
+                            </section>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            任务器Job列表
+                        </header>
+                        <div class="panel-body">
+                            <section id="unseen">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>任务名</th>
+                                            <th>任务组</th>
+                                            <th>触发器名</th>
+                                            <th>触发器组</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <#list quartzList as quartz>
+                                        <tr>
+                                            <td>${quartz.jobName}</td>
+                                            <td>${quartz.jobGroupName}</td>
+                                            <td>${quartz.triggerName}</td>
+                                            <td>${quartz.triggerGroupName}</td>
+                                        </tr>
+                                    </#list>
+                                    </tbody>
+                                </table>
                             </section>
                         </div>
                     </section>

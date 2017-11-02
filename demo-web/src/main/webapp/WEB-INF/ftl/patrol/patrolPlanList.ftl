@@ -37,7 +37,6 @@
                                             <th>结束时间</th>
                                             <th>时间间隔</th>
                                             <th>状态</th>
-                                            <th>生成任务</th>
                                             <th>时间</th>
                                             <th>操作</th>
                                         </tr>
@@ -52,7 +51,6 @@
                                                 <td>${obj.planEnd?string("yyyy-MM-dd HH:mm:ss")}</td>
                                                 <td>${obj.planPerHour} 小时</td>
                                                 <td><#if obj.status == true>启用<#else>停用</#if></td>
-                                                <td><#if obj.relatedQuartzJob == 1>已生成定时任务<#else>未关联定时任务</#if></td>
                                                 <td>${obj.createDate?string("yyyy-MM-dd HH:mm:ss")}</td>
                                                 <td>
                                                     <div class="btn-group">
@@ -63,8 +61,8 @@
                                                             <li><a href="#" >编辑巡检计划</a></li>
                                                             <li><a href="javascript:delete_patrol_plan(${obj.id})" >删除巡检计划</a></li>
                                                             <li class="divider"></li>
-                                                            <li><a href="javascript:create_quartz_job(${obj.id},${obj.relatedQuartzJob})" >生成定时任务</a></li>
-                                                            <li><a href="javascript:delete_quartz_job(${obj.id},${obj.relatedQuartzJob})" >删除关联任务</a></li>
+                                                            <li><a href="javascript:execute_plan(${obj.id})" >开启执行</a></li>
+                                                            <li><a href="javascript:close_plan(${obj.id})" >关闭执行</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -97,7 +95,6 @@
     });
 
     function delete_patrol_plan(id) {
-        console.info("id = " + id);
         if (id == undefined || id == '') return;
         $.confirm({
             icon: 'fa fa-warning',
@@ -142,19 +139,12 @@
     }
 
 
-    function create_quartz_job(id, relatedQuartzJob) {
-        console.info("id = " + id);
-        console.info("relatedQuartzJob = " + relatedQuartzJob);
+    function execute_plan(id) {
         if (id == undefined || id == '') return;
-        if (relatedQuartzJob == undefined) return;
-        if (relatedQuartzJob == 1) {
-            TipsNotice(null, "关联该计划的定时任务已经生成！ 不能重复生成！");
-            return;
-        }
         $.confirm({
             icon: 'fa fa-warning',
-            title: '删除提示！',
-            content: '确定要创建定时任务并关联该巡检计划吗?',
+            title: '启动提示！',
+            content: '确定要启动该巡检计划吗?',
             type: 'dark',
             autoClose: 'cancel|8000',
             buttons: {
@@ -163,10 +153,9 @@
                     btnClass: 'btn-primary',
                     keys: ['enter'],
                     action: function(){
-                        var url = "/patrol/createQuartzJob";
+                        var url = "/patrol/executePlan";
                         var postData = {id: id};
                         postData = JSON.stringify(postData);
-                        console.info("postData= " + postData);
                         $.ajax({
                             url: url,
                             type: 'post',
@@ -194,20 +183,12 @@
     }
 
 
-    function delete_quartz_job(id, relatedQuartzJob) {
-        console.info("id = " + id);
-        console.info("relatedQuartzJob = " + relatedQuartzJob);
+    function close_plan(id) {
         if (id == undefined || id == '') return;
-        if (relatedQuartzJob == undefined) return;
-        if (relatedQuartzJob == 0) {
-            console.info("11111")
-            TipsNotice(null, "关联该计划的定时任务已经删除或未生成！ 不能删除！");
-            return;
-        }
         $.confirm({
             icon: 'fa fa-warning',
-            title: '删除提示！',
-            content: '确定要创建定时任务并关联该巡检计划吗?',
+            title: '关闭提示！',
+            content: '确定要关闭该巡检计划吗?',
             type: 'dark',
             autoClose: 'cancel|8000',
             buttons: {
@@ -216,10 +197,9 @@
                     btnClass: 'btn-primary',
                     keys: ['enter'],
                     action: function(){
-                        var url = "/patrol/deleteQuartzJob";
+                        var url = "/patrol/closePlan";
                         var postData = {id: id};
                         postData = JSON.stringify(postData);
-                        console.info("postData= " + postData);
                         $.ajax({
                             url: url,
                             type: 'post',

@@ -30,5 +30,5 @@ public interface PatrolPlanDao {
 
     void updatePlan(@Param("patrolPlan") PatrolPlan patrolPlan);
 
-    int updatePlanRelatedJob(@Param("patrolPlan")PatrolPlan patrolPlan);
+    int updateStatus(@Param("patrolPlan")PatrolPlan patrolPlan);
 }

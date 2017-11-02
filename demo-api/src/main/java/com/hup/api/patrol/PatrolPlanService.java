@@ -26,5 +26,5 @@ public interface PatrolPlanService {
 
     void updatePlan(PatrolPlan patrolPlan);
 
-    int updatePlanRelatedJob(PatrolPlan plan);
+    int updateStatus(PatrolPlan plan);
 }

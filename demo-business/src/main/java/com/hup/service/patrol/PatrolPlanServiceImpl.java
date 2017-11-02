@@ -63,7 +63,7 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
     }
 
     @Override
-    public int updatePlanRelatedJob(PatrolPlan patrolPlan) {
-       return patrolPlanDao.updatePlanRelatedJob(patrolPlan);
+    public int updateStatus(PatrolPlan patrolPlan) {
+       return patrolPlanDao.updateStatus(patrolPlan);
     }
 }
