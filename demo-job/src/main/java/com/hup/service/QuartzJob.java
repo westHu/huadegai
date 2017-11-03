@@ -12,13 +12,16 @@
 package com.hup.service;
   
 import java.text.SimpleDateFormat;  
-import java.util.Date;  
-  
+import java.util.Date;
+
+import com.hup.api.patrol.PatrolPlanService;
+import com.hup.entity.PatrolPlan;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;  
-  
+import org.quartz.JobExecutionException;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /** 
  * @Description: 任务执行类 
  * 
@@ -30,11 +33,13 @@ import org.quartz.JobExecutionException;
  * @version V2.0 
  */  
 public class QuartzJob implements Job {  
-  
+
+
+
     @Override  
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
         JobDetail jobDetail = arg0.getJobDetail();
         String name = jobDetail.getName();
         System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+ "★★★★★★★★★★★ - " + name);
-    }  
+    }
 }  

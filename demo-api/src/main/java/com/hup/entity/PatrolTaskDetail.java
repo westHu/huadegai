@@ -12,8 +12,8 @@ import java.util.Date;
 public class PatrolTaskDetail {
 
     private Long id;
-    private String taskName; //名称
-    private String pointName;
+    private Long taskId; //名称
+    private Long pointId;
     private String deviceCode;
     private String tags;
     private String resultMsg;
@@ -32,20 +32,20 @@ public class PatrolTaskDetail {
         this.id = id;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public Long getTaskId() {
+        return taskId;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 
-    public String getPointName() {
-        return pointName;
+    public Long getPointId() {
+        return pointId;
     }
 
-    public void setPointName(String pointName) {
-        this.pointName = pointName;
+    public void setPointId(Long pointId) {
+        this.pointId = pointId;
     }
 
     public String getDeviceCode() {

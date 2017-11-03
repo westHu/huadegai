@@ -33,6 +33,9 @@ public class JobQuartzInitialize {
     @Autowired
     private JobQuartzService jobQuartzService;
 
+    @Autowired
+    private QuartzManager quartzManager;
+
 
     /**
      * <p>@Description:  根据巡检计划生成定时任务， 再根据定时任务生成巡检任务
@@ -47,7 +50,7 @@ public class JobQuartzInitialize {
         for (JobQuartz quartz : jobList) {
             //启动任务
             Class<?> aClass = Thread.currentThread().getContextClassLoader().loadClass(quartz.getJobClass());
-            QuartzManager.addJob(quartz.getJobName(), aClass, quartz.getTime());
+            quartzManager.addJob(quartz.getJobName(), aClass, quartz.getTime());
 
         }
     }

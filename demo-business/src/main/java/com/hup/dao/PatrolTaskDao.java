@@ -2,6 +2,7 @@ package com.hup.dao;
 
 import com.hup.db.Pager;
 import com.hup.entity.PatrolTask;
+import com.hup.entity.PatrolTaskDetail;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -27,4 +28,8 @@ public interface PatrolTaskDao {
     PatrolTask getTask(Long id);
 
     void updateTask(@Param("patrolTask") PatrolTask patrolTask);
+
+
+    //-----------------detail -----------------
+    void batchInsertTaskDetail(@Param("taskDetails") List<PatrolTaskDetail> taskDetails);
 }

@@ -22,6 +22,9 @@ public class JobQuartzServiceImpl implements JobQuartzService {
     @Autowired
     private JobQuartzDao jobQuartzDao;
 
+    @Autowired
+    private QuartzManager quartzManager;
+
     @Override
     public List<JobQuartz> getQuartzJobByStatus(String status) {
         return jobQuartzDao.getQuartzJobByStatus(status);
@@ -73,7 +76,7 @@ public class JobQuartzServiceImpl implements JobQuartzService {
         //关闭定时任务
         JobQuartz one = jobQuartzDao.findOne(id);
         if (one != null) {
-            QuartzManager.removeJob(one.getJobName());
+            quartzManager.removeJob(one.getJobName());
         }
         //删除任务列表记录
         int delete = jobQuartzDao.deleteJobQuartz(id);

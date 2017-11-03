@@ -4,6 +4,7 @@ import com.hup.api.patrol.PatrolTaskService;
 import com.hup.dao.PatrolTaskDao;
 import com.hup.db.Pager;
 import com.hup.entity.PatrolTask;
+import com.hup.entity.PatrolTaskDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +56,12 @@ public class PatrolTaskServiceImpl implements PatrolTaskService {
     @Override
     public void updateTask(PatrolTask patrolTask) {
         patrolTaskDao.updateTask(patrolTask);
+    }
+
+
+    //--------------------detail------------------
+    @Override
+    public void batchInsertTaskDetail(List<PatrolTaskDetail> taskDetails) {
+        patrolTaskDao.batchInsertTaskDetail(taskDetails);
     }
 }

@@ -40,6 +40,8 @@ public class JobQuartzController {
     @Autowired
     private JobQuartzService jobQuartzService;
 
+    @Autowired
+    private QuartzManager quartzManager;
     /**
      * <p>@Description: 定时任务列表
      * <p>@Author: hupj
@@ -58,7 +60,7 @@ public class JobQuartzController {
         model.addAttribute("pager", pager);
 
 
-        List<JobQuartz> quartzList = QuartzManager.jobList();
+        List<JobQuartz> quartzList = quartzManager.jobList();
         logger.info("quartzList == " + JSON.toJSONString(quartzList));
         model.addAttribute("quartzList", quartzList);
 
@@ -75,7 +77,7 @@ public class JobQuartzController {
     public BaseResponse startJob(@PathVariable("id") Long id) {
         logger.info("-----> 启动定时任务 --id : " + id);
         JobQuartz jobQuartz = jobQuartzService.findOne(id);
-        QuartzManager.addJob(jobQuartz.getJobName(), QuartzJob.class, jobQuartz.getTime());
+        quartzManager.addJob(jobQuartz.getJobName(), QuartzJob.class, jobQuartz.getTime());
 
         jobQuartz.setStatus(QuartzJobStatus.ON.getStatus()); //运行中
         jobQuartzService.updateStatus(jobQuartz);
@@ -88,7 +90,7 @@ public class JobQuartzController {
     public BaseResponse stopJob(@PathVariable("id") Long id) {
         logger.info("-----> 暂停定时任务 --id : " + id);
         JobQuartz jobQuartz = jobQuartzService.findOne(id);
-        QuartzManager.removeJob(jobQuartz.getJobName());
+        quartzManager.removeJob(jobQuartz.getJobName());
         jobQuartz.setStatus(QuartzJobStatus.OFF.getStatus()); //停止中
         jobQuartzService.updateStatus(jobQuartz);
         return new BaseResponse("0", "定时任务暂停成功！");

@@ -141,7 +141,7 @@ public class PatrolPlanController {
         quartz.setTime(time);
         jobQuartzService.insertJobQuartz(quartz);
         //启动定时器
-        QuartzManager.addJob(quartz.getJobName(), QuartzJob.class, quartz.getTime());
+        //QuartzManager.addJob(quartz.getJobName(), QuartzJob.class, quartz.getTime());
         //更新巡检计划 已关联任务
         plan.setStatus(Boolean.TRUE);
         patrolPlanService.updateStatus(plan);
@@ -160,7 +160,7 @@ public class PatrolPlanController {
             return new BaseResponse("0","巡检计划关闭失败！ 计划处于关闭状态！", null);
         }
         //先删除定时器
-        QuartzManager.removeJob(plan.getPlanName());
+        //QuartzManager.removeJob(plan.getPlanName());
         //删除定时任务
         JobQuartz one = jobQuartzService.findOneByJobName(plan.getPlanName());
         if (one != null) {

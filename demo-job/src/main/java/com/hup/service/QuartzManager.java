@@ -17,7 +17,11 @@ import com.hup.entity.JobQuartz;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /** 
@@ -26,20 +30,25 @@ import java.util.*;
  * @ClassName: QuartzManager 
  * @Copyright: Copyright (c) 2014 
  * @version V2.0
- */  
+ */
+@Service
 public class QuartzManager {
 
-    private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();  
+
+    @Autowired
+    private Scheduler scheduler;
+
+    //private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();
     private static String JOB_GROUP_NAME = "EXTJWEB_JOBGROUP_NAME";  
     private static String TRIGGER_GROUP_NAME = "EXTJWEB_TRIGGERGROUP_NAME";
 
 
 
 
-    public static List<JobQuartz> jobList(){
+    public  List<JobQuartz> jobList(){
         List<JobQuartz> quartzList = new ArrayList<>();
         try {
-            Scheduler scheduler = gSchedulerFactory.getScheduler();
+            //Scheduler scheduler = gSchedulerFactory.getScheduler();
             for (String groupName : scheduler.getJobGroupNames()) {
                 for (String jobName : scheduler.getJobNames(groupName)) {
                     Trigger[] triggers = scheduler.getTriggersOfJob(jobName,groupName);
@@ -71,17 +80,17 @@ public class QuartzManager {
      *  
      */
     @SuppressWarnings("unchecked")  
-    public static void addJob(String jobName, Class cls, String time) {  
+    public  void addJob(String jobName, Class cls, String time) {
         try {  
-            Scheduler sched = gSchedulerFactory.getScheduler();  
+            //Scheduler sched = gSchedulerFactory.getScheduler();
             JobDetail jobDetail = new JobDetail(jobName, JOB_GROUP_NAME, cls);// 任务名，任务组，任务执行类  
             // 触发器  
             CronTrigger trigger = new CronTrigger(jobName, TRIGGER_GROUP_NAME);// 触发器名,触发器组  
             trigger.setCronExpression(time);// 触发器时间设定  
-            sched.scheduleJob(jobDetail, trigger);
+            scheduler.scheduleJob(jobDetail, trigger);
             // 启动
-            if (!sched.isShutdown()) {  
-                sched.start();  
+            if (!scheduler.isShutdown()) {
+                scheduler.start();
             }  
         } catch (Exception e) {  
             throw new RuntimeException(e);  
@@ -106,16 +115,16 @@ public class QuartzManager {
      * @version V2.0
      */  
     @SuppressWarnings("unchecked")  
-    public static void addJob(String jobName, String jobGroupName,  
+    public  void addJob(String jobName, String jobGroupName,
             String triggerName, String triggerGroupName, Class jobClass,  
             String time) {  
         try {  
-            Scheduler sched = gSchedulerFactory.getScheduler();  
+            //Scheduler sched = gSchedulerFactory.getScheduler();
             JobDetail jobDetail = new JobDetail(jobName, jobGroupName, jobClass);// 任务名，任务组，任务执行类  
             // 触发器  
             CronTrigger trigger = new CronTrigger(triggerName, triggerGroupName);// 触发器名,触发器组  
             trigger.setCronExpression(time);// 触发器时间设定  
-            sched.scheduleJob(jobDetail, trigger);  
+            scheduler.scheduleJob(jobDetail, trigger);
         } catch (Exception e) {  
             throw new RuntimeException(e);  
         }  
@@ -132,16 +141,16 @@ public class QuartzManager {
      *  
      */
     @SuppressWarnings("unchecked")  
-    public static void modifyJobTime(String jobName, String time) {  
+    public  void modifyJobTime(String jobName, String time) {
         try {  
-            Scheduler sched = gSchedulerFactory.getScheduler();  
-            CronTrigger trigger = (CronTrigger) sched.getTrigger(jobName,TRIGGER_GROUP_NAME);  
+            //Scheduler sched = gSchedulerFactory.getScheduler();
+            CronTrigger trigger = (CronTrigger) scheduler.getTrigger(jobName,TRIGGER_GROUP_NAME);
             if (trigger == null) {  
                 return;  
             }  
             String oldTime = trigger.getCronExpression();  
             if (!oldTime.equalsIgnoreCase(time)) {  
-                JobDetail jobDetail = sched.getJobDetail(jobName,JOB_GROUP_NAME);  
+                JobDetail jobDetail = scheduler.getJobDetail(jobName,JOB_GROUP_NAME);
                 Class objJobClass = jobDetail.getJobClass();  
                 removeJob(jobName);  
                 addJob(jobName, objJobClass, time);  
@@ -162,11 +171,11 @@ public class QuartzManager {
      * @Copyright: Copyright (c) 2014 
      *  
      */
-    public static void modifyJobTime(String triggerName,
+    public  void modifyJobTime(String triggerName,
             String triggerGroupName, String time) {  
         try {  
-            Scheduler sched = gSchedulerFactory.getScheduler();  
-            CronTrigger trigger = (CronTrigger) sched.getTrigger(triggerName,triggerGroupName);  
+            //Scheduler sched = gSchedulerFactory.getScheduler();
+            CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerName,triggerGroupName);
             if (trigger == null) {  
                 return;  
             }  
@@ -176,7 +185,7 @@ public class QuartzManager {
                 // 修改时间  
                 ct.setCronExpression(time);  
                 // 重启触发器  
-                sched.resumeTrigger(triggerName, triggerGroupName);  
+                scheduler.resumeTrigger(triggerName, triggerGroupName);
             }  
         } catch (Exception e) {  
             throw new RuntimeException(e);  
@@ -191,12 +200,12 @@ public class QuartzManager {
      * @Title: QuartzManager.java 
      * @Copyright: Copyright (c) 2014 
      */
-    public static void removeJob(String jobName) {  
+    public  void removeJob(String jobName) {
         try {  
-            Scheduler sched = gSchedulerFactory.getScheduler();  
-            sched.pauseTrigger(jobName, TRIGGER_GROUP_NAME);// 停止触发器  
-            sched.unscheduleJob(jobName, TRIGGER_GROUP_NAME);// 移除触发器  
-            sched.deleteJob(jobName, JOB_GROUP_NAME);// 删除任务  
+            //Scheduler sched = gSchedulerFactory.getScheduler();
+            scheduler.pauseTrigger(jobName, TRIGGER_GROUP_NAME);// 停止触发器
+            scheduler.unscheduleJob(jobName, TRIGGER_GROUP_NAME);// 移除触发器
+            scheduler.deleteJob(jobName, JOB_GROUP_NAME);// 删除任务
         } catch (Exception e) {  
             throw new RuntimeException(e);  
         }  
@@ -213,13 +222,13 @@ public class QuartzManager {
      * @Title: QuartzManager.java 
      * @Copyright: Copyright (c) 2014 
      */
-    public static void removeJob(String jobName, String jobGroupName,  
+    public  void removeJob(String jobName, String jobGroupName,
             String triggerName, String triggerGroupName) {  
         try {  
-            Scheduler sched = gSchedulerFactory.getScheduler();  
-            sched.pauseTrigger(triggerName, triggerGroupName);// 停止触发器  
-            sched.unscheduleJob(triggerName, triggerGroupName);// 移除触发器  
-            sched.deleteJob(jobName, jobGroupName);// 删除任务  
+            //Scheduler sched = gSchedulerFactory.getScheduler();
+            scheduler.pauseTrigger(triggerName, triggerGroupName);// 停止触发器
+            scheduler.unscheduleJob(triggerName, triggerGroupName);// 移除触发器
+            scheduler.deleteJob(jobName, jobGroupName);// 删除任务
         } catch (Exception e) {  
             throw new RuntimeException(e);  
         }  
@@ -232,10 +241,10 @@ public class QuartzManager {
      * @Title: QuartzManager.java 
      * @Copyright: Copyright (c) 2014 
      */
-    public static void startJobs() {  
+    public  void startJobs() {
         try {  
-            Scheduler sched = gSchedulerFactory.getScheduler();  
-            sched.start();  
+            //Scheduler sched = gSchedulerFactory.getScheduler();
+            scheduler.start();
         } catch (Exception e) {  
             throw new RuntimeException(e);  
         }  
@@ -248,11 +257,11 @@ public class QuartzManager {
      * @Title: QuartzManager.java 
      * @Copyright: Copyright (c) 2014 
      */
-    public static void shutdownJobs() {  
+    public  void shutdownJobs() {
         try {  
-            Scheduler sched = gSchedulerFactory.getScheduler();  
-            if (!sched.isShutdown()) {  
-                sched.shutdown();  
+            //Scheduler sched = gSchedulerFactory.getScheduler();
+            if (!scheduler.isShutdown()) {
+                scheduler.shutdown();
             }  
         } catch (Exception e) {  
             throw new RuntimeException(e);  

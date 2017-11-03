@@ -2,6 +2,9 @@ package com.hup.api.patrol;
 
 import com.hup.db.Pager;
 import com.hup.entity.PatrolTask;
+import com.hup.entity.PatrolTaskDetail;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,4 +25,8 @@ public interface PatrolTaskService {
     PatrolTask getTask(Long id);
 
     void updateTask(PatrolTask patrolTask);
+
+
+    ///--------------------------detail
+    void batchInsertTaskDetail(List<PatrolTaskDetail> taskDetails);
 }

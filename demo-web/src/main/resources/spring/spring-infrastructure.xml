@@ -113,6 +113,11 @@
           destroy-method="destroy">
     </bean>-->
 
+    <!-- quartz的定时任务的factorybean,配置其他config -->
+    <bean id="jobFactory" class="com.hup.util.JobFactory"></bean>
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobFactory" ref="jobFactory"></property>
+    </bean>
     <!-- 巡检计划生成定时任务 -->
     <bean id="jobQuartzInitialize" class="com.hup.service.JobQuartzInitialize" init-method="init"
           destroy-method="destroy">

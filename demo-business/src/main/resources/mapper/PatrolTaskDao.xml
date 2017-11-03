@@ -51,4 +51,14 @@
         WHERE id = #{patrolTask.id}
     </update>
 
+
+    <insert id="batchInsertTaskDetail">
+        INSERT INTO pps_patrol_task_detail
+        (task_id, point_id, device_code, tags)
+        VALUES
+        <foreach collection="taskDetails" item="task" separator=",">
+            (#{task.taskId},#{task.pointId},#{task.deviceCode},#{task.tags})
+        </foreach>
+    </insert>
+
 </mapper>
