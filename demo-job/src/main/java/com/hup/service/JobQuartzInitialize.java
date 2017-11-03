@@ -42,12 +42,12 @@ public class JobQuartzInitialize {
      * <p>@return:
      */
     public void init() throws Exception {
-        logger.info("-- 根据巡检计划生成定时任务 -- " + new Date());
-
+        logger.info("-- 定时器任务初始化 -- " + new Date());
         List<JobQuartz> jobList = jobQuartzService.getQuartzJobByStatus(QuartzJobStatus.ON.getStatus());
         for (JobQuartz quartz : jobList) {
             //启动任务
-            QuartzManager.addJob(quartz.getJobName(), QuartzJob.class, quartz.getTime());
+            Class<?> aClass = Thread.currentThread().getContextClassLoader().loadClass(quartz.getJobClass());
+            QuartzManager.addJob(quartz.getJobName(), aClass, quartz.getTime());
 
         }
     }
