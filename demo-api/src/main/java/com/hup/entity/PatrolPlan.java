@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,6 +32,7 @@ public class PatrolPlan {
     //-----非数据库字段
     private String pointIds; //关联的巡检点
     private String pointDetailIds; //关联的巡检设备
+    private List<PatrolPlanDetail> detailList;
 
     public Long getId() {
         return id;
@@ -134,5 +136,13 @@ public class PatrolPlan {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public List<PatrolPlanDetail> getDetailList() {
+        return detailList;
+    }
+
+    public void setDetailList(List<PatrolPlanDetail> detailList) {
+        this.detailList = detailList;
     }
 }

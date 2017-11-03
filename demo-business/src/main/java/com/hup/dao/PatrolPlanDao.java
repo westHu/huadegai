@@ -34,4 +34,8 @@ public interface PatrolPlanDao {
     int updateStatus(@Param("patrolPlan")PatrolPlan patrolPlan);
 
     void batchInsertPlanDetail(@Param("detailList") List<PatrolPlanDetail> detailList);
+
+    PatrolPlan getPlanByName(String planName);
+
+    List<PatrolPlanDetail> getPlanDetailListByPlanId(Long planId);
 }

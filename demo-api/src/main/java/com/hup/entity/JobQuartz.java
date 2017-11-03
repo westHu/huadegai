@@ -1,7 +1,5 @@
 package com.hup.entity;
 
-import com.hup.enums.job.QuartzJobStatus;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,7 +15,9 @@ public class JobQuartz implements Serializable {
     private String jobGroupName;
     private String triggerName;
     private String triggerGroupName;
+    private String jobClass;
     private String time;
+
 
     private String jobCreater;
     private String jobType;
@@ -64,6 +64,14 @@ public class JobQuartz implements Serializable {
 
     public void setTriggerGroupName(String triggerGroupName) {
         this.triggerGroupName = triggerGroupName;
+    }
+
+    public String getJobClass() {
+        return jobClass;
+    }
+
+    public void setJobClass(String jobClass) {
+        this.jobClass = jobClass;
     }
 
     public String getTime() {

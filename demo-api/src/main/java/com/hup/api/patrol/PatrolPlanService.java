@@ -27,4 +27,6 @@ public interface PatrolPlanService {
     void updatePlan(PatrolPlan patrolPlan);
 
     int updateStatus(PatrolPlan plan);
+
+    PatrolPlan getPlanByName(String planName);
 }

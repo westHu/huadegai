@@ -16,10 +16,11 @@ public class PatrolTask {
     private Long id;
     private String taskName; //名称
     private String taskDesc; //描述
-    private Long planId; //计划Id
+    private String planName; //计划名称
     private String taskType; //任务分类
     private String taskCreater; //任务创建者
     private Long estimatedTime; //预计耗时 单位：分
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date taskBeginTime; //任务允许开始时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -28,7 +29,6 @@ public class PatrolTask {
     private Date practiceBeginTime; //实际开始时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date practiceEndTime; //实际结束时间
-
 
     private String agent;
     private String remark;
@@ -60,12 +60,12 @@ public class PatrolTask {
         this.taskDesc = taskDesc;
     }
 
-    public Long getPlanId() {
-        return planId;
+    public String getPlanName() {
+        return planName;
     }
 
-    public void setPlanId(Long planId) {
-        this.planId = planId;
+    public void setPlanName(String planName) {
+        this.planName = planName;
     }
 
     public String getTaskType() {

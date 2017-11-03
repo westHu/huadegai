@@ -89,4 +89,14 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
     public int updateStatus(PatrolPlan patrolPlan) {
        return patrolPlanDao.updateStatus(patrolPlan);
     }
+
+    @Override
+    public PatrolPlan getPlanByName(String planName) {
+        PatrolPlan planByName = patrolPlanDao.getPlanByName(planName);
+        if (null != planByName) {
+            List<PatrolPlanDetail> detailList = patrolPlanDao.getPlanDetailListByPlanId(planByName.getId());
+            planByName.setDetailList(detailList);
+        }
+        return planByName;
+    }
 }

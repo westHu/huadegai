@@ -70,7 +70,17 @@
         </foreach>
     </insert>
 
+    <select id="getPlanByName" resultType="com.hup.entity.PatrolPlan">
+        SELECT * FROM pps_patrol_plan WHERE plan_name = #{planName}
+    </select>
 
+
+
+
+
+    <select id="getPlanDetailListByPlanId" resultType="com.hup.entity.PatrolPlanDetail">
+        SELECT * FROM pps_patrol_plan_detail WHERE plan_id = #{planId}
+    </select>
 
 
 </mapper>
