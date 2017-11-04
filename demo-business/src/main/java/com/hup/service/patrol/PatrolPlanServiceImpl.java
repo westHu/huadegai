@@ -99,4 +99,21 @@ public class PatrolPlanServiceImpl implements PatrolPlanService {
         }
         return planByName;
     }
+
+
+
+
+    //================plan detail ==================
+    @Override
+    public Pager<PatrolPlanDetail> queryPatrolPlanDetailList(PatrolPlanDetail planDetail, Pager<PatrolPlanDetail> pager) {
+        if (pager == null) {
+            pager = new Pager<>();
+        }
+        pager.setOrderColumns("id"); //时间倒序查询
+        List<PatrolPlanDetail> planDetailList = patrolPlanDao.queryPatrolPlanDetailList(planDetail, pager);
+        int planDetailCount = patrolPlanDao.getPatrolPlanDetailCount(planDetail);
+        pager.setList(planDetailList);
+        pager.setTotalCount(planDetailCount);
+        return pager;
+    }
 }

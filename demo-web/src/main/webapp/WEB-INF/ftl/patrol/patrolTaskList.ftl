@@ -19,7 +19,7 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="#">新增巡检任务</a></li> <#--${context.contextPath}/patrol/taskCreate-->
+                                    <li><a href="${context.contextPath}/patrol/taskCreate">新增巡检任务</a></li> <#--${context.contextPath}/patrol/taskCreate-->
                                     <li><a href="#">导入巡检任务</a></li>
                                     <li><a href="#">导出巡检任务</a></li>
                                 </ul>
@@ -49,10 +49,10 @@
                                                 <td>${obj.taskDesc}</td>
                                                 <td>${obj.taskCreater}</td>
                                                 <td>[${obj.taskBeginTime?string("yyyy-MM-dd HH:mm:ss")}] ~ [${obj.taskEndTime?string("yyyy-MM-dd HH:mm:ss")}]</td>
-                                                <td>${obj.estimatedTime} 分钟</td>
-                                                <td>[${obj.practiceBeginTime?string(" HH:mm")}] ~ [${obj.practiceEndTime?string("HH:mm")}]</td>
+                                                <td>${obj.estimatedTime!"180"} 分钟</td>
+                                                <td>[${(obj.practiceBeginTime?string("HH:mm"))!}] ~ [${(obj.practiceEndTime?string("HH:mm"))!}]</td>
                                                 <td>${obj.agent}</td>
-                                                <td>${obj.status}</td>
+                                                <td><#if obj.status == 'READY'>未巡检<#else>进行中</#if></td>
                                                 <td>${obj.createDate?string("yyyy-MM-dd HH:mm:ss")}</td>
                                                 <td>
                                                     <div class="btn-group">
@@ -60,6 +60,7 @@
                                                             操&nbsp作 <span class="caret"></span>
                                                         </button>
                                                         <ul role="menu" class="dropdown-menu">
+                                                            <li><a href="#xianlu-map" data-toggle="modal" >推荐路线图</a></li>
                                                             <li><a href="#" >编辑巡检任务</a></li>
                                                             <li><a href="javascript:delete_patrol_task(${obj.id})" >删除巡检任务</a></li>
                                                         </ul>
@@ -75,14 +76,42 @@
                     </section>
                 </div>
             </div>
+
+            <#--http://www.cnblogs.com/wujy/p/3897501.html-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            巡检路线图
+                        </header>
+                        <div class="panel-body">
+                            <section id="unseen">
+                                <div id="allmap" style="width:100%;height:200px;"></div>
+                            </section>
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
         <footer>
             2017 &copy; tansfar by hup
         </footer>
     </div>
 </section>
+
+
 <!-- Placed js at the end of the document so the pages load faster -->
-<@js_lib js_war="gritter_script,pickers_plugins,pickers_initialization,paging-hup,jquery_confirm"></@js_lib>
+<@js_lib js_war="gritter_script,pickers_plugins,pickers_initialization,paging-hup,jquery_confirm">
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wP746Nxc9dhwGHc68oAQviyW"></script>
+</@js_lib>
+<script type="text/javascript">
+
+    var map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 13);
+    var walking = new BMap.WalkingRoute(map, {renderOptions:{map: map, autoViewport: true}});
+    walking.search("天坛公园", "故宫");
+</script>
+
 <script>
     jQuery(document).ready(function() {
         //显示小提示

@@ -82,5 +82,23 @@
         SELECT * FROM pps_patrol_plan_detail WHERE plan_id = #{planId}
     </select>
 
+    <select id="queryPatrolPlanDetailList" resultType="com.hup.entity.PatrolPlanDetail">
+        SELECT * FROM pps_patrol_plan_detail WHERE 1=1
+        <if test="planDetail.planId != null ">
+          AND  plan_id = #{planDetail.planId}
+        </if>
+    </select>
+
+
+    <select id="getPatrolPlanDetailCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM pps_patrol_plan_detail WHERE 1=1
+        <if test="planDetail.planId != null ">
+          AND  plan_id = #{planDetail.planId}
+        </if>
+    </select>
+
+
+
+
 
 </mapper>

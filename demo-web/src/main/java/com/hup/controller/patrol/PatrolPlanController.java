@@ -12,6 +12,7 @@ import com.hup.enums.job.QuartzJobStatus;
 import com.hup.enums.job.QuartzJobType;
 import com.hup.request.PageRequest;
 import com.hup.response.BaseResponse;
+import com.hup.response.DataGridResponse;
 import com.hup.service.QuartzJob;
 import com.hup.service.QuartzManager;
 import com.hup.util.PageUtils;
@@ -69,7 +70,25 @@ public class PatrolPlanController {
         return "patrol/patrolPlanList";
     }
 
-
+    @ResponseBody
+    @RequestMapping(value = "/planDetailListJson", method = RequestMethod.GET)
+    public DataGridResponse planDetailListJson(String planId, PageRequest pageRequest){
+        logger.info(" --- 巡检设备列表 planId = " + planId);
+        if (StringUtils.isBlank(planId)) {
+            return new DataGridResponse();
+        }
+        Pager<PatrolPlanDetail> pager = new Pager<>();
+        pager.setCurrentPage(PageUtils.getCorrectCurrentPage(pageRequest.getPage()));
+        pager.setPageSize(PageUtils.getCorrectCurrentPageSize(pageRequest.getRows()));
+        PatrolPlanDetail detail = new PatrolPlanDetail();
+        detail.setPlanId(Long.parseLong(planId));
+        pager = patrolPlanService.queryPatrolPlanDetailList(detail, pager);
+        DataGridResponse response = new DataGridResponse();
+        if (pager.getTotalCount() > 0) {
+            response = new DataGridResponse(pager.getTotalCount(),pager.getList());
+        }
+        return response;
+    }
 
     @RequestMapping(value = "/planCreate", method = RequestMethod.GET)
     public String planCreateForm(Model model) {

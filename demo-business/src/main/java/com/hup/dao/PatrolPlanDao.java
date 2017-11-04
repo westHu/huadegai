@@ -38,4 +38,11 @@ public interface PatrolPlanDao {
     PatrolPlan getPlanByName(String planName);
 
     List<PatrolPlanDetail> getPlanDetailListByPlanId(Long planId);
+
+
+
+    //--------------------plan detail
+    List<PatrolPlanDetail> queryPatrolPlanDetailList(@Param("planDetail") PatrolPlanDetail planDetail, @Param("pager") Pager<PatrolPlanDetail> pager);
+
+    int getPatrolPlanDetailCount(@Param("planDetail") PatrolPlanDetail planDetail);
 }

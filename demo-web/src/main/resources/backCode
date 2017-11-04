@@ -133,4 +133,18 @@ function removeByValue(arr, val) {
     }
 }
 
-#==========================================
+#=================model=========================
+
+<#--<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="xianlu-map" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">添加巡检设备</h4>
+            </div>
+            <div class="modal-body">
+                <div id="allmap" style="width:500px;height:500px;"></div>
+            </div>
+        </div>
+    </div>
+</div>-->

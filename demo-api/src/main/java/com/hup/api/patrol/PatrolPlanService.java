@@ -2,6 +2,8 @@ package com.hup.api.patrol;
 
 import com.hup.db.Pager;
 import com.hup.entity.PatrolPlan;
+import com.hup.entity.PatrolPlanDetail;
+import com.hup.entity.PatrolPointDetail;
 
 import java.util.List;
 
@@ -29,4 +31,9 @@ public interface PatrolPlanService {
     int updateStatus(PatrolPlan plan);
 
     PatrolPlan getPlanByName(String planName);
+
+
+
+    //plan detail ==========================
+    Pager<PatrolPlanDetail> queryPatrolPlanDetailList(PatrolPlanDetail detail, Pager<PatrolPlanDetail> pager);
 }
